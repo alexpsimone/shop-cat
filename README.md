@@ -13,6 +13,7 @@ It also provides more flexibility and collaborative oversight than a site like I
 ### Technologies required (besides typical Hackbright tech stack)
 
 - Wikipedia API: https://www.mediawiki.org/wiki/API:Main_page
+- YouTube API: https://developers.google.com/youtube/v3
 
 ### Data
 
