@@ -4,49 +4,51 @@
 
 ### Overview
 
-A collaborative wiki for vehicle repair.
-This app allows users to create individual pages for different processes, with step-by-step instructions. 
-Pages will be linked by keyword and moderated by the community.
-The app is meant to be a better-moderated, more structured alternative to traditional vehicle forum writeups and YouTube videos.
+A collaborative wiki for vehicle repair.<br>
+This app allows users to create individual pages for different processes, with step-by-step instructions.<br>
+Pages will be linked by keyword and moderated by the community.<br>
+The app is meant to be a better-moderated, more structured alternative to traditional vehicle forum writeups and YouTube videos.<br>
 It also provides more flexibility and collaborative oversight than a site like Instructables.
 
 ### Technologies required (besides typical Hackbright tech stack)
 
-- Wikipedia API: https://www.mediawiki.org/wiki/API:Main_page
-- YouTube API: https://developers.google.com/youtube/v3
+- Wikipedia API: https://www.mediawiki.org/wiki/API:Main_page</li>
+- YouTube API: https://developers.google.com/youtube/v3</li>
 
 ### Data
 
-Items and Procedures are the central building blocks of shop-cat.
+**Items and Procedures are the central building blocks of shop-cat.**
 
-A Procedure is tied to a Page with a unique ID, url, etc.
-Procedures consist of Parts, Tools, and Steps.
-A Procedure can require multiple Parts, and Parts can be used in multiple Procedures. (many-many)
-A Procedure can require multiple Tools, and Tools can be used in multiple Procedures. (many-many)
-A Procedure consists of multiple Steps, but a Step can only exist in a specific Procedure. (one-many)
-	***exception/special case: when a Procedure is also a Step (i.e. remove wheels, disconnect battery...)***
-A Part can have multiple Part-Numbers, but a Part-Number can only describe one Part (one-many)
+A Procedure is tied to a Page with a unique ID, url, etc.  
+Procedures consist of Parts, Tools, and Steps.  
+A Procedure can require multiple Parts, and Parts can be used in multiple Procedures. (many-many)  
+A Procedure can require multiple Tools, and Tools can be used in multiple Procedures. (many-many)  
+A Procedure consists of multiple Steps, but a Step can only exist in a specific Procedure. (one-many)  
+	***exception/special case: when a Procedure is also a Step (i.e. remove wheels, disconnect battery...)***  
+A Part can have multiple Part-Numbers, but a Part-Number can only describe one Part (one-many)  
 
-Items consist of Statements. Items are things that aren't procedures (e.g. cars or engines).
-An Item is tied to a Page with a unique ID, url, etc.
+**Items are things that aren't procedures (e.g. cars or engines).**  
+Items consist of Statements.  
+An Item is tied to a Page with a unique ID, url, etc.  
 
 Steps also consist of Statements.
 
 Either an Item or a Step can have many Statements, but a given Statement can only describe one Item or Step. (one-many)
 
-Statements consist of Properties (e.g. lug nut torque) and References.
-A Statement can have multiple Properties, but Properties can only describe specific Statements. (one-many)
-A Statement can have multiple References, and References can be used to describe multiple Statements. (many-many)
+**Statements consist of Properties (e.g. lug nut torque) and References.**   
+A Statement can have multiple Properties, but Properties can only describe specific Statements. (one-many)  
+A Statement can have multiple References, and References can be used to describe multiple Statements. (many-many)  
 
-This is the part I am least sure of:
-Each Property has at least one Value, but can have many Values. 
-A Value can represent multiple Properties.
+*This is the part I am least sure of:*  
+Each Property has at least one Value, but can have many Values.   
+A Value can represent multiple Properties.  
 
-Users are connected to the things that they can add, remove, or change in shop-cat.
-	--Only upon creation: Procedures, Items
-	--Upon editing, adding, or removing: Parts, Part-Nums, Tools, Steps, Statements, Properties, Values, Refs
-Users can edit many things, and each thing can be edited by many different Users. (many-many)
-Therefore, users are connected to these things via their key in the Contribution-History.
+**Users are connected to the things that they can add, remove, or change in shop-cat.**   
+- Only upon creation: Procedures, Items
+- Upon editing, adding, or removing: Parts, Part-Nums, Tools, Steps, Statements, Properties, Values, Refs   
+
+Users can edit many things, and each thing can be edited by many different Users. (many-many)      
+Therefore, Users are connected to these things via their key in the Contribution-History.
 
 
 ### Roadmap
