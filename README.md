@@ -38,10 +38,9 @@ Statements consist of Properties (e.g. lug nut torque) and References.
 A Statement can have multiple Properties, but Properties can only describe specific Statements. (one-many)
 A Statement can have multiple References, and References can be used to describe multiple Statements. (many-many)
 
-*~*~*~*~*~*~*~*~*~*~* this is the part I am least sure of *~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
+This is the part I am least sure of:
 Each Property has at least one Value, but can have many Values. 
 A Value can represent multiple Properties.
-*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
 
 Users are connected to the things that they can add, remove, or change in shop-cat.
 	--Only upon creation: Procedures, Items
