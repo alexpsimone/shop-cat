@@ -2,7 +2,7 @@
 
 function Procedure() {
     return (
-        <p>TEST!</p>
+        <p>OTHER TEST!</p>
     );
 }
 

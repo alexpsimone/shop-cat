@@ -8,11 +8,13 @@ def show_homepage():
 
     return render_template('homepage.html')
 
-@app.route('procedure/')
-def show_homepage():
+
+@app.route('/procedure')
+def show_procedure_page():
     """Render a procedure page."""
 
     return render_template('procedure.html')
+
 
 if __name__ == '__main__':
     app.run(debug = True, host = '0.0.0.0')
