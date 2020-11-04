@@ -31,8 +31,7 @@ A Part can have multiple Part-Numbers, but a Part-Number can only describe one P
 Items consist of Statements.  
 An Item is tied to a Page with a unique ID, url, etc.  
 
-Steps also consist of Statements.
-
+Steps also consist of Statements.   
 Either an Item or a Step can have many Statements, but a given Statement can only describe one Item or Step. (one-many)
 
 **Statements consist of Properties (e.g. lug nut torque) and References.**   
