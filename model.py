@@ -60,7 +60,20 @@ class Page(db.Model):
         return f'<Page page_id={self.page_id} page_url={self.page_url}>'
 
 
+class Car(db.Model):
+    """A page."""
 
+    __tablename__ = 'cars'
+
+    car_id = db.Column(db.Integer,
+                        primary_key = True,
+                        autoincrement = True)
+    model = db.Column(String(25), nullable = False)
+    make = db.Column(String(25), default = 'unknown')
+    model_year = db.Column(Integer, default = 9999)
+
+    def __repr__(self):
+        return f'<Car car_id={self.car_id} model_year={self.model_year} model={self.model}>'
 
 
 def connect_to_db(flask_app, db_uri='postgresql:///shopcat', echo = True):
