@@ -19,3 +19,20 @@ class Page(db.Model):
 
     def __repr__(self):
         return f'<Page page_id={self.page_id} page_url={self.page_url}>'
+
+
+class User(db.Model):
+    """A user."""
+
+    __tablename__ = 'users'
+
+    user_id = db.Column(db.Integer,
+                        primary_key = True,
+                        autoincrement = True)
+    username = db.Column(db.String(25), nullable = False, unique = True)
+    password = db.Column(db.String(25), nullable = False)
+    nickname = db.Column(db.String(25))
+    avatar_img_url = db.Column(db.String) 
+
+    def __repr__(self):
+        return f'<User user_id={self.user_id} username={self.username}>'
