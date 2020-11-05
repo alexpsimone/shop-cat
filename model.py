@@ -61,7 +61,7 @@ class Page(db.Model):
 
 
 class Car(db.Model):
-    """A page."""
+    """A car."""
 
     __tablename__ = 'cars'
 
@@ -76,8 +76,42 @@ class Car(db.Model):
         return f'<Car car_id={self.car_id} model_year={self.model_year} model={self.model}>'
 
 
+class PartNum(db.Model):
+    """A part number."""
+
+    __tablename__ = 'part_nums'
+
+    part_num_id = db.Column(db.Integer,
+                        primary_key = True,
+                        autoincrement = True)
+    manuf = db.Column(String(25), default='unknown')
+    part_num = db.Column(String(25), default='unknown')
+    is_oem_part = db.Column(Bool)
+
+    def __repr__(self):
+        return f'<PartNum part_num_id={self.part_num_id} part_num={self.part_num}>'
+
+
+class Part(db.Model):
+    """A part."""
+
+    __tablename__ = 'parts'
+
+    part_id = db.Column(db.Integer,
+                        primary_key = True,
+                        autoincrement = True)
+    name = db.Column(String(25), nullable = False)
+    part_img = db.Columndb.Column(db.String(50))
+    part_num_id = db.Column(db.Integer, db.ForeignKey('part_nums.part_num_id'))
+
+    part_number = db.relationship('PartNum', backref = 'parts')
+
+    def __repr__(self):
+        return f'<Part part_id={self.part_id} name={self.name}>'
+
+
 class ProcedureCar(db.Model):
-    """A page."""
+    """Procedure-Car association table."""
 
     __tablename__ = 'procedure_car'
 
