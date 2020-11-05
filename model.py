@@ -82,8 +82,8 @@ class PartNum(db.Model):
     __tablename__ = 'part_nums'
 
     part_num_id = db.Column(db.Integer,
-                        primary_key = True,
-                        autoincrement = True)
+                            primary_key = True,
+                            autoincrement = True)
     manuf = db.Column(String(25), default='unknown')
     part_num = db.Column(String(25), default='unknown')
     is_oem_part = db.Column(Bool)
@@ -116,8 +116,8 @@ class ProcedureCar(db.Model):
     __tablename__ = 'procedure_car'
 
     proc_car_id = db.Column(db.Integer,
-                        primary_key = True,
-                        autoincrement = True)
+                            primary_key = True,
+                            autoincrement = True)
     proc_id = db.Column(db.Integer, db.ForeignKey('procedures.proc_id'))
     car_id = db.Column(db.Integer, db.ForeignKey('cars.car_id'))
 
@@ -126,6 +126,24 @@ class ProcedureCar(db.Model):
 
     def __repr__(self):
         return f'<ProcedureCar proc_car_id={self.proc_car_id} procedure={self.proc_id} car={self.car_id}>'
+
+
+class ProcedurePart(db.Model):
+    """Procedure-Part association table."""
+
+    __tablename__ = 'proc_part'
+
+    proc_part_id = db.Column(db.Integer,
+                            primary_key = True,
+                            autoincrement = True)
+    proc_id = db.Column(db.Integer, db.ForeignKey('procedures.proc_id'))
+    part_id = db.Column(db.Integer, db.ForeignKey('parts.part_id'))
+
+    proc = db.relationship('Procedure', backref = 'procedure_car')
+    car = db.relationship('Part', backref = 'procedure_car')
+
+    def __repr__(self):
+        return f'<ProcedureCar proc_car_id={self.proc_car_id} procedure={self.proc_id} part={self.part_id}>'
 
 
 def connect_to_db(flask_app, db_uri='postgresql:///shopcat', echo = True):
