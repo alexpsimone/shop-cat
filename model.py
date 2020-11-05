@@ -35,7 +35,7 @@ class Page(db.Model):
     page_id = db.Column(db.Integer,
                         primary_key = True,
                         autoincrement = True)
-    size = db.Column(db.Real)
+    size = db.Column(db.Float)
     page_url = db.Column(db.String(50), unique = True)
     page_type = db.Column(db.String(25))
 
