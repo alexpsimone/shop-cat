@@ -17,6 +17,11 @@ class Procedure(db.Model):
     description = db.Column(db.Text)
     label = db.Column(db.String(25))
     img = db.Column(db.String)
+    page_id = db.Column(db.Integer, db.ForeignKey('pages.page_id'))
+    created_by_user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+
+    page = db.relationship('Page')
+    user = db.relationship('User')
 
     def __repr__(self):
         return f'<Procedure proc_id={self.proc_id} title={self.title}>'
