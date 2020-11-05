@@ -159,7 +159,25 @@ class ProcedurePart(db.Model):
     car = db.relationship('Part', backref = 'procedure_car')
 
     def __repr__(self):
-        return f'<ProcedureCar proc_car_id={self.proc_car_id} procedure={self.proc_id} part={self.part_id}>'
+        return f'<ProcedurePart proc_part_id={self.proc_part_id} procedure={self.proc_id} part={self.part_id}>'
+
+
+class ProcedureTool(db.Model):
+    """Procedure-Tool association table."""
+
+    __tablename__ = 'proc_tool'
+
+    proc_tool_id = db.Column(db.Integer,
+                            primary_key = True,
+                            autoincrement = True)
+    proc_id = db.Column(db.Integer, db.ForeignKey('procedures.proc_id'))
+    tool_id = db.Column(db.Integer, db.ForeignKey('tools.tool_id'))
+
+    proc = db.relationship('Procedure', backref = 'procedure_car')
+    tool = db.relationship('Tool', backref = 'procedure_car')
+
+    def __repr__(self):
+        return f'<ProcedureTool proc_tool_id={self.proc_tool_id} procedure={self.proc_id} part={self.tool_id}>'
 
 
 def connect_to_db(flask_app, db_uri='postgresql:///shopcat', echo = True):
