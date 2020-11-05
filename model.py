@@ -76,6 +76,24 @@ class Car(db.Model):
         return f'<Car car_id={self.car_id} model_year={self.model_year} model={self.model}>'
 
 
+class ProcedureCar(db.Model):
+    """A page."""
+
+    __tablename__ = 'procedure_car'
+
+    proc_car_id = db.Column(db.Integer,
+                        primary_key = True,
+                        autoincrement = True)
+    proc_id = db.Column(db.Integer, db.ForeignKey('procedures.proc_id'))
+    car_id = db.Column(db.Integer, db.ForeignKey('cars.car_id'))
+
+    proc = db.relationship('Procedure', backref = 'procedure_car')
+    car = db.relationship('Car', backref = 'procedure_car')
+
+    def __repr__(self):
+        return f'<ProcedureCar proc_car_id={self.proc_car_id} procedure={self.proc_id} car={self.car_id}>'
+
+
 def connect_to_db(flask_app, db_uri='postgresql:///shopcat', echo = True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo
