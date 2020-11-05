@@ -14,3 +14,18 @@ def create_user(username, password, nickname, img):
     db.session.commit()
 
     return user
+
+
+def create_procedure(title, description, label, img):
+    """Create and return a new user."""
+
+    procedure = Procedure(title = title,
+                description = description,
+                label = label,
+                img = img
+                )
+
+    db.session.add(procedure)
+    db.session.commit()
+
+    return procedure
