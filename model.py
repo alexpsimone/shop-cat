@@ -5,6 +5,23 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
+class Procedure(db.Model):
+    """A procedure."""
+
+    __tablename__ = 'procedures'
+
+    proc_id = db.Column(db.Integer,
+                        primary_key = True,
+                        autoincrement = True)
+    title = db.Column(db.String(25), nullable = False, unique = True)
+    description = db.Column(db.Text)
+    label = db.Column(db.String(25))
+    img = db.Column(db.String)
+
+    def __repr__(self):
+        return f'<Procedure proc_id={self.proc_id} title={self.title}>'
+
+
 class Page(db.Model):
     """A page."""
 
