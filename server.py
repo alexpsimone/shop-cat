@@ -3,6 +3,15 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 @app.route('/')
+def show_landing():
+    """Render the Shop Cat landing page.
+    
+    This may eventually turn into a login page."""
+
+    return render_template('shopcat.html')
+
+
+@app.route('/home')
 def show_homepage():
     """Render the homepage."""
 
