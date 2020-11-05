@@ -76,6 +76,22 @@ class Car(db.Model):
         return f'<Car car_id={self.car_id} model_year={self.model_year} model={self.model}>'
 
 
+class Tool(db.Model):
+    """A tool."""
+
+    __tablename__ = 'tools'
+
+    tool_id = db.Column(db.Integer,
+                        primary_key = True,
+                        autoincrement = True)
+    name = db.Column(String(25), nullable = False)
+    description = db.Column(Text)
+    tool_img = db.Column(db.String, default = '')
+
+    def __repr__(self):
+        return f'<Tool tool_id={self.tool_id} name={self.name}>'
+
+
 class PartNum(db.Model):
     """A part number."""
 
