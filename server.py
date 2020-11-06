@@ -28,13 +28,6 @@ def show_homepage():
                             procedures = procedures)
 
 
-# @app.route('/procedure')
-# def show_procedure_page():
-#     """Render a procedure page."""
-
-#     return render_template('procedure.html')
-
-
 @app.route('/procedure/<proc_id>')
 def show_procedure_page(proc_id):
     """Render a procedure page."""
