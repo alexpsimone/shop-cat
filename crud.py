@@ -59,3 +59,15 @@ def create_tool(name, description, tool_img):
     db.session.commit()
 
     return tool
+
+def create_procedure_tool(proc, tool):
+    """Create and return a ProcedureTool object."""
+
+    proc_tool = ProcedureTool(proc = proc,
+                                tool = tool
+                                )
+
+    db.session.add(proc_tool)
+    db.session.commit()
+
+    return proc_tool

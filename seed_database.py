@@ -14,6 +14,19 @@ os.system('createdb shopcat')
 model.connect_to_db(server.app)
 model.db.create_all()
 
+# Create a set of 10 test tools.
+toolbox = []
+
+for tool in range(10):
+    
+    name = f'tool_{tool}'
+    description = 'placeholder'
+    tool_img = f'path_{tool}'
+
+    tool = crud.create_tool(name, description, tool_img)
+    toolbox.append(tool)
+
+
 # Create 5 dummy test users.
 
 for user in range(5):
@@ -41,13 +54,13 @@ for user in range(5):
 
         procedure = crud.create_procedure(title, description, label, img, user, page)
 
-        for y in range(3):
-            
-            num = randint(1, 9)
-            # Create 3 tools for each procedure.
-            name = f'tool_{num}'
-            description = 'placeholder'
-            tool_img = f'path_{num}'
+        # Randomly assign 3 tools from the existing set 
+        # to each of the procedures.
+        for x in range(3):
+            num = randint(0,9)
+            tool = toolbox[num]
+            proc_tool = crud.create_procedure_tool(procedure, tool)
 
-            tool = crud.create_tool(name, description, tool_img)
-            # Create 3 parts for each procedure.
+
+
+
