@@ -26,6 +26,17 @@ for tool in range(10):
     tool = crud.create_tool(name, description, tool_img)
     toolbox.append(tool)
 
+# Create a set of 50 test parts.
+parts_bin = []
+
+for part in range(50):
+    
+    name = f'part_{part}'
+    part_img = f'path_{part}'
+
+    part = crud.create_part(name, part_img)
+    parts_bin.append(part)
+
 
 # Create 5 dummy test users.
 
@@ -58,11 +69,21 @@ for user in range(5):
         # to each of the procedures.
         nums_used = set()
         for x in range(3):
-            num = randint(0,9)
+            num = randint(0, 9)
             nums_used.add(num)
         for num in nums_used:
             tool = toolbox[num]
             proc_tool = crud.create_procedure_tool(procedure, tool)
+        
+        # Randomly assign up to 3 parts from the existing set 
+        # to each of the procedures.
+        nums_used = set()
+        for x in range(3):
+            num = randint(0, 49)
+            nums_used.add(num)
+        for num in nums_used:
+            part = parts_bin[num]
+            proc_part = crud.create_procedure_part(procedure, part)
 
 
 

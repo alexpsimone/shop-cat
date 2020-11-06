@@ -129,7 +129,7 @@ class Part(db.Model):
 class ProcedureCar(db.Model):
     """Procedure-Car association table."""
 
-    __tablename__ = 'procedure_car'
+    __tablename__ = 'procedure_cars'
 
     proc_car_id = db.Column(db.Integer,
                             primary_key = True,
@@ -147,7 +147,7 @@ class ProcedureCar(db.Model):
 class ProcedurePart(db.Model):
     """Procedure-Part association table."""
 
-    __tablename__ = 'procedure_part'
+    __tablename__ = 'procedure_parts'
 
     proc_part_id = db.Column(db.Integer,
                             primary_key = True,
@@ -156,7 +156,7 @@ class ProcedurePart(db.Model):
     part_id = db.Column(db.Integer, db.ForeignKey('parts.part_id'))
 
     proc = db.relationship('Procedure', backref = 'procedure_part')
-    car = db.relationship('Part', backref = 'procedure_part')
+    part = db.relationship('Part', backref = 'procedure_part')
 
     def __repr__(self):
         return f'<ProcedurePart proc_part_id={self.proc_part_id} procedure={self.proc_id} part={self.part_id}>'
@@ -165,7 +165,7 @@ class ProcedurePart(db.Model):
 class ProcedureTool(db.Model):
     """Procedure-Tool association table."""
 
-    __tablename__ = 'procedure_tool'
+    __tablename__ = 'procedure_tools'
 
     proc_tool_id = db.Column(db.Integer,
                             primary_key = True,

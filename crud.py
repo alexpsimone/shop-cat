@@ -71,3 +71,29 @@ def create_procedure_tool(proc, tool):
     db.session.commit()
 
     return proc_tool
+
+
+def create_part(name, part_img):
+    """Create and return a tool."""
+
+    part = Part(name = name,
+                part_img = part_img
+                )
+
+    db.session.add(part)
+    db.session.commit()
+
+    return part
+
+
+def create_procedure_part(proc, part):
+    """Create and return a ProcedureTool object."""
+
+    proc_part = ProcedurePart(proc = proc,
+                                part = part
+                                )
+
+    db.session.add(proc_part)
+    db.session.commit()
+
+    return proc_part
