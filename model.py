@@ -30,9 +30,9 @@ class Procedure(db.Model):
     proc_id = db.Column(db.Integer,
                         primary_key = True,
                         autoincrement = True)
-    title = db.Column(db.String(25), nullable = False, unique = True)
+    title = db.Column(db.String(50), nullable = False, unique = True)
     description = db.Column(db.Text, default = '')
-    label = db.Column(db.String(25), default = '')
+    label = db.Column(db.String(50), default = '')
     img = db.Column(db.String, default = '')
     page_id = db.Column(db.Integer, db.ForeignKey('pages.page_id'))
     created_by_user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
@@ -68,9 +68,9 @@ class Car(db.Model):
     car_id = db.Column(db.Integer,
                         primary_key = True,
                         autoincrement = True)
-    model = db.Column(String(25), nullable = False)
-    make = db.Column(String(25), default = 'unknown')
-    model_year = db.Column(Integer, default = 9999)
+    model = db.Column(db.String(25), nullable = False)
+    make = db.Column(db.String(25), default = 'unknown')
+    model_year = db.Column(db.Integer, default = 9999)
 
     def __repr__(self):
         return f'<Car car_id={self.car_id} model_year={self.model_year} model={self.model}>'
@@ -84,8 +84,8 @@ class Tool(db.Model):
     tool_id = db.Column(db.Integer,
                         primary_key = True,
                         autoincrement = True)
-    name = db.Column(String(25), nullable = False)
-    description = db.Column(Text)
+    name = db.Column(db.String(25), nullable = False)
+    description = db.Column(db.Text)
     tool_img = db.Column(db.String, default = '')
 
     def __repr__(self):
@@ -100,9 +100,9 @@ class PartNum(db.Model):
     part_num_id = db.Column(db.Integer,
                             primary_key = True,
                             autoincrement = True)
-    manuf = db.Column(String(25), default='unknown')
-    part_num = db.Column(String(25), default='unknown')
-    is_oem_part = db.Column(Bool)
+    manuf = db.Column(db.String(25), default='unknown')
+    part_num = db.Column(db.String(25), default='unknown')
+    is_oem_part = db.Column(db.Boolean)
 
     def __repr__(self):
         return f'<PartNum part_num_id={self.part_num_id} part_num={self.part_num}>'
@@ -116,8 +116,8 @@ class Part(db.Model):
     part_id = db.Column(db.Integer,
                         primary_key = True,
                         autoincrement = True)
-    name = db.Column(String(25), nullable = False)
-    part_img = db.Columndb.Column(db.String(50))
+    name = db.Column(db.String(25), nullable = False)
+    part_img = db.Column(db.String(50))
     part_num_id = db.Column(db.Integer, db.ForeignKey('part_nums.part_num_id'))
 
     part_number = db.relationship('PartNum', backref = 'parts')
@@ -147,7 +147,7 @@ class ProcedureCar(db.Model):
 class ProcedurePart(db.Model):
     """Procedure-Part association table."""
 
-    __tablename__ = 'proc_part'
+    __tablename__ = 'procedure_part'
 
     proc_part_id = db.Column(db.Integer,
                             primary_key = True,
@@ -155,8 +155,8 @@ class ProcedurePart(db.Model):
     proc_id = db.Column(db.Integer, db.ForeignKey('procedures.proc_id'))
     part_id = db.Column(db.Integer, db.ForeignKey('parts.part_id'))
 
-    proc = db.relationship('Procedure', backref = 'procedure_car')
-    car = db.relationship('Part', backref = 'procedure_car')
+    proc = db.relationship('Procedure', backref = 'procedure_part')
+    car = db.relationship('Part', backref = 'procedure_part')
 
     def __repr__(self):
         return f'<ProcedurePart proc_part_id={self.proc_part_id} procedure={self.proc_id} part={self.part_id}>'
@@ -165,7 +165,7 @@ class ProcedurePart(db.Model):
 class ProcedureTool(db.Model):
     """Procedure-Tool association table."""
 
-    __tablename__ = 'proc_tool'
+    __tablename__ = 'procedure_tool'
 
     proc_tool_id = db.Column(db.Integer,
                             primary_key = True,
@@ -173,8 +173,8 @@ class ProcedureTool(db.Model):
     proc_id = db.Column(db.Integer, db.ForeignKey('procedures.proc_id'))
     tool_id = db.Column(db.Integer, db.ForeignKey('tools.tool_id'))
 
-    proc = db.relationship('Procedure', backref = 'procedure_car')
-    tool = db.relationship('Tool', backref = 'procedure_car')
+    proc = db.relationship('Procedure', backref = 'procedure_tool')
+    tool = db.relationship('Tool', backref = 'procedure_tool')
 
     def __repr__(self):
         return f'<ProcedureTool proc_tool_id={self.proc_tool_id} procedure={self.proc_id} part={self.tool_id}>'
@@ -185,8 +185,8 @@ def connect_to_db(flask_app, db_uri='postgresql:///shopcat', echo = True):
     flask_app.config['SQLALCHEMY_ECHO'] = echo
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    db.app = app
-    db.init_app(app)
+    db.app = flask_app
+    db.init_app(flask_app)
 
     print('Connected to Shop Cat database!')
 
