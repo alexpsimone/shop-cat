@@ -15,7 +15,7 @@ model.db.create_all()
 
 # Create 10 dummy test users.
 
-for user in range(10):
+for user in range(5):
     username = f'user{user}'
     password = f'password{user}'
     nickname = f'nickname{user}'
@@ -23,7 +23,7 @@ for user in range(10):
     
     user = crud.create_user(username, password, nickname, avatar_img_url)
     
-    for x in range(5):
+    for x in range(3):
 
         # Create 5 pages for each new user.
         size = 99.999
@@ -39,5 +39,4 @@ for user in range(10):
         img = f'img{user.user_id}_{x}'
 
         procedure = crud.create_procedure(title, description, label, img, user, page)
-
 
