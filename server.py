@@ -23,9 +23,13 @@ def show_homepage():
     """Render the homepage."""
 
     procedures = crud.get_procedures()
+    tools = crud.get_tools()
+    parts = crud.get_parts()
 
     return render_template('homepage.html',
-                            procedures = procedures)
+                            procedures = procedures,
+                            tools = tools,
+                            parts = parts)
 
 
 @app.route('/procedure/<proc_id>')

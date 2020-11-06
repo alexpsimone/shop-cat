@@ -5,13 +5,7 @@ function Title() {
     return (
         <React.Fragment>
             <h1>Let's write a procedure!</h1>
-            <br />
-            <form action="/procedure">
-                <label>Procedure Name: </label>
-                <input type="text" name="name" required/>
-                <input type="submit" />
-            </form>
-            <br />
+
         </React.Fragment>
     );
 }

@@ -151,6 +151,18 @@ def get_procedures():
     return Procedure.query.all()
 
 
+def get_tools():
+    """Return all tools."""
+
+    return Tool.query.all()
+
+
+def get_parts():
+    """Return all parts."""
+
+    return Part.query.all()
+
+
 def get_procedure_by_id(proc_id):
     """Return a procedure with a given proc_id."""
 

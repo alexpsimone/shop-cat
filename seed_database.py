@@ -78,7 +78,7 @@ for user in range(5):
         title = f'title{user.user_id}_{x}'
         description = f'description{user.user_id}_{x}'
         label = f'label{user.user_id}_{x}'
-        img = f'img{user.user_id}_{x}'
+        img = 'nopath'
 
         procedure = crud.create_procedure(title, description, label, img, user, page)
 
