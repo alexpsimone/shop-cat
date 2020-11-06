@@ -13,9 +13,15 @@
         <h2>{{ procedure.title }}</h2><br />
         <p>Description: {{ procedure.description }}</p><br />
         <img src = "{{ procedure.img }}"/>
-        <p>Car Model Year: {{ proc_car.car.model_year }}</p><br />
-        <p>Car Make: {{ proc_car.car.make }}</p><br />
-        <p>Car Model : {{ proc_car.car.model }}</p><br />
+        <p>This procedure applies to the following cars:</p>
+        <ul>
+            {% for proc_car in proc_car_obj %}
+                <li>{{ proc_car.car.model_year }}
+                    {{ proc_car.car.make }}
+                    {{ proc_car.car.model }}
+                </li>
+            {% endfor %}
+        </ul>
         <p>Parts Required: </p>
         <ul>
             {% for proc_part in proc_part_obj %}

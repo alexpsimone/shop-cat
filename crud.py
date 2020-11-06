@@ -159,21 +159,17 @@ def get_procedure_by_id(proc_id):
 
 def get_proc_car_by_proc_id(proc_id):
     """Return all proc_car objects associated with a given proc_id."""
-
-    return ProcedureCar.query.get(proc_id)
+    
+    return ProcedureCar.query.filter_by(proc_id = proc_id).all()
 
 
 def get_parts_by_proc_id(proc_id):
     """Return all parts associated with a given proc_id."""
 
-    proc_part_obj = ProcedurePart.query.filter_by(proc_id = proc_id).all()
-    
-    return proc_part_obj
+    return ProcedurePart.query.filter_by(proc_id = proc_id).all()
 
 
 def get_tools_by_proc_id(proc_id):
-    """Return all parts associated with a given proc_id."""
-
-    proc_tool_obj = ProcedureTool.query.filter_by(proc_id = proc_id).all()
+    """Return all tools associated with a given proc_id."""
     
-    return proc_tool_obj
+    return ProcedureTool.query.filter_by(proc_id = proc_id).all()

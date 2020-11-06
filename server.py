@@ -33,13 +33,13 @@ def show_procedure_page(proc_id):
     """Render a procedure page."""
 
     procedure = crud.get_procedure_by_id(proc_id)
-    proc_car = crud.get_proc_car_by_proc_id(proc_id)
+    proc_car_obj = crud.get_proc_car_by_proc_id(proc_id)
     proc_part_obj = crud.get_parts_by_proc_id(proc_id)
     proc_tool_obj = crud.get_tools_by_proc_id(proc_id)
 
     return render_template('procedure.html',
                             procedure = procedure,
-                            proc_car = proc_car,
+                            proc_car_obj = proc_car_obj,
                             proc_part_obj = proc_part_obj,
                             proc_tool_obj = proc_tool_obj)
 
