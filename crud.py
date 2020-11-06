@@ -1,5 +1,6 @@
-from model import db, User, Procedure, Page, Car, Part, Tool
+from model import db, connect_to_db, User, Procedure, Page, Car, Part, Tool
 from model import PartNum, ProcedureCar, ProcedurePart, ProcedureTool
+
 
 def create_user(username, password, nickname, img):
     """Create and return a new user."""
@@ -131,3 +132,20 @@ def create_procedure_car(proc, car):
     db.session.commit()
 
     return proc_car
+
+
+def create_procedure_car(proc, car):
+    """Create and return a ProcedureCar object."""
+
+    proc_car = ProcedureCar(proc = proc, car = car)
+
+    db.session.add(proc_car)
+    db.session.commit()
+
+    return proc_car
+
+
+def get_procedures():
+    """Return all procedures."""
+
+    return Procedure.query.all()

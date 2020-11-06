@@ -1,6 +1,13 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+
+from model import connect_to_db
+import crud
+# from jinja2 import StrictUndefined
 
 app = Flask(__name__)
+
+# app.secret_key = "dev"
+# app.jinja_env.undefined = StrictUndefined
 
 @app.route('/')
 def show_landing():
@@ -15,7 +22,10 @@ def show_landing():
 def show_homepage():
     """Render the homepage."""
 
-    return render_template('homepage.html')
+    procedures = crud.get_procedures()
+
+    return render_template('homepage.html',
+                            procedures = procedures)
 
 
 @app.route('/procedure')
@@ -26,4 +36,5 @@ def show_procedure_page():
 
 
 if __name__ == '__main__':
+    connect_to_db(app)
     app.run(debug = True, host = '0.0.0.0')

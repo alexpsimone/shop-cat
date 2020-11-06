@@ -8,8 +8,11 @@
 
 
 {% block body %}
+    <div id= "app-procedures"></div>
+    <div>
+    {% for procedure in procedures %}
+        <a href = "/procedure/{{ procedure.proc_id }}">{{ procedure.title }}</a>
+    {% endfor %}
+    </div>
     <div id= "app-title"></div>
-    <div id= "app-tools"></div>
-    <div id = "app-parts"></div>
-    <div id = "app-steps"></div>
 {% endblock %}
