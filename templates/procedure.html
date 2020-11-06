@@ -9,4 +9,17 @@
 
 {% block body %}
     <div id="app"></div>
+    <div>
+        <h2>{{ procedure.title }}</h2><br />
+        <p>Description: {{ procedure.description }}</p><br />
+        <img src = "{{ procedure.img }}"/>
+        <p>Car Model Year: _____</p><br />
+        <p>Car Make: ______</p><br />
+        <p>Car Model : ______</p><br />
+        <p>Parts Required: </p><br />
+        <p>Tools Required: </p><br />
+
+        <p>This page was created by {{ procedure.user.nickname }}.</p>
+        <p>This page was labeled {{ procedure.label }}.</p>
+    </div>
 {% endblock %}

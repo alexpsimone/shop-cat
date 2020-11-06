@@ -2,7 +2,10 @@
 
 function Procedure() {
     return (
-        <p>OTHER TEST!</p>
+        <React.Fragment>
+            <h1>Here's your procedure info!</h1>
+            <br />
+        </React.Fragment>
     );
 }
 

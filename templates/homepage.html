@@ -12,7 +12,8 @@
     <div>
     {% for procedure in procedures %}
         <a href = "/procedure/{{ procedure.proc_id }}">{{ procedure.title }}</a>
-    {% endfor %}
+        <br />
+        {% endfor %}
     </div>
     <div id= "app-title"></div>
 {% endblock %}
