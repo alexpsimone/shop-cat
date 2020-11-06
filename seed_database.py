@@ -1,5 +1,5 @@
 import os
-from random import randint
+from random import randint, choice
 
 import crud
 import model
@@ -37,9 +37,26 @@ for part in range(50):
     part = crud.create_part(name, part_img)
     parts_bin.append(part)
 
+    manuf = choice(['ACDelco', 'Delphi', 'Bosch', 'Continental'])
+    part_num = '1234ABCD'
+    is_oem_part = True
+    part = part
+
+    part_num = crud.create_part_num(manuf, part_num, is_oem_part, part)
+    
+# Create a set of 10 test cars.
+garage = []
+
+for car in range(10):
+    
+    model = 'Chevrolet'
+    make = f'car_{car}'
+    model_year = randint(1956, 2020)
+
+    car = crud.create_car(model, make, model_year)
+    garage.append(car)
 
 # Create 5 dummy test users.
-
 for user in range(5):
     username = f'user{user}'
     password = f'password{user}'
@@ -64,6 +81,10 @@ for user in range(5):
         img = f'img{user.user_id}_{x}'
 
         procedure = crud.create_procedure(title, description, label, img, user, page)
+
+        # Randomly assign a car from the garage to each procedure.
+        car_num = randint(0, 9)
+        proc_car = crud.create_procedure_car(procedure, garage[car_num])
 
         # Randomly assign up to 3 tools from the existing set 
         # to each of the procedures.

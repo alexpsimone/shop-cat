@@ -103,6 +103,9 @@ class PartNum(db.Model):
     manuf = db.Column(db.String(25), default='unknown')
     part_num = db.Column(db.String(25), default='unknown')
     is_oem_part = db.Column(db.Boolean)
+    part_id = db.Column(db.Integer, db.ForeignKey('parts.part_id'))
+
+    part = db.relationship('Part', backref = 'part_nums')
 
     def __repr__(self):
         return f'<PartNum part_num_id={self.part_num_id} part_num={self.part_num}>'
@@ -118,9 +121,9 @@ class Part(db.Model):
                         autoincrement = True)
     name = db.Column(db.String(25), nullable = False)
     part_img = db.Column(db.String(50))
-    part_num_id = db.Column(db.Integer, db.ForeignKey('part_nums.part_num_id'))
+    # part_num_id = db.Column(db.Integer, db.ForeignKey('part_nums.part_num_id'))
 
-    part_number = db.relationship('PartNum', backref = 'parts')
+    # part_number = db.relationship('PartNum', backref = 'parts')
 
     def __repr__(self):
         return f'<Part part_id={self.part_id} name={self.name}>'

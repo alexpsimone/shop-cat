@@ -17,7 +17,7 @@ def create_user(username, password, nickname, img):
 
 
 def create_page(size, page_url, page_type):
-    """Create and return a new user."""
+    """Create and return a page."""
 
     page = Page(size = size,
                 page_url = page_url,
@@ -31,7 +31,7 @@ def create_page(size, page_url, page_type):
 
 
 def create_procedure(title, description, label, img, user, page):
-    """Create and return a new user."""
+    """Create and return a procedure."""
 
     procedure = Procedure(title = title,
                 description = description,
@@ -47,6 +47,20 @@ def create_procedure(title, description, label, img, user, page):
     return procedure
 
 
+def create_car(model, make, model_year):
+    """Create and return a car."""
+
+    car = Car(model = model, 
+                make = make, 
+                model_year = model_year
+                )
+
+    db.session.add(car)
+    db.session.commit()
+
+    return car
+
+
 def create_tool(name, description, tool_img):
     """Create and return a tool."""
 
@@ -60,12 +74,11 @@ def create_tool(name, description, tool_img):
 
     return tool
 
+
 def create_procedure_tool(proc, tool):
     """Create and return a ProcedureTool object."""
 
-    proc_tool = ProcedureTool(proc = proc,
-                                tool = tool
-                                )
+    proc_tool = ProcedureTool(proc = proc, tool = tool)
 
     db.session.add(proc_tool)
     db.session.commit()
@@ -74,11 +87,9 @@ def create_procedure_tool(proc, tool):
 
 
 def create_part(name, part_img):
-    """Create and return a tool."""
+    """Create and return a part."""
 
-    part = Part(name = name,
-                part_img = part_img
-                )
+    part = Part(name = name, part_img = part_img)
 
     db.session.add(part)
     db.session.commit()
@@ -86,14 +97,37 @@ def create_part(name, part_img):
     return part
 
 
+def create_part_num(manuf, part_num, is_oem_part, part):
+    """Create and return a part number."""
+
+    part_num = PartNum(manuf = manuf, 
+                        part_num = part_num,
+                        is_oem_part = is_oem_part,
+                        part = part)
+
+    db.session.add(part_num)
+    db.session.commit()
+
+    return part_num
+
+
 def create_procedure_part(proc, part):
     """Create and return a ProcedureTool object."""
 
-    proc_part = ProcedurePart(proc = proc,
-                                part = part
-                                )
+    proc_part = ProcedurePart(proc = proc, part = part)
 
     db.session.add(proc_part)
     db.session.commit()
 
     return proc_part
+
+
+def create_procedure_car(proc, car):
+    """Create and return a ProcedureCar object."""
+
+    proc_car = ProcedureCar(proc = proc, car = car)
+
+    db.session.add(proc_car)
+    db.session.commit()
+
+    return proc_car
