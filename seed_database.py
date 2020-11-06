@@ -49,8 +49,8 @@ garage = []
 
 for car in range(10):
     
-    model = 'Chevrolet'
-    make = f'car_{car}'
+    model = f'car_{car}'
+    make = 'Chevrolet'
     model_year = randint(1956, 2020)
 
     car = crud.create_car(model, make, model_year)
