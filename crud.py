@@ -155,3 +155,9 @@ def get_procedure_by_id(proc_id):
     """Return a procedure with a given proc_id."""
 
     return Procedure.query.get(proc_id)
+
+
+def get_proc_car_by_proc_id(proc_id):
+    """Return all proc_car objects associated with a given proc_id."""
+
+    return ProcedureCar.query.get(proc_id)

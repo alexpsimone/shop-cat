@@ -40,9 +40,11 @@ def show_procedure_page(proc_id):
     """Render a procedure page."""
 
     procedure = crud.get_procedure_by_id(proc_id)
+    proc_car = crud.get_proc_car_by_proc_id(proc_id)
 
     return render_template('procedure.html',
-                            procedure = procedure)
+                            procedure = procedure,
+                            proc_car = proc_car)
 
 
 if __name__ == '__main__':

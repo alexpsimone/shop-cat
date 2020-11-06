@@ -13,11 +13,13 @@
         <h2>{{ procedure.title }}</h2><br />
         <p>Description: {{ procedure.description }}</p><br />
         <img src = "{{ procedure.img }}"/>
-        <p>Car Model Year: _____</p><br />
-        <p>Car Make: ______</p><br />
-        <p>Car Model : ______</p><br />
+        <p>Car Model Year: {{ proc_car.car.model_year }}</p><br />
+        <p>Car Make: {{ proc_car.car.make }}</p><br />
+        <p>Car Model : {{ proc_car.car.model }}</p><br />
         <p>Parts Required: </p><br />
         <p>Tools Required: </p><br />
+
+        <p>Proc_car: {{ proc_car }}</p><br />
 
         <p>This page was created by {{ procedure.user.nickname }}.</p>
         <p>This page was labeled {{ procedure.label }}.</p>
