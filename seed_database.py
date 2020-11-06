@@ -54,10 +54,13 @@ for user in range(5):
 
         procedure = crud.create_procedure(title, description, label, img, user, page)
 
-        # Randomly assign 3 tools from the existing set 
+        # Randomly assign up to 3 tools from the existing set 
         # to each of the procedures.
+        nums_used = set()
         for x in range(3):
             num = randint(0,9)
+            nums_used.add(num)
+        for num in nums_used:
             tool = toolbox[num]
             proc_tool = crud.create_procedure_tool(procedure, tool)
 
