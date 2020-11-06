@@ -16,10 +16,20 @@
         <p>Car Model Year: {{ proc_car.car.model_year }}</p><br />
         <p>Car Make: {{ proc_car.car.make }}</p><br />
         <p>Car Model : {{ proc_car.car.model }}</p><br />
-        <p>Parts Required: </p><br />
-        <p>Tools Required: </p><br />
-
-        <p>Proc_car: {{ proc_car }}</p><br />
+        <p>Parts Required: </p>
+        <ul>
+            {% for proc_part in proc_part_obj %}
+                <li>{{ proc_part.part.name }}</li>
+            {% endfor %}
+        </ul>
+        <br />
+        <p>Tools Required: </p>
+        <ul>
+            {% for proc_tool in proc_tool_obj %}
+                <li>{{ proc_tool.tool.name }}</li>
+            {% endfor %}
+        </ul>
+        <br />
 
         <p>This page was created by {{ procedure.user.nickname }}.</p>
         <p>This page was labeled {{ procedure.label }}.</p>
