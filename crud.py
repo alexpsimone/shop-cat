@@ -45,3 +45,17 @@ def create_procedure(title, description, label, img, user, page):
     db.session.commit()
 
     return procedure
+
+
+def create_tool(name, description, tool_img):
+    """Create and return a tool."""
+
+    tool = Tool(name = name,
+                description = description,
+                tool_img = tool_img
+                )
+
+    db.session.add(tool)
+    db.session.commit()
+
+    return tool

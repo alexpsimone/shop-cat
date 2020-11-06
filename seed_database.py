@@ -1,4 +1,5 @@
 import os
+from random import randint
 
 import crud
 import model
@@ -13,7 +14,7 @@ os.system('createdb shopcat')
 model.connect_to_db(server.app)
 model.db.create_all()
 
-# Create 10 dummy test users.
+# Create 5 dummy test users.
 
 for user in range(5):
     username = f'user{user}'
@@ -25,14 +26,14 @@ for user in range(5):
     
     for x in range(3):
 
-        # Create 5 pages for each new user.
+        # Create 3 pages for each new user.
         size = 99.999
         page_url = f'url_{user.user_id}_{x}'
         page_type = "procedure"
 
         page = crud.create_page(size, page_url, page_type)
 
-        # Create 5 procedures for each new user.
+        # Create 3 procedures for each new user.
         title = f'title{user.user_id}_{x}'
         description = f'description{user.user_id}_{x}'
         label = f'label{user.user_id}_{x}'
@@ -40,3 +41,13 @@ for user in range(5):
 
         procedure = crud.create_procedure(title, description, label, img, user, page)
 
+        for y in range(3):
+            
+            num = randint(1, 9)
+            # Create 3 tools for each procedure.
+            name = f'tool_{num}'
+            description = 'placeholder'
+            tool_img = f'path_{num}'
+
+            tool = crud.create_tool(name, description, tool_img)
+            # Create 3 parts for each procedure.
