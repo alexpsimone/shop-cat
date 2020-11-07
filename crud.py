@@ -145,6 +145,12 @@ def create_procedure_car(proc, car):
     return proc_car
 
 
+def get_cars():
+    """Return all cars."""
+
+    return Car.query.all()
+
+
 def get_procedures():
     """Return all procedures."""
 

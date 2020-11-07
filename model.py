@@ -121,9 +121,6 @@ class Part(db.Model):
                         autoincrement = True)
     name = db.Column(db.String(25), nullable = False)
     part_img = db.Column(db.String(50))
-    # part_num_id = db.Column(db.Integer, db.ForeignKey('part_nums.part_num_id'))
-
-    # part_number = db.relationship('PartNum', backref = 'parts')
 
     def __repr__(self):
         return f'<Part part_id={self.part_id} name={self.name}>'

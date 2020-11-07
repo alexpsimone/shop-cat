@@ -17,22 +17,29 @@
     </div>
     <div id= "app-title"></div>
 
-    <form action="/procedure">
+    <form action="/build-procedure" method="POST">
 
-        <br /><label>Car Model Year:</label>
-        <input type="number" min="1900" max="2020" name="car_model_year" required />
+        <br /><label>Choose a Car: </label>
+        <select name="car_req">
+            <option value="">--Please select a car--</option>
+            {% for car in cars %}
+            <option value="{{ car.model_year }}-{{ car.make }}-{{ car.model }}">{{ car.model_year }} {{ car.make }} {{ car.model }}</option>
+            {% endfor %}
+            <option value="other">Other (please specify)...</option>
+        </select>
+        <br /><p>If other, please specify: </p>
+        <label>Car Model Year:</label>
+        <input type="number" min="1900" max="2020" name="car_model_year" />
         <br /><label>Car Make: </label>
-        <input type="text" name="car_make" required />
+        <input type="text" name="car_make" />
         <br /><label>Car Model: </label>
-        <input type="text" name="car_model" required />
+        <input type="text" name="car_model" />
         <br />
 
         <br /><label>Procedure Name: </label>
         <input type="text" name="proc_name" required />
-        <br /><label>Procedure Description: </label>
-        <input type="text" name="proc_description" required />
         <br /><label>Procedure Label (optional): </label>
-        <input type="text" name="proc_label" />
+        <input type="text" name="proc_label" required />
         <br /><label>Upload an Image (Optional)</label>
         <input type="file" name="proc_img" />
         <br />
@@ -141,7 +148,7 @@
         <br />
 
         <br /><label>Procedure Text: </label>
-        <textarea name="proc_name" required></textarea>
+        <textarea name="proc_text" required></textarea>
 
         <br /><input type="submit"></input>
     </form>
