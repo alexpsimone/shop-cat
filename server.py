@@ -25,9 +25,6 @@ def show_homepage():
     """Render the homepage."""
 
     procedures = crud.get_procedures()
-    tools = crud.get_tools()
-    parts = crud.get_parts()
-    cars = crud.get_cars()
 
     return render_template('homepage.html',
                             procedures = procedures,
@@ -53,7 +50,7 @@ def show_procedure_page(proc_id):
 
 
 @app.route('/year-make-search')
-def show_search():
+def show_year_make_search():
     """Render the vehicle year/make search menu."""
 
     all_makes = []
@@ -80,7 +77,7 @@ def year_make_search():
 
 
 @app.route('/model-search')
-def model_search():
+def show_model_search():
     """ ."""
 
     model_year = session['model_year']
@@ -97,6 +94,26 @@ def model_search():
 
     return render_template('model-search.html', sorted_models = sorted_models)
 
+
+@app.route('/get-model', methods = ["POST"])
+def model_search():
+    
+    session['model'] = request.form.get('model')
+
+    flash(f"This procedure is written for a {session['model_year']} {session['make']} {session['model']}.")
+
+    return redirect('/write-procedure')
+
+
+@app.route('/write-procedure')
+def build_procedure():
+
+    tools = crud.get_tools()
+    parts = crud.get_parts()
+
+    return render_template('write-procedure.html',
+                            tools = tools,
+                            parts = parts)
 
 # @app.route('/build-procedure.json', methods = ["POST"])
 # def build_procedure():

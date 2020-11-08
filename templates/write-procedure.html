@@ -7,24 +7,7 @@
 
 {% block body %}
 
-<!-- <form action="/build-procedure" method="POST">
-
-    <br /><label>Choose a Car: </label>
-    <select name="car_req">
-        <option value="">--Please select a car--</option>
-        {% for car in cars %}
-        <option value="{{ car.model_year }}-{{ car.make }}-{{ car.model }}">{{ car.model_year }} {{ car.make }} {{ car.model }}</option>
-        {% endfor %}
-        <option value="other">Other (please specify)...</option>
-    </select>
-    <br /><p>If other, please specify: </p>
-    <label>Car Model Year:</label>
-    <input type="number" min="1900" max="2020" name="car_model_year" />
-    <br /><label>Car Make: </label>
-    <input type="text" name="car_make" />
-    <br /><label>Car Model: </label>
-    <input type="text" name="car_model" />
-    <br />
+<form action="/procedure">
 
     <br /><label>Procedure Name: </label>
     <input type="text" name="proc_name" required />
@@ -142,6 +125,6 @@
 
     <br /><input type="submit"></input>
 </form>
-<br /> -->
+<br />
 
 {% endblock %}
