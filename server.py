@@ -26,11 +26,7 @@ def show_homepage():
 
     procedures = crud.get_procedures()
 
-    return render_template('homepage.html',
-                            procedures = procedures,
-                            tools = tools,
-                            parts = parts,
-                            cars = cars)
+    return render_template('homepage.html', procedures = procedures)
 
 
 @app.route('/procedure/<proc_id>')
@@ -106,7 +102,7 @@ def model_search():
 
 
 @app.route('/write-procedure')
-def build_procedure():
+def write_procedure():
 
     tools = crud.get_tools()
     parts = crud.get_parts()
@@ -115,33 +111,33 @@ def build_procedure():
                             tools = tools,
                             parts = parts)
 
-# @app.route('/build-procedure.json', methods = ["POST"])
-# def build_procedure():
-#     """Build a procedure with the info given in the form."""
+@app.route('/build-procedure', methods=["POST"])
+def build_procedure():
+    """Build a procedure with the info given in the form."""
 
-#     # First, create a new page.
-#     new_page = crud.create_page(9.99,'newpath','procedure')
+    # First, create a new page.
+    new_page = crud.create_page(9.99,'newpath22','procedure')
 
-#     # Next, take the form data to create a procedure.
-#     proc_name = request.form.get('proc_name')
-#     proc_description = request.form.get('proc_text')
-#     proc_label = request.form.get('proc_label')
-#     proc_img = request.form.get('proc_img')
+    # Next, take the form data to create a procedure.
+    proc_title = request.form.get('proc_title')
+    proc_description = request.form.get('proc_text')
+    proc_label = request.form.get('proc_label')
+    proc_img = request.form.get('proc_img')
 
-#     #######################################################
-#     ### I need to attach a user to this! Need a session!###
-#     #######################################################
+    #######################################################
+    ### I need to attach a user to this! Need a session!###
+    #######################################################
     
-#     # DELETE LATER.
-#     new_user = crud.create_user('newusername', 'newpass', 'newname', 'nada')
+    # DELETE LATER.
+    new_user = crud.create_user('newusername22', 'newpass', 'newname', 'nada')
     
-#     new_proc = crud.create_procedure(proc_name,
-#                                     proc_description,
-#                                     proc_label,
-#                                     proc_img,
-#                                     new_user,
-#                                     new_page
-#                                     )
+    new_proc = crud.create_procedure(proc_title,
+                                    proc_description,
+                                    proc_label,
+                                    proc_img,
+                                    new_user,
+                                    new_page
+                                    )
 
 #     # Then, check if the user selected an existing car.
 #     # If they did, then keep it handy, and don't create a new Car object.
@@ -272,7 +268,11 @@ def build_procedure():
 #     crud.create_procedure_part(new_proc, part2)
 #     crud.create_procedure_part(new_proc, part3)
 
-#     return redirect('/home')
+    return render_template('/procedure.html',
+                            new_user = new_user,
+                            new_page = new_page,
+                            new_proc = new_proc
+                            )
 
 
 

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ procedure.title }}{% endblock %}
+{% block title %}{{ new_proc.title }}{% endblock %}
 
 {% block js %}
     <script src="/static/js/procedure.jsx" type="text/jsx"></script>
@@ -8,37 +8,9 @@
 
 
 {% block body %}
-    <div id="app"></div>
-    <div>
-        <h2>{{ procedure.title }}</h2><br />
-        <p>Description: {{ procedure.description }}</p><br />
-        <img src = "{{ procedure.img }}"/>
-        <p>This procedure applies to the following cars:</p>
-        <ul>
-            {% for proc_car in proc_car_obj %}
-                <li>{{ proc_car.car.model_year }}
-                    {{ proc_car.car.make }}
-                    {{ proc_car.car.model }}
-                </li>
-            {% endfor %}
-        </ul>
-        <p>Parts Required: </p>
-        <ul>
-            {% for proc_part in proc_part_obj %}
-                <li>{{ proc_part.part.name }}</li>
-            {% endfor %}
-        </ul>
-        <br />
-        <p>Tools Required: </p>
-        <ul>
-            {% for proc_tool in proc_tool_obj %}
-                <li>{{ proc_tool.tool.name }}</li>
-            {% endfor %}
-        </ul>
-        <br />
 
-        <p>This page was created by {{ procedure.user.nickname }}.</p>
-        <p>This page was labeled {{ procedure.label }}.</p>
-        <a href = "/home">Return Home</a>
-    </div>
+    <p>Page: {{ new_page }}</p>
+    <p>User: {{new_user}} </p>
+    <p>Procedure: {{ new_proc }}</p>
+    
 {% endblock %}

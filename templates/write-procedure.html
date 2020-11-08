@@ -7,17 +7,17 @@
 
 {% block body %}
 
-<form action="/procedure">
+<form action="/build-procedure", method="POST">
 
     <br /><label>Procedure Name: </label>
-    <input type="text" name="proc_name" required />
+    <input type="text" name="proc_title" required />
     <br /><label>Procedure Label (optional): </label>
     <input type="text" name="proc_label" required />
     <br /><label>Upload an Image (Optional)</label>
     <input type="file" name="proc_img" />
     <br />
 
-    <br /><label>First Tool Required: </label>
+    <!-- <br /><label>First Tool Required: </label>
     <select name="first_tool_req">
         <option value="">--Please select a tool--</option>
         {% for tool in tools %}
@@ -118,7 +118,7 @@
     <label for="is_oem_3">Aftermarket</label>
     <input type="radio" name="oem3" value="unsure_if_oem_3" />
     <label for="unsure_if_oem_3">Not Sure</label>
-    <br />
+    <br /> -->
 
     <br /><label>Procedure Text: </label>
     <textarea name="proc_text" required></textarea>
