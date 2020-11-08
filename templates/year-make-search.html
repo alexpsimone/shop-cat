@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Search Menu{% endblock %}
+
+{% block js %}{% endblock %}
+
+{% block body %}
+
+<form action="/get-year-make" method="POST">
+
+    <label>Car Model Year:</label>
+        <input name="model_year" type="number" min="1900" max="2020" />
+    <br />
+    <label>Car Make:</label>
+    <select name="make">
+        <option value="">--Please select a Make--</option>
+        {% for make in sorted_makes %}
+        <option value="{{ make }}">{{ make }}</option>
+        {% endfor %}
+        <option value="other">Other (please specify)...</option>
+    </select>
+    <br />
+    <input type="submit">
+</form>
+
+{% endblock %}

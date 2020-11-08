@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block title %}Write a Procedure{% endblock %}
+
+{% block js %}{% endblock %}
+
+
+{% block body %}
+
+<!-- <form action="/build-procedure" method="POST">
+
+    <br /><label>Choose a Car: </label>
+    <select name="car_req">
+        <option value="">--Please select a car--</option>
+        {% for car in cars %}
+        <option value="{{ car.model_year }}-{{ car.make }}-{{ car.model }}">{{ car.model_year }} {{ car.make }} {{ car.model }}</option>
+        {% endfor %}
+        <option value="other">Other (please specify)...</option>
+    </select>
+    <br /><p>If other, please specify: </p>
+    <label>Car Model Year:</label>
+    <input type="number" min="1900" max="2020" name="car_model_year" />
+    <br /><label>Car Make: </label>
+    <input type="text" name="car_make" />
+    <br /><label>Car Model: </label>
+    <input type="text" name="car_model" />
+    <br />
+
+    <br /><label>Procedure Name: </label>
+    <input type="text" name="proc_name" required />
+    <br /><label>Procedure Label (optional): </label>
+    <input type="text" name="proc_label" required />
+    <br /><label>Upload an Image (Optional)</label>
+    <input type="file" name="proc_img" />
+    <br />
+
+    <br /><label>First Tool Required: </label>
+    <select name="first_tool_req">
+        <option value="">--Please select a tool--</option>
+        {% for tool in tools %}
+        <option value="{{ tool.name }}">{{ tool.name }}</option>
+        {% endfor %}
+        <option value="other">Other (please specify)...</option>
+    </select>
+    <br /><label>If other, please specify: </label>
+    <input type="text" name="first_tool_other" />
+
+    <br /><label>Second Tool Required: </label>
+    <select name="second_tool_req">
+        <option value="">--Please select a tool--</option>
+        {% for tool in tools %}
+        <option value="{{ tool.name }}">{{ tool.name }}</option>
+        {% endfor %}
+        <option value="other">Other (please specify)...</option>
+    </select>
+    <br /><label>If other, please specify: </label>
+    <input type="text" name="second_tool_other" />
+
+    <br /><label>Third Tool Required: </label>
+    <select name="third_tool_req">
+        <option value="">--Please select a tool--</option>
+        {% for tool in tools %}
+        <option value="{{ tool.name }}">{{ tool.name }}</option>
+        {% endfor %}
+        <option value="other">Other (please specify)...</option>
+    </select>
+    <br /><label>If other, please specify: </label>
+    <input type="text" name="third_tool_other" />
+    <br />
+
+    <br /><label>First Part Required: </label>
+    <select name="first_part_req">
+        <option value="">--Please select a part--</option>
+        {% for part in parts %}
+        <option value="{{ part.name }}">{{ part.name }}</option>
+        {% endfor %}
+        <option value="other">Other (please specify)...</option>
+    </select>
+    <br /><label>If other, please specify name: </label>
+    <input type="text" name="first_part_other_name" />
+    <br /><label>If other, please specify P/N: </label>
+    <input type="text" name="first_part_other_num" />
+    <br /><label>If other, please specify manuf: </label>
+    <input type="text" name="first_part_other_manuf" />
+    <br /><label>If other, please specify if OEM: </label>
+    <input type="radio" name="oem1" value="is_oem_1" />
+    <label for="is_oem_1">OEM</label>
+    <input type="radio" name="oem1" value="is_not_oem_1" />
+    <label for="is_oem_1">Aftermarket</label>
+    <input type="radio" name="oem1" value="unsure_if_oem_1" />
+    <label for="unsure_if_oem_1">Not Sure</label>
+    <br />
+
+    <br /><label>Second Part Required: </label>
+    <select name="second_part_req">
+        <option value="">--Please select a part--</option>
+        {% for part in parts %}
+        <option value="{{ part.name }}">{{ part.name }}</option>
+        {% endfor %}
+        <option value="other">Other (please specify)...</option>
+    </select>
+    <br /><label>If other, please specify name: </label>
+    <input type="text" name="second_part_other_name" />
+    <br /><label>If other, please specify P/N: </label>
+    <input type="text" name="second_part_other_num" />
+    <br /><label>If other, please specify manuf: </label>
+    <input type="text" name="second_part_other_manuf" />
+    <br /><label>If other, please specify if OEM: </label>
+    <input type="radio" name="oem2" value="is_oem_2" />
+    <label for="is_oem_2">OEM</label>
+    <input type="radio" name="oem2" value="is_not_oem_2" />
+    <label for="is_oem_2">Aftermarket</label>
+    <input type="radio" name="oem2" value="unsure_if_oem_2" />
+    <label for="unsure_if_oem_2">Not Sure</label>
+    <br />
+
+    <br /><label>Third Part Required: </label>
+    <select name="third_part_req">
+        <option value="">--Please select a part--</option>
+        {% for part in parts %}
+        <option value="{{ part.name }}">{{ part.name }}</option>
+        {% endfor %}
+        <option value="other">Other (please specify)...</option>
+    </select>
+    <br /><label>If other, please specify name: </label>
+    <input type="text" name="third_part_other_name" />
+    <br /><label>If other, please specify P/N: </label>
+    <input type="text" name="third_part_other_num" />
+    <br /><label>If other, please specify manuf: </label>
+    <input type="text" name="third_part_other_manuf" />
+    <br /><label>If other, please specify if OEM: </label>
+    <input type="radio" name="oem3" value="is_oem_3" />
+    <label for="is_oem_3">OEM</label>
+    <input type="radio" name="oem3" value="is_not_oem_3" />
+    <label for="is_oem_3">Aftermarket</label>
+    <input type="radio" name="oem3" value="unsure_if_oem_3" />
+    <label for="unsure_if_oem_3">Not Sure</label>
+    <br />
+
+    <br /><label>Procedure Text: </label>
+    <textarea name="proc_text" required></textarea>
+
+    <br /><input type="submit"></input>
+</form>
+<br /> -->
+
+{% endblock %}
