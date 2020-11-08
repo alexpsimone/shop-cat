@@ -9,6 +9,11 @@
         {% block js %}{% endblock %}
     </head>
     <body>
+
+        {% for message in get_flashed_messages() %}
+            <h3>{{ message }}</h3>
+        {% endfor %}
+
         {% block body %}{% endblock %}
     </body>
 </html>

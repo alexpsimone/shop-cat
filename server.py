@@ -1,15 +1,15 @@
 from flask import Flask, render_template, redirect
-from flask import request, flash
+from flask import request, flash, session
 
 from model import connect_to_db
 import crud
 import requests, json
-# from jinja2 import StrictUndefined
+from jinja2 import StrictUndefined
 
 app = Flask(__name__)
 
 app.secret_key = "dev"
-# app.jinja_env.undefined = StrictUndefined
+app.jinja_env.undefined = StrictUndefined
 
 @app.route('/')
 def show_landing():
@@ -36,6 +36,22 @@ def show_homepage():
                             cars = cars)
 
 
+@app.route('/procedure/<proc_id>')
+def show_procedure_page(proc_id):
+    """Render a procedure page."""
+
+    procedure = crud.get_procedure_by_id(proc_id)
+    proc_car_obj = crud.get_proc_car_by_proc_id(proc_id)
+    proc_part_obj = crud.get_parts_by_proc_id(proc_id)
+    proc_tool_obj = crud.get_tools_by_proc_id(proc_id)
+
+    return render_template('procedure.html',
+                            procedure = procedure,
+                            proc_car_obj = proc_car_obj,
+                            proc_part_obj = proc_part_obj,
+                            proc_tool_obj = proc_tool_obj)
+
+
 @app.route('/year-make-search')
 def show_search():
     """Render the vehicle year/make search menu."""
@@ -52,11 +68,13 @@ def show_search():
     return render_template('year-make-search.html', sorted_makes = sorted_makes)
 
 
-@app.route('/makesearch', methods = ["POST"])
-def make_search():
+@app.route('/get-year-make', methods = ["POST"])
+def year_make_search():
     
-    model_year = request.form.get('model_year')
-    make = request.form.get('make')
+    session['model_year'] = request.form.get('model_year')
+    session['make'] = request.form.get('make')
+
+    flash('TEST')
 
     return redirect('/model-search')
 
@@ -65,10 +83,9 @@ def make_search():
 def model_search():
     """ ."""
 
-    return render_template('model-search.html')
-
-
-
+    return render_template('model-search.html',
+                            model_year = session['model_year'],
+                            make = session['make'])
 
 
 # @app.route('/build-procedure.json', methods = ["POST"])
@@ -231,20 +248,7 @@ def model_search():
 #     return redirect('/home')
 
 
-@app.route('/procedure/<proc_id>')
-def show_procedure_page(proc_id):
-    """Render a procedure page."""
 
-    procedure = crud.get_procedure_by_id(proc_id)
-    proc_car_obj = crud.get_proc_car_by_proc_id(proc_id)
-    proc_part_obj = crud.get_parts_by_proc_id(proc_id)
-    proc_tool_obj = crud.get_tools_by_proc_id(proc_id)
-
-    return render_template('procedure.html',
-                            procedure = procedure,
-                            proc_car_obj = proc_car_obj,
-                            proc_part_obj = proc_part_obj,
-                            proc_tool_obj = proc_tool_obj)
 
 
 if __name__ == '__main__':
