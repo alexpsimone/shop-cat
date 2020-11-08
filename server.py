@@ -74,7 +74,7 @@ def year_make_search():
     session['model_year'] = request.form.get('model_year')
     session['make'] = request.form.get('make')
 
-    flash('TEST')
+    flash(f"You selected a {session['model_year']} {session['make']}.")
 
     return redirect('/model-search')
 
@@ -83,9 +83,19 @@ def year_make_search():
 def model_search():
     """ ."""
 
-    return render_template('model-search.html',
-                            model_year = session['model_year'],
-                            make = session['make'])
+    model_year = session['model_year']
+    make = session['make']
+    all_models = []
+
+    url = f'https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/{make}/modelyear/{model_year}?format=json'
+    res = requests.get(url)
+    data = res.json()
+
+    for item in data['Results']:
+        all_models.append(item['Model_Name'])
+    sorted_models = sorted(all_models)
+
+    return render_template('model-search.html', sorted_models = sorted_models)
 
 
 # @app.route('/build-procedure.json', methods = ["POST"])
