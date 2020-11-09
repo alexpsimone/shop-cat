@@ -1,4 +1,4 @@
-from model import db, connect_to_db, User, Procedure, Page, Car, Part, Tool
+from model import db, connect_to_db, User, Procedure, Car, Part, Tool
 from model import PartNum, ProcedureCar, ProcedurePart, ProcedureTool
 
 
@@ -17,21 +17,21 @@ def create_user(username, password, nickname, img):
     return user
 
 
-def create_page(size, page_url, page_type):
-    """Create and return a page."""
+# def create_page(size, page_url, page_type):
+#     """Create and return a page."""
 
-    page = Page(size = size,
-                page_url = page_url,
-                page_type = page_type
-                )
+#     page = Page(size = size,
+#                 page_url = page_url,
+#                 page_type = page_type
+#                 )
 
-    db.session.add(page)
-    db.session.commit()
+#     db.session.add(page)
+#     db.session.commit()
 
-    return page
+#     return page
 
 
-def create_procedure(title, description, label, img, user, page):
+def create_procedure(title, description, label, img, user):
     """Create and return a procedure."""
 
     procedure = Procedure(title = title,
@@ -39,7 +39,6 @@ def create_procedure(title, description, label, img, user, page):
                 label = label,
                 img = img,
                 user = user,
-                page = page
                 )
 
     db.session.add(procedure)
@@ -191,3 +190,15 @@ def get_tools_by_proc_id(proc_id):
     """Return all tools associated with a given proc_id."""
     
     return ProcedureTool.query.filter_by(proc_id = proc_id).all()
+
+
+def get_car_by_details(model_year, make, model):
+    """Return a car with the specified info, if it exists."""
+
+    return Car.query.filter_by(model_year = model_year, make = make, model = model).first()
+
+
+def get_user_by_id(user_id):
+    """Get a user with a given ID."""
+
+    return User.query.filter_by(user_id = user_id).first()

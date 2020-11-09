@@ -115,10 +115,7 @@ def write_procedure():
 def build_procedure():
     """Build a procedure with the info given in the form."""
 
-    # First, create a new page.
-    new_page = crud.create_page(9.99,'newpath22','procedure')
-
-    # Next, take the form data to create a procedure.
+    # Take the form data to create a procedure.
     proc_title = request.form.get('proc_title')
     proc_description = request.form.get('proc_text')
     proc_label = request.form.get('proc_label')
@@ -129,44 +126,30 @@ def build_procedure():
     #######################################################
     
     # DELETE LATER.
-    new_user = crud.create_user('newusername22', 'newpass', 'newname', 'nada')
+    user = crud.get_user_by_id(4)
     
     new_proc = crud.create_procedure(proc_title,
                                     proc_description,
                                     proc_label,
                                     proc_img,
-                                    new_user,
-                                    new_page
+                                    user
                                     )
 
-#     # Then, check if the user selected an existing car.
-#     # If they did, then keep it handy, and don't create a new Car object.
-#     # If they didn't, then double-check that the car is actually new.
-#     # If it isn't, then select the corresponding existing car.
-#     # Otherwise. create a new Car object with the new info.
-#     car_req = request.form.get('car_req')
-    
-#     if car_req != 'other':
-#         car_info = car_req.split('-')
-#         car_model_year = int(car_info[0])
-#         car_make = car_info[1]
-#         car_model = car_info[2]
-#         car = Car.query.filter_by(model_year = car_model_year) \
-#                 .filter_by(make = car_make).filter_by(model = car_model).one()
-#     else:
-#         car_model_year = request.form.get('car_model_year')
-#         car_make = request.form.get('car_make')
-#         car_model = request.form.get('car_model')
+    # Then, check if the user selected an existing car.
+    # If they did, then keep it handy, and don't create a new Car object.
+    # If they didn't, then use the session info to create one.
 
-#         if Car.query.filter_by(model_year = car_model_year) \
-#                 .filter_by(make = car_make).filter_by(model = car_model).one() \
-#                 != None:
-#             car = Car.query.filter_by(model_year = car_model_year) \
-#                 .filter_by(make = car_make).filter_by(model = car_model).one()
-#         else:
-#             car = crud.create_car(car_model, car_make, car_model_year)
+    model_year = session['model_year']
+    make = session['make']
+    model = session['model']
+
+    if crud.get_car_by_details(model_year, make, model):
+        car = crud.get_car_by_details(model_year, make, model)
+    else:
+        car = crud.create_car(model, make, model_year)
         
-#         crud.create_procedure_car(new_proc, car)
+    
+    proc_car = crud.create_procedure_car(new_proc, car)
 
 #     # Now, check if the user selected an existing tool.
 #     # If they did, then keep it handy, and don't create a new Tool object.
@@ -269,9 +252,10 @@ def build_procedure():
 #     crud.create_procedure_part(new_proc, part3)
 
     return render_template('/procedure.html',
-                            new_user = new_user,
-                            new_page = new_page,
-                            new_proc = new_proc
+                            user = user,
+                            new_proc = new_proc,
+                            car = car,
+                            proc_car = proc_car
                             )
 
 

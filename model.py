@@ -34,30 +34,30 @@ class Procedure(db.Model):
     description = db.Column(db.Text, default = '')
     label = db.Column(db.String(50), default = '')
     img = db.Column(db.String, default = '')
-    page_id = db.Column(db.Integer, db.ForeignKey('pages.page_id'))
+    # page_id = db.Column(db.Integer, db.ForeignKey('pages.page_id'))
     created_by_user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
-    page = db.relationship('Page', backref = 'procedures')
+    # page = db.relationship('Page', backref = 'procedures')
     user = db.relationship('User', backref = 'procedures')
 
     def __repr__(self):
         return f'<Procedure proc_id={self.proc_id} title={self.title}>'
 
 
-class Page(db.Model):
-    """A page."""
+# class Page(db.Model):
+#     """A page."""
 
-    __tablename__ = 'pages'
+#     __tablename__ = 'pages'
 
-    page_id = db.Column(db.Integer,
-                        primary_key = True,
-                        autoincrement = True)
-    size = db.Column(db.Float, default=0)
-    page_url = db.Column(db.String(50), unique = True)
-    page_type = db.Column(db.String(25))
+#     page_id = db.Column(db.Integer,
+#                         primary_key = True,
+#                         autoincrement = True)
+#     size = db.Column(db.Float, default=0)
+#     page_url = db.Column(db.String(50), unique = True)
+#     page_type = db.Column(db.String(25))
 
-    def __repr__(self):
-        return f'<Page page_id={self.page_id} page_url={self.page_url}>'
+#     def __repr__(self):
+#         return f'<Page page_id={self.page_id} page_url={self.page_url}>'
 
 
 class Car(db.Model):
