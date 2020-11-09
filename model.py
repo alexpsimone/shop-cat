@@ -68,8 +68,8 @@ class Car(db.Model):
     car_id = db.Column(db.Integer,
                         primary_key = True,
                         autoincrement = True)
-    model = db.Column(db.String(25), nullable = False)
-    make = db.Column(db.String(25), default = 'unknown')
+    model = db.Column(db.String(125), nullable = False)
+    make = db.Column(db.String(125), default = 'unknown')
     model_year = db.Column(db.Integer, default = 9999)
 
     def __repr__(self):

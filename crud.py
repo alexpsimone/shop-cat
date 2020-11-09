@@ -61,7 +61,7 @@ def create_car(model, make, model_year):
     return car
 
 
-def create_tool(name, description, tool_img):
+def create_tool(name, description='empty', tool_img='empty'):
     """Create and return a tool."""
 
     tool = Tool(name = name,
@@ -202,3 +202,15 @@ def get_user_by_id(user_id):
     """Get a user with a given ID."""
 
     return User.query.filter_by(user_id = user_id).first()
+
+
+def check_toolbox(tool_name):
+    """Check if a tool is in the existing toolbox."""
+
+    return Tool.query.filter_by(name = tool_name).first()
+
+
+def check_parts_bin(part_name):
+    """Check if a part is in the existing parts bin."""
+
+    return Part.query.filter_by(name = part_name).first()

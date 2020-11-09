@@ -17,7 +17,7 @@
     <input type="file" name="proc_img" />
     <br />
 
-    <!-- <br /><label>First Tool Required: </label>
+    <br /><label>First Tool Required: </label>
     <select name="first_tool_req">
         <option value="">--Please select a tool--</option>
         {% for tool in tools %}
@@ -66,11 +66,11 @@
     <br /><label>If other, please specify manuf: </label>
     <input type="text" name="first_part_other_manuf" />
     <br /><label>If other, please specify if OEM: </label>
-    <input type="radio" name="oem1" value="is_oem_1" />
+    <input type="radio" name="oem1" value="True" />
     <label for="is_oem_1">OEM</label>
-    <input type="radio" name="oem1" value="is_not_oem_1" />
+    <input type="radio" name="oem1" value="False" />
     <label for="is_oem_1">Aftermarket</label>
-    <input type="radio" name="oem1" value="unsure_if_oem_1" />
+    <input type="radio" name="oem1" value="False" />
     <label for="unsure_if_oem_1">Not Sure</label>
     <br />
 
@@ -89,11 +89,11 @@
     <br /><label>If other, please specify manuf: </label>
     <input type="text" name="second_part_other_manuf" />
     <br /><label>If other, please specify if OEM: </label>
-    <input type="radio" name="oem2" value="is_oem_2" />
+    <input type="radio" name="oem2" value="True" />
     <label for="is_oem_2">OEM</label>
-    <input type="radio" name="oem2" value="is_not_oem_2" />
+    <input type="radio" name="oem2" value="False" />
     <label for="is_oem_2">Aftermarket</label>
-    <input type="radio" name="oem2" value="unsure_if_oem_2" />
+    <input type="radio" name="oem2" value="False" />
     <label for="unsure_if_oem_2">Not Sure</label>
     <br />
 
@@ -112,13 +112,13 @@
     <br /><label>If other, please specify manuf: </label>
     <input type="text" name="third_part_other_manuf" />
     <br /><label>If other, please specify if OEM: </label>
-    <input type="radio" name="oem3" value="is_oem_3" />
+    <input type="radio" name="oem3" value="True" />
     <label for="is_oem_3">OEM</label>
-    <input type="radio" name="oem3" value="is_not_oem_3" />
+    <input type="radio" name="oem3" value="False" />
     <label for="is_oem_3">Aftermarket</label>
-    <input type="radio" name="oem3" value="unsure_if_oem_3" />
+    <input type="radio" name="oem3" value="False" />
     <label for="unsure_if_oem_3">Not Sure</label>
-    <br /> -->
+    <br />
 
     <br /><label>Procedure Text: </label>
     <textarea name="proc_text" required></textarea>
