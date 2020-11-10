@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect
-from flask import request, flash, session
+from flask import request, flash, session, jsonify
 
 from model import connect_to_db
 import crud
@@ -99,6 +99,15 @@ def model_search():
     flash(f"This procedure is written for a {session['model_year']} {session['make']} {session['model']}.")
 
     return redirect('/write-procedure')
+
+
+@app.route('/get-tools.json')
+def get_all_tools():
+    """Get all tools from the database and return as JSON."""
+
+    TOOLS = [tool for tool in crud.get_tools()]
+
+    return jsonify(TOOLS)
 
 
 @app.route('/write-procedure')
