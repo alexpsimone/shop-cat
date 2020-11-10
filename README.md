@@ -54,24 +54,32 @@ Therefore, Users are connected to these things via their key in the Contribution
 
 #### MVP
 
-- User can create a new page to outline a procedure.
-- User can add a list of required tools and parts, as well as text-based step-by-step directions.
-- User has the option to link to a photo relevant to the procedure.
-- Text inputs will feed into a formatted display that can be read easily. 
+- [x] User can create a new page to outline a procedure.
+- [x] User can add a fixed number of required tools and parts, as well as text-based step-by-step directions.
+- [x] User has the option to link to a photo relevant to the procedure.
+- [x] Text inputs will feed into a formatted display that can be read easily. 
+
 
 #### 2.0
 
-- The user will have the option to add or remove steps after the procedure is generated for the first time.
-- Allow user to edit existing steps after a procedure is generated.
-- User will be able to link to references to specific steps in their procedures.
-    - References can link to YouTube videos using the YouTube API.
-- User will be able to create general informational pages that are linked to specific cars, not procedures.
-- Adapt site to use React (if it doesn't already).
+- [ ] Allow user logins.
+- [ ] Allow user to add any number of required tools and parts to their procedure.
+- [ ] Allow user to add discrete, editable steps to their procedure.
+- [ ] User will be able to link to references to specific steps in their procedures.
+    - [ ] References can link to YouTube videos using the YouTube API.
+- [ ] User will be able to create general informational pages that are linked to specific cars, not procedures.
+
 
 #### 3.0
 
-- Allow user logins.
-- Allow users to flag procedures that are unclear.
-- All edits made by a certain user (to a procedure or info page) will be tracked in contribution history.
-- User can add a central page where all vehicles of a certain make or model are linked.
-- Link to the Wikipedia API to get general information about the vehicle on the page.
+- [ ] Allow users to add, remove, or edit steps after a procedure is generated for the first time.
+- [ ] Allow users to add, remove, or edit tools/part lists after a procedure is generated for the first time.
+- [ ] Allow users to flag procedures that are unclear.
+- [ ] Adapt site to use React (if it doesn't already).
+
+
+#### 4.0
+
+- [ ] All edits made by a certain user (to a procedure or info page) will be tracked in contribution history.
+- [ ] User can add a central page where all vehicles of a certain make or model are linked.
+- [ ] Link to the Wikipedia API to get general information about the vehicle on the page.
