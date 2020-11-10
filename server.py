@@ -111,6 +111,7 @@ def write_procedure():
                             tools = tools,
                             parts = parts)
 
+
 @app.route('/build-procedure', methods=["POST"])
 def build_procedure():
     """Build a procedure with the info given in the form."""
@@ -157,6 +158,26 @@ def build_procedure():
 #     # If it isn't, then select the corresponding existing tool.
 #     # Otherwise. create a new Tool object with the new info.
 #     # Do this three times.
+
+    """
+        tools = []
+
+        for tool_request in tool_requests:
+            
+            tool_req = request.form.get('tool_req')
+            tool_other = request.form.get('tool_other')
+
+            if tool_req != 'other':
+                tool = crud.check_toolbox(tool_req)
+            elif crud.check_toolbox(tool_other) != None:
+                tool = crud.check_toolbox(tool_other)
+            else:
+                tool = crud.create_tool(tool_other)
+            
+            tools.append(tool)
+    """       
+
+
     first_tool_req = request.form.get('first_tool_req')
     first_tool_other = request.form.get('first_tool_other')
 
