@@ -2,10 +2,16 @@
 
 {% block title %}Write a Procedure{% endblock %}
 
-{% block js %}{% endblock %}
+{% block js %}
+    <script src="/static/js/write-procedure.jsx" type="text/jsx"></script>
+{% endblock %}
 
 
 {% block body %}
+
+<p>Tool List Ajax</p>
+<ul id="tool-list"></ul>
+<button id="tool-adder">Add a Tool</button>
 
 <form action="/build-procedure", method="POST">
 
@@ -16,10 +22,6 @@
     <br /><label>Upload an Image (Optional)</label>
     <input type="file" name="proc_img" />
     <br />
-
-    <p>Tool List Ajax</p>
-    <ul id="tool-list"></ul>
-    <button id="tool-adder">Add a Tool</button>
 
     <br /><label>First Tool Required: </label>
     <select name="first_tool_req">
