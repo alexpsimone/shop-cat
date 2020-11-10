@@ -58,6 +58,7 @@ Therefore, Users are connected to these things via their key in the Contribution
 - [x] User can add a fixed number of required tools and parts, as well as text-based step-by-step directions.
 - [x] User has the option to link to a photo relevant to the procedure.
 - [x] Text inputs will feed into a formatted display that can be read easily. 
+- [x] Any new procedures or vehicles/tools/parts created when a procedure is written are automatically added to the database. 
 
 
 #### 2.0
