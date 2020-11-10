@@ -110,6 +110,15 @@ def get_all_tools():
     return jsonify(tools)
 
 
+@app.route('/get-parts.json')
+def get_all_parts():
+    """Get all parts from the database and return as JSON."""
+
+    parts = [part.name for part in crud.get_parts()]
+
+    return jsonify(parts)
+
+
 @app.route('/write-procedure')
 def write_procedure():
 
