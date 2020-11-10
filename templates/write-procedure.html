@@ -10,15 +10,6 @@
 
 {% block body %}
 
-<p>Tool List Ajax</p>
-<div id="tool-list"></div>
-<button id="tool-adder">Add a Tool</button>
-<br />
-
-<p>Part List Ajax</p>
-<div id="part-list"></div>
-<button id="part-adder">Add a Part</button>
-<br />
 
 <form action="/build-procedure", method="POST">
 
@@ -28,6 +19,13 @@
     <input type="text" name="proc_label" required />
     <br /><label>Upload an Image (Optional)</label>
     <input type="file" name="proc_img" />
+    <br />
+
+    <p>Tool List Ajax</p>
+    <div id="tool-list"></div>
+    <br />
+    <p>Part List Ajax</p>
+    <div id="part-list"></div>
     <br />
 
     <br /><label>First Tool Required: </label>
@@ -139,6 +137,9 @@
     <br /><input type="submit"></input>
 </form>
 <br />
+<button id="tool-adder">Add a Tool</button>
+    
+<button id="part-adder">Add a Part</button>
 
 
 {% endblock %}
