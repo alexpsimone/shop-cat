@@ -1,11 +1,15 @@
 'use strict';
 
+let NUM_TOOLS = 0;
+let NUM_PARTS = 0;
+
 function getTools (evt) {
 
     evt.preventDefault();
 
     $.get('/get-tools.json', (res) => { 
 
+        NUM_TOOLS += 1;
         let str = '';
 
         for (const tool of res) {
@@ -15,7 +19,7 @@ function getTools (evt) {
         $('#tool-list').append(
             `<br />
             <label>Tool Required: </label>
-            <select name="tool_req">
+            <select name="tool_req" class="tool-req" id="tool${NUM_TOOLS}">
             <option value="">--Please select a tool--</option>
             ${str}
             <option value="other">Other (please specify)...</option>
@@ -33,7 +37,8 @@ function getParts (evt) {
     evt.preventDefault();
 
     $.get('/get-parts.json', (res) => { 
-
+        
+        NUM_PARTS += 1;
         let str = '';
 
         for (const part of res) {
@@ -43,7 +48,7 @@ function getParts (evt) {
         $('#part-list').append(
             `<br />
             <label>Part Required: </label>
-            <select name="part_req">
+            <select name="part_req" class="part-req" id="part${NUM_PARTS}">
             <option value="">--Please select a part--</option>
             ${str}
             <option value="other">Other (please specify)...</option>
