@@ -105,9 +105,9 @@ def model_search():
 def get_all_tools():
     """Get all tools from the database and return as JSON."""
 
-    TOOLS = [tool for tool in crud.get_tools()]
+    tools = [tool.name for tool in crud.get_tools()]
 
-    return jsonify(TOOLS)
+    return jsonify(tools)
 
 
 @app.route('/write-procedure')

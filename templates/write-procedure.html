@@ -4,13 +4,14 @@
 
 {% block js %}
     <script src="/static/js/write-procedure.jsx" type="text/jsx"></script>
+    <script src="http://code.jquery.com/jquery.js"></script>
 {% endblock %}
 
 
 {% block body %}
 
 <p>Tool List Ajax</p>
-<ul id="tool-list"></ul>
+<div id="tool-list"></div>
 <button id="tool-adder">Add a Tool</button>
 
 <form action="/build-procedure", method="POST">
@@ -132,5 +133,6 @@
     <br /><input type="submit"></input>
 </form>
 <br />
+
 
 {% endblock %}
