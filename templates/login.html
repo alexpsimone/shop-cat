@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Log In{% endblock %}
+
+{% block js %}
+    <script src="/static/js/shopcat.jsx" type="text/jsx"></script>
+{% endblock %}
+
+
+{% block body %}
+    <div id="app"></div>
+    <h2>Log in with your Shop Cat account here.</h2>
+    
+    <form action="/existing-user" method="POST">
+        <label>Username: </label>
+        <input type="text" name="username" />
+        <br />
+        <label>Password: </label>
+        <input type="password" name="password" />
+        <br />
+        <input type="submit">
+    </form>
+
+    <p>Already have an account? Log in <a href="/">here</a>.</p>
+{% endblock %}
