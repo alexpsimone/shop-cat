@@ -1,25 +1,25 @@
 from flask import Flask, render_template, redirect
 from flask import request, flash, session, jsonify
+from jinja2 import StrictUndefined
+import requests, json
 
 from model import connect_to_db
 import crud
-import requests, json
-from jinja2 import StrictUndefined
 
 app = Flask(__name__)
 
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
+
 @app.route('/')
-def show_landing():
-    """Render the Shop Cat landing page.
-    
-    This may eventually turn into a login page."""
+def show_login():
+
+    """Render the Shop Cat landing/login page."""
 
     return render_template('shopcat.html')
 
-
+# TODO: Don't automatically create a new user, what if there's a typo?!?!
 @app.route('/login', methods=['POST'])
 def login_user():
     """Create a new user or log in existing user."""
@@ -60,15 +60,15 @@ def show_procedure_page(proc_id):
     proc_part_obj = crud.get_parts_by_proc_id(proc_id)
     proc_tool_obj = crud.get_tools_by_proc_id(proc_id)
     proc_num_tools = crud.num_tools_by_proc(proc_id)
-    
-    print("******", proc_tool_obj)
+    proc_num_parts = crud.num_parts_by_proc(proc_id)
 
     return render_template('procedure.html',
                             procedure = procedure,
                             proc_car_obj = proc_car_obj,
                             proc_part_obj = proc_part_obj,
                             proc_tool_obj = proc_tool_obj,
-                            proc_num_tools = proc_num_tools)
+                            proc_num_tools = proc_num_tools,
+                            proc_num_parts = proc_num_parts)
 
 
 @app.route('/year-make-search')

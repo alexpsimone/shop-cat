@@ -197,6 +197,12 @@ def get_user_by_username(username):
     return User.query.filter_by(username = username).first()
 
 
+def num_parts_by_proc(proc_id):
+    """Return the number of tools required for a given procedure."""
+
+    return ProcedurePart.query.filter_by(proc_id = proc_id).count()
+
+
 def num_tools_by_proc(proc_id):
     """Return the number of tools required for a given procedure."""
 

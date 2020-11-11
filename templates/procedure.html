@@ -28,7 +28,7 @@
         {% endfor %}
     </ul>
 
-    <p>You'll need these parts for the job:</p>
+    <p>You'll need {{ proc_num_parts }} parts for the job:</p>
     <ul>
         {% for proc_part in proc_part_obj %}
         <li>{{ proc_part.part.name }}</li>
