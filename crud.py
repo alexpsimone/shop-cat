@@ -214,3 +214,9 @@ def check_parts_bin(part_name):
     """Check if a part is in the existing parts bin."""
 
     return Part.query.filter_by(name = part_name).first()
+
+
+def num_tools_by_proc(proc_id):
+    """Return the number of tools required for a given procedure."""
+
+    return ProcedureTool.query.filter_by(proc_id = proc_id).count()

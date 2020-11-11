@@ -21,7 +21,7 @@
         {% endfor %}
     </ul>    
 
-    <p>You'll need these tools for the job:</p>
+    <p>You'll need {{ proc_num_tools }} tools for the job:</p>
     <ul>
         {% for proc_tool in proc_tool_obj %}
         <li>{{ proc_tool.tool.name }}</li>

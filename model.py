@@ -177,7 +177,7 @@ class ProcedureTool(db.Model):
     tool = db.relationship('Tool', backref = 'procedure_tool')
 
     def __repr__(self):
-        return f'<ProcedureTool proc_tool_id={self.proc_tool_id} procedure={self.proc_id} part={self.tool_id}>'
+        return f'<ProcedureTool proc_tool_id={self.proc_tool_id} procedure={self.proc_id} tool={self.tool_id}>'
 
 
 def connect_to_db(flask_app, db_uri='postgresql:///shopcat', echo = True):

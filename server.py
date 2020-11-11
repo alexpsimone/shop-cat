@@ -37,12 +37,16 @@ def show_procedure_page(proc_id):
     proc_car_obj = crud.get_proc_car_by_proc_id(proc_id)
     proc_part_obj = crud.get_parts_by_proc_id(proc_id)
     proc_tool_obj = crud.get_tools_by_proc_id(proc_id)
+    proc_num_tools = crud.num_tools_by_proc(proc_id)
+    
+    print("******", proc_tool_obj)
 
     return render_template('procedure.html',
                             procedure = procedure,
                             proc_car_obj = proc_car_obj,
                             proc_part_obj = proc_part_obj,
-                            proc_tool_obj = proc_tool_obj)
+                            proc_tool_obj = proc_tool_obj,
+                            proc_num_tools = proc_num_tools)
 
 
 @app.route('/year-make-search')
@@ -177,24 +181,28 @@ def build_procedure():
 #     # Otherwise. create a new Tool object with the new info.
 #     # Do this three times.
 
+    tools = []
+
+    NUM_TOOLS = int(request.form.get('NUM_TOOLS'))
+    
+    for tool in range(1, (NUM_TOOLS + 1)):
+        
+        tool_req = request.form.get(f'tool_req_{tool}')
+        tool_other = request.form.get(f'tool_other_{tool}')
+
+        if tool_req != 'other':
+            my_tool = crud.check_toolbox(tool_req)
+        elif crud.check_toolbox(tool_other) != None:
+            my_tool = crud.check_toolbox(tool_other)
+        else:
+            my_tool = crud.create_tool(tool_other)
+        
+        tools.append(my_tool)
+    
+    for tool in tools:
+        crud.create_procedure_tool(procedure, tool)
+     
     """
-        tools = []
-
-        for tool_request in tool_requests:
-            
-            tool_req = request.form.get('tool_req')
-            tool_other = request.form.get('tool_other')
-
-            if tool_req != 'other':
-                tool = crud.check_toolbox(tool_req)
-            elif crud.check_toolbox(tool_other) != None:
-                tool = crud.check_toolbox(tool_other)
-            else:
-                tool = crud.create_tool(tool_other)
-            
-            tools.append(tool)
-    """       
-
 
     first_tool_req = request.form.get('first_tool_req')
     first_tool_other = request.form.get('first_tool_other')
@@ -225,10 +233,11 @@ def build_procedure():
         tool3 = crud.check_toolbox(third_tool_other)
     else:
         tool3 = crud.create_tool(third_tool_other)
-
+    
     proc_tool_1 = crud.create_procedure_tool(procedure, tool1)
     proc_tool_2 = crud.create_procedure_tool(procedure, tool2)
     proc_tool_3 = crud.create_procedure_tool(procedure, tool3)
+   """
 
 #     # Now, check if the user selected an existing part.
 #     # If they did, then keep it handy, and don't create a new Part object.
@@ -238,6 +247,37 @@ def build_procedure():
 #     # Otherwise. create a new Part object with the new info.
 #     # Do this three times.
 
+    
+    parts = []
+
+    NUM_PARTS = int(request.form.get('NUM_PARTS'))
+
+    for part in range(1, (NUM_PARTS + 1)):
+        
+        part_req = request.form.get(f'part_req_{part}')
+        part_other = request.form.get(f'part_other_{part}')
+
+        if part_req != 'other':
+            my_part = crud.check_parts_bin(part_req)
+        elif crud.check_parts_bin(part_other) != None:
+            my_part = check_parts_bin(part_other)
+        else:
+            part_other_name = request.form.get(f'part_{part}_other_name')
+            part_other_num = request.form.get(f'part_{part}_other_num')
+            part_other_manuf = request.form.get(f'part_{part}_other_manuf')
+            oem = request.form.get('oem_{part}')
+            my_part = crud.create_part(part_other_name, 'newpath')
+            crud.create_part_num(part_other_manuf,
+                                 part_other_num,
+                                 oem,
+                                 my_part)
+        
+        parts.append(my_part)
+
+    for part in parts:
+        crud.create_procedure_part(procedure, part)
+
+    """
     first_part_req = request.form.get('first_part_req')
     first_part_other = request.form.get('first_part_other')
 
@@ -298,6 +338,7 @@ def build_procedure():
     crud.create_procedure_part(procedure, part1)
     crud.create_procedure_part(procedure, part2)
     crud.create_procedure_part(procedure, part3)
+    """
 
     return redirect('/home')
 
