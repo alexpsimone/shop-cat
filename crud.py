@@ -4,7 +4,7 @@ from model import PartNum, ProcedureCar, ProcedurePart, ProcedureTool
 
 def check_toolbox(tool_name):
     """Check if a tool is in the existing toolbox."""
-
+    
     return Tool.query.filter_by(name = tool_name).first()
 
 
