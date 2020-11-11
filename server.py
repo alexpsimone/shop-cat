@@ -28,7 +28,6 @@ def login_user():
     password = request.form.get('password')
 
     user = crud.get_user_by_username(username)
-    print(f'**************{user}**************')
 
     if user:
         if user.password == password:
@@ -167,12 +166,7 @@ def build_procedure():
     proc_label = request.form.get('proc_label')
     proc_img = request.form.get('proc_img')
 
-    #######################################################
-    ##### TODO:  attach a user to this! Need a session!####
-    #######################################################
-    
-    # DELETE LATER.
-    user = crud.get_user_by_id(4)
+    user = crud.get_user_by_id(session['current_user'])
     
     procedure = crud.create_procedure(proc_title,
                                         proc_description,
