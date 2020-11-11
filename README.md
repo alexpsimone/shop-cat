@@ -63,8 +63,8 @@ Therefore, Users are connected to these things via their key in the Contribution
 
 #### 2.0
 
-- [ ] Allow user logins.
-- [ ] Allow user to add any number of required tools and parts to their procedure.
+- [x] Allow user logins.
+- [x] Allow user to add any number of required tools and parts to their procedure.
 - [ ] Allow user to add discrete, editable steps to their procedure.
 - [ ] User will be able to link to references to specific steps in their procedures.
     - [ ] References can link to YouTube videos using the YouTube API.
@@ -75,6 +75,7 @@ Therefore, Users are connected to these things via their key in the Contribution
 
 - [ ] Allow users to add, remove, or edit steps after a procedure is generated for the first time.
 - [ ] Allow users to add, remove, or edit tools/part lists after a procedure is generated for the first time.
+- [ ] Allow users to add or remove cars to a procedure after it is generated.
 - [ ] Allow users to flag procedures that are unclear.
 - [ ] Adapt site to use React (if it doesn't already).
 
