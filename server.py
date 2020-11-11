@@ -145,7 +145,7 @@ def build_procedure():
     proc_img = request.form.get('proc_img')
 
     #######################################################
-    ### I need to attach a user to this! Need a session!###
+    ##### TODO:  attach a user to this! Need a session!####
     #######################################################
     
     # DELETE LATER.
@@ -202,42 +202,6 @@ def build_procedure():
     for tool in tools:
         crud.create_procedure_tool(procedure, tool)
      
-    """
-
-    first_tool_req = request.form.get('first_tool_req')
-    first_tool_other = request.form.get('first_tool_other')
-
-    if first_tool_req != 'other':
-        tool1 = crud.check_toolbox(first_tool_req)
-    elif crud.check_toolbox(first_tool_other) != None:
-        tool1 = crud.check_toolbox(first_tool_other)
-    else:
-        tool1 = crud.create_tool(first_tool_other)
-    
-    second_tool_req = request.form.get('second_tool_req')
-    second_tool_other = request.form.get('second_tool_other')
-
-    if second_tool_req != 'other':
-        tool2 = crud.check_toolbox(second_tool_req)
-    elif crud.check_toolbox(second_tool_other) != None:
-        tool2 = crud.check_toolbox(second_tool_other)
-    else:
-        tool2 = crud.create_tool(second_tool_other)
-
-    third_tool_req = request.form.get('third_tool_req')
-    third_tool_other = request.form.get('third_tool_other')
-
-    if third_tool_req != 'other':
-        tool3 = crud.check_toolbox(third_tool_req)
-    elif crud.check_toolbox(third_tool_other) != None:
-        tool3 = crud.check_toolbox(third_tool_other)
-    else:
-        tool3 = crud.create_tool(third_tool_other)
-    
-    proc_tool_1 = crud.create_procedure_tool(procedure, tool1)
-    proc_tool_2 = crud.create_procedure_tool(procedure, tool2)
-    proc_tool_3 = crud.create_procedure_tool(procedure, tool3)
-   """
 
 #     # Now, check if the user selected an existing part.
 #     # If they did, then keep it handy, and don't create a new Part object.
@@ -276,69 +240,6 @@ def build_procedure():
 
     for part in parts:
         crud.create_procedure_part(procedure, part)
-
-    """
-    first_part_req = request.form.get('first_part_req')
-    first_part_other = request.form.get('first_part_other')
-
-    if first_part_req != 'other':
-        part1 = crud.check_parts_bin(first_part_req)
-    elif crud.check_parts_bin(first_part_other) != None:
-        part1 = crud.check_parts_bin(first_part_other)
-    else:
-        first_part_other_name = request.form.get('first_part_other_name')
-        first_part_other_num = request.form.get('first_part_other_num')
-        first_part_other_manuf = request.form.get('first_part_other_manuf')
-        oem1 = request.form.get('oem1')
-        part1 = crud.create_part(first_part_other_name, 'newpath')
-        crud.create_part_num(first_part_other_manuf,
-                             first_part_other_num,
-                             oem1 == 'True',
-                             part1)
-        
-    
-    second_part_req = request.form.get('second_part_req')
-    second_part_other = request.form.get('second_part_other')
-
-    if second_part_req != 'other':
-        part2 = crud.check_parts_bin(second_part_req)
-    elif crud.check_parts_bin(second_part_other) != None:
-        part2 = crud.check_parts_bin(second_part_other)
-    else:
-        second_part_other_name = request.form.get('second_part_other_name')
-        second_part_other_num = request.form.get('second_part_other_num')
-        second_part_other_manuf = request.form.get('second_part_other_manuf')
-        oem2 = request.form.get('oem2')
-        part2 = crud.create_part(second_part_other_name, 'newpath')
-        crud.create_part_num(second_part_other_manuf,
-                             second_part_other_num,
-                             oem2 == 'True',
-                             part2)
-        
-        
-    third_part_req = request.form.get('third_part_req')
-    third_part_other = request.form.get('third_part_other')
-
-    if third_part_req != 'other':
-        part3 = crud.check_parts_bin(third_part_req)
-    elif crud.check_parts_bin(third_part_other) != None:
-        part3 = crud.check_parts_bin(third_part_other)
-    else:
-        third_part_other_name = request.form.get('third_part_other_name')
-        third_part_other_num = request.form.get('third_part_other_num')
-        third_part_other_manuf = request.form.get('third_part_other_manuf')
-        oem3 = request.form.get('oem3')
-        part3 = crud.create_part(third_part_other_name, 'newpath')
-        crud.create_part_num(third_part_other_manuf,
-                            third_part_other_num,
-                            oem3 == 'True',
-                            part3)
-        
-
-    crud.create_procedure_part(procedure, part1)
-    crud.create_procedure_part(procedure, part2)
-    crud.create_procedure_part(procedure, part3)
-    """
 
     return redirect('/home')
 
