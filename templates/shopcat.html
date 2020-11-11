@@ -9,9 +9,9 @@
 
 {% block body %}
     <div id="app"></div>
-    <h2>Sign Up/Log In</h2>
+    <h2>Create a ShopCat Account!</h2>
     
-    <form action="/login" method="POST">
+    <form action="/new-user" method="POST">
         <label>Username: </label>
         <input type="text" name="username" />
         <br />
@@ -20,4 +20,6 @@
         <br />
         <input type="submit">
     </form>
+
+    <p>Already have an account? Log in <a href="/">here</a>.</p>
 {% endblock %}

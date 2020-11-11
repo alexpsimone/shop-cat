@@ -18,12 +18,28 @@ def show_login():
 
     return render_template('shopcat.html')
 
-# ##########################################################
-# ### TODO: Don't automatically create a new user, what if there's a typo?!?!
-# ##########################################################
-@app.route('/login', methods=['POST'])
+
+@app.route('/new-user', methods=['POST'])
+def new_user():
+    """Create a new user."""
+
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    user = crud.get_user_by_username(username)
+
+    if user:
+        flash('A user already exists with that username.')
+        return redirect('/')
+    else:
+        crud.create_user(username, password)
+        flash(f'New account created. Please use your credentials to log in.')
+        return redirect('/login') 
+
+
+@app.route('/existing-user', methods=['POST'])
 def login_user():
-    """Create a new user or log in existing user."""
+    """Log in with an existing user account."""
 
     username = request.form.get('username')
     password = request.form.get('password')
@@ -37,10 +53,17 @@ def login_user():
             return redirect('/home')
         else:
             flash('Password is incorrect.')
+            return redirect('/login')
     else:
-        crud.create_user(username, password)
-        flash(f'New account created. Please use your credentials to log in.')
-        return redirect('/')
+        flash(f'No account exists with this username')
+        return redirect('/login')
+
+
+@app.route('/login')
+def login_page():
+    """Render the login page."""
+
+    return render_template('login.html')
 
 
 @app.route('/home')
