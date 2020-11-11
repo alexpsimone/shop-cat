@@ -204,6 +204,12 @@ def get_user_by_id(user_id):
     return User.query.filter_by(user_id = user_id).first()
 
 
+def get_user_by_email(email):
+    """Get a user with a given email."""
+
+    return User.query.filter_by(email = email).first()
+
+
 def check_toolbox(tool_name):
     """Check if a tool is in the existing toolbox."""
 
