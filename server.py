@@ -20,6 +20,28 @@ def show_landing():
     return render_template('shopcat.html')
 
 
+@app.route('/login', methods=['POST'])
+def login_user():
+    """Create a new user or log in existing user."""
+
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    user = crud.get_user_by_email
+
+    if user:
+        if user.password == password:
+            session['current_user'] = user.user_id
+            flash(f'Welcome, {user.user_id}!')
+            return redirect('/home')
+        else:
+            flash('Password is incorrect.')
+    else:
+        crud.create_user(email, password)
+        flash(f'New account created. Please use your credentials to log in.')
+        return redirect('/')
+
+
 @app.route('/home')
 def show_homepage():
     """Render the homepage."""
