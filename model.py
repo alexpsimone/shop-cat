@@ -44,22 +44,6 @@ class Procedure(db.Model):
         return f'<Procedure proc_id={self.proc_id} title={self.title}>'
 
 
-# class Page(db.Model):
-#     """A page."""
-
-#     __tablename__ = 'pages'
-
-#     page_id = db.Column(db.Integer,
-#                         primary_key = True,
-#                         autoincrement = True)
-#     size = db.Column(db.Float, default=0)
-#     page_url = db.Column(db.String(50), unique = True)
-#     page_type = db.Column(db.String(25))
-
-#     def __repr__(self):
-#         return f'<Page page_id={self.page_id} page_url={self.page_url}>'
-
-
 class Car(db.Model):
     """A car."""
 
@@ -73,7 +57,8 @@ class Car(db.Model):
     model_year = db.Column(db.Integer, default = 9999)
 
     def __repr__(self):
-        return f'<Car car_id={self.car_id} model_year={self.model_year} model={self.model}>'
+        return f'''<Car car_id={self.car_id} 
+                    model_year={self.model_year} model={self.model}>'''
 
 
 class Tool(db.Model):
@@ -108,7 +93,8 @@ class PartNum(db.Model):
     part = db.relationship('Part', backref = 'part_nums')
 
     def __repr__(self):
-        return f'<PartNum part_num_id={self.part_num_id} part_num={self.part_num}>'
+        return f'''<PartNum part_num_id={self.part_num_id} 
+                    part_num={self.part_num}>'''
 
 
 class Part(db.Model):
@@ -141,7 +127,8 @@ class ProcedureCar(db.Model):
     car = db.relationship('Car', backref = 'procedure_car')
 
     def __repr__(self):
-        return f'<ProcedureCar proc_car_id={self.proc_car_id} procedure={self.proc_id} car={self.car_id}>'
+        return f'''<ProcedureCar proc_car_id={self.proc_car_id} 
+                    procedure={self.proc_id} car={self.car_id}>'''
 
 
 class ProcedurePart(db.Model):
@@ -159,7 +146,8 @@ class ProcedurePart(db.Model):
     part = db.relationship('Part', backref = 'procedure_part')
 
     def __repr__(self):
-        return f'<ProcedurePart proc_part_id={self.proc_part_id} procedure={self.proc_id} part={self.part_id}>'
+        return f'''<ProcedurePart proc_part_id={self.proc_part_id} 
+                    procedure={self.proc_id} part={self.part_id}>'''
 
 
 class ProcedureTool(db.Model):
@@ -177,7 +165,8 @@ class ProcedureTool(db.Model):
     tool = db.relationship('Tool', backref = 'procedure_tool')
 
     def __repr__(self):
-        return f'<ProcedureTool proc_tool_id={self.proc_tool_id} procedure={self.proc_id} tool={self.tool_id}>'
+        return f'''<ProcedureTool proc_tool_id={self.proc_tool_id} 
+                    procedure={self.proc_id} tool={self.tool_id}>'''
 
 
 def connect_to_db(flask_app, db_uri='postgresql:///shopcat', echo = True):

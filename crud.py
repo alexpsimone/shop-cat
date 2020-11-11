@@ -134,7 +134,8 @@ def create_user(username, password, nickname="nothingyet", img="emptypath"):
 def get_car_by_details(model_year, make, model):
     """Return a car with the specified info, if it exists."""
 
-    return Car.query.filter_by(model_year = model_year, make = make, model = model).first()
+    return Car.query.filter_by(model_year = model_year, 
+                                make = make, model = model).first()
 
 
 def get_cars():

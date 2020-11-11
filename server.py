@@ -14,12 +14,13 @@ app.jinja_env.undefined = StrictUndefined
 
 @app.route('/')
 def show_login():
-
-    """Render the Shop Cat landing/login page."""
+    """Render the landing/login page."""
 
     return render_template('shopcat.html')
 
-# TODO: Don't automatically create a new user, what if there's a typo?!?!
+# ##########################################################
+# ### TODO: Don't automatically create a new user, what if there's a typo?!?!
+# ##########################################################
 @app.route('/login', methods=['POST'])
 def login_user():
     """Create a new user or log in existing user."""
@@ -84,11 +85,13 @@ def show_year_make_search():
         all_makes.append(item['Make_Name'])
     sorted_makes = sorted(all_makes)
 
-    return render_template('year-make-search.html', sorted_makes = sorted_makes)
+    return render_template('year-make-search.html', 
+                            sorted_makes = sorted_makes)
 
 
 @app.route('/get-year-make', methods = ["POST"])
 def year_make_search():
+    """Search for vehicle makes using the NHTSA vehicle API"""
     
     session['model_year'] = request.form.get('model_year')
     session['make'] = request.form.get('make')
@@ -100,12 +103,15 @@ def year_make_search():
 
 @app.route('/model-search')
 def show_model_search():
-    """ ."""
+    """Search for vehicle models using the NHTSA vehicle API"""
 
     model_year = session['model_year']
     make = session['make']
     all_models = []
 
+    # ##########################################################
+    # ###TODO: Figure out how to make this PEP-8 compliant!!!###
+    # ##########################################################
     url = f'https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/{make}/modelyear/{model_year}?format=json'
     res = requests.get(url)
     data = res.json()
@@ -119,17 +125,19 @@ def show_model_search():
 
 @app.route('/get-model', methods = ["POST"])
 def model_search():
+    """Send selected vehicle info as a flash message."""
     
     session['model'] = request.form.get('model')
 
-    flash(f"This procedure is written for a {session['model_year']} {session['make']} {session['model']}.")
+    flash(f"""This procedure is written for a {session['model_year']} 
+            {session['make']} {session['model']}.""")
 
     return redirect('/write-procedure')
 
 
 @app.route('/get-tools.json')
 def get_all_tools():
-    """Get all tools from the database and return as JSON."""
+    """Get all tools from the shopcat database and return as JSON."""
 
     tools = [tool.name for tool in crud.get_tools()]
 
@@ -138,7 +146,7 @@ def get_all_tools():
 
 @app.route('/get-parts.json')
 def get_all_parts():
-    """Get all parts from the database and return as JSON."""
+    """Get all parts from the shopcat database and return as JSON."""
 
     parts = [part.name for part in crud.get_parts()]
 
@@ -147,6 +155,7 @@ def get_all_parts():
 
 @app.route('/write-procedure')
 def write_procedure():
+    """Render the write-procedure template using existing Part/Tool objects."""
 
     tools = crud.get_tools()
     parts = crud.get_parts()
@@ -160,7 +169,7 @@ def write_procedure():
 def build_procedure():
     """Build a procedure with the info given in the form."""
 
-    # Take the form data to create a procedure.
+    # Take the form data to create a Procedure object.
     proc_title = request.form.get('proc_title')
     proc_description = request.form.get('proc_text')
     proc_label = request.form.get('proc_label')
@@ -175,10 +184,11 @@ def build_procedure():
                                         user
                                         )
 
-    # Then, check if the user selected an existing car.
-    # If they did, then keep it handy, and don't create a new Car object.
-    # If they didn't, then use the session info to create one.
-
+    """
+    Check if the user selected an existing car.
+    If they did, then keep it handy, and don't create a new Car object.
+    If they didn't, then use the session info to create one.
+    """
     model_year = session['model_year']
     make = session['make']
     model = session['model']
@@ -191,12 +201,15 @@ def build_procedure():
     # Use the Car and Procedure objects to make a new ProcedureCar.
     crud.create_procedure_car(procedure, car)
 
-    # Now, check if the user selected an existing tool.
-    # If they did, then keep it handy, and don't create a new Tool object.
-    # If they didn't, then double-check that the tool is actually new.
-    # If it isn't, then select the corresponding existing tool.
-    # Otherwise. create a new Tool object with the new info.
-    # Do this for all tools added to the procedure.
+    """
+    Check if the user selected an existing tool.
+    If they did, then keep it handy, and don't create a new Tool object.
+    If they didn't, then double-check that the tool is actually new.
+    If it isn't, then select the corresponding existing tool.
+    Otherwise. create a new Tool object with the new info.
+    Then create a corresponding ProcedureTool object.
+    Do this for all tools added to the procedure.
+    """
     NUM_TOOLS = int(request.form.get('NUM_TOOLS'))
     
     for tool in range(1, (NUM_TOOLS + 1)):
@@ -213,14 +226,16 @@ def build_procedure():
         
         crud.create_procedure_tool(procedure, my_tool)
      
-
-    # Now, check if the user selected an existing part.
-    # If they did, then keep it handy, and don't create a new Part object.
-        # This will also require a new PartNumber object.
-    # If they didn't, then double-check that the part is actually new.
-    # If it isn't, then select the corresponding existing part.
-    # Otherwise. create a new Part object with the new info.
-    # Do this for all parts added to the procedure.
+    """
+    Check if the user selected an existing part.
+    If they did, then keep it handy, and don't create a new Part object.
+    If they didn't, then double-check that the part is actually new.
+    If it isn't, then select the corresponding existing part.
+    Otherwise. create a new Part object with the new info.
+        This will also require a new PartNumber object.
+    Then create a corresponding ProcedurePart object.
+    Do this for all parts added to the procedure.
+    """
     NUM_PARTS = int(request.form.get('NUM_PARTS'))
 
     for part in range(1, (NUM_PARTS + 1)):
