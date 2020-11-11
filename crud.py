@@ -2,7 +2,7 @@ from model import db, connect_to_db, User, Procedure, Car, Part, Tool
 from model import PartNum, ProcedureCar, ProcedurePart, ProcedureTool
 
 
-def create_user(username, password, nickname, img):
+def create_user(username, password, nickname="nothingyet", img="emptypath"):
     """Create and return a new user."""
 
     user = User(username = username,
@@ -204,10 +204,10 @@ def get_user_by_id(user_id):
     return User.query.filter_by(user_id = user_id).first()
 
 
-def get_user_by_email(email):
-    """Get a user with a given email."""
+def get_user_by_username(username):
+    """Get a user with a given username."""
 
-    return User.query.filter_by(email = email).first()
+    return User.query.filter_by(username = username).first()
 
 
 def check_toolbox(tool_name):
