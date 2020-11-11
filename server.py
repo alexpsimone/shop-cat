@@ -191,15 +191,12 @@ def build_procedure():
     # Use the Car and Procedure objects to make a new ProcedureCar.
     crud.create_procedure_car(procedure, car)
 
-#     # Now, check if the user selected an existing tool.
-#     # If they did, then keep it handy, and don't create a new Tool object.
-#     # If they didn't, then double-check that the tool is actually new.
-#     # If it isn't, then select the corresponding existing tool.
-#     # Otherwise. create a new Tool object with the new info.
-#     # Do this three times.
-
-    tools = []
-
+    # Now, check if the user selected an existing tool.
+    # If they did, then keep it handy, and don't create a new Tool object.
+    # If they didn't, then double-check that the tool is actually new.
+    # If it isn't, then select the corresponding existing tool.
+    # Otherwise. create a new Tool object with the new info.
+    # Do this for all tools added to the procedure.
     NUM_TOOLS = int(request.form.get('NUM_TOOLS'))
     
     for tool in range(1, (NUM_TOOLS + 1)):
@@ -214,23 +211,16 @@ def build_procedure():
         else:
             my_tool = crud.create_tool(tool_other)
         
-        tools.append(my_tool)
-    
-    for tool in tools:
-        crud.create_procedure_tool(procedure, tool)
+        crud.create_procedure_tool(procedure, my_tool)
      
 
-#     # Now, check if the user selected an existing part.
-#     # If they did, then keep it handy, and don't create a new Part object.
-#         # This will also require a new PartNumber object.
-#     # If they didn't, then double-check that the part is actually new.
-#     # If it isn't, then select the corresponding existing part.
-#     # Otherwise. create a new Part object with the new info.
-#     # Do this three times.
-
-    
-    parts = []
-
+    # Now, check if the user selected an existing part.
+    # If they did, then keep it handy, and don't create a new Part object.
+        # This will also require a new PartNumber object.
+    # If they didn't, then double-check that the part is actually new.
+    # If it isn't, then select the corresponding existing part.
+    # Otherwise. create a new Part object with the new info.
+    # Do this for all parts added to the procedure.
     NUM_PARTS = int(request.form.get('NUM_PARTS'))
 
     for part in range(1, (NUM_PARTS + 1)):
@@ -253,10 +243,7 @@ def build_procedure():
                                  oem,
                                  my_part)
         
-        parts.append(my_part)
-
-    for part in parts:
-        crud.create_procedure_part(procedure, part)
+        crud.create_procedure_part(procedure, my_part)
 
     return redirect('/home')
 
