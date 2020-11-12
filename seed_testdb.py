@@ -108,40 +108,43 @@ def load_all():
     db.session.commit()
 
 
-        
-    #     for x in range(3):
+    # Add a Car to each Procedure by creating a ProcedureCar object.
+    proc_car_1 = ProcedureCar(proc = procedure1, car = car1)
+    proc_car_2 = ProcedureCar(proc = procedure2, car = car1)
+    proc_car_3 = ProcedureCar(proc = procedure3, car = car2)
+    proc_car_4 = ProcedureCar(proc = procedure4, car = car2)
+    db.session.add(proc_car_1)
+    db.session.add(proc_car_2)
+    db.session.add(proc_car_3)
+    db.session.add(proc_car_4)
+    
+    # Add a Part to most Procedures by creating ProcedurePart objects.
+    proc_part_1 = ProcedurePart(proc = procedure1, part = part1)
+    proc_part_2 = ProcedurePart(proc = procedure1, part = part2)
+    proc_part_3 = ProcedurePart(proc = procedure1, part = part3)
+    proc_part_4 = ProcedurePart(proc = procedure2, part = part1)
+    proc_part_5 = ProcedurePart(proc = procedure2, part = part4)
+    proc_part_6 = ProcedurePart(proc = procedure2, part = part3)
+    db.session.add(proc_part_1)
+    db.session.add(proc_part_2)
+    db.session.add(proc_part_3)
+    db.session.add(proc_part_4)
+    db.session.add(proc_part_5)
+    db.session.add(proc_part_6)
 
-    #         # Create 3 procedures for each new user.
-    #         title = f'title{user.user_id}_{x}'
-    #         description = f'description{user.user_id}_{x}'
-    #         label = f'label{user.user_id}_{x}'
-    #         img = 'nopath'
-
-    #         procedure = crud.create_procedure(title, description, label, img, user)
-
-    #         # Randomly assign a car from the garage to each procedure.
-    #         car_num = randint(0, 4)
-    #         proc_car = crud.create_procedure_car(procedure, garage[car_num])
-
-    #         # Randomly assign up to 3 tools from the existing set 
-    #         # to each procedure.
-    #         nums_used = set()
-    #         for x in range(3):
-    #             num = randint(0, 4)
-    #             nums_used.add(num)
-    #         for num in nums_used:
-    #             tool = toolbox[num]
-    #             proc_tool = crud.create_procedure_tool(procedure, tool)
-            
-    #         # Randomly assign up to 3 parts from the existing set 
-    #         # to each procedure.
-    #         nums_used = set()
-    #         for x in range(3):
-    #             num = randint(0, 9)
-    #             nums_used.add(num)
-    #         for num in nums_used:
-    #             part = parts_bin[num]
-    #             proc_part = crud.create_procedure_part(procedure, part)
+    # Add a Tool to most Procedures by creating ProcedureTool objects.
+    proc_tool_1 = ProcedureTool(proc = procedure1, tool = tool1)
+    proc_tool_2 = ProcedureTool(proc = procedure1, tool = tool2)
+    proc_tool_3 = ProcedureTool(proc = procedure1, tool = tool3)
+    proc_tool_4 = ProcedureTool(proc = procedure3, tool = tool1)
+    proc_tool_5 = ProcedureTool(proc = procedure3, tool = tool2)
+    proc_tool_6 = ProcedureTool(proc = procedure3, tool = tool3)
+    db.session.add(proc_tool_1)
+    db.session.add(proc_tool_2)
+    db.session.add(proc_tool_3)
+    db.session.add(proc_tool_4)
+    db.session.add(proc_tool_5)
+    db.session.add(proc_tool_6)
 
 
 if __name__ == '__main__':
