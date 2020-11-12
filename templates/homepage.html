@@ -9,6 +9,7 @@
 
 {% block body %}
     <div id= "app-procedures"></div>
+    <h1>Browse all the available procedures:</h1>
     <div>
     {% for procedure in procedures %}
         <a href = "/procedure/{{ procedure.proc_id }}">{{ procedure.title }}</a>

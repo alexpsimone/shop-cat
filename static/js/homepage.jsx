@@ -13,12 +13,7 @@ function Title() {
 
 function Procedures() {
 
-    return (
-        <React.Fragment>
-            <h1>Browse all the available procedures:</h1>
-
-        </React.Fragment>
-    );
+    return (<div></div>);
 }
 
 

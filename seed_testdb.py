@@ -7,7 +7,7 @@ def load_all():
     """Load all the things."""
 
     # Create test users.
-    user1 = User(username = 'username1',
+    user1 = User(username = 'usernameA',
                     password = 'pass1',
                     nickname = 'nickname1',
                     avatar_img_url = 'myavatar1.png')
@@ -17,7 +17,7 @@ def load_all():
     user3 = User(username = 'username3',
                     password = 'pass3',
                     avatar_img_url = 'myavatar3.png')
-    user4 = User(username = 'username4', 
+    user4 = User(username = 'username4',  
                     password = 'pass4')
     db.session.add(user1)
     db.session.add(user2)
@@ -107,7 +107,6 @@ def load_all():
 
     db.session.commit()
 
-
     # Add a Car to each Procedure by creating a ProcedureCar object.
     proc_car_1 = ProcedureCar(proc = procedure1, car = car1)
     proc_car_2 = ProcedureCar(proc = procedure2, car = car1)
@@ -146,9 +145,11 @@ def load_all():
     db.session.add(proc_tool_5)
     db.session.add(proc_tool_6)
 
+    db.session.commit()
+
 
 if __name__ == '__main__':
-    connect_to_db(app)
+    connect_to_db(app, db_uri = "postgresql:///testdb")
     print("Connected to testdb.")
     db.create_all()
     load_all()
