@@ -63,6 +63,12 @@ class ShopCatTestsDatabase(unittest.TestCase):
         self.assertIn(b'<form action="/build-procedure", method="POST">',
                              result.data)
 
+    #########################################################################
+    ### TODO: Add this function, figure out how to incorporate variable route.
+    #########################################################################
+    
+    # def test_procedure_by_proc_id_route(self):
+        """Check that the write-procedure route is rendering properly."""
 
 
 if __name__ == "__main__":

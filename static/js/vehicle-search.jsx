@@ -19,9 +19,12 @@ function getModels (evt) {
         for (const model of res) {
             str = str + `<option value="${model}">${model}</option>`;
         }
-        $('#model-select').append(
-            `${str}
-            <option value="other">Other (please specify)...</option>str`
+        $('#model-select').replaceWith(
+            `<select id="model-select" name="model">
+            <option value="">--Please select a Model--</option>
+            ${str}
+            <option value="other">Other (please specify)...</option>
+            </select>`
         );
     })
 
