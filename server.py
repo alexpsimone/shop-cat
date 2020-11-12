@@ -95,7 +95,7 @@ def show_procedure_page(proc_id):
                             proc_num_parts = proc_num_parts)
 
 
-@app.route('/year-make-search')
+@app.route('/vehicle-search')
 def show_year_make_search():
     """Render the vehicle year/make search menu."""
 
@@ -108,7 +108,7 @@ def show_year_make_search():
         all_makes.append(item['Make_Name'])
     sorted_makes = sorted(all_makes)
 
-    return render_template('year-make-search.html', 
+    return render_template('vehicle-search.html', 
                             sorted_makes = sorted_makes)
 
 
