@@ -17,10 +17,9 @@ toolbox = []
 for tool in range(10):
     
     name = f'tool_{tool}'
-    description = 'placeholder'
     tool_img = f'path_{tool}'
 
-    tool = crud.create_tool(name, description, tool_img)
+    tool = crud.create_tool(name, tool_img)
     toolbox.append(tool)
 
 # Create a set of 50 test parts.

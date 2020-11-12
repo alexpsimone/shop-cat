@@ -70,7 +70,6 @@ class Tool(db.Model):
                         primary_key = True,
                         autoincrement = True)
     name = db.Column(db.String(25), nullable = False)
-    description = db.Column(db.Text)
     tool_img = db.Column(db.String, default = '')
 
     def __repr__(self):
