@@ -3,6 +3,11 @@ from server import app
 from model import db, connect_to_db
 import os
 
+# Drop and re-create the test database.
+os.system('dropdb testdb')
+os.system('createdb testdb')
+os.system('python3 seed_testdb.py')
+
 
 class FlaskTests(unittest.TestCase):
     """Tests for the Shop Cat site."""
@@ -30,15 +35,10 @@ class ShopCatTestsDatabase(unittest.TestCase):
 
         self.client = app.test_client()
         app.config['TESTING'] = True
-
-        # # Drop and re-create the test database.
-        os.system('dropdb testdb')
-        os.system('createdb testdb')
-        os.system('python3 seed_testdb.py')
         
         # Connect to test database
         connect_to_db(app, db_uri = "postgresql:///testdb")
-
+        db.create_all()
 
     def tearDown(self):
         """Do at end of every test."""
