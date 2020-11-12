@@ -47,66 +47,43 @@ def load_all():
     part2 = Part(name = 'exhaust gasket', part_img = 'exh_gasket.png')
     part3 = Part(name = 'drain plug')
     part4 = Part(name = '10mm bolt', part_img = 'bolt.jpg')
+    part5 = Part(name = 'valve cover')
     db.session.add(part1)
     db.session.add(part2)
     db.session.add(part3)
     db.session.add(part4)
+    db.session.add(part5)
 
     db.session.commit()
 
+    # Create test part numbers.
+    partnum1 = PartNum(manuf = 'ACDelco', 
+                        part_num = '123456',
+                        is_oem_part = True,
+                        part = part1)
+    partnum2 = PartNum(manuf = 'Delphi', 
+                        is_oem_part = False,
+                        part = part1)
+    partnum3 = PartNum(part_num = '7891011',
+                        is_oem_part = True,
+                        part = part3)
+    partnum4 = PartNum(is_oem_part = True,
+                        part = part4)
+    partnum5 = PartNum(manuf = 'ACDelco', 
+                        part_num = '12131415',
+                        part = part5)
+    db.session.add(partnum1)
+    db.session.add(partnum2)
+    db.session.add(partnum3)
+    db.session.add(partnum4)
+    db.session.add(partnum5)
+
+    db.session.commit()
+
+ 
+    
 
 
-
-
-    # # Create a set of 10 test tools.
-    # toolbox = []
-
-    # for tool in range(5):
-        
-    #     name = f'tool_{tool}'
-    #     tool_img = f'path_{tool}'
-
-    #     tool = crud.create_tool(name, tool_img)
-    #     toolbox.append(tool)
-
-    # # Create a set of 50 test parts.
-    # parts_bin = []
-
-    # for part in range(10):
-        
-    #     name = f'part_{part}'
-    #     part_img = f'path_{part}'
-
-    #     part = crud.create_part(name, part_img)
-    #     parts_bin.append(part)
-
-    #     manuf = choice(['ACDelco', 'Delphi', 'Bosch', 'Continental'])
-    #     part_num = '1234ABCD'
-    #     is_oem_part = True
-    #     part = part
-
-    #     part_num = crud.create_part_num(manuf, part_num, is_oem_part, part)
-        
-    # # Create a set of 10 test cars.
-    # garage = []
-
-    # for car in range(5):
-        
-    #     model = f'car_{car}'
-    #     make = 'Chevrolet'
-    #     model_year = randint(1956, 2020)
-
-    #     car = crud.create_car(model, make, model_year)
-    #     garage.append(car)
-
-    # # Create 5 test users.
-    # for user in range(5):
-    #     username = f'user{user}'
-    #     password = f'password{user}'
-    #     nickname = f'nickname{user}'
-    #     avatar_img_url = f'urlpath{user}'
-        
-    #     user = crud.create_user(username, password, nickname, avatar_img_url)
         
     #     for x in range(3):
 
