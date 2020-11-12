@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Write a Procedure{% endblock %}
+
+{% block js %}
+    <script src="/static/js/vehicle-search.jsx" type="text/jsx"></script>
+    <script src="/static/js/write-procedure.jsx" type="text/jsx"></script>
+    <script src="http://code.jquery.com/jquery.js"></script>
+{% endblock %}
+
+
+{% block body %}
+
+<form action="/vehicle-select", method="POST">
+
+    <label>Car Model Year:</label>
+        <input id="model-year" name="model-year" type="number" min="1900" max="2020" />
+    <br />
+    <label>Car Make:</label>
+    <select id="make" name="make">
+        <option value="">--Please select a Make--</option>
+        {% for make in sorted_makes %}
+        <option value="{{ make }}">{{ make }}</option>
+        {% endfor %}
+        <option value="other">Other (please specify)...</option>
+    </select>
+    <br />
+    <label>Car Model:</label>
+    <select id="model-select" name="model" disabled>
+        <option value="">--Please select a Model--</option>
+    </select>
+    <br />
+    <input id="vehicle-submit" type="submit" disabled>
+</form>
+
+<form action="/build-procedure", method="POST">
+
+    <br /><label>Procedure Name: </label>
+    <input type="text" name="proc_title" required disabled/>
+    <br /><label>Procedure Label (optional): </label>
+    <input type="text" name="proc_label" required disabled/>
+    <br /><label>Upload an Image (Optional)</label>
+    <input type="file" name="proc_img" />
+    <br />
+
+    <p>Tool List Ajax</p>
+    <div id="tool-list"></div>
+    <br />
+    <p>Part List Ajax</p>
+    <div id="part-list"></div>
+    <br />
+
+    <br /><label>Procedure Text: </label>
+    <textarea name="proc_text" required disabled></textarea>
+
+    <input name="NUM_TOOLS" id="NUM_TOOLS" type="number" value="0" style="display: none;"/>
+    <input name="NUM_PARTS" id="NUM_PARTS" type="number" value="0" style="display: none;"/>
+
+    <br /><input type="submit" disabled></input>
+</form>
+<br />
+<button id="tool-adder" disabled>Add a Tool</button>
+    
+<button id="part-adder" disabled>Add a Part</button>
+
+
+{% endblock %}

@@ -193,6 +193,28 @@ def write_procedure():
                             parts = parts)
 
 
+@app.route('/write-procedure-2')
+def write_procedure_2():
+    """Render the write-procedure template using existing Part/Tool objects."""
+
+    tools = crud.get_tools()
+    parts = crud.get_parts()
+
+    all_makes = []
+    url = 'https://vpic.nhtsa.dot.gov/api/vehicles/GetAllMakes?format=json'
+    res = requests.get(url)
+    data = res.json()
+
+    for item in data['Results']:
+        all_makes.append(item['Make_Name'])
+    sorted_makes = sorted(all_makes)
+
+    return render_template('write-procedure-2.html',
+                            tools = tools,
+                            parts = parts,
+                            sorted_makes = sorted_makes)
+
+
 @app.route('/build-procedure', methods=["POST"])
 def build_procedure():
     """Build a procedure with the info given in the form."""
