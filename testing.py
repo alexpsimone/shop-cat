@@ -52,7 +52,17 @@ class ShopCatTestsDatabase(unittest.TestCase):
 
         result = self.client.get('/home')
         self.assertEqual(result.status_code, 200)
-        self.assertIn(b'<h1>Browse all the available procedures:</h1>', result.data)
+        self.assertIn(b'Browse all the available procedures:', result.data)
+    
+
+    def test_write_procedure_route(self):
+        """Check that the write-procedure route is rendering properly."""
+
+        result = self.client.get('/write-procedure')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b'<form action="/build-procedure", method="POST">',
+                             result.data)
+
 
 
 if __name__ == "__main__":
