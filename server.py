@@ -112,18 +112,44 @@ def show_year_make_search():
                             sorted_makes = sorted_makes)
 
 
-@app.route('/get-year-make', methods = ["POST"])
-def year_make_search():
-    """Search for vehicle makes using the NHTSA vehicle API"""
+@app.route('/vehicle-select', methods=['POST'])
+def apply_year_make():
+    """Retrieve a vehicle make using NHTSA vehicle API, save to session."""
+
+    model_year = request.form.get('model-year')
+    make = request.form.get('make')
+    model = request.form.get('model')
+    print('********************',model_year,make, model)
+    session['model_year'] = model_year
+    session['make'] = make
+    session['model'] = model
+    print('********************',session['model_year'],session['make'], session['model'])
+    flash(f'{model_year} {make} {model}')
+
+    return redirect('/write-procedure')
+
+
+@app.route('/get-models.json')
+def get_all_models():
     
-    session['model_year'] = request.form.get('model_year')
-    session['make'] = request.form.get('make')
+    all_models = []
+    model_year = request.args.get('modelYear')
+    make = request.args.get('make')
+    print('********************',model_year,make)
+    # ##########################################################
+    # ###TODO: Figure out how to make this PEP-8 compliant!!!###
+    # ##########################################################
+    url = f'https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/{make}/modelyear/{model_year}?format=json'
+    res = requests.get(url)
+    data = res.json()
+    
+    for item in data['Results']:
+        all_models.append(item['Model_Name'])
+    sorted_models = sorted(all_models)
 
-    flash(f"You selected a {session['model_year']} {session['make']}.")
+    return jsonify(sorted_models)
 
-    return redirect('/model-search')
-
-
+    
 @app.route('/model-search')
 def show_model_search():
     """Search for vehicle models using the NHTSA vehicle API"""

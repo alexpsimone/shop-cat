@@ -2,17 +2,20 @@
 
 {% block title %}Search Menu{% endblock %}
 
-{% block js %}{% endblock %}
+{% block js %}
+    <script src="/static/js/vehicle-search.jsx" type="text/jsx"></script>
+    <script src="http://code.jquery.com/jquery.js"></script>
+{% endblock %}
 
 {% block body %}
 
-<form action="/get-year-make" method="POST">
+<form action="/vehicle-select", method="POST">
 
     <label>Car Model Year:</label>
-        <input name="model_year" type="number" min="1900" max="2020" />
+        <input id="model-year" name="model-year" type="number" min="1900" max="2020" />
     <br />
     <label>Car Make:</label>
-    <select name="make">
+    <select id="make" name="make">
         <option value="">--Please select a Make--</option>
         {% for make in sorted_makes %}
         <option value="{{ make }}">{{ make }}</option>
@@ -20,7 +23,12 @@
         <option value="other">Other (please specify)...</option>
     </select>
     <br />
-    <input type="submit">
+    <label>Car Model:</label>
+    <select id="model-select" name="model" disabled>
+        <option value="">--Please select a Model--</option>
+    </select>
+    <br />
+    <input id="vehicle-submit" type="submit" disabled>
 </form>
 
 {% endblock %}

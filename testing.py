@@ -11,8 +11,10 @@ class FlaskTests(unittest.TestCase):
         self.client = app.test_client()
         app.config['TESTING'] = True
     
+
     # def tearDown(self):
-        """Stuff to do after each test."""
+        # """Stuff to do after each test."""
+    
     
     def test_shopcat_root_route(self):
         """Check that the shopcat root route is rendering properly."""
@@ -20,6 +22,14 @@ class FlaskTests(unittest.TestCase):
         result = self.client.get('/')
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<form action="/new-user" method="POST">', result.data)
+    
+    
+    def test_home_route(self):
+        """Check that the home route is rendering properly."""
+
+        result = self.client.get('/home')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b'<h1>Browse all the available procedures:</h1>', result.data)
 
 if __name__ == "__main__":
     unittest.main()
