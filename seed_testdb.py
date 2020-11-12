@@ -42,6 +42,16 @@ def load_all():
     db.session.add(tool2)
     db.session.add(tool3)
 
+    # Create test parts.
+    part1 = Part(name = 'oil filter', part_img = 'oil_filter.png')
+    part2 = Part(name = 'exhaust gasket', part_img = 'exh_gasket.png')
+    part3 = Part(name = 'drain plug')
+    part4 = Part(name = '10mm bolt', part_img = 'bolt.jpg')
+    db.session.add(part1)
+    db.session.add(part2)
+    db.session.add(part3)
+    db.session.add(part4)
+
     db.session.commit()
 
 
