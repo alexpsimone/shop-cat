@@ -30,7 +30,7 @@ class Procedure(db.Model):
     proc_id = db.Column(db.Integer,
                         primary_key = True,
                         autoincrement = True)
-    title = db.Column(db.String(50), nullable = False, unique = True)
+    title = db.Column(db.String(50), nullable = False)
     description = db.Column(db.Text, default = '')
     label = db.Column(db.String(50), default = '')
     img = db.Column(db.String, default = '')

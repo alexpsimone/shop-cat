@@ -1,8 +1,7 @@
 from random import randint, choice
 from server import app
-from model import db, connect_to_db, User, Car, Part, Tool, Procedure
-
-import crud
+from model import db, connect_to_db, Car, Part, PartNum, Procedure, Tool, User
+from model import ProcedureCar, ProcedurePart, ProcedureTool
 
 def load_all():
     """Load all the things."""
@@ -80,8 +79,33 @@ def load_all():
 
     db.session.commit()
 
- 
-    
+    # Create test procedures.
+    procedure1 = Procedure(title = 'Oil Change',
+                            description = 'How to change your oil.',
+                            label = 'basic care',
+                            img = 'oil_change.jpg',
+                            user = user1)
+    procedure2 = Procedure(title = 'Tire Rotation',
+                            description = 'Swapping across corners.',
+                            label = 'basic care',
+                            img = 'tire_rotate.jpg',
+                            user = user2)
+    procedure3 = Procedure(title = 'Engine Swap',
+                            description = '''You'll need a few hours.''',
+                            label = 'major overhaul',
+                            img = 'engine.jpg',
+                            user = user3)
+    procedure4 = Procedure(title = 'Exhaust Gasket Replacement',
+                            description = 'For when you hear a rattle.',
+                            label = 'old car care',
+                            img = 'exhaust.jpg',
+                            user = user4)
+    db.session.add(procedure1)
+    db.session.add(procedure2)
+    db.session.add(procedure3)
+    db.session.add(procedure4)
+
+    db.session.commit()
 
 
         
