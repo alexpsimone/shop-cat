@@ -119,12 +119,13 @@ def apply_year_make():
     model_year = request.form.get('model-year')
     make = request.form.get('make')
     model = request.form.get('model')
-    print('********************',model_year,make, model)
+
     session['model_year'] = model_year
     session['make'] = make
     session['model'] = model
-    print('********************',session['model_year'],session['make'], session['model'])
-    flash(f'{model_year} {make} {model}')
+        
+    flash(f"""This procedure is written for a {session['model_year']} 
+        {session['make']} {session['model']}.""")
 
     return redirect('/write-procedure')
 
@@ -148,28 +149,6 @@ def get_all_models():
     sorted_models = sorted(all_models)
 
     return jsonify(sorted_models)
-
-    
-@app.route('/model-search')
-def show_model_search():
-    """Search for vehicle models using the NHTSA vehicle API"""
-
-    model_year = session['model_year']
-    make = session['make']
-    all_models = []
-
-    # ##########################################################
-    # ###TODO: Figure out how to make this PEP-8 compliant!!!###
-    # ##########################################################
-    url = f'https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/{make}/modelyear/{model_year}?format=json'
-    res = requests.get(url)
-    data = res.json()
-
-    for item in data['Results']:
-        all_models.append(item['Model_Name'])
-    sorted_models = sorted(all_models)
-
-    return render_template('model-search.html', sorted_models = sorted_models)
 
 
 @app.route('/get-model', methods = ["POST"])
