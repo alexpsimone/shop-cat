@@ -127,7 +127,7 @@ def apply_year_make():
     flash(f"""This procedure is written for a {session['model_year']} 
         {session['make']} {session['model']}.""")
 
-    return redirect('/write-procedure')
+    return redirect('/write-procedure-2')
 
 
 @app.route('/get-models.json')
