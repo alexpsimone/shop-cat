@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Search for a Vehicle{% endblock %}
+
+{% block js %}
+    <script src="/static/js/vehicle-search.jsx" type="text/jsx"></script>
+    <script src="http://code.jquery.com/jquery.js"></script>
+{% endblock %}
+
+{% block body %}
+
+<form action="/vehicle-select", method="POST">
+
+    <label>Car Model Year:</label>
+        <input id="model-year" name="model-year" type="number" min="1900" max="2020" />
+    <br />
+    <label>Car Make:</label>
+    <select id="make" name="make">
+        <option value="">--Please select a Make--</option>
+        {% for make in sorted_makes %}
+        <option value="{{ make }}">{{ make }}</option>
+        {% endfor %}
+        <option value="other">Other (please specify)...</option>
+    </select>
+    <br />
+    <label>Car Model:</label>
+    <select id="model-select" name="model" disabled>
+        <option value="">--Please select a Model--</option>
+    </select>
+    <br />
+    <input id="vehicle-submit" type="submit" disabled>
+</form>
+
+{% endblock %}
