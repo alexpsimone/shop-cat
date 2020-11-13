@@ -12,6 +12,7 @@ os.system('python3 seed_testdb.py')
 class FlaskTests(unittest.TestCase):
     """Tests for the Shop Cat site."""
 
+
     def setUp(self):
         """Stuff to do before every test."""
 
@@ -40,6 +41,7 @@ class FlaskTests(unittest.TestCase):
 class ShopCatTestsDatabase(unittest.TestCase):
     """Flask tests that use the database."""
 
+
     def setUp(self):
         """Stuff to do before every test."""
 
@@ -49,6 +51,7 @@ class ShopCatTestsDatabase(unittest.TestCase):
         # Connect to test database
         connect_to_db(app, db_uri = "postgresql:///testdb")
         db.create_all()
+
 
     def tearDown(self):
         """Do at end of every test."""
@@ -73,9 +76,6 @@ class ShopCatTestsDatabase(unittest.TestCase):
         self.assertIn(b'<form action="/build-procedure", method="POST">',
                              result.data)
 
-    #########################################################################
-    ### TODO: Add this function, figure out how to incorporate variable route.
-    #########################################################################
     
     def test_procedure_by_proc_id_route(self):
         """Check that the procedure view route is rendering properly."""
