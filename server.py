@@ -16,7 +16,10 @@ app.jinja_env.undefined = StrictUndefined
 def show_login():
     """Render the landing/login page."""
 
-    return render_template('shopcat.html')
+    if session['current_user']:
+        return redirect('/home')
+    else:
+        return render_template('shopcat.html')
 
 
 @app.route('/new-user', methods=['POST'])
