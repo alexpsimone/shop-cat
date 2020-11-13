@@ -25,6 +25,7 @@ class FlaskTests(unittest.TestCase):
         result = self.client.get('/')
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<form action="/new-user" method="POST">', result.data)
+        self.assertNotIn(b'<form action="/existing-user"', result.data)
     
 
     def test_login_route(self):
