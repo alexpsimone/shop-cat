@@ -89,9 +89,16 @@ function addStep (evt) {
     NUM_STEPS += 1;
 
     $('#step-list').append(`<p>Step ${NUM_STEPS}: </p>
-                            <textarea id="step-${NUM_STEPS}" 
-                            name="step_text_${NUM_STEPS}"></textarea>
-                            <br />`);
+                            <textarea name="step_text_${NUM_STEPS}"></textarea>
+                            <br />
+                            <input type="checkbox" id="ref_${NUM_STEPS}"
+                            name="ref_${NUM_STEPS}" />
+                            <label for="ref_${NUM_STEPS}">Reference?</label>
+                            <br />
+                            <label for="ref_text_${NUM_STEPS}">
+                            Copy reference URL here: </label>
+                            <input type="text" name="ref_text_${NUM_STEPS}" />`
+                            );
 
     $('#NUM_STEPS').replaceWith(`<input name ="NUM_STEPS" id="NUM_STEPS" 
         type="number" value="${NUM_STEPS}" style="display: none;"/>`);
