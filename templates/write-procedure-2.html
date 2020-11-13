@@ -32,15 +32,15 @@
     <br />
     <input id="vehicle-submit" type="submit" disabled>
 </form>
-
+<p id="selected-vehicle">Select a vehicle to continue.</p>
 <form action="/build-procedure", method="POST">
 
     <br /><label>Procedure Name: </label>
-    <input type="text" name="proc_title" required disabled/>
+    <input id="proc-title" type="text" name="proc_title" required disabled/>
     <br /><label>Procedure Label (optional): </label>
-    <input type="text" name="proc_label" required disabled/>
+    <input id="proc-label" type="text" name="proc_label" required disabled/>
     <br /><label>Upload an Image (Optional)</label>
-    <input type="file" name="proc_img" />
+    <input id="proc-img" type="file" name="proc_img" disabled/>
     <br />
 
     <p>Tool List Ajax</p>
@@ -51,12 +51,12 @@
     <br />
 
     <br /><label>Procedure Text: </label>
-    <textarea name="proc_text" required disabled></textarea>
+    <textarea id="proc-text" name="proc_text" required disabled></textarea>
 
     <input name="NUM_TOOLS" id="NUM_TOOLS" type="number" value="0" style="display: none;"/>
     <input name="NUM_PARTS" id="NUM_PARTS" type="number" value="0" style="display: none;"/>
 
-    <br /><input type="submit" disabled></input>
+    <br /><input id="proc-submit" type="submit" disabled></input>
 </form>
 <br />
 <button id="tool-adder" disabled>Add a Tool</button>

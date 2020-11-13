@@ -32,5 +32,32 @@ function getModels (evt) {
     $('#vehicle-submit').attr('disabled', false);
 }
 
+function submitVehicle (evt) {
+
+    evt.preventDefault();
+
+    const formData = {
+        make: $('#make').val(),
+        modelYear: $('#model-year').val(),
+        model: $('#model-select').val()
+    };
+
+    $.post('/vehicle-select-2.json', formData, (res) => {
+        $('#selected-vehicle').replaceWith(`<p>You selected a 
+                                            ${formData.modelYear} 
+                                            ${formData.make} 
+                                            ${formData.model}.</p>`)
+    });
+
+    $('#proc-title').attr('disabled', false);
+    $('#proc-label').attr('disabled', false);
+    $('#proc-img').attr('disabled', false);
+    $('#proc-text').attr('disabled', false);
+    $('#proc-submit').attr('disabled', false);
+    $('#tool-adder').attr('disabled', false);
+    $('#part-adder').attr('disabled', false);
+}
 
 $('#make').on('change', getModels);
+$('#vehicle-submit').on('click', submitVehicle);
+

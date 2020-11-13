@@ -193,6 +193,7 @@ def write_procedure():
                             parts = parts)
 
 
+
 @app.route('/write-procedure-2')
 def write_procedure_2():
     """Render the write-procedure template using existing Part/Tool objects."""
@@ -213,6 +214,22 @@ def write_procedure_2():
                             tools = tools,
                             parts = parts,
                             sorted_makes = sorted_makes)
+
+@app.route('/vehicle-select-2.json', methods=['POST'])
+def select_vehicle_2():
+
+    model_year = request.form.get('modelYear')
+    make = request.form.get('make')
+    model = request.form.get('model')
+
+    vehicle_specs = [model_year, make, model]
+
+    session['model_year'] = model_year
+    session['make'] = make
+    session['model'] = model
+    print('***************', session['model'])
+    
+    return jsonify(vehicle_specs)
 
 
 @app.route('/build-procedure', methods=["POST"])
