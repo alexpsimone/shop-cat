@@ -2,6 +2,7 @@
 
 let NUM_TOOLS = 0;
 let NUM_PARTS = 0;
+let NUM_STEPS = 0;
 
 
 function getTools (evt) {
@@ -80,5 +81,23 @@ function getParts (evt) {
     });   
 }
 
+
+function addStep (evt) {
+    
+    evt.preventDefault();
+        
+    NUM_STEPS += 1;
+
+    $('#step-list').append(`<p>Step ${NUM_STEPS}: </p>
+                            <textarea id="step-${NUM_STEPS}" 
+                            name="step_text_${NUM_STEPS}"></textarea>
+                            <br />`);
+
+    $('#NUM_STEPS').replaceWith(`<input name ="NUM_STEPS" id="NUM_STEPS" 
+        type="number" value="${NUM_STEPS}" style="display: none;"/>`);
+ 
+}
+
 $('#tool-adder').on('click', getTools);
 $('#part-adder').on('click', getParts);
+$('#step-adder').on('click', addStep);

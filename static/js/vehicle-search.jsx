@@ -56,6 +56,7 @@ function submitVehicle (evt) {
     $('#proc-submit').attr('disabled', false);
     $('#tool-adder').attr('disabled', false);
     $('#part-adder').attr('disabled', false);
+    $('#step-adder').attr('disabled', false);
 }
 
 $('#make').on('change', getModels);

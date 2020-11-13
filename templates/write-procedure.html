@@ -43,18 +43,22 @@
     <input id="proc-img" type="file" name="proc_img" disabled/>
     <br />
 
-    <p>Tool List Ajax</p>
+    <h3>Tool List</h3>
     <div id="tool-list"></div>
     <br />
-    <p>Part List Ajax</p>
+    <h3>Parts List</h3>
     <div id="part-list"></div>
+    <br />
+    <h3>Step List</h3>
+    <div id="step-list"></div>
     <br />
 
     <br /><label>Procedure Text: </label>
-    <textarea id="proc-text" name="proc_text" required disabled></textarea>
+    <textarea id="proc-text" name="proc_text" disabled></textarea>
 
     <input name="NUM_TOOLS" id="NUM_TOOLS" type="number" value="0" style="display: none;"/>
     <input name="NUM_PARTS" id="NUM_PARTS" type="number" value="0" style="display: none;"/>
+    <input name="NUM_STEPS" id="NUM_STEPS" type="number" value="0" style="display: none;"/>
 
     <br /><input id="proc-submit" type="submit" disabled></input>
 </form>
@@ -62,6 +66,8 @@
 <button id="tool-adder" disabled>Add a Tool</button>
     
 <button id="part-adder" disabled>Add a Part</button>
+
+<button id="step-adder" disabled>Add a Step</button>
 
 
 {% endblock %}
