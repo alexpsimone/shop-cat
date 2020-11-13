@@ -81,22 +81,18 @@ def load_all():
 
     # Create test procedures.
     procedure1 = Procedure(title = 'Oil Change',
-                            description = 'How to change your oil.',
                             label = 'basic care',
                             img = 'oil_change.jpg',
                             user = user1)
     procedure2 = Procedure(title = 'Tire Rotation',
-                            description = 'Swapping across corners.',
                             label = 'basic care',
                             img = 'tire_rotate.jpg',
                             user = user2)
     procedure3 = Procedure(title = 'Engine Swap',
-                            description = '''You'll need a few hours.''',
                             label = 'major overhaul',
                             img = 'engine.jpg',
                             user = user3)
     procedure4 = Procedure(title = 'Exhaust Gasket Replacement',
-                            description = 'For when you hear a rattle.',
                             label = 'old car care',
                             img = 'exhaust.jpg',
                             user = user4)
@@ -106,6 +102,30 @@ def load_all():
     db.session.add(procedure4)
 
     db.session.commit()
+
+    # Add a Step object for each Procedure.
+    step1 = Step(order_num = 1, 
+                reference = 'http://www.google.com',
+                step_text = 'Here is some text.'
+                proc = procedure1
+                )
+    step2 = Step(order_num = 1,
+                step_text = 'Here is some text.'
+                proc = procedure2
+                )
+    step3 = Step(order_num = 1,
+                step_text = 'Here is some text.'
+                proc = procedure3
+                )
+    step4 = Step(order_num = 1, 
+                reference = 'http://www.google.com',
+                step_text = 'Here is some text.'
+                proc = procedure4
+                )
+    db.session.add(step1)
+    db.session.add(step2)
+    db.session.add(step3)
+    db.session.add(step4)
 
     # Add a Car to each Procedure by creating a ProcedureCar object.
     proc_car_1 = ProcedureCar(proc = procedure1, car = car1)
