@@ -102,11 +102,10 @@ def create_procedure_tool(proc, tool):
     return proc_tool
 
 
-def create_tool(name, description='empty', tool_img='empty'):
+def create_tool(name, tool_img='empty'):
     """Create and return a tool."""
 
     tool = Tool(name = name,
-                description = description,
                 tool_img = tool_img
                 )
 
