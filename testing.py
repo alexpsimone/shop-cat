@@ -25,6 +25,15 @@ class FlaskTests(unittest.TestCase):
         result = self.client.get('/')
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<form action="/new-user" method="POST">', result.data)
+    
+
+    def test_login_route(self):
+        """Check that the login route renders properly."""
+
+        result = self.client.get('/login')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b'<form action="/existing-user"', result.data)
+        self.assertNotIn(b'<form action="/new-user"', result.data)
 
 
 class ShopCatTestsDatabase(unittest.TestCase):
