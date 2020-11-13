@@ -102,6 +102,17 @@ def create_procedure_tool(proc, tool):
     return proc_tool
 
 
+def create_step(order_num, reference, text):
+    """Create and return a Step object."""
+
+    step = Step(order_num = order_num, reference = reference, text = text)
+
+    db.session.add(step)
+    db.session.commit()
+
+    return step
+
+
 def create_tool(name, tool_img='empty'):
     """Create and return a tool."""
 
