@@ -44,10 +44,10 @@
             {{ step.step_text }}
             {% if step.reference %}
                 <br />
-                Reference: {{ step.reference }}
+                Reference:
+                <a href="{{ step.reference }}">{{ step.reference }}</a>
             {% endif %}
         </li>
-
         {% endfor %}
     </ol>
 
