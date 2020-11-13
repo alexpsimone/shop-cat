@@ -57,7 +57,7 @@ class Step(db.Model):
     step_text = db.Column(db.Text, nullable = False)
     proc_id = db.Column(db.Integer, db.ForeignKey('procedures.proc_id'))
 
-    proc = db.relationship('Procedure', backref = 'procedure_part')
+    proc = db.relationship('Procedure', backref = 'steps')
 
     def __repr__(self):
         return f'''<Step step_id={self.step_id} proc={self.proc} 

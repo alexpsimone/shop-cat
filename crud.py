@@ -1,4 +1,4 @@
-from model import db, connect_to_db, User, Procedure, Car, Part, Tool
+from model import db, connect_to_db, User, Procedure, Car, Part, Tool, Step
 from model import PartNum, ProcedureCar, ProcedurePart, ProcedureTool
 
 
@@ -102,10 +102,13 @@ def create_procedure_tool(proc, tool):
     return proc_tool
 
 
-def create_step(order_num, reference, text):
+def create_step(order_num, step_text, proc, reference = 'No Reference Provided'):
     """Create and return a Step object."""
 
-    step = Step(order_num = order_num, reference = reference, text = text)
+    step = Step(order_num = order_num, 
+                step_text = step_text, 
+                proc = proc,
+                reference = reference)
 
     db.session.add(step)
     db.session.commit()
