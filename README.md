@@ -66,7 +66,7 @@ Therefore, Users are connected to these things via their key in the Contribution
 - [x] Allow user logins.
 - [x] Allow user to add any number of required tools and parts to their procedure.
 - [x] Allow user to add discrete steps to their procedure.
-- [ ] User will be able to link to references to specific steps in their procedures.
+- [x] User will be able to link to references to specific steps in their procedures.
     - [ ] References can link to YouTube videos using the YouTube API.
 - [ ] User will be able to create general informational pages that are linked to specific cars, not procedures.
 
