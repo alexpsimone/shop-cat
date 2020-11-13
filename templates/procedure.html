@@ -40,7 +40,14 @@
     <p>Here are the steps in the procedure:</p>
     <ol>
         {% for step in steps %}
-        <li>{{ step.step_text }}</li>
+        <li>
+            {{ step.step_text }}
+            {% if step.reference %}
+                <br />
+                Reference: {{ step.reference }}
+            {% endif %}
+        </li>
+
         {% endfor %}
     </ol>
     <p>{{ procedure.description }}</p>

@@ -219,8 +219,13 @@ def build_procedure():
     for step in range(1, (NUM_STEPS + 1)):
 
         step_req = request.form.get(f'step_text_{step}')
-        new_step = crud.create_step(step, step_req, procedure)
-        
+        ref_check = request.form.get(f'ref_{step}')
+        if ref_check:
+            ref_text = request.form.get(f'ref_text_{step}')
+            new_step = crud.create_step(step, step_req, procedure, ref_text)
+        else:
+            new_step = crud.create_step(step, step_req, procedure)
+
     """
     Check if the user selected an existing car.
     If they did, then keep it handy, and don't create a new Car object.
