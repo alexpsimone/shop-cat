@@ -95,23 +95,6 @@ def show_procedure_page(proc_id):
                             proc_num_parts = proc_num_parts)
 
 
-@app.route('/vehicle-search')
-def show_year_make_search():
-    """Render the vehicle year/make search menu."""
-
-    all_makes = []
-    url = 'https://vpic.nhtsa.dot.gov/api/vehicles/GetAllMakes?format=json'
-    res = requests.get(url)
-    data = res.json()
-
-    for item in data['Results']:
-        all_makes.append(item['Make_Name'])
-    sorted_makes = sorted(all_makes)
-
-    return render_template('vehicle-search.html', 
-                            sorted_makes = sorted_makes)
-
-
 @app.route('/vehicle-select', methods=['POST'])
 def apply_year_make():
     """Retrieve a vehicle make using NHTSA vehicle API, save to session."""
@@ -151,18 +134,6 @@ def get_all_models():
     return jsonify(sorted_models)
 
 
-@app.route('/get-model', methods = ["POST"])
-def model_search():
-    """Send selected vehicle info as a flash message."""
-    
-    session['model'] = request.form.get('model')
-
-    flash(f"""This procedure is written for a {session['model_year']} 
-            {session['make']} {session['model']}.""")
-
-    return redirect('/write-procedure')
-
-
 @app.route('/get-tools.json')
 def get_all_tools():
     """Get all tools from the shopcat database and return as JSON."""
@@ -179,19 +150,6 @@ def get_all_parts():
     parts = [part.name for part in crud.get_parts()]
 
     return jsonify(parts)
-
-
-@app.route('/write-procedure')
-def write_procedure():
-    """Render the write-procedure template using existing Part/Tool objects."""
-
-    tools = crud.get_tools()
-    parts = crud.get_parts()
-
-    return render_template('write-procedure.html',
-                            tools = tools,
-                            parts = parts)
-
 
 
 @app.route('/write-procedure-2')
@@ -214,6 +172,7 @@ def write_procedure_2():
                             tools = tools,
                             parts = parts,
                             sorted_makes = sorted_makes)
+
 
 @app.route('/vehicle-select-2.json', methods=['POST'])
 def select_vehicle_2():
