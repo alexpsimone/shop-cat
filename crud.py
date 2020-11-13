@@ -187,6 +187,12 @@ def get_proc_car_by_proc_id(proc_id):
     return ProcedureCar.query.filter_by(proc_id = proc_id).all()
 
 
+def get_steps_by_proc_id(proc_id):
+    """Return all Step objects associated with a given proc_id."""
+    
+    return Step.query.filter_by(proc_id = proc_id).all()
+
+
 def get_tools():
     """Return all tools."""
 

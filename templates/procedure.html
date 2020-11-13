@@ -37,6 +37,12 @@
         {% endfor %}
     </ul>
 
+    <p>Here are the steps in the procedure:</p>
+    <ol>
+        {% for step in steps %}
+        <li>{{ step.step_text }}</li>
+        {% endfor %}
+    </ol>
     <p>{{ procedure.description }}</p>
 
     <p>This procedure was created by {{ procedure.user.nickname }}.</p>

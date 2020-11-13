@@ -83,14 +83,17 @@ def show_procedure_page(proc_id):
     proc_car_obj = crud.get_proc_car_by_proc_id(proc_id)
     proc_part_obj = crud.get_parts_by_proc_id(proc_id)
     proc_tool_obj = crud.get_tools_by_proc_id(proc_id)
+    steps = crud.get_steps_by_proc_id(proc_id)
     proc_num_tools = crud.num_tools_by_proc(proc_id)
     proc_num_parts = crud.num_parts_by_proc(proc_id)
+    
 
     return render_template('procedure.html',
                             procedure = procedure,
                             proc_car_obj = proc_car_obj,
                             proc_part_obj = proc_part_obj,
                             proc_tool_obj = proc_tool_obj,
+                            steps = steps,
                             proc_num_tools = proc_num_tools,
                             proc_num_parts = proc_num_parts)
 
