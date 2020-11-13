@@ -44,6 +44,25 @@ class Procedure(db.Model):
         return f'<Procedure proc_id={self.proc_id} title={self.title}>'
 
 
+class Step(db.Model):
+    """A Step in a procedure."""
+
+    __tablename__ = 'steps'
+
+    step_id = db.Column(db.Integer,
+                        primary_key = True,
+                        autoincrement = True)
+    order_num = db.Column(db.Integer, default = 0)
+    reference = db.Column(db.String, default = 'No Reference Provided')
+    step_text = db.Column(db.Text, nullable = False)
+    proc_id = db.Column(db.Integer, db.ForeignKey('procedures.proc_id'))
+
+    proc = db.relationship('Procedure', backref = 'procedure_part')
+
+    def __repr__(self):
+        return f'''<Step step_id={self.step_id} proc={self.proc} 
+                        order_num={self.order_num}>''' 
+    
 class Car(db.Model):
     """A car."""
 
