@@ -94,7 +94,6 @@ def show_procedure_page(proc_id):
         proc_num_tools = crud.num_tools_by_proc(proc_id)
         proc_num_parts = crud.num_parts_by_proc(proc_id)
         
-
         return render_template('procedure.html',
                                 procedure = procedure,
                                 proc_car_obj = proc_car_obj,
@@ -178,7 +177,10 @@ def select_vehicle():
     make = request.form.get('make')
     model = request.form.get('model')
 
-    vehicle_specs = [model_year, make, model]
+    vehicle_specs = {'model_year': model_year,
+                    'make': make,
+                    'model': model
+                    }
 
     session['model_year'] = model_year
     session['make'] = make
