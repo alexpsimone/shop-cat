@@ -1,6 +1,6 @@
 import unittest
 from server import app
-from model import db, connect_to_db
+from model import db, connect_to_db, Procedure
 import os
 
 # Drop and re-create the test database.
@@ -77,8 +77,20 @@ class ShopCatTestsDatabase(unittest.TestCase):
     ### TODO: Add this function, figure out how to incorporate variable route.
     #########################################################################
     
-    # def test_procedure_by_proc_id_route(self):
-        """Check that the write-procedure route is rendering properly."""
+    def test_procedure_by_proc_id_route(self):
+        """Check that the procedure view route is rendering properly."""
+
+        all_procedures = Procedure.query.all()
+        
+        for procedure in all_procedures:
+            result = self.client.get(f'/procedure/{procedure.proc_id}')
+            self.assertEqual(result.status_code, 200)
+            self.assertIn(f'<h1>{procedure.title}</h1>', result.data)
+            self.assertNotIn(b'<form action="/vehicle-select"', result.data)
+
+
+
+
 
 
 if __name__ == "__main__":
