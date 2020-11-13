@@ -16,7 +16,7 @@ app.jinja_env.undefined = StrictUndefined
 def show_login():
     """Render the landing/login page."""
 
-    if session['current_user']:
+    if session:
         return redirect('/home')
     else:
         return render_template('shopcat.html')
@@ -74,32 +74,37 @@ def login_page():
 def show_homepage():
     """Render the homepage."""
 
-    procedures = crud.get_procedures()
-
-    return render_template('homepage.html', procedures = procedures)
+    if session:
+        procedures = crud.get_procedures()
+        return render_template('homepage.html', procedures = procedures)
+    else:
+        return redirect('/')
 
 
 @app.route('/procedure/<proc_id>')
 def show_procedure_page(proc_id):
     """Render a procedure page."""
 
-    procedure = crud.get_procedure_by_id(proc_id)
-    proc_car_obj = crud.get_proc_car_by_proc_id(proc_id)
-    proc_part_obj = crud.get_parts_by_proc_id(proc_id)
-    proc_tool_obj = crud.get_tools_by_proc_id(proc_id)
-    steps = crud.get_steps_by_proc_id(proc_id)
-    proc_num_tools = crud.num_tools_by_proc(proc_id)
-    proc_num_parts = crud.num_parts_by_proc(proc_id)
-    
+    if session:
+        procedure = crud.get_procedure_by_id(proc_id)
+        proc_car_obj = crud.get_proc_car_by_proc_id(proc_id)
+        proc_part_obj = crud.get_parts_by_proc_id(proc_id)
+        proc_tool_obj = crud.get_tools_by_proc_id(proc_id)
+        steps = crud.get_steps_by_proc_id(proc_id)
+        proc_num_tools = crud.num_tools_by_proc(proc_id)
+        proc_num_parts = crud.num_parts_by_proc(proc_id)
+        
 
-    return render_template('procedure.html',
-                            procedure = procedure,
-                            proc_car_obj = proc_car_obj,
-                            proc_part_obj = proc_part_obj,
-                            proc_tool_obj = proc_tool_obj,
-                            steps = steps,
-                            proc_num_tools = proc_num_tools,
-                            proc_num_parts = proc_num_parts)
+        return render_template('procedure.html',
+                                procedure = procedure,
+                                proc_car_obj = proc_car_obj,
+                                proc_part_obj = proc_part_obj,
+                                proc_tool_obj = proc_tool_obj,
+                                steps = steps,
+                                proc_num_tools = proc_num_tools,
+                                proc_num_parts = proc_num_parts)
+    else:
+        return redirect('/')
 
 
 @app.route('/vehicle-select', methods=['POST'])
@@ -163,22 +168,25 @@ def get_all_parts():
 def write_procedure():
     """Render the write-procedure template using existing Part/Tool objects."""
 
-    tools = crud.get_tools()
-    parts = crud.get_parts()
+    if session:
+        tools = crud.get_tools()
+        parts = crud.get_parts()
 
-    all_makes = []
-    url = 'https://vpic.nhtsa.dot.gov/api/vehicles/GetAllMakes?format=json'
-    res = requests.get(url)
-    data = res.json()
+        all_makes = []
+        url = 'https://vpic.nhtsa.dot.gov/api/vehicles/GetAllMakes?format=json'
+        res = requests.get(url)
+        data = res.json()
 
-    for item in data['Results']:
-        all_makes.append(item['Make_Name'])
-    sorted_makes = sorted(all_makes)
+        for item in data['Results']:
+            all_makes.append(item['Make_Name'])
+        sorted_makes = sorted(all_makes)
 
-    return render_template('write-procedure.html',
-                            tools = tools,
-                            parts = parts,
-                            sorted_makes = sorted_makes)
+        return render_template('write-procedure.html',
+                                tools = tools,
+                                parts = parts,
+                                sorted_makes = sorted_makes)
+    else:
+        return redirect('/')
 
 
 @app.route('/vehicle-select.json', methods=['POST'])
