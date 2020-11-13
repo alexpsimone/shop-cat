@@ -107,24 +107,6 @@ def show_procedure_page(proc_id):
         return redirect('/')
 
 
-@app.route('/vehicle-select', methods=['POST'])
-def apply_year_make():
-    """Retrieve a vehicle make using NHTSA vehicle API, save to session."""
-
-    model_year = request.form.get('model-year')
-    make = request.form.get('make')
-    model = request.form.get('model')
-
-    session['model_year'] = model_year
-    session['make'] = make
-    session['model'] = model
-        
-    flash(f"""This procedure is written for a {session['model_year']} 
-        {session['make']} {session['model']}.""")
-
-    return redirect('/write-procedure')
-
-
 @app.route('/get-models.json')
 def get_all_models():
     
@@ -201,7 +183,7 @@ def select_vehicle():
     session['model_year'] = model_year
     session['make'] = make
     session['model'] = model
-    print('***************', session['model'])
+    print('***************', session['model_year'], session['make'], session['model'])
     
     return jsonify(vehicle_specs)
 
