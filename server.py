@@ -25,6 +25,7 @@ def new_user():
 
     username = request.form.get('username')
     password = request.form.get('password')
+    nickname = request.form.get('nickname')
 
     user = crud.get_user_by_username(username)
 
@@ -32,7 +33,7 @@ def new_user():
         flash('A user already exists with that username.')
         return redirect('/')
     else:
-        crud.create_user(username, password)
+        crud.create_user(username, password, nickname)
         flash(f'New account created. Please use your credentials to log in.')
         return redirect('/login') 
 
