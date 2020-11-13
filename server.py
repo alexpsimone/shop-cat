@@ -110,7 +110,7 @@ def apply_year_make():
     flash(f"""This procedure is written for a {session['model_year']} 
         {session['make']} {session['model']}.""")
 
-    return redirect('/write-procedure-2')
+    return redirect('/write-procedure')
 
 
 @app.route('/get-models.json')
@@ -152,8 +152,8 @@ def get_all_parts():
     return jsonify(parts)
 
 
-@app.route('/write-procedure-2')
-def write_procedure_2():
+@app.route('/write-procedure')
+def write_procedure():
     """Render the write-procedure template using existing Part/Tool objects."""
 
     tools = crud.get_tools()
@@ -168,14 +168,14 @@ def write_procedure_2():
         all_makes.append(item['Make_Name'])
     sorted_makes = sorted(all_makes)
 
-    return render_template('write-procedure-2.html',
+    return render_template('write-procedure.html',
                             tools = tools,
                             parts = parts,
                             sorted_makes = sorted_makes)
 
 
-@app.route('/vehicle-select-2.json', methods=['POST'])
-def select_vehicle_2():
+@app.route('/vehicle-select.json', methods=['POST'])
+def select_vehicle():
 
     model_year = request.form.get('modelYear')
     make = request.form.get('make')

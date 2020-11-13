@@ -42,7 +42,7 @@ function submitVehicle (evt) {
         model: $('#model-select').val()
     };
 
-    $.post('/vehicle-select-2.json', formData, (res) => {
+    $.post('/vehicle-select.json', formData, (res) => {
         $('#selected-vehicle').replaceWith(`<p>You selected a 
                                             ${formData.modelYear} 
                                             ${formData.make} 
