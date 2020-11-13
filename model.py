@@ -31,13 +31,10 @@ class Procedure(db.Model):
                         primary_key = True,
                         autoincrement = True)
     title = db.Column(db.String(50), nullable = False)
-    # description = db.Column(db.Text, default = '')
     label = db.Column(db.String(50), default = '')
     img = db.Column(db.String, default = '')
-    # page_id = db.Column(db.Integer, db.ForeignKey('pages.page_id'))
     created_by_user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
-    # page = db.relationship('Page', backref = 'procedures')
     user = db.relationship('User', backref = 'procedures')
 
     def __repr__(self):
