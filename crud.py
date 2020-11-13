@@ -53,15 +53,14 @@ def create_part_num(manuf, part_num, is_oem_part, part):
     return part_num
 
 
-def create_procedure(title, description, label, img, user):
+def create_procedure(title, label, img, user):
     """Create and return a procedure."""
 
     procedure = Procedure(title = title,
-                description = description,
-                label = label,
-                img = img,
-                user = user,
-                )
+                            label = label,
+                            img = img,
+                            user = user
+                            )
 
     db.session.add(procedure)
     db.session.commit()

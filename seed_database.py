@@ -65,11 +65,10 @@ for user in range(5):
 
         # Create 3 procedures for each new user.
         title = f'title{user.user_id}_{x}'
-        description = f'description{user.user_id}_{x}'
         label = f'label{user.user_id}_{x}'
         img = 'nopath'
 
-        procedure = crud.create_procedure(title, description, label, img, user)
+        procedure = crud.create_procedure(title, label, img, user)
 
         # Randomly assign a car from the garage to each procedure.
         car_num = randint(0, 9)
