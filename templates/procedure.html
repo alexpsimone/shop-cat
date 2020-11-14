@@ -57,7 +57,9 @@
         <p>This procedure was created by {{ procedure.user.username }}.</p>
     {% endif %}
 
-    <p>Click <a href = "/edit-procedure">here</a> to edit this procedure.</p>
-    <a href="/home">Return Home</a>
+    <form action="/edit-procedure">
+        <input type="submit" value ="Edit this procedure"/>
+    </form>
     
+    <a href="/home">Return Home</a>
 {% endblock %}

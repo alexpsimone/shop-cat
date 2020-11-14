@@ -94,9 +94,21 @@ for user in range(5):
             proc_part = crud.create_procedure_part(procedure, part)
 
         # Create 3 Steps for each Procedure.
-        crud.create_step(1, f'Procedure_{procedure.proc_id}_step1', procedure)
-        crud.create_step(2, f'Procedure_{procedure.proc_id}_step2', procedure)
-        crud.create_step(3, f'Procedure_{procedure.proc_id}_step3', procedure)
+        crud.create_step(1, 
+                        f'Procedure_{procedure.proc_id}_step1',
+                        procedure,
+                        'No Ref Provided',
+                        'toolbox.jpg')
+        crud.create_step(2, 
+                        f'Procedure_{procedure.proc_id}_step2',
+                        procedure,
+                        'No Ref Provided',
+                        'toolbox.jpg')
+        crud.create_step(3, 
+                        f'Procedure_{procedure.proc_id}_step3',
+                        procedure,
+                        'No Ref Provided',
+                        'toolbox.jpg')
 
 
 
