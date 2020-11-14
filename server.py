@@ -222,20 +222,56 @@ def build_procedure():
                                         user
                                         )
 
+    """
+    For each step added by the user, create a Step object.
+    Check to see if reference or image checkboxes were selecteed.
+    If they were, then look to the corresponding input fields for data.
+    Add image and reference info to the Step objects as required.
+    """
     NUM_STEPS = int(request.form.get('NUM_STEPS'))
 
-    ##################################################################
-    ## TODO: Clean this up, reference not saving/rendering properly.
-    ##################################################################
     for step in range(1, (NUM_STEPS + 1)):
 
-        step_req = request.form.get(f'step_text_{step}')
+        step_text = request.form.get(f'step_text_{step}')
         ref_check = request.form.get(f'ref_{step}')
+        img_check = request.form.get(f'img_{step}')
+        
         if ref_check:
             ref_text = request.form.get(f'ref_text_{step}')
-            new_step = crud.create_step(step, step_req, procedure, ref_text)
+            if img_check:
+                step_img = request.form.get(f'img_file_{step}')
+                if step_img == '':
+                    step_img = 'toolbox.jpg'
+                new_step = crud.create_step(step, 
+                                            step_text, 
+                                            procedure, 
+                                            ref_text,
+                                            step_img)
+            else:
+                step_img = 'toolbox.jpg'
+                new_step = crud.create_step(step, 
+                                            step_text, 
+                                            procedure, 
+                                            ref_text, 
+                                            step_img)      
         else:
-            new_step = crud.create_step(step, step_req, procedure)
+            ref_text = 'No Ref Provided'
+            if img_check:
+                step_img = request.form.get(f'img_file_{step}')
+                if step_img == '':
+                    step_img = 'toolbox.jpg'
+                new_step = crud.create_step(step, 
+                                            step_text, 
+                                            procedure,
+                                            ref_text,
+                                            step_img)
+            else:
+                step_img = 'toolbox.jpg'
+                new_step = crud.create_step(step, 
+                                            step_text, 
+                                            procedure, 
+                                            ref_text, 
+                                            step_img)
 
     """
     Check if the user selected an existing car.

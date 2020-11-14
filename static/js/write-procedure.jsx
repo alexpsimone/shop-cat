@@ -103,12 +103,12 @@ function addStep (evt) {
                             <br />
                             <input type="checkbox" id="img_${NUM_STEPS}"
                             name="img_${NUM_STEPS}" />
-                            <label for="ref_${NUM_STEPS}">Add an image?</label>
+                            <label for="img_${NUM_STEPS}">Add an image?</label>
                             <br />
-                            <label for="ref_img_${NUM_STEPS}">
+                            <label for="img_file_${NUM_STEPS}">
                             Please select an image. </label>
-                            <input type="file" id="ref_img_${NUM_STEPS}
-                            name="ref_img_${NUM_STEPS}" />
+                            <input type="file" id="img_file_${NUM_STEPS}"
+                            name="img_file_${NUM_STEPS}" />
                             <br />`
                             );
 

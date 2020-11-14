@@ -97,13 +97,15 @@ def create_procedure_tool(proc, tool):
     return proc_tool
 
 
-def create_step(order_num, step_text, proc, reference = 'No Ref Provided'):
+def create_step(order_num, step_text, proc, reference, step_img):
+
     """Create and return a Step object."""
 
     step = Step(order_num = order_num, 
                 step_text = step_text, 
                 proc = proc,
-                reference = reference)
+                reference = reference,
+                step_img = step_img)
 
     db.session.add(step)
     db.session.commit()

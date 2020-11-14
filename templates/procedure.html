@@ -51,8 +51,11 @@
         {% endfor %}
     </ol>
 
-    <p>This procedure was created by {{ procedure.user.nickname }}.</p>
-
+    {% if procedure.user.nickname %}
+        <p>This procedure was created by {{ procedure.user.nickname }}.</p>
+    {% else %}
+        <p>This procedure was created by {{ procedure.user.username }}.</p>
+    {% endif %}
     <a href="/home">Return Home</a>
     
 {% endblock %}
