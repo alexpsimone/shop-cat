@@ -96,8 +96,10 @@ function addStep (evt) {
                             <label for="ref_${NUM_STEPS}">Reference?</label>
                             <br />
                             <label for="ref_text_${NUM_STEPS}">
-                            Copy reference URL here: </label>
-                            <input type="text" name="ref_text_${NUM_STEPS}" />`
+                            Reference URL: </label>
+                            <input type="url" name="ref_text_${NUM_STEPS}"
+                            placeholder="https://example.com"
+                            pattern="https://.*" />`
                             );
 
     $('#NUM_STEPS').replaceWith(`<input name ="NUM_STEPS" id="NUM_STEPS" 
