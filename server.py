@@ -80,7 +80,7 @@ def show_homepage():
         cars = crud.get_cars()
         model_years = set([car.model_year for car in cars])
         makes = set([car.make for car in cars])
-        
+
         return render_template('homepage.html',
                                 procedures = procedures,
                                 tools = tools,
@@ -113,6 +113,13 @@ def show_procedure_page(proc_id):
                                 proc_num_parts = proc_num_parts)
     else:
         return redirect('/')
+
+
+@app.route('/tool/<tool_id>')
+def show_tool_page(tool_id):
+    """Render a tool page."""
+
+    return render_template('tool.html')
 
 
 @app.route('/get-models.json')
