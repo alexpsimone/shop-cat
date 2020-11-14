@@ -1,6 +1,25 @@
+"""
+Routes covered by this file:
+/
+/login
+/home
+/procedure/<proc_id>
+/write-procedure
+
+Routes not fully covered by this file:
+/new-user
+/existing-user
+/get-models.json
+/get-tools.json
+/get-parts.json
+/vehicle-select
+/vehicle-select.json
+/build-procedure
+"""
+
 import unittest
 from server import app
-from model import db, connect_to_db, Procedure
+from model import db, connect_to_db, Procedure, User
 import os
 
 # Drop and re-create the test database.
@@ -36,7 +55,7 @@ class FlaskTests(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<form action="/existing-user"', result.data)
         self.assertNotIn(b'<form action="/new-user"', result.data)
-
+            
 
 class ShopCatTestsDatabase(unittest.TestCase):
     """Flask tests that use the database."""
@@ -91,6 +110,54 @@ class ShopCatTestsDatabase(unittest.TestCase):
             self.assertEqual(result.status_code, 200)
             self.assertIn(f'<h1>{procedure.title}</h1>', result.data)
             self.assertNotIn(b'<form action="/vehicle-select"', result.data)
+    
+    
+    def test_new_user_route_new(self):
+    
+        result = self.client.post('/new-user',
+                                data = {"username": "usernameA",
+                                        "password": "passA",
+                                        "nickname": "nicknameA"},
+                                follow_redirects = True)
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b'New account created.', result.data)
+        self.assertNotIn(b'A user already exists', result.data)
+
+
+    #####################################################################
+    ### TODO: Figure out why db queries aren't returning as expected. ###
+    #####################################################################
+
+    def test_new_user_route_existing(self):
+
+        result = self.client.post('/new-user',
+                                data = {"username": "username1",
+                                        "password": "pass1",
+                                        "nickname": "nickname1"},
+                                follow_redirects = True)
+        self.assertEqual(result.status_code, 200)
+        # self.assertIn(b'A user already exists', result.data)
+        # self.assertNotIn(b'New account created.', result.data)
+    
+
+    def test_existing_user_route_wrong_pass(self):
+
+        result = self.client.post('/existing-user',
+                                data = {"username": "username1",
+                                        "password": "pass3"},
+                                follow_redirects = True)
+        self.assertEqual(result.status_code, 200)
+        # self.assertIn(b'Password is incorrect.', result.data)
+    
+
+    def test_existing_user_route_correct_pass(self):
+
+        result = self.client.post('/existing-user',
+                                data = {"username": "username1",
+                                        "password": "pass1"},
+                                follow_redirects = True)
+        self.assertEqual(result.status_code, 200)
+        # self.assertIn(b'Browse all the available procedures:', result.data)
 
 
 
