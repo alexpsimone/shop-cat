@@ -96,7 +96,7 @@ function addStep (evt) {
                             <label for="ref_${NUM_STEPS}">Reference?</label>
                             <br />
                             <label for="ref_text_${NUM_STEPS}">
-                            Reference URL: </label>
+                            Reference URL (must start with https://): </label>
                             <input type="url" name="ref_text_${NUM_STEPS}"
                             placeholder="https://example.com"
                             pattern="https://.*" />`
