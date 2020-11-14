@@ -352,8 +352,8 @@ def build_procedure():
     return redirect('/home')
 
 
-@app.route('/edit-procedure')
-def edit_procedure():
+@app.route('/edit-procedure/<proc_id>')
+def edit_procedure(proc_id):
     """Render the procedure editing form."""
 
     return render_template('edit-procedure.html')
