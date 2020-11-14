@@ -52,6 +52,10 @@ class ShopCatTestsDatabase(unittest.TestCase):
         connect_to_db(app, db_uri = "postgresql:///testdb")
         db.create_all()
 
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess['current_user'] = "username1"
+
 
     def tearDown(self):
         """Do at end of every test."""

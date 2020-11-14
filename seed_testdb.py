@@ -1,13 +1,13 @@
 from random import randint, choice
 from server import app
-from model import db, connect_to_db, Car, Part, PartNum, Procedure, Tool, User
-from model import ProcedureCar, ProcedurePart, ProcedureTool
+from model import db, connect_to_db, Car, Part, PartNum, Step, Tool, User
+from model import Procedure, ProcedureCar, ProcedurePart, ProcedureTool
 
 def load_all():
     """Load all the things."""
 
     # Create test users.
-    user1 = User(username = 'usernameA',
+    user1 = User(username = 'username1',
                     password = 'pass1',
                     nickname = 'nickname1',
                     avatar_img_url = 'myavatar1.png')
@@ -102,20 +102,23 @@ def load_all():
     # Add a Step object for each Procedure.
     step1 = Step(order_num = 1, 
                 reference = 'http://www.google.com',
-                step_text = 'Here is some text.'
-                proc = procedure1
+                step_text = 'Here is some text.',
+                proc = procedure1,
+                step_img = 'toolbox.jpg'
                 )
     step2 = Step(order_num = 1,
-                step_text = 'Here is some text.'
-                proc = procedure2
+                step_text = 'Here is some text.',
+                proc = procedure2,
+                step_img = 'toolbox.jpg'
                 )
     step3 = Step(order_num = 1,
-                step_text = 'Here is some text.'
-                proc = procedure3
+                step_text = 'Here is some text.',
+                proc = procedure3,
+                step_img = 'toolbox.jpg'
                 )
     step4 = Step(order_num = 1, 
                 reference = 'http://www.google.com',
-                step_text = 'Here is some text.'
+                step_text = 'Here is some text.',
                 proc = procedure4
                 )
     db.session.add(step1)
