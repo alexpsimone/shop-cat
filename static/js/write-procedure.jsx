@@ -99,7 +99,17 @@ function addStep (evt) {
                             Reference URL (must start with https://): </label>
                             <input type="url" name="ref_text_${NUM_STEPS}"
                             placeholder="https://example.com"
-                            pattern="https://.*" />`
+                            pattern="https://.*" />
+                            <br />
+                            <input type="checkbox" id="img_${NUM_STEPS}"
+                            name="img_${NUM_STEPS}" />
+                            <label for="ref_${NUM_STEPS}">Add an image?</label>
+                            <br />
+                            <label for="ref_img_${NUM_STEPS}">
+                            Please select an image. </label>
+                            <input type="file" id="ref_img_${NUM_STEPS}
+                            name="ref_img_${NUM_STEPS}" />
+                            <br />`
                             );
 
     $('#NUM_STEPS').replaceWith(`<input name ="NUM_STEPS" id="NUM_STEPS" 
