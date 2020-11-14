@@ -352,6 +352,13 @@ def build_procedure():
     return redirect('/home')
 
 
+@app.route('/edit-procedure')
+def edit_procedure():
+    """Render the procedure editing form."""
+
+    return render_template('edit-procedure.html')
+
+
 if __name__ == '__main__':
     connect_to_db(app)
     app.run(debug = True, host = '0.0.0.0')
