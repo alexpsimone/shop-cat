@@ -76,7 +76,16 @@ def show_homepage():
 
     if session:
         procedures = crud.get_procedures()
-        return render_template('homepage.html', procedures = procedures)
+        tools = crud.get_tools()
+        cars = crud.get_cars()
+        model_years = set([car.model_year for car in cars])
+        makes = set([car.make for car in cars])
+        
+        return render_template('homepage.html',
+                                procedures = procedures,
+                                tools = tools,
+                                model_years = model_years,
+                                makes = makes)
     else:
         return redirect('/')
 

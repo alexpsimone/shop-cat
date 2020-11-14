@@ -8,14 +8,41 @@
 
 
 {% block body %}
-    <div id= "app-procedures"></div>
-    <h1>Browse all the available procedures:</h1>
+    <h1>Write a new procedure!</h1>
+    <a href = "/write-procedure">Search for a car to begin writing a new procedure!</a>
+
     <div>
+    <h1>Browse all the available procedures:</h1>
     {% for procedure in procedures %}
         <a href = "/procedure/{{ procedure.proc_id }}">{{ procedure.title }}</a>
         <br />
     {% endfor %}
     </div>
-    <div id= "app-title"></div>
-    <a href = "/write-procedure">Search for a car to begin writing a new procedure!</a>
+
+    <div>
+    <h1>Browse all the available tools:</h1>
+    {% for tool in tools %}
+        <a href = "/tool/{{ tool.tool_id }}">{{ tool.name }}</a>
+        <br />
+    {% endfor %}
+    </div>
+
+    <div>
+    <h1>Browse all the cars with existing ShopCat procedures:</h1>
+    <h2>Browse by Model Year:</h2>
+        {% for model_year in model_years %}
+            <a href = "vehicle/{{ model_year }}">
+                {{ model_year }}
+            </a>
+            <br />
+        {% endfor %}
+    <h2>Browse by Make:</h2>
+    {% for make in makes %}
+        <a href = "/vehicle/allMY/{{ make }}">
+            {{ make }}
+        </a>
+        <br />
+    {% endfor %}
+    </div>
+    
 {% endblock %}
