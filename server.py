@@ -356,6 +356,22 @@ def build_procedure():
 def edit_procedure(proc_id):
     """Render the procedure editing form."""
 
+    if session:
+        procedure = crud.get_procedure_by_id(proc_id)
+        proc_car_obj = crud.get_proc_car_by_proc_id(proc_id)
+        proc_part_obj = crud.get_parts_by_proc_id(proc_id)
+        proc_tool_obj = crud.get_tools_by_proc_id(proc_id)
+        steps = crud.get_steps_by_proc_id(proc_id)
+        
+        return render_template('edit-procedure.html',
+                                procedure = procedure,
+                                proc_car_obj = proc_car_obj,
+                                proc_part_obj = proc_part_obj,
+                                proc_tool_obj = proc_tool_obj,
+                                steps = steps)
+    else:
+        return redirect('/')
+
     return render_template('edit-procedure.html')
 
 
