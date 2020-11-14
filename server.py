@@ -197,6 +197,7 @@ def select_vehicle():
                     'make': make,
                     'model': model
                     }
+    print('***************', vehicle_specs)
 
     session['model_year'] = model_year
     session['make'] = make

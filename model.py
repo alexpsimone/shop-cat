@@ -15,8 +15,8 @@ class User(db.Model):
                         autoincrement = True)
     username = db.Column(db.String(25), nullable = False, unique = True)
     password = db.Column(db.String(25), nullable = False)
-    nickname = db.Column(db.String(25), default = 'avatar.jpg')
-    avatar_img_url = db.Column(db.String) 
+    nickname = db.Column(db.String(25))
+    avatar_img_url = db.Column(db.String, default = 'avatar.jpg') 
 
     def __repr__(self):
         return f'<User user_id={self.user_id} username={self.username}>'
