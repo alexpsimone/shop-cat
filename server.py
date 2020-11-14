@@ -214,13 +214,11 @@ def build_procedure():
     # Take the form data to create a Procedure object.
     proc_title = request.form.get('proc_title')
     proc_label = request.form.get('proc_label')
-    proc_img = request.form.get('proc_img')
 
     user = crud.get_user_by_id(session['current_user'])
     
     procedure = crud.create_procedure(proc_title,
                                         proc_label,
-                                        proc_img,
                                         user
                                         )
 

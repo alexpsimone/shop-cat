@@ -16,7 +16,7 @@ class User(db.Model):
     username = db.Column(db.String(25), nullable = False, unique = True)
     password = db.Column(db.String(25), nullable = False)
     nickname = db.Column(db.String(25))
-    avatar_img_url = db.Column(db.String, default = 'avatar.jpg') 
+    avatar_img_url = db.Column(db.String, default = 'cat.jpg') 
 
     def __repr__(self):
         return f'<User user_id={self.user_id} username={self.username}>'
@@ -32,7 +32,6 @@ class Procedure(db.Model):
                         autoincrement = True)
     title = db.Column(db.String(50), nullable = False)
     label = db.Column(db.String(50), default = '')
-    img = db.Column(db.String, default = '')
     created_by_user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
     user = db.relationship('User', backref = 'procedures')
@@ -52,6 +51,7 @@ class Step(db.Model):
     order_num = db.Column(db.Integer, default = 0)
     reference = db.Column(db.String, default = 'No Reference Provided')
     step_text = db.Column(db.Text, nullable = False)
+    step_img = db.Column(db.String, default = 'toolbox.jpg')
     proc_id = db.Column(db.Integer, db.ForeignKey('procedures.proc_id'))
 
     proc = db.relationship('Procedure', backref = 'steps')

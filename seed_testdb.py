@@ -82,19 +82,15 @@ def load_all():
     # Create test procedures.
     procedure1 = Procedure(title = 'Oil Change',
                             label = 'basic care',
-                            img = 'oil_change.jpg',
                             user = user1)
     procedure2 = Procedure(title = 'Tire Rotation',
                             label = 'basic care',
-                            img = 'tire_rotate.jpg',
                             user = user2)
     procedure3 = Procedure(title = 'Engine Swap',
                             label = 'major overhaul',
-                            img = 'engine.jpg',
                             user = user3)
     procedure4 = Procedure(title = 'Exhaust Gasket Replacement',
                             label = 'old car care',
-                            img = 'exhaust.jpg',
                             user = user4)
     db.session.add(procedure1)
     db.session.add(procedure2)

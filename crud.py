@@ -53,14 +53,10 @@ def create_part_num(manuf, part_num, is_oem_part, part):
     return part_num
 
 
-def create_procedure(title, label, img, user):
+def create_procedure(title, label, user):
     """Create and return a procedure."""
 
-    procedure = Procedure(title = title,
-                            label = label,
-                            img = img,
-                            user = user
-                            )
+    procedure = Procedure(title = title, label = label, user = user)
 
     db.session.add(procedure)
     db.session.commit()
@@ -101,7 +97,7 @@ def create_procedure_tool(proc, tool):
     return proc_tool
 
 
-def create_step(order_num, step_text, proc, reference = 'No Reference Provided'):
+def create_step(order_num, step_text, proc, reference = 'No Ref Provided'):
     """Create and return a Step object."""
 
     step = Step(order_num = order_num, 

@@ -42,7 +42,7 @@
         {% for step in steps %}
         <li>
             {{ step.step_text }}
-            {% if step.reference %}
+            {% if step.reference != "No Ref Provided" %}
                 <br />
                 Reference:
                 <a href="{{ step.reference }}">{{ step.reference }}</a>
