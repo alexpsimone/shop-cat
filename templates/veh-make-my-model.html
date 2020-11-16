@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block js %}
+
+{% endblock %}
+
+
+{% block body %}
+
+    <ul>
+        {% for proc_car in proc_cars %}
+            <li>
+                <a href="/vehicle/{{ make }}/{{ model_year }}/{{ proc_car.car.model }}/{{ proc_car.proc }}">{{ proc_car.proc.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="/vehicle/{{ make }}/{{ model_year }}">Return to all {{ make }} vehicles from {{ model_year }}.</a>
+    <br />
+    <a href="/vehicle/{{ make }}">Return to all {{ make }} vehicles.</a>
+    <br />
+    <a href="/home">Return Home</a>
+{% endblock %}

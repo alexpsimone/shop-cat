@@ -155,10 +155,15 @@ def get_cars():
 
 
 def get_cars_by_make(make):
-    """Return all ProcedureCar objects with a given model year."""
+    """Return all Car objects with a given model year."""
 
     return Car.query.filter_by(make = make).all()
 
+
+def get_cars_by_make_and_model_year(make, model_year):
+    """Return all Car objects with a given make and model year."""
+
+    return Car.query.filter(Car.make == make, Car.model_year == model_year).all()
 
 
 def get_parts():
@@ -189,6 +194,16 @@ def get_proc_car_by_proc_id(proc_id):
     """Return all proc_car objects associated with a given proc_id."""
     
     return ProcedureCar.query.filter_by(proc_id = proc_id).all()
+
+
+def get_proc_car_by_car_info(make, model_year, model):
+    """Return all proc_car objects associated with a given car."""
+
+    car = Car.query.filter(Car.make == make, 
+                            Car.model_year == model_year, 
+                            Car.model == model).first()
+      
+    return ProcedureCar.query.filter_by(car_id = car.car_id).all()
 
 
 def get_steps_by_proc_id(proc_id):

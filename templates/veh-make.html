@@ -1,9 +1,22 @@
-<p>This is a test.</p>
+{% extends 'base.html' %}
 
-<ul>
-    {% for model_year in model_years %}
-        <li>{{ model_year }}</li>
-    {% endfor %}
-</ul>
+{% block title %}{% endblock %}
 
-<a href="/home">Return Home</a>
+{% block js %}
+
+{% endblock %}
+
+
+{% block body %}
+    <p>{{ make }}</p>
+
+    <ul>
+        {% for model_year in model_years %}
+            <li>
+                <a href="/vehicle/{{ make }}/{{ model_year }}">{{ model_year }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="/home">Return Home</a>
+{% endblock %}

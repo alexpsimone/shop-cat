@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block js %}
+
+{% endblock %}
+
+
+{% block body %}
+    <p>{{ make }} {{ model_year }}</p>
+
+    <ul>
+        {% for model in models %}
+            <li>
+                <a href="/vehicle/{{ make }}/{{ model_year }}/{{ model }}">{{ model }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="/vehicle/{{ make }}">Return to  {{ make }} page.</a>
+    <br />
+    <a href="/home">Return Home</a>
+{% endblock %}

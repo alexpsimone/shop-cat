@@ -125,15 +125,41 @@ def show_tool_page(tool_id):
 
 
 @app.route('/vehicle/<make>')
-def show_model_year_page(make):
-    """Render a model year page."""
+def show_make_page(make):
+    """Render a page that shows all model years for a given make in the db."""
 
     cars = crud.get_cars_by_make(make)
     model_years = set(sorted([car.model_year for car in cars]))
 
-    return render_template('veh-make.html', 
-                            cars = cars, 
+    return render_template('veh-make.html',
+                            make = make, 
                             model_years = model_years)
+
+
+@app.route('/vehicle/<make>/<model_year>')
+def show_model_year_page(make, model_year):
+    """Render a page that shows all cars in db with given make/MY."""
+
+    cars = crud.get_cars_by_make_and_model_year(make, model_year)
+    models = set(sorted([car.model for car in cars]))
+
+    return render_template('veh-make-my.html',
+                            make = make, 
+                            model_year = model_year,
+                            models = models)
+
+
+@app.route('/vehicle/<make>/<model_year>/<model>')
+def show_model_page(make, model_year, model):
+    """Render a page that shows all procedures for a given vehicle."""
+
+    proc_cars = crud.get_proc_car_by_car_info(make, model_year, model)
+
+    return render_template('veh-make-my-model.html',
+                            proc_cars = proc_cars,
+                            make = make,
+                            model_year = model_year,
+                            model = model)
 
 
 @app.route('/get-models.json')
