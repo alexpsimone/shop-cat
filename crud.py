@@ -1,5 +1,7 @@
 from model import db, connect_to_db, User, Procedure, Car, Part, Tool, Step
 from model import PartNum, ProcedureCar, ProcedurePart, ProcedureTool
+import requests
+from bs4 import BeautifulSoup
 
 
 def check_toolbox(tool_name):
@@ -252,3 +254,19 @@ def num_tools_by_proc(proc_id):
     """Return the number of tools required for a given procedure."""
 
     return ProcedureTool.query.filter_by(proc_id = proc_id).count()
+
+
+def get_all_rockauto_makes():
+    """Scrape all vehicle makes from RockAuto's website."""
+
+    url = 'http://www.rockauto.com'
+    req = requests.get(url)
+    src = req.content
+    soup = BeautifulSoup(src, 'lxml')
+
+    divs_normal = soup.findAll('a', {'class': 'navlabellink nvoffset nnormal'})
+    divs_important = soup.findAll('a', {'class': 'navlabellink nvoffset nimportant'})
+    car_makes_normal = [div_normal.string for div_normal in divs_normal]
+    car_makes_important = [div_important.string for div_important in divs_important]
+
+    return sorted(car_makes_normal + car_makes_important)

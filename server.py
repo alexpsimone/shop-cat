@@ -208,15 +208,7 @@ def write_procedure():
     if session:
         tools = crud.get_tools()
         parts = crud.get_parts()
-
-        all_makes = []
-        url = 'https://vpic.nhtsa.dot.gov/api/vehicles/GetAllMakes?format=json'
-        res = requests.get(url)
-        data = res.json()
-
-        for item in data['Results']:
-            all_makes.append(item['Make_Name'])
-        sorted_makes = sorted(all_makes)
+        sorted_makes = crud.get_all_rockauto_makes()
 
         return render_template('write-procedure.html',
                                 tools = tools,

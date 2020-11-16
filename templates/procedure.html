@@ -18,9 +18,11 @@
     <ul>
         {% for proc_car in proc_car_obj %}
         <li>
-            <a href="/vehicle/{{ proc_car.car.make }}/{{ proc_car.car.model_year }}/{{ proc_car.car.model }}">
             {{ proc_car.car.model_year }}
+            <a href="/vehicle/{{ proc_car.car.make }}">
             {{ proc_car.car.make }}
+            </a>
+            <a href="/vehicle/{{ proc_car.car.make }}/{{ proc_car.car.model_year }}/{{ proc_car.car.model }}">
             {{ proc_car.car.model }}
             </a>
         </li>
