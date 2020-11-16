@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}{% endblock %}
+{% block title %}{{ tool.name }}{% endblock %}
 
 {% block js %}
 
@@ -8,5 +8,11 @@
 
 
 {% block body %}
+
+<h1>{{ tool.name }}</h1>
+
+<img src="{{ tool.tool_img }}" />
+<br />
+<a href="/home">Return Home</a>
 
 {% endblock %}

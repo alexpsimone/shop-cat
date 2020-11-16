@@ -21,6 +21,8 @@
 
     <div>
     <h1>Browse all the available tools:</h1>
+    <p>Don't see the tool that you need?</p>
+    <p>You can add a new tool when you write or edit a procedure!</p>
     {% for tool in tools %}
         <a href = "/tool/{{ tool.tool_id }}">{{ tool.name }}</a>
         <br />
@@ -29,16 +31,9 @@
 
     <div>
     <h1>Browse all the cars with existing ShopCat procedures:</h1>
-    <h2>Browse by Model Year:</h2>
-        {% for model_year in model_years %}
-            <a href = "vehicle/{{ model_year }}">
-                {{ model_year }}
-            </a>
-            <br />
-        {% endfor %}
     <h2>Browse by Make:</h2>
     {% for make in makes %}
-        <a href = "/vehicle/allMY/{{ make }}">
+        <a href = "/vehicle/{{ make }}">
             {{ make }}
         </a>
         <br />

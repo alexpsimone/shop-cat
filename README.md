@@ -68,7 +68,6 @@ Therefore, Users are connected to these things via their key in the Contribution
 - [x] Allow user to add discrete steps to their procedure.
 - [x] User will be able to link to references to specific steps in their procedures.
     - [ ] References can link to YouTube videos using the YouTube API.
-- [ ] User will be able to create general informational pages that are linked to specific cars, not procedures.
 
 
 #### 3.0
@@ -85,3 +84,4 @@ Therefore, Users are connected to these things via their key in the Contribution
 - [ ] All edits made by a certain user (to a procedure or info page) will be tracked in contribution history.
 - [ ] User can add a central page where all vehicles of a certain make or model are linked.
 - [ ] Link to the Wikipedia API to get general information about the vehicle on the page.
+- [ ] User will be able to create general informational pages that are linked to specific cars, not procedures.

@@ -119,7 +119,21 @@ def show_procedure_page(proc_id):
 def show_tool_page(tool_id):
     """Render a tool page."""
 
-    return render_template('tool.html')
+    tool = crud.get_tool_by_id(tool_id)
+
+    return render_template('tool.html', tool = tool)
+
+
+@app.route('/vehicle/<make>')
+def show_model_year_page(make):
+    """Render a model year page."""
+
+    cars = crud.get_cars_by_make(make)
+    model_years = set(sorted([car.model_year for car in cars]))
+
+    return render_template('veh-make.html', 
+                            cars = cars, 
+                            model_years = model_years)
 
 
 @app.route('/get-models.json')

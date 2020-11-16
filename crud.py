@@ -154,6 +154,13 @@ def get_cars():
     return Car.query.all()
 
 
+def get_cars_by_make(make):
+    """Return all ProcedureCar objects with a given model year."""
+
+    return Car.query.filter_by(make = make).all()
+
+
+
 def get_parts():
     """Return all parts."""
 
@@ -194,6 +201,12 @@ def get_tools():
     """Return all tools."""
 
     return Tool.query.all()
+
+
+def get_tool_by_id(tool_id):
+    """Return a tool with a given id."""
+
+    return Tool.query.filter_by(tool_id = tool_id).first()
 
 
 def get_tools_by_proc_id(proc_id):
