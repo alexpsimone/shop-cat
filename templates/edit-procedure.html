@@ -11,9 +11,14 @@
 
 {% block body %}
 
+<form action="/rebuild-procedure", method="POST">
 <h1>Title:</h1>
 <p id="proc-title">{{ procedure.title }}</p>
 <button id="title-change">Change the Title</button>
+
+<input name="proc_id" id="proc_id" type="number" value="{{ procedure.proc_id }}" style="display: none;"/>
+<input type="submit">
+</form>
 
 <h1>Label:</h1>
 {% if procedure.label %}

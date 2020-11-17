@@ -268,6 +268,17 @@ def num_tools_by_proc(proc_id):
     return ProcedureTool.query.filter_by(proc_id = proc_id).count()
 
 
+def update_procedure(proc_id, title):
+    """Update a procedure with given information."""
+
+    procedure = Procedure.query.filter_by(proc_id = proc_id).first()
+
+    procedure.title = title
+    db.session.commit()
+
+    return procedure
+
+
 def get_all_rockauto_makes():
     """Scrape all vehicle makes from RockAuto's website."""
 

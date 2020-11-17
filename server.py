@@ -200,7 +200,7 @@ def edit_procedure(proc_id):
     return render_template('edit-procedure.html')
 
 
-@app.route('/existing-user', methods=['POST'])
+@app.route('/existing-user', methods = ['POST'])
 def login_user():
     """Log in with an existing user account."""
 
@@ -288,7 +288,7 @@ def login_page():
     return render_template('login.html')
 
 
-@app.route('/new-user', methods=['POST'])
+@app.route('/new-user', methods = ['POST'])
 def new_user():
     """Create a new user."""
 
@@ -330,6 +330,18 @@ def show_procedure_page(proc_id):
                                 proc_num_parts = proc_num_parts)
     else:
         return redirect('/')
+
+
+@app.route('/rebuild-procedure', methods = ['POST'])
+def rebuild_procedure():
+    """Rebuild an edited procedure."""
+
+    proc_id = int(request.form.get('proc_id'))
+    title = request.form.get('proc-title')
+
+    crud.update_procedure(proc_id, title)
+
+    return redirect(f'/procedure/{proc_id}')
 
 
 @app.route('/tool/<tool_id>')
