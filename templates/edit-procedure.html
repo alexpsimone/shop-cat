@@ -3,31 +3,107 @@
 {% block title %}Edit Procedure{% endblock %}
 
 {% block js %}
-    
+    <script src="/static/js/vehicle-search.js" type="text/jsx"></script>
+    <script src="/static/js/write-procedure.js" type="text/jsx"></script>
+    <script src="/static/js/edit-procedure.js" type="text/jsx"></script>
+    <script src="http://code.jquery.com/jquery.js"></script>
 {% endblock %}
 
 
 {% block body %}
 
+<h1>Title:</h1>
+<p id="proc-title">{{ procedure.title }}</p>
 <button id="title-change">Change the Title</button>
 
+<h1>Label:</h1>
+<p>{{procedure.label }}</p>
 <button id="label-add">Add a Label</button>
 <button id="label-remove">Remove the Label</button>
 <button id="label-change">Change the Label</button>
 
+<h1>Applicable Vehicles:</h1>
+<ul id="old-cars">
+    {% for proc_car in proc_car_obj %}
+    <li>
+        {{ proc_car.car.model_year }}
+        <a href="/vehicle/{{ proc_car.car.make }}">
+        {{ proc_car.car.make }}
+        </a>
+        <a href="/vehicle/{{ proc_car.car.make }}/{{ proc_car.car.model_year }}/{{ proc_car.car.model }}">
+        {{ proc_car.car.model }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+<ul id="new-cars"></ul>
+
+<form id="car-add-form" action="/vehicle-select", method="POST" style="display: none;">
+    <label>Car Model Year:</label>
+    <input id="model-year" name="model-year" type="number" min="1900" max="2020" />
+    <br />
+    <label>Car Make:</label>
+    <select id="make" name="make">
+    <option value="">--Please select a Make--</option>
+    {% for make in sorted_makes %}
+    <option value="{{ make }}">{{ make }}</option>
+    {% endfor %}
+    <option value="other">Other (please specify)...</option>
+    </select>
+    <br />
+    <label>Car Model:</label>
+    <select id="model-select" name="model" disabled>
+    <option value="">--Please select a Model--</option>
+    </select>
+    <br />
+    <input id="vehicle-submit" type="submit" disabled>
+</form>
+
 <button id="car-add">Add a Vehicle</button>
 <button id="car-remove">Remove a Vehicle</button>
-<button id="car-change">Change a Vehicle</button>
 
+<p>Required tools:</p>
 <button id="tool-add">Add a Tool</button>
 <button id="tool-remove">Delete a Tool</button>
-    
+<ul>
+    {% for proc_tool in proc_tool_obj %}
+    <li>
+        <a href="/tool/{{ proc_tool.tool.tool_id }}">
+        {{ proc_tool.tool.name }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+<p>Required Parts:</p>
 <button id="part-add">Add a Part</button>
 <button id="part-remove">Delete a Part</button>
+<ul>
+    {% for proc_part in proc_part_obj %}
+    <li>{{ proc_part.part.name }}</li>
+    {% endfor %}
+</ul>
 
+<p>Here are the steps in the procedure:</p>
 <button id="step-add">Add a Step</button>
 <button id="step-remove">Delete a Step</button>
+<ol>
+    {% for step in steps %}
+    <li>
+        {{ step.step_text }}
+        {% if step.reference != "No Ref Provided" %}
+            <br />
+            Reference:
+            <a href="{{ step.reference }}">{{ step.reference }}</a>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ol>
 
+
+<br />
 <a href="/home">Return Home</a>
-    
+
+<input name="NUM_STEPS" id="NUM_STEPS" type="number" value="0" style="display: none;"/>
+<input name="NUM_CARS" id="NUM_CARS" type="number" value="0" style="display: none;"/>
 {% endblock %}

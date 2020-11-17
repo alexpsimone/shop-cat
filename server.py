@@ -22,239 +22,6 @@ def show_login():
         return render_template('shopcat.html')
 
 
-@app.route('/new-user', methods=['POST'])
-def new_user():
-    """Create a new user."""
-
-    username = request.form.get('username')
-    password = request.form.get('password')
-    nickname = request.form.get('nickname')
-
-    user = crud.get_user_by_username(username)
-
-    if user:
-        flash('A user already exists with that username.')
-        return redirect('/')
-    else:
-        crud.create_user(username, password, nickname)
-        flash(f'New account created. Please use your credentials to log in.')
-        return redirect('/login') 
-
-
-@app.route('/existing-user', methods=['POST'])
-def login_user():
-    """Log in with an existing user account."""
-
-    username = request.form.get('username')
-    password = request.form.get('password')
-
-    user = crud.get_user_by_username(username)
-
-    if user:
-        if user.password == password:
-            session['current_user'] = user.user_id
-            flash(f'Welcome, {user.username}!')
-            return redirect('/home')
-        else:
-            flash('Password is incorrect.')
-            return redirect('/login')
-    else:
-        flash(f'No account exists with this username')
-        return redirect('/login')
-
-
-@app.route('/login')
-def login_page():
-    """Render the login page."""
-
-    return render_template('login.html')
-
-
-@app.route('/home')
-def show_homepage():
-    """Render the homepage."""
-
-    if session:
-        procedures = crud.get_procedures()
-        tools = crud.get_tools()
-        cars = crud.get_cars()
-        model_years = set([car.model_year for car in cars])
-        makes = set([car.make for car in cars])
-
-        return render_template('homepage.html',
-                                procedures = procedures,
-                                tools = tools,
-                                model_years = model_years,
-                                makes = makes)
-    else:
-        return redirect('/')
-
-
-@app.route('/procedure/<proc_id>')
-def show_procedure_page(proc_id):
-    """Render a procedure page."""
-
-    if session:
-        procedure = crud.get_procedure_by_id(proc_id)
-        proc_car_obj = crud.get_proc_car_by_proc_id(proc_id)
-        proc_part_obj = crud.get_parts_by_proc_id(proc_id)
-        proc_tool_obj = crud.get_tools_by_proc_id(proc_id)
-        steps = crud.get_steps_by_proc_id(proc_id)
-        proc_num_tools = crud.num_tools_by_proc(proc_id)
-        proc_num_parts = crud.num_parts_by_proc(proc_id)
-        
-        return render_template('procedure.html',
-                                procedure = procedure,
-                                proc_car_obj = proc_car_obj,
-                                proc_part_obj = proc_part_obj,
-                                proc_tool_obj = proc_tool_obj,
-                                steps = steps,
-                                proc_num_tools = proc_num_tools,
-                                proc_num_parts = proc_num_parts)
-    else:
-        return redirect('/')
-
-
-@app.route('/tool/<tool_id>')
-def show_tool_page(tool_id):
-    """Render a tool page."""
-
-    tool = crud.get_tool_by_id(tool_id)
-
-    return render_template('tool.html', tool = tool)
-
-
-@app.route('/vehicle/<make>')
-def show_make_page(make):
-    """Render a page that shows all model years for a given make in the db."""
-
-    cars = crud.get_cars_by_make(make)
-    model_years = set(sorted([car.model_year for car in cars]))
-
-    return render_template('veh-make.html',
-                            make = make, 
-                            model_years = model_years)
-
-
-@app.route('/vehicle/<make>/<model_year>')
-def show_model_year_page(make, model_year):
-    """Render a page that shows all cars in db with given make/MY."""
-
-    cars = crud.get_cars_by_make_and_model_year(make, model_year)
-    models = set(sorted([car.model for car in cars]))
-
-    return render_template('veh-make-my.html',
-                            make = make, 
-                            model_year = model_year,
-                            models = models)
-
-
-@app.route('/vehicle/<make>/<model_year>/<model>')
-def show_model_page(make, model_year, model):
-    """Render a page that shows all procedures for a given vehicle."""
-
-    proc_cars = crud.get_proc_car_by_car_info(make, model_year, model)
-
-    return render_template('veh-make-my-model.html',
-                            proc_cars = proc_cars,
-                            make = make,
-                            model_year = model_year,
-                            model = model)
-
-
-@app.route('/get-models.json')
-def get_all_models():
-    
-    all_models = []
-    model_year = request.args.get('modelYear')
-    make = request.args.get('make')
-    print('********************',model_year,make)
-    # ##########################################################
-    # ###TODO: Figure out how to make this PEP-8 compliant!!!###
-    # ##########################################################
-    url = f'https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/{make}/modelyear/{model_year}?format=json'
-    res = requests.get(url)
-    data = res.json()
-    
-    for item in data['Results']:
-        all_models.append(item['Model_Name'])
-    sorted_models = sorted(all_models)
-
-    return jsonify(sorted_models)
-
-
-@app.route('/get-tools.json')
-def get_all_tools():
-    """Get all tools from the shopcat database and return as JSON."""
-
-    tools = [tool.name for tool in crud.get_tools()]
-
-    return jsonify(tools)
-
-
-@app.route('/get-parts.json')
-def get_all_parts():
-    """Get all parts from the shopcat database and return as JSON."""
-
-    parts = [part.name for part in crud.get_parts()]
-
-    return jsonify(parts)
-
-
-@app.route('/write-procedure')
-def write_procedure():
-    """Render the write-procedure template using existing Part/Tool objects."""
-
-    if session:
-        tools = crud.get_tools()
-        parts = crud.get_parts()
-        sorted_makes = crud.get_all_rockauto_makes()
-
-        return render_template('write-procedure.html',
-                                tools = tools,
-                                parts = parts,
-                                sorted_makes = sorted_makes)
-    else:
-        return redirect('/')
-
-
-@app.route('/vehicle-select', methods=['POST'])
-def apply_selected_vehicle():
-    """Retrieve selected vehicle info and save to session."""
-
-    model_year = request.form.get('model-year')
-    make = request.form.get('make')
-    model = request.form.get('model')
-
-    session['model_year'] = model_year
-    session['make'] = make
-    session['model'] = model
-    print('***************', session['model_year'], session['make'], session['model'])
-
-    return redirect('/write-procedure')
-
-
-@app.route('/vehicle-select.json', methods=['POST'])
-def select_vehicle():
-
-    model_year = request.form.get('modelYear')
-    make = request.form.get('make')
-    model = request.form.get('model')
-
-    vehicle_specs = {'model_year': model_year,
-                    'make': make,
-                    'model': model
-                    }
-    print('***************', vehicle_specs)
-
-    session['model_year'] = model_year
-    session['make'] = make
-    session['model'] = model
-    print('***************', session['model_year'], session['make'], session['model'])
-    
-    return jsonify(vehicle_specs)
-
-
 @app.route('/build-procedure', methods=["POST"])
 def build_procedure():
     """Build a procedure with the info given in the form."""
@@ -410,17 +177,254 @@ def edit_procedure(proc_id):
         proc_part_obj = crud.get_parts_by_proc_id(proc_id)
         proc_tool_obj = crud.get_tools_by_proc_id(proc_id)
         steps = crud.get_steps_by_proc_id(proc_id)
+        sorted_makes = crud.get_all_rockauto_makes()
         
         return render_template('edit-procedure.html',
                                 procedure = procedure,
                                 proc_car_obj = proc_car_obj,
                                 proc_part_obj = proc_part_obj,
                                 proc_tool_obj = proc_tool_obj,
-                                steps = steps)
+                                steps = steps,
+                                sorted_makes = sorted_makes)
     else:
         return redirect('/')
 
     return render_template('edit-procedure.html')
+
+
+@app.route('/existing-user', methods=['POST'])
+def login_user():
+    """Log in with an existing user account."""
+
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    user = crud.get_user_by_username(username)
+
+    if user:
+        if user.password == password:
+            session['current_user'] = user.user_id
+            flash(f'Welcome, {user.username}!')
+            return redirect('/home')
+        else:
+            flash('Password is incorrect.')
+            return redirect('/login')
+    else:
+        flash(f'No account exists with this username')
+        return redirect('/login')
+
+
+@app.route('/get-models.json')
+def get_all_models():
+    
+    all_models = []
+    model_year = request.args.get('modelYear')
+    make = request.args.get('make')
+    print('********************',model_year,make)
+    # ##########################################################
+    # ###TODO: Figure out how to make this PEP-8 compliant!!!###
+    # ##########################################################
+    url = f'https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/{make}/modelyear/{model_year}?format=json'
+    res = requests.get(url)
+    data = res.json()
+    
+    for item in data['Results']:
+        all_models.append(item['Model_Name'])
+    sorted_models = sorted(all_models)
+
+    return jsonify(sorted_models)
+
+
+@app.route('/get-parts.json')
+def get_all_parts():
+    """Get all parts from the shopcat database and return as JSON."""
+
+    parts = [part.name for part in crud.get_parts()]
+
+    return jsonify(parts)
+
+
+@app.route('/get-tools.json')
+def get_all_tools():
+    """Get all tools from the shopcat database and return as JSON."""
+
+    tools = [tool.name for tool in crud.get_tools()]
+
+    return jsonify(tools)
+
+
+@app.route('/home')
+def show_homepage():
+    """Render the homepage."""
+
+    if session:
+        procedures = crud.get_procedures()
+        tools = crud.get_tools()
+        cars = crud.get_cars()
+        model_years = set([car.model_year for car in cars])
+        makes = set([car.make for car in cars])
+
+        return render_template('homepage.html',
+                                procedures = procedures,
+                                tools = tools,
+                                model_years = model_years,
+                                makes = makes)
+    else:
+        return redirect('/')
+
+
+@app.route('/login')
+def login_page():
+    """Render the login page."""
+
+    return render_template('login.html')
+
+
+@app.route('/new-user', methods=['POST'])
+def new_user():
+    """Create a new user."""
+
+    username = request.form.get('username')
+    password = request.form.get('password')
+    nickname = request.form.get('nickname')
+
+    user = crud.get_user_by_username(username)
+
+    if user:
+        flash('A user already exists with that username.')
+        return redirect('/')
+    else:
+        crud.create_user(username, password, nickname)
+        flash(f'New account created. Please use your credentials to log in.')
+        return redirect('/login') 
+
+
+@app.route('/procedure/<proc_id>')
+def show_procedure_page(proc_id):
+    """Render a procedure page."""
+
+    if session:
+        procedure = crud.get_procedure_by_id(proc_id)
+        proc_car_obj = crud.get_proc_car_by_proc_id(proc_id)
+        proc_part_obj = crud.get_parts_by_proc_id(proc_id)
+        proc_tool_obj = crud.get_tools_by_proc_id(proc_id)
+        steps = crud.get_steps_by_proc_id(proc_id)
+        proc_num_tools = crud.num_tools_by_proc(proc_id)
+        proc_num_parts = crud.num_parts_by_proc(proc_id)
+        
+        return render_template('procedure.html',
+                                procedure = procedure,
+                                proc_car_obj = proc_car_obj,
+                                proc_part_obj = proc_part_obj,
+                                proc_tool_obj = proc_tool_obj,
+                                steps = steps,
+                                proc_num_tools = proc_num_tools,
+                                proc_num_parts = proc_num_parts)
+    else:
+        return redirect('/')
+
+
+@app.route('/tool/<tool_id>')
+def show_tool_page(tool_id):
+    """Render a tool page."""
+
+    tool = crud.get_tool_by_id(tool_id)
+
+    return render_template('tool.html', tool = tool)
+
+
+@app.route('/vehicle/<make>')
+def show_make_page(make):
+    """Render a page that shows all model years for a given make in the db."""
+
+    cars = crud.get_cars_by_make(make)
+    model_years = set(sorted([car.model_year for car in cars]))
+
+    return render_template('veh-make.html',
+                            make = make, 
+                            model_years = model_years)
+
+
+@app.route('/vehicle/<make>/<model_year>')
+def show_model_year_page(make, model_year):
+    """Render a page that shows all cars in db with given make/MY."""
+
+    cars = crud.get_cars_by_make_and_model_year(make, model_year)
+    models = set(sorted([car.model for car in cars]))
+
+    return render_template('veh-make-my.html',
+                            make = make, 
+                            model_year = model_year,
+                            models = models)
+
+
+@app.route('/vehicle/<make>/<model_year>/<model>')
+def show_model_page(make, model_year, model):
+    """Render a page that shows all procedures for a given vehicle."""
+
+    proc_cars = crud.get_proc_car_by_car_info(make, model_year, model)
+
+    return render_template('veh-make-my-model.html',
+                            proc_cars = proc_cars,
+                            make = make,
+                            model_year = model_year,
+                            model = model)
+
+
+@app.route('/vehicle-select', methods=['POST'])
+def apply_selected_vehicle():
+    """Retrieve selected vehicle info and save to session."""
+
+    model_year = request.form.get('model-year')
+    make = request.form.get('make')
+    model = request.form.get('model')
+
+    session['model_year'] = model_year
+    session['make'] = make
+    session['model'] = model
+    print('***************', session['model_year'], session['make'], session['model'])
+
+    return redirect('/write-procedure')
+
+
+@app.route('/vehicle-select.json', methods=['POST'])
+def select_vehicle():
+
+    model_year = request.form.get('modelYear')
+    make = request.form.get('make')
+    model = request.form.get('model')
+
+    vehicle_specs = {'model_year': model_year,
+                    'make': make,
+                    'model': model
+                    }
+    print('***************', vehicle_specs)
+
+    session['model_year'] = model_year
+    session['make'] = make
+    session['model'] = model
+    print('***************', session['model_year'], session['make'], session['model'])
+    
+    return jsonify(vehicle_specs)
+
+
+@app.route('/write-procedure')
+def write_procedure():
+    """Render the write-procedure template using existing Part/Tool objects."""
+
+    if session:
+        tools = crud.get_tools()
+        parts = crud.get_parts()
+        sorted_makes = crud.get_all_rockauto_makes()
+
+        return render_template('write-procedure.html',
+                                tools = tools,
+                                parts = parts,
+                                sorted_makes = sorted_makes)
+    else:
+        return redirect('/')
+
+
 
 
 if __name__ == '__main__':
