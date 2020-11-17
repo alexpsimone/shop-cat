@@ -3,7 +3,6 @@
 {% block title %}Edit Procedure{% endblock %}
 
 {% block js %}
-    <script src="/static/js/vehicle-search.js" type="text/jsx"></script>
     <script src="/static/js/write-procedure.js" type="text/jsx"></script>
     <script src="/static/js/edit-procedure.js" type="text/jsx"></script>
     <script src="http://code.jquery.com/jquery.js"></script>
@@ -17,26 +16,42 @@
 <button id="title-change">Change the Title</button>
 
 <h1>Label:</h1>
-<p>{{procedure.label }}</p>
-<button id="label-add">Add a Label</button>
-<button id="label-remove">Remove the Label</button>
-<button id="label-change">Change the Label</button>
+{% if procedure.label %}
+    <p>{{ procedure.label }}</p>
+    <button id="label-remove">Remove the Label</button>
+    <button id="label-change">Change the Label</button>
+{% else %}
+    <button id="label-add">Add a Label</button>
+{% endif %}
+
 
 <h1>Applicable Vehicles:</h1>
-<ul id="old-cars">
+<ul id="all-cars">
     {% for proc_car in proc_car_obj %}
-    <li>
+    <li id="item-{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}">
         {{ proc_car.car.model_year }}
-        <a href="/vehicle/{{ proc_car.car.make }}">
         {{ proc_car.car.make }}
-        </a>
-        <a href="/vehicle/{{ proc_car.car.make }}/{{ proc_car.car.model_year }}/{{ proc_car.car.model }}">
         {{ proc_car.car.model }}
-        </a>
+        {% if num_cars > 1 %}
+            <input type="checkbox"
+                    id="remove-{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}"
+                    name="remove-{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}" />
+            <label for="remove-{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}">
+                Remove This Vehicle
+            </label>
+        {% else %}
+        <input type="checkbox"
+        class="car-remove"
+        id="remove-{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}"
+        name="remove-{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}"
+        disabled />
+        <label for="remove-{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}">
+            Remove This Vehicle
+        </label>
+        {% endif %}
     </li>
     {% endfor %}
 </ul>
-<ul id="new-cars"></ul>
 
 <form id="car-add-form" action="/vehicle-select", method="POST" style="display: none;">
     <label>Car Model Year:</label>
@@ -60,9 +75,9 @@
 </form>
 
 <button id="car-add">Add a Vehicle</button>
-<button id="car-remove">Remove a Vehicle</button>
 
-<p>Required tools:</p>
+
+<h1>Required tools:</h1>
 <button id="tool-add">Add a Tool</button>
 <button id="tool-remove">Delete a Tool</button>
 <ul>
@@ -75,7 +90,7 @@
     {% endfor %}
 </ul>
 
-<p>Required Parts:</p>
+<h1>Required Parts:</h1>
 <button id="part-add">Add a Part</button>
 <button id="part-remove">Delete a Part</button>
 <ul>
@@ -84,7 +99,7 @@
     {% endfor %}
 </ul>
 
-<p>Here are the steps in the procedure:</p>
+<h1>Procedure Steps:</h1>
 <button id="step-add">Add a Step</button>
 <button id="step-remove">Delete a Step</button>
 <ol>
@@ -104,6 +119,8 @@
 <br />
 <a href="/home">Return Home</a>
 
-<input name="NUM_STEPS" id="NUM_STEPS" type="number" value="0" style="display: none;"/>
-<input name="NUM_CARS" id="NUM_CARS" type="number" value="0" style="display: none;"/>
+<input name="NUM_PARTS" id="NUM_PARTS" type="number" value="{{ num_parts }}" style="display: none;"/>
+<input name="NUM_TOOLS" id="NUM_TOOLS" type="number" value="{{ num_tools }}" style="display: none;"/>
+<input name="NUM_STEPS" id="NUM_STEPS" type="number" value="{{ num_steps }}" style="display: none;"/>
+<input name="NUM_CARS" id="NUM_CARS" type="number" value="{{ num_cars }}" style="display: none;"/>
 {% endblock %}

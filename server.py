@@ -176,6 +176,10 @@ def edit_procedure(proc_id):
         proc_car_obj = crud.get_proc_car_by_proc_id(proc_id)
         proc_part_obj = crud.get_parts_by_proc_id(proc_id)
         proc_tool_obj = crud.get_tools_by_proc_id(proc_id)
+        num_tools = crud.num_tools_by_proc(proc_id)
+        num_parts = crud.num_parts_by_proc(proc_id)
+        num_cars = crud.num_cars_by_proc(proc_id)
+        num_steps = crud.num_steps_by_proc(proc_id)
         steps = crud.get_steps_by_proc_id(proc_id)
         sorted_makes = crud.get_all_rockauto_makes()
         
@@ -185,6 +189,10 @@ def edit_procedure(proc_id):
                                 proc_part_obj = proc_part_obj,
                                 proc_tool_obj = proc_tool_obj,
                                 steps = steps,
+                                num_tools = num_tools,
+                                num_parts = num_parts,
+                                num_cars = num_cars,
+                                num_steps = num_steps,
                                 sorted_makes = sorted_makes)
     else:
         return redirect('/')
