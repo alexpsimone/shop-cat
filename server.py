@@ -337,7 +337,8 @@ def rebuild_procedure():
     """Rebuild an edited procedure."""
 
     proc_id = int(request.form.get('proc_id'))
-    title = request.form.get('proc-title')
+    title = request.form.get('title')
+    # label = request.form.get('')
 
     crud.update_procedure(proc_id, title)
 

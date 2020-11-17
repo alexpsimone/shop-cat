@@ -12,22 +12,25 @@
 {% block body %}
 
 <form action="/rebuild-procedure", method="POST">
-<h1>Title:</h1>
-<p id="proc-title">{{ procedure.title }}</p>
-<button id="title-change">Change the Title</button>
+    <input name="proc_id" id="proc_id" type="number" value="{{ procedure.proc_id }}" style="display: none;"/>
 
-<input name="proc_id" id="proc_id" type="number" value="{{ procedure.proc_id }}" style="display: none;"/>
-<input type="submit">
+    <h1>Title:</h1>
+    <input type="text" name="title" id="title", value="{{ procedure.title }}" />
+
+    <h1>Label (optional):</h1>
+    {% if procedure.label %}
+        <input type="text" name="label" id="label" value="{{ procedure.label }}" />
+        <br />
+        <input type="checkbox" name="label-remove" id="label-remove" />
+        <label for="label-remove">Remove this label.</label>
+    {% else %}
+        <input type="text" name="label" id="label" />
+    {% endif %}
+    <br />
+    <input type="submit">
 </form>
 
-<h1>Label:</h1>
-{% if procedure.label %}
-    <p>{{ procedure.label }}</p>
-    <button id="label-remove">Remove the Label</button>
-    <button id="label-change">Change the Label</button>
-{% else %}
-    <button id="label-add">Add a Label</button>
-{% endif %}
+
 
 
 <h1>Applicable Vehicles:</h1>
