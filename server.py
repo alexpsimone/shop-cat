@@ -338,9 +338,10 @@ def rebuild_procedure():
 
     proc_id = int(request.form.get('proc_id'))
     title = request.form.get('title')
-    # label = request.form.get('')
+    remove_label = request.form.get('label-remove')
+    label = request.form.get('label')
 
-    crud.update_procedure(proc_id, title)
+    crud.update_procedure(proc_id, title, remove_label, label)
 
     return redirect(f'/procedure/{proc_id}')
 

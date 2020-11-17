@@ -20,12 +20,12 @@
     <h1>Label (optional):</h1>
     {% if procedure.label %}
         <input type="text" name="label" id="label" value="{{ procedure.label }}" />
-        <br />
-        <input type="checkbox" name="label-remove" id="label-remove" />
-        <label for="label-remove">Remove this label.</label>
     {% else %}
         <input type="text" name="label" id="label" />
     {% endif %}
+    <br />
+    <input type="checkbox" name="label-remove" id="label-remove" />
+    <label for="label-remove">Remove this label.</label>
     <br />
     <input type="submit">
 </form>

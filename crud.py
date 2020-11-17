@@ -268,12 +268,22 @@ def num_tools_by_proc(proc_id):
     return ProcedureTool.query.filter_by(proc_id = proc_id).count()
 
 
-def update_procedure(proc_id, title):
+def update_procedure(proc_id, title, remove_label, label):
     """Update a procedure with given information."""
 
     procedure = Procedure.query.filter_by(proc_id = proc_id).first()
 
     procedure.title = title
+
+    print('***************', remove_label, label, procedure.label)
+
+    if remove_label:
+        procedure.label = None
+    elif label == '':
+            procedure.label = None
+    else: 
+        procedure.label = label
+
     db.session.commit()
 
     return procedure
