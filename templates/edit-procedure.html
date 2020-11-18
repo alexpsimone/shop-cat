@@ -115,13 +115,9 @@
     <div id="steps">
         <input name="NUM_STEPS" id="NUM_STEPS" type="hidden" value="{{ num_steps }}" />
         <h1>Procedure Steps:</h1>
-        <button id="step-add">Add a Step</button>
         <table>
             {% for step in steps %}
             <tr id="row-{{ step.step_id }}">
-                <td>
-                    <input name="step_order" value="{{ step.order_num }}" disabled />
-                </td>
                 <td>
                     <input name="step_text" value="{{ step.step_text }}" disabled />
                     <br />
@@ -143,14 +139,16 @@
                     <button class="remove-step" value="{{ step.step_id }}">Remove Step</button>
                 </td>
                 <td>
-                    <button class="move-up" value="{{ step.step_id }}">UP</button>
+                    <button class="move up" value="{{ step.step_id }}">UP</button>
                 </td>
                 <td>
-                    <button class="move-down" value="{{ step.step_id }}">DOWN</button>
+                    <button class="move down" value="{{ step.step_id }}">DOWN</button>
                 </td>
             </tr>
             {% endfor %}
         </table>
+        <br />
+        <button id="step-add">Add a Step</button>
     </div>
 
     <br />

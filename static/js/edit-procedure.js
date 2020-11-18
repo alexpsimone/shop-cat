@@ -204,6 +204,21 @@ function selectAddlVehicle (evt) {
 }
 
 
+function moveRow (evt) {
+
+    evt.preventDefault();
+
+    const thisButton = evt.target;
+    const thisRow = $(thisButton).closest('tr');
+
+    if ($(thisButton).hasClass('up')) {
+        thisRow.prev().before(thisRow);
+    } else {
+        thisRow.next().after(thisRow);
+    }
+}
+
+
 $('#car-add').on('click', addVehicle);
 $('#make').on('change', getModels);
 $('#vehicle-submit').on('click', selectAddlVehicle);
@@ -213,3 +228,5 @@ $('#tool-add').on('click', addTool);
 
 $('button.remove-part').on('click', removePart);
 $('#part-add').on('click', addPart);
+
+$('button.move').on('click', moveRow)
