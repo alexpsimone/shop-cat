@@ -62,7 +62,7 @@
             {% for proc_tool in proc_tool_obj %}
             <tr id="row-{{ proc_tool.tool.name }}">
                 <td>
-                    <input name="tool-list" value="{{ proc_tool.tool.name }}" disabled />
+                    <input name="tool" value="{{ proc_tool.tool.name }}" disabled />
                 </td>
                 <td>
                     <button class="remove-tool" value="{{ proc_tool.tool.name }}">Remove</button>
