@@ -219,6 +219,23 @@ function moveRow (evt) {
 }
 
 
+function removeStep (evt) {
+
+    evt.preventDefault();
+
+    const thisButton = evt.target;
+    const thisRow = $(thisButton).closest('tr');
+    $(thisRow).remove();
+
+    let NUM_STEPS = Number($('#NUM_STEPS').val());
+    NUM_STEPS -= 1;
+
+    $('#NUM_STEPS').replaceWith(`<input name="NUM_STEPS" id="NUM_STEPS" 
+                                    type="hidden" value="${NUM_STEPS}" />`);
+   
+}
+
+
 $('#car-add').on('click', addVehicle);
 $('#make').on('change', getModels);
 $('#vehicle-submit').on('click', selectAddlVehicle);
@@ -230,3 +247,4 @@ $('button.remove-part').on('click', removePart);
 $('#part-add').on('click', addPart);
 
 $('button.move').on('click', moveRow)
+$('button.remove-step').on('click', removeStep);
