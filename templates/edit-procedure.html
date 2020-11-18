@@ -26,24 +26,26 @@
     <br />
     <input type="checkbox" name="label-remove" id="label-remove" />
     <label for="label-remove">Remove this label.</label>
-    <br />
-
-    <h1>Required tools:</h1>
-    <table>
-        {% for proc_tool in proc_tool_obj %}
-        <tr id="row-{{ proc_tool.tool.name }}">
-            <td>
-                <input name="tools" value="{{ proc_tool.tool.name }}" disabled />
-            </td>
-            <td>
-                <button class="remove-tool" value="{{ proc_tool.tool.name }}">Remove</button>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    <button id="tool-add">Add a Tool</button>
-    <input name="NUM_TOOLS" id="NUM_TOOLS" type="hidden" value="{{ num_tools }}" />
     
+    <br />
+    <div id="tools">
+        <h1>Required tools:</h1>
+        <button id="tool-add">Add a Tool</button>
+        <input name="NUM_TOOLS" id="NUM_TOOLS" type="hidden" value="{{ num_tools }}" />
+        <table>
+            {% for proc_tool in proc_tool_obj %}
+            <tr id="row-{{ proc_tool.tool.name }}">
+                <td>
+                    <input name="tools" value="{{ proc_tool.tool.name }}" disabled />
+                </td>
+                <td>
+                    <button class="remove-tool" value="{{ proc_tool.tool.name }}">Remove</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
     <br />
     <input type="submit">
 </form>
