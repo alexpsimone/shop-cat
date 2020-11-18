@@ -28,6 +28,50 @@
     <label for="label-remove">Remove this label.</label>
     
     <br />
+    <div id="cars">
+    <h1>Applicable Vehicles:</h1>
+    <table>
+        {% for proc_car in proc_car_obj %}
+        <tr id="row-{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}">
+            <td>
+                <input name="cars" 
+                        value="{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}" 
+                        disabled />
+            </td>
+            <td>
+                <button class="remove-car" 
+                        value="{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}">
+                        Remove
+                </button>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <form id="car-add-form" action="/vehicle-select" method="POST">
+        <label>Car Model Year:</label>
+        <input id="model-year" name="model-year" type="number" min="1900" max="2020" />
+        <br />
+        <label>Car Make:</label>
+        <select id="make" name="make">
+        <option value="">--Please select a Make--</option>
+        {% for make in sorted_makes %}
+        <option value="{{ make }}">{{ make }}</option>
+        {% endfor %}
+        <option value="other">Other (please specify)...</option>
+        </select>
+        <br />
+        <label>Car Model:</label>
+        <select id="model-select" name="model" disabled>
+        <option value="">--Please select a Model--</option>
+        </select>
+        <br />
+        <input id="vehicle-submit" type="submit" disabled>
+    </form>
+    <br />
+    <button id="car-add">Add a Vehicle</button>
+    </div>
+   
+    <br />
     <div id="tools">
         <h1>Required tools:</h1>
         <button id="tool-add">Add a Tool</button>
@@ -47,72 +91,30 @@
     </div>
 
     <br />
+    <div id="parts">
+        <input name="NUM_PARTS" id="NUM_PARTS" type="hidden" value="{{ num_parts }}" />
+        <h1>Required parts:</h1>
+        <button id="part-add">Add a Part</button>
+        <input name="NUM_PARTS" id="NUM_PARTS" type="hidden" value="{{ num_parts }}" />
+        <table>
+            {% for proc_part in proc_part_obj %}
+            <tr id="row-{{ proc_part.part.name }}">
+                <td>
+                    <input name="parts" value="{{ proc_part.part.name }}" disabled />
+                </td>
+                <td>
+                    <button class="remove-part" value="{{ proc_part.part.name }}">Remove</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <br />
     <input type="submit">
 </form>
 
 
-<h1>Applicable Vehicles:</h1>
-<ul id="all-cars">
-    {% for proc_car in proc_car_obj %}
-    <li id="item-{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}">
-        {{ proc_car.car.model_year }}
-        {{ proc_car.car.make }}
-        {{ proc_car.car.model }}
-        {% if num_cars > 1 %}
-            <input type="checkbox"
-                    id="remove-{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}"
-                    name="remove-{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}" />
-            <label for="remove-{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}">
-                Remove This Vehicle
-            </label>
-        {% else %}
-        <input type="checkbox"
-        class="car-remove"
-        id="remove-{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}"
-        name="remove-{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}"
-        disabled />
-        <label for="remove-{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}">
-            Remove This Vehicle
-        </label>
-        {% endif %}
-    </li>
-    {% endfor %}
-</ul>
-
-<form id="car-add-form" action="/vehicle-select", method="POST" style="display: none;">
-    <label>Car Model Year:</label>
-    <input id="model-year" name="model-year" type="number" min="1900" max="2020" />
-    <br />
-    <label>Car Make:</label>
-    <select id="make" name="make">
-    <option value="">--Please select a Make--</option>
-    {% for make in sorted_makes %}
-    <option value="{{ make }}">{{ make }}</option>
-    {% endfor %}
-    <option value="other">Other (please specify)...</option>
-    </select>
-    <br />
-    <label>Car Model:</label>
-    <select id="model-select" name="model" disabled>
-    <option value="">--Please select a Model--</option>
-    </select>
-    <br />
-    <input id="vehicle-submit" type="submit" disabled>
-</form>
-
-<button id="car-add">Add a Vehicle</button>
-
-
-
-
-<h1>Required Parts:</h1>
-<button id="part-add">Add a Part</button>
-<button id="part-remove">Delete a Part</button>
-<ul>
-    {% for proc_part in proc_part_obj %}
-    <li>{{ proc_part.part.name }}</li>
-    {% endfor %}
-</ul>
 
 <h1>Procedure Steps:</h1>
 <button id="step-add">Add a Step</button>
@@ -134,7 +136,7 @@
 <br />
 <a href="/home">Return Home</a>
 
-<input name="NUM_PARTS" id="NUM_PARTS" type="hidden" value="{{ num_parts }}" />
+
 
 <input name="NUM_STEPS" id="NUM_STEPS" type="hidden" value="{{ num_steps }}" />
 <input name="NUM_CARS" id="NUM_CARS" type="hidden" value="{{ num_cars }}" />

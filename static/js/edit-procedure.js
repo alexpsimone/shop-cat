@@ -28,8 +28,6 @@ function removeTool (evt) {
                                     type="hidden" value="${NUM_TOOLS}" />`);
 }
 
-$('button.remove-tool').on('click', removeTool);
-
 
 function addTool (evt) {
 
@@ -65,7 +63,66 @@ function addTool (evt) {
     
 }
 
-$('#tool-add').on('click', addTool);
+function removePart (evt) {
+
+    evt.preventDefault();
+
+    const partButton = evt.target;
+    const partName = partButton['value'];
+
+    $(`#row-${partName}`).remove();
+
+    let NUM_PARTS = Number($('#NUM_PARTS').val());
+    NUM_PARTS -= 1;
+
+    $('#NUM_PARTS').replaceWith(`<input name="NUM_PARTS" id="NUM_PARTS" 
+                                    type="hidden" value="${NUM_PARTS}" />`);
+}
+
+
+function addPart (evt) {
+
+    evt.preventDefault();
+    
+    let NUM_PARTS = Number($('#NUM_PARTS').val());
+    NUM_PARTS += 1;
+
+    $.get('/get-parts.json', (res) => { 
+        
+        let str = '';
+        for (const part of res) {
+            str = str + `<option value="${part}">${part}</option>`;
+        }
+
+        $('#parts').append(
+            `<br />
+            <label>New Part: </label>
+            <select name="part_req_${NUM_PARTS}" class="part-req" id="part${NUM_PARTS}">
+            <option value="">--Please select a part--</option>
+            ${str}
+            <option value="other">Other (please specify)...</option>
+            </select>
+            <br /><label>If other, please specify name: </label>
+            <input type="text" name="part_${NUM_PARTS}_other_name" />
+            <br /><label>If other, please specify P/N: </label>
+            <input type="text" name="part_${NUM_PARTS}_other_num" />
+            <br /><label>If other, please specify manuf: </label>
+            <input type="text" name="part_${NUM_PARTS}_other_manuf" />
+            <br /><label>If other, please specify if OEM: </label>
+            <input type="radio" name="oem_${NUM_PARTS}" value="True" />
+            <label for="is_oem_1">OEM</label>
+            <input type="radio" name="oem1" value="False" />
+            <label for="not_oem_1">Aftermarket</label>
+            <input type="radio" name="oem1" value="False" />
+            <label for="unsure_if_oem_1">Not Sure</label>
+            <br />`
+        );
+
+    });
+
+    $('#NUM_PARTS').replaceWith(`<input name="NUM_PARTS" id="NUM_PARTS" 
+                                    type="hidden" value="${NUM_PARTS}" />`);
+}
 
 
 function addVehicle (evt) {
@@ -140,14 +197,19 @@ function selectAddlVehicle (evt) {
     $('#NUM_CARS').replaceWith(`<input name="NUM_CARS" 
                                 id="NUM_CARS" type="number" 
                                 value="${numCars}" 
-                                style="display: none;"/>`)
+                                style="display: none;"/>`);
 
     $('checkbox.car-remove').attr('disabled', false);
-    $('#car-add-form').hide()
+    $('#car-add-form').hide();
 }
-
 
 
 $('#car-add').on('click', addVehicle);
 $('#make').on('change', getModels);
 $('#vehicle-submit').on('click', selectAddlVehicle);
+
+$('button.remove-tool').on('click', removeTool);
+$('#tool-add').on('click', addTool);
+
+$('button.remove-part').on('click', removePart);
+$('#part-add').on('click', addPart);
