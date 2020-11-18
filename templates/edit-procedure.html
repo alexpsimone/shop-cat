@@ -27,10 +27,26 @@
     <input type="checkbox" name="label-remove" id="label-remove" />
     <label for="label-remove">Remove this label.</label>
     <br />
+
+    <h1>Required tools:</h1>
+    <table>
+        {% for proc_tool in proc_tool_obj %}
+        <tr id="row-{{ proc_tool.tool.name }}">
+            <td>
+                <input name="tools" value="{{ proc_tool.tool.name }}" disabled />
+            </td>
+            <td>
+                <button class="remove-tool" value="{{ proc_tool.tool.name }}">Remove</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <button id="tool-add">Add a Tool</button>
+    <input name="NUM_TOOLS" id="NUM_TOOLS" type="hidden" value="{{ num_tools }}" />
+    
+    <br />
     <input type="submit">
 </form>
-
-
 
 
 <h1>Applicable Vehicles:</h1>
@@ -85,18 +101,7 @@
 <button id="car-add">Add a Vehicle</button>
 
 
-<h1>Required tools:</h1>
-<button id="tool-add">Add a Tool</button>
-<button id="tool-remove">Delete a Tool</button>
-<ul>
-    {% for proc_tool in proc_tool_obj %}
-    <li>
-        <a href="/tool/{{ proc_tool.tool.tool_id }}">
-        {{ proc_tool.tool.name }}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
+
 
 <h1>Required Parts:</h1>
 <button id="part-add">Add a Part</button>
@@ -127,8 +132,8 @@
 <br />
 <a href="/home">Return Home</a>
 
-<input name="NUM_PARTS" id="NUM_PARTS" type="number" value="{{ num_parts }}" style="display: none;"/>
-<input name="NUM_TOOLS" id="NUM_TOOLS" type="number" value="{{ num_tools }}" style="display: none;"/>
-<input name="NUM_STEPS" id="NUM_STEPS" type="number" value="{{ num_steps }}" style="display: none;"/>
-<input name="NUM_CARS" id="NUM_CARS" type="number" value="{{ num_cars }}" style="display: none;"/>
+<input name="NUM_PARTS" id="NUM_PARTS" type="hidden" value="{{ num_parts }}" />
+
+<input name="NUM_STEPS" id="NUM_STEPS" type="hidden" value="{{ num_steps }}" />
+<input name="NUM_CARS" id="NUM_CARS" type="hidden" value="{{ num_cars }}" />
 {% endblock %}

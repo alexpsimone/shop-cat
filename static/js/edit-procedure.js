@@ -11,6 +11,23 @@ $('#label-remove').on('change', () => {
     };
 });
 
+
+
+function removeTool (evt) {
+
+    evt.preventDefault();
+
+    const toolButton = evt.target;
+
+    const toolName = toolButton['value'];
+    console.log(`toolName: ${toolName}`)
+
+     $(`#row-${toolName}`).remove();
+}
+
+$('button.remove-tool').on('click', removeTool);
+
+
 function addVehicle (evt) {
 
     evt.preventDefault();

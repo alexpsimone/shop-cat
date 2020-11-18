@@ -273,16 +273,22 @@ def update_procedure(proc_id, title, remove_label, label):
 
     procedure = Procedure.query.filter_by(proc_id = proc_id).first()
 
+    # Update procedure.title.
     procedure.title = title
 
-    print('***************', remove_label, label, procedure.label)
-
+    # Update procedure.label.
     if remove_label:
         procedure.label = None
     elif label == '':
-            procedure.label = None
+        procedure.label = None
     else: 
         procedure.label = label
+
+    # Update ProcedureTool objects.
+    # for tool in tools:
+    #     if ProcedureTool.query.filter(ProcedureTool.procedure, ProcedureTool.tool).first() == None:
+    #         procedure_tool = ProcedureTool(proc = procedure, tool = tool)
+    #         db.session.add(procedure_tool)
 
     db.session.commit()
 

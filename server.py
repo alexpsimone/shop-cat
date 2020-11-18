@@ -340,6 +340,7 @@ def rebuild_procedure():
     title = request.form.get('title')
     remove_label = request.form.get('label-remove')
     label = request.form.get('label')
+    tools = request.form.getlist('tools')
 
     crud.update_procedure(proc_id, title, remove_label, label)
 
