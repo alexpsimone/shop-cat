@@ -128,7 +128,6 @@ function addPart (evt) {
 function addVehicle (evt) {
 
     evt.preventDefault();
-   
     $('#car-add-form').show()
 
 }
@@ -204,6 +203,27 @@ function selectAddlVehicle (evt) {
 }
 
 
+// function moveStepUp (evt) {
+
+//     evt.preventDefault();
+
+//     const stepButton = evt.target;
+//     const stepID = stepButton['value'];
+//     const NUM_STEPS = Number($('#NUM_STEPS').val());
+
+//     const currentStepOrder = Number($(`#order-${stepID}`).val());
+//     console.log(currentStepOrder);
+    
+//     if (currentStepOrder > 1) {
+//         console.log(stepID);
+//         for (NUM_STEP in NUM_STEPS) {
+
+//         }
+
+//     }
+
+// }
+
 $('#car-add').on('click', addVehicle);
 $('#make').on('change', getModels);
 $('#vehicle-submit').on('click', selectAddlVehicle);
@@ -213,3 +233,5 @@ $('#tool-add').on('click', addTool);
 
 $('button.remove-part').on('click', removePart);
 $('#part-add').on('click', addPart);
+
+// $('button.move-up').on('click', moveStepUp);

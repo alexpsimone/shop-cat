@@ -48,26 +48,7 @@
         </tr>
         {% endfor %}
     </table>
-    <form id="car-add-form" action="/vehicle-select" method="POST">
-        <label>Car Model Year:</label>
-        <input id="model-year" name="model-year" type="number" min="1900" max="2020" />
-        <br />
-        <label>Car Make:</label>
-        <select id="make" name="make">
-        <option value="">--Please select a Make--</option>
-        {% for make in sorted_makes %}
-        <option value="{{ make }}">{{ make }}</option>
-        {% endfor %}
-        <option value="other">Other (please specify)...</option>
-        </select>
-        <br />
-        <label>Car Model:</label>
-        <select id="model-select" name="model" disabled>
-        <option value="">--Please select a Model--</option>
-        </select>
-        <br />
-        <input id="vehicle-submit" type="submit" disabled>
-    </form>
+
     <br />
     <button id="car-add">Add a Vehicle</button>
     </div>
@@ -81,7 +62,7 @@
             {% for proc_tool in proc_tool_obj %}
             <tr id="row-{{ proc_tool.tool.name }}">
                 <td>
-                    <input name="tools" value="{{ proc_tool.tool.name }}" disabled />
+                    <input name="tool-list" value="{{ proc_tool.tool.name }}" disabled />
                 </td>
                 <td>
                     <button class="remove-tool" value="{{ proc_tool.tool.name }}">Remove</button>
@@ -117,36 +98,31 @@
         <h1>Procedure Steps:</h1>
         <button id="step-add">Add a Step</button>
         <table>
-            {% for step in steps %}
-            <tr id="row-{{ step.step_id }}">
+            {% for n in range(num_steps) %}
+            <tr id="row-{{ steps[n].step_id }}">
                 <td>
-                    <input name="step_order" value="{{ step.order_num }}" disabled />
-                </td>
-                <td>
-                    <input name="step_text" value="{{ step.step_text }}" disabled />
+                    <input id="order-{{ steps[n].step_id }}" name="step-order" value="{{ n + 1 }}" disabled />
                     <br />
-                    <button class="edit-step" value="{{ step.step_id }}">Edit Text</button>
+                    <button class="move-up" value="{{ steps[n].step_id }}">UP</button>
+                    <button class="move-down" value="{{ steps[n].step_id }}">DOWN</button>
                 </td>
                 <td>
-                    <input name="step_ref" value="{{ step.reference }}" disabled />
+                    <input name="step_text" value="{{ steps[n].step_text }}" />
+                </td>
+                <td>
+                    <input name="step_ref" value="{{ steps[n].reference }}" disabled />
                     <br />
-                    <button class="edit-ref" value="{{ step.step_id }}">Edit Ref</button>
-                    <button class="del-ref" value="{{ step.step_id }}">Remove Ref</button>
+                    <button class="edit-ref" value="{{ steps[n].step_id }}">Edit Ref</button>
+                    <button class="del-ref" value="{{ steps[n].step_id }}">Remove Ref</button>
                 </td>
                 <td>
-                    <input name="step_img" value="{{ step.step_img }}" disabled />
+                    <input name="step_img" value="{{ steps[n].step_img }}" disabled />
                     <br />
-                    <button class="edit-img" value="{{ step.step_id }}">Edit Img</button>
-                    <button class="del-img" value="{{ step.step_id }}">Remove Img</button>
+                    <button class="edit-img" value="{{ steps[n].step_id }}">Edit Img</button>
+                    <button class="del-img" value="{{ steps[n].step_id }}">Remove Img</button>
                 </td>
                 <td>
-                    <button class="remove-step" value="{{ step.step_id }}">Remove Step</button>
-                </td>
-                <td>
-                    <button class="move-up" value="{{ step.step_id }}">UP</button>
-                </td>
-                <td>
-                    <button class="move-down" value="{{ step.step_id }}">DOWN</button>
+                    <button class="remove-step" value="{{ steps[n].step_id }}">Remove Step</button>
                 </td>
             </tr>
             {% endfor %}
@@ -160,6 +136,25 @@
 <br />
 <a href="/home">Return Home</a>
 
-
+<form id="car-add-form" action="/vehicle-select" method="POST" style="display: none;">
+    <label>Car Model Year:</label>
+    <input id="model-year" name="model-year" type="number" min="1900" max="2020" />
+    <br />
+    <label>Car Make:</label>
+    <select id="make" name="make">
+    <option value="">--Please select a Make--</option>
+    {% for make in sorted_makes %}
+    <option value="{{ make }}">{{ make }}</option>
+    {% endfor %}
+    <option value="other">Other (please specify)...</option>
+    </select>
+    <br />
+    <label>Car Model:</label>
+    <select id="model-select" name="model" disabled>
+    <option value="">--Please select a Model--</option>
+    </select>
+    <br />
+    <input id="vehicle-submit" type="submit" disabled>
+</form>
 
 {% endblock %}
