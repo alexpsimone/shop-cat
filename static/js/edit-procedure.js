@@ -236,6 +236,47 @@ function removeStep (evt) {
 }
 
 
+function addStep (evt) {
+
+    evt.preventDefault();
+
+    let NUM_STEPS = Number($('#NUM_STEPS').val());
+    NUM_STEPS += 1;
+
+    $('#steps').append(
+                `<tr>
+                    <td>
+                        <input name="step_text" value="Enter text here..." />
+                    </td>
+                    <td>
+                        <input name="step_ref" value="No Ref Provided" disabled />
+                        <br />
+                        <button class="edit-ref>Edit Ref</button>
+                        <button class="del-ref" disabled>Remove Ref</button>
+                    </td>
+                    <td>
+                        <input name="step_img" value="toolbox.jpg" disabled />
+                        <br />
+                        <button class="edit-img">Edit Img</button>
+                        <button class="del-img" disabled>Restore Default Img</button>
+                    </td>
+                    <td>
+                        <button class="remove-step">Remove Step</button>
+                    </td>
+                    <td>
+                        <button class="move up">UP</button>
+                    </td>
+                    <td>
+                        <button class="move down">DOWN</button>
+                    </td>
+                </tr>`);
+
+    $('#NUM_STEPS').replaceWith(`<input name="NUM_STEPS" id="NUM_STEPS" 
+                                    type="hidden" value="${NUM_STEPS}" />`);
+   
+}
+
+
 $('#car-add').on('click', addVehicle);
 $('#make').on('change', getModels);
 $('#vehicle-submit').on('click', selectAddlVehicle);
@@ -248,3 +289,4 @@ $('#part-add').on('click', addPart);
 
 $('button.move').on('click', moveRow)
 $('button.remove-step').on('click', removeStep);
+$('#step-add').on('click', addStep);

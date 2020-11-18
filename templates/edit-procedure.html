@@ -112,16 +112,14 @@
     </div>
 
     <br />
-    <div id="steps">
+    <div>
         <input name="NUM_STEPS" id="NUM_STEPS" type="hidden" value="{{ num_steps }}" />
         <h1>Procedure Steps:</h1>
-        <table>
+        <table id="steps">
             {% for step in steps %}
-            <tr id="row-{{ step.step_id }}">
+            <tr>
                 <td>
-                    <input name="step_text" value="{{ step.step_text }}" disabled />
-                    <br />
-                    <button class="edit-step" value="{{ step.step_id }}">Edit Text</button>
+                    <input name="step_text" value="{{ step.step_text }}" />
                 </td>
                 <td>
                     <input name="step_ref" value="{{ step.reference }}" disabled />
@@ -136,13 +134,13 @@
                     <button class="del-img" value="{{ step.step_id }}">Restore Default Img</button>
                 </td>
                 <td>
-                    <button class="remove-step" value="{{ step.step_id }}">Remove Step</button>
+                    <button class="remove-step">Remove Step</button>
                 </td>
                 <td>
-                    <button class="move up" value="{{ step.step_id }}">UP</button>
+                    <button class="move up">UP</button>
                 </td>
                 <td>
-                    <button class="move down" value="{{ step.step_id }}">DOWN</button>
+                    <button class="move down">DOWN</button>
                 </td>
             </tr>
             {% endfor %}
