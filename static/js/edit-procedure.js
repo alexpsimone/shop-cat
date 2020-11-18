@@ -277,6 +277,18 @@ function addStep (evt) {
 }
 
 
+function enableEditField (evt) {
+
+    evt.preventDefault();
+
+    const thisButton = evt.target;
+    const thisInput = $(thisButton).prevAll('input');
+    
+    $(thisInput).attr('disabled', false);
+    $(thisButton).attr('disabled', true);
+
+}
+
 $('#car-add').on('click', addVehicle);
 $('#make').on('change', getModels);
 $('#vehicle-submit').on('click', selectAddlVehicle);
@@ -290,3 +302,5 @@ $('#part-add').on('click', addPart);
 $('button.move').on('click', moveRow)
 $('button.remove-step').on('click', removeStep);
 $('#step-add').on('click', addStep);
+
+$('button.edit').on('click', enableEditField);
