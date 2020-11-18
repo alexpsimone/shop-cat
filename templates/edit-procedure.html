@@ -29,6 +29,7 @@
     
     <br />
     <div id="cars">
+    <input name="NUM_CARS" id="NUM_CARS" type="hidden" value="{{ num_cars }}" />
     <h1>Applicable Vehicles:</h1>
     <table>
         {% for proc_car in proc_car_obj %}
@@ -111,33 +112,54 @@
     </div>
 
     <br />
+    <div id="steps">
+        <input name="NUM_STEPS" id="NUM_STEPS" type="hidden" value="{{ num_steps }}" />
+        <h1>Procedure Steps:</h1>
+        <button id="step-add">Add a Step</button>
+        <table>
+            {% for step in steps %}
+            <tr id="row-{{ step.step_id }}">
+                <td>
+                    <input name="step_order" value="{{ step.order_num }}" disabled />
+                </td>
+                <td>
+                    <input name="step_text" value="{{ step.step_text }}" disabled />
+                    <br />
+                    <button class="edit-step" value="{{ step.step_id }}">Edit Text</button>
+                </td>
+                <td>
+                    <input name="step_ref" value="{{ step.reference }}" disabled />
+                    <br />
+                    <button class="edit-ref" value="{{ step.step_id }}">Edit Ref</button>
+                    <button class="del-ref" value="{{ step.step_id }}">Remove Ref</button>
+                </td>
+                <td>
+                    <input name="step_img" value="{{ step.step_img }}" disabled />
+                    <br />
+                    <button class="edit-img" value="{{ step.step_id }}">Edit Img</button>
+                    <button class="del-img" value="{{ step.step_id }}">Remove Img</button>
+                </td>
+                <td>
+                    <button class="remove-step" value="{{ step.step_id }}">Remove Step</button>
+                </td>
+                <td>
+                    <button class="move-up" value="{{ step.step_id }}">UP</button>
+                </td>
+                <td>
+                    <button class="move-down" value="{{ step.step_id }}">DOWN</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <br />
     <input type="submit">
 </form>
-
-
-
-<h1>Procedure Steps:</h1>
-<button id="step-add">Add a Step</button>
-<button id="step-remove">Delete a Step</button>
-<ol>
-    {% for step in steps %}
-    <li>
-        {{ step.step_text }}
-        {% if step.reference != "No Ref Provided" %}
-            <br />
-            Reference:
-            <a href="{{ step.reference }}">{{ step.reference }}</a>
-        {% endif %}
-    </li>
-    {% endfor %}
-</ol>
-
 
 <br />
 <a href="/home">Return Home</a>
 
 
 
-<input name="NUM_STEPS" id="NUM_STEPS" type="hidden" value="{{ num_steps }}" />
-<input name="NUM_CARS" id="NUM_CARS" type="hidden" value="{{ num_cars }}" />
 {% endblock %}
