@@ -46,8 +46,10 @@ function addTool (evt) {
 
         $('button.remove-tool').off();
         $('button.edit').off();
+        $('button.del-img').off();
         $('button.remove-tool').on('click', removeTool);
         $('button.edit').on('click', enableEditField);
+        $('button.del-img').on('click', restoreDefaultImg);
 
     });
 
@@ -131,7 +133,9 @@ function addPart (evt) {
             </tr>`
         );
         $('button.remove-part').off();
+        $('button.del-img').off();
         $('button.remove-part').on('click', removePart);
+        $('button.del-img').on('click', restoreDefaultImg);
     });
 
     $('#NUM_PARTS').replaceWith(`<input name="NUM_PARTS" id="NUM_PARTS" 
@@ -294,11 +298,11 @@ function addStep (evt) {
     $('button.move').off();
     $('button.remove-step').off();
     $('button.edit').off();
-    $('button.del-img').off();
+    $('button.del-ref').off();
     $('button.move').on('click', moveRow);
     $('button.remove-step').on('click', removeStep);
     $('button.edit').on('click', enableEditField);
-    $('button.del-img').on('click', restoreDefaultImg);
+    $('button.del-ref').on('click', removeReference);
 }
 
 
@@ -308,9 +312,11 @@ function enableEditField (evt) {
 
     const thisButton = evt.target;
     const thisInput = $(thisButton).prevAll('input');
+    const otherButton = $(thisButton).nextAll('button');
 
     $(thisInput).attr('disabled', false);
     $(thisButton).attr('disabled', true);
+    $(otherButton).attr('disabled', false);
 
 }
 
