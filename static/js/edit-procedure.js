@@ -133,7 +133,7 @@ function addPart (evt) {
         $('button.remove-part').off();
         $('button.remove-part').on('click', removePart);
     });
-    
+
     $('#NUM_PARTS').replaceWith(`<input name="NUM_PARTS" id="NUM_PARTS" 
                                     type="hidden" value="${NUM_PARTS}" />`);
 }
@@ -263,7 +263,9 @@ function addStep (evt) {
                         <input name="step-text" value="Enter text here..." />
                     </td>
                     <td>
-                        <input name="step-ref" value="No Ref Provided" disabled />
+                        <input type="url" name="step_ref"
+                            placeholder="https://example.com"
+                            pattern="https://.*" disabled/>
                         <br />
                         <button class="edit ref">Edit Ref</button>
                         <button class="del-ref" disabled>Remove Ref</button>
@@ -292,9 +294,11 @@ function addStep (evt) {
     $('button.move').off();
     $('button.remove-step').off();
     $('button.edit').off();
+    $('button.del-img').off();
     $('button.move').on('click', moveRow);
     $('button.remove-step').on('click', removeStep);
     $('button.edit').on('click', enableEditField);
+    $('button.del-img').on('click', restoreDefaultImg);
 }
 
 
@@ -309,6 +313,27 @@ function enableEditField (evt) {
     $(thisButton).attr('disabled', true);
 
 }
+
+
+function restoreDefaultImg (evt) {
+
+    evt.preventDefault();
+
+    const thisButton = evt.target;
+    const thisInput = $(thisButton).prevAll('input');
+    $(thisInput).val('toolbox.jpg');
+}
+
+
+function removeReference (evt) {
+
+    evt.preventDefault();
+
+    const thisButton = evt.target;
+    const thisInput = $(thisButton).prevAll('input');
+    $(thisInput).val('No Ref Provided');
+}
+
 
 $('#car-add').on('click', addVehicle);
 $('#make').on('change', getModels);
@@ -325,3 +350,4 @@ $('button.remove-step').on('click', removeStep);
 $('#step-add').on('click', addStep);
 
 $('button.edit').on('click', enableEditField);
+$('button.del-img').on('click', restoreDefaultImg);

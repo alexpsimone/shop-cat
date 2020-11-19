@@ -137,7 +137,15 @@
                     <input name="step-text" value="{{ step.step_text }}" />
                 </td>
                 <td>
-                    <input name="step-ref" value="{{ step.reference }}" disabled />
+                    {% if step.reference == "No Ref Provided" %}
+                        <input type="url" name="step-ref"
+                                placeholder="https://example.com"
+                                pattern="https://.*" disabled/>
+                    {% else %}
+                        <input type="url" name="step-ref"
+                                    placeholder="https://example.com"
+                                    pattern="https://.*" value="{{ step.reference }}" disabled/>
+                    {% endif %}
                     <br />
                     <button class="edit ref">Edit Ref</button>
                     <button class="del-ref">Remove Ref</button>
