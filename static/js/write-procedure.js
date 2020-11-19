@@ -27,7 +27,9 @@ function getTools (evt) {
             </select>
             <br /><label>If other, please specify: </label>
             <input type="text" name="tool_other_${NUM_TOOLS}" />
-            <br />`
+            <br />
+            <label>Other Tool Image (optional):
+            <input type="file" name="tool_img_${NUM_TOOLS}" />`
         );
 
     });
@@ -72,7 +74,9 @@ function getParts (evt) {
             <label for="not_oem_1">Aftermarket</label>
             <input type="radio" name="oem1" value="False" />
             <label for="unsure_if_oem_1">Not Sure</label>
-            <br />`
+            <br />
+            <label>Other Part Image (optional):
+            <input type="file" name="part_img_${NUM_PARTS}" />`
         );
 
         $('#NUM_PARTS').replaceWith(`<input name ="NUM_PARTS" id="NUM_PARTS" 

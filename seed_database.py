@@ -98,17 +98,17 @@ for user in range(5):
                         f'Procedure_{procedure.proc_id}_step1',
                         procedure,
                         'No Ref Provided',
-                        'toolbox.jpg')
+                        '/static/img/toolbox.png')
         crud.create_step(2, 
                         f'Procedure_{procedure.proc_id}_step2',
                         procedure,
                         'No Ref Provided',
-                        'toolbox.jpg')
+                        '/static/img/toolbox.png')
         crud.create_step(3, 
                         f'Procedure_{procedure.proc_id}_step3',
                         procedure,
                         'No Ref Provided',
-                        'toolbox.jpg')
+                        '/static/img/toolbox.png')
 
 
 

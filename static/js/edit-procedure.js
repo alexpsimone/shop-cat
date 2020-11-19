@@ -126,6 +126,9 @@ function addPart (evt) {
                     <label for="not_oem_1">Aftermarket</label>
                     <input type="radio" name="oem1" value="False" />
                     <label for="unsure_if_oem_1">Not Sure</label>
+                    <br /><label>Part Image (optional):</label>
+                    <input type="file" name="part-img" />
+                    <button class="del-img">Restore Default Img</button>
                 </td>
                 <td>
                     <button class="remove-part">Remove</button>
@@ -275,7 +278,7 @@ function addStep (evt) {
                         <button class="del-ref" disabled>Remove Ref</button>
                     </td>
                     <td>
-                        <input name="step-img" value="toolbox.jpg" disabled />
+                        <input name="step-img" type="file" value="/static/img/toolbox.png" disabled />
                         <br />
                         <button class="edit img">Edit Img</button>
                         <button class="del-img" disabled>Restore Default Img</button>
@@ -312,7 +315,7 @@ function enableEditField (evt) {
 
     const thisButton = evt.target;
     const thisInput = $(thisButton).prevAll('input');
-    const otherButton = $(thisButton).nextAll('button');
+    const otherButton = $(thisButton).next('button');
 
     $(thisInput).attr('disabled', false);
     $(thisButton).attr('disabled', true);
@@ -327,7 +330,7 @@ function restoreDefaultImg (evt) {
 
     const thisButton = evt.target;
     const thisInput = $(thisButton).prevAll('input');
-    $(thisInput).val('toolbox.jpg');
+    $(thisInput).val('/static/img/toolbox.png');
 }
 
 

@@ -126,7 +126,8 @@ def build_procedure():
         elif crud.check_toolbox(tool_other) != None:
             my_tool = crud.check_toolbox(tool_other)
         else:
-            my_tool = crud.create_tool(tool_other)
+            tool_other_img = request.form.get(f'tool_img_{tool}')
+            my_tool = crud.create_tool(tool_other, tool_other_img)
         
         crud.create_procedure_tool(procedure, my_tool)
      
@@ -146,17 +147,18 @@ def build_procedure():
         
         part_req = request.form.get(f'part_req_{part}')
         part_other = request.form.get(f'part_other_{part}')
-
+        
         if part_req != 'other':
             my_part = crud.check_parts_bin(part_req)
         elif crud.check_parts_bin(part_other) != None:
             my_part = check_parts_bin(part_other)
         else:
+            part_other_img = request.form.get(f'part_img_{tool}')
             part_other_name = request.form.get(f'part_{part}_other_name')
             part_other_num = request.form.get(f'part_{part}_other_num')
             part_other_manuf = request.form.get(f'part_{part}_other_manuf')
             oem = request.form.get('oem_{part}')
-            my_part = crud.create_part(part_other_name, 'newpath')
+            my_part = crud.create_part(part_other_name, part_other_img)
             crud.create_part_num(part_other_manuf,
                                  part_other_num,
                                  oem,

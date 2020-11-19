@@ -12,7 +12,7 @@
     <ul>
         {% for proc_car in proc_cars %}
             <li>
-                <a href="/vehicle/{{ make }}/{{ model_year }}/{{ proc_car.car.model }}/{{ proc_car.proc }}">{{ proc_car.proc.title }}</a>
+                <a href="/procedure/{{ proc_car.proc.proc_id }}">{{ proc_car.proc.title }}</a>
             </li>
         {% endfor %}
     </ul>
