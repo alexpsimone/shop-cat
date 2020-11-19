@@ -12,23 +12,6 @@ $('#label-remove').on('change', () => {
 });
 
 
-function removeTool (evt) {
-
-    evt.preventDefault();
-
-    const toolButton = evt.target;
-    const toolName = toolButton['value'];
-
-    $(`#row-${toolName}`).remove();
-
-    let NUM_TOOLS = Number($('#NUM_TOOLS').val());
-    NUM_TOOLS -= 1;
-
-    $('#NUM_TOOLS').replaceWith(`<input name="NUM_TOOLS" id="NUM_TOOLS" 
-                                    type="hidden" value="${NUM_TOOLS}" />`);
-}
-
-
 function addTool (evt) {
 
     evt.preventDefault();
@@ -44,17 +27,27 @@ function addTool (evt) {
         }
 
         $('#tools').append(
-            `<br />
-            <label>New Tool: </label>
-            <select name="tool_req_${NUM_TOOLS}" class="tool-req" id="tool${NUM_TOOLS}">
-            <option value="">--Please select a tool--</option>
-            ${str}
-            <option value="other">Other (please specify)...</option>
-            </select>
-            <br /><label>If other, please specify: </label>
-            <input type="text" name="tool_other_${NUM_TOOLS}" />
-            <br />`
+            `<tr>
+                <td>
+                <label>New Tool: </label>
+                <select name="tool_req_${NUM_TOOLS}" class="tool-req" id="tool${NUM_TOOLS}">
+                <option value="">--Please select a tool--</option>
+                ${str}
+                <option value="other">Other (please specify)...</option>
+                </select>
+                <br /><label>If other, please specify: </label>
+                <input type="text" name="tool_other_${NUM_TOOLS}" />
+                </td>
+                <td>
+                <button class="remove-tool">Remove</button>
+                </td>
+            </tr>`
         );
+
+        $('button.remove-tool').off();
+        $('button.edit').off();
+        $('button.remove-tool').on('click', removeTool);
+        $('button.edit').on('click', enableEditField);
 
     });
 
@@ -63,14 +56,30 @@ function addTool (evt) {
     
 }
 
+
+function removeTool (evt) {
+
+    evt.preventDefault();
+
+    const thisButton = evt.target;
+    const thisRow = $(thisButton).closest('tr');
+    $(thisRow).remove();
+
+    let NUM_TOOLS = Number($('#NUM_TOOLS').val());
+    NUM_TOOLS -= 1;
+
+    $('#NUM_TOOLS').replaceWith(`<input name="NUM_TOOLS" id="NUM_TOOLS" 
+                                    type="hidden" value="${NUM_TOOLS}" />`);
+}
+
+
 function removePart (evt) {
 
     evt.preventDefault();
 
-    const partButton = evt.target;
-    const partName = partButton['value'];
-
-    $(`#row-${partName}`).remove();
+    const thisButton = evt.target;
+    const thisRow = $(thisButton).closest('tr');
+    $(thisRow).remove();
 
     let NUM_PARTS = Number($('#NUM_PARTS').val());
     NUM_PARTS -= 1;
@@ -88,38 +97,43 @@ function addPart (evt) {
     NUM_PARTS += 1;
 
     $.get('/get-parts.json', (res) => { 
-        
+       
         let str = '';
         for (const part of res) {
             str = str + `<option value="${part}">${part}</option>`;
         }
-
         $('#parts').append(
-            `<br />
-            <label>New Part: </label>
-            <select name="part_req_${NUM_PARTS}" class="part-req" id="part${NUM_PARTS}">
-            <option value="">--Please select a part--</option>
-            ${str}
-            <option value="other">Other (please specify)...</option>
-            </select>
-            <br /><label>If other, please specify name: </label>
-            <input type="text" name="part_${NUM_PARTS}_other_name" />
-            <br /><label>If other, please specify P/N: </label>
-            <input type="text" name="part_${NUM_PARTS}_other_num" />
-            <br /><label>If other, please specify manuf: </label>
-            <input type="text" name="part_${NUM_PARTS}_other_manuf" />
-            <br /><label>If other, please specify if OEM: </label>
-            <input type="radio" name="oem_${NUM_PARTS}" value="True" />
-            <label for="is_oem_1">OEM</label>
-            <input type="radio" name="oem1" value="False" />
-            <label for="not_oem_1">Aftermarket</label>
-            <input type="radio" name="oem1" value="False" />
-            <label for="unsure_if_oem_1">Not Sure</label>
-            <br />`
+            `<tr>
+                <td>
+                    <label>New Part: </label>
+                    <select name="part_req_${NUM_PARTS}" class="part-req" id="part${NUM_PARTS}">
+                    <option value="">--Please select a part--</option>
+                    ${str}
+                    <option value="other">Other (please specify)...</option>
+                    </select>
+                    <br /><label>If other, please specify name: </label>
+                    <input type="text" name="part_${NUM_PARTS}_other_name" />
+                    <br /><label>If other, please specify P/N: </label>
+                    <input type="text" name="part_${NUM_PARTS}_other_num" />
+                    <br /><label>If other, please specify manuf: </label>
+                    <input type="text" name="part_${NUM_PARTS}_other_manuf" />
+                    <br /><label>If other, please specify if OEM: </label>
+                    <input type="radio" name="oem_${NUM_PARTS}" value="True" />
+                    <label for="is_oem_1">OEM</label>
+                    <input type="radio" name="oem1" value="False" />
+                    <label for="not_oem_1">Aftermarket</label>
+                    <input type="radio" name="oem1" value="False" />
+                    <label for="unsure_if_oem_1">Not Sure</label>
+                </td>
+                <td>
+                    <button class="remove-part">Remove</button>
+                </td>
+            </tr>`
         );
-
+        $('button.remove-part').off();
+        $('button.remove-part').on('click', removePart);
     });
-
+    
     $('#NUM_PARTS').replaceWith(`<input name="NUM_PARTS" id="NUM_PARTS" 
                                     type="hidden" value="${NUM_PARTS}" />`);
 }
@@ -223,12 +237,12 @@ function removeStep (evt) {
 
     evt.preventDefault();
 
+    let NUM_STEPS = Number($('#NUM_STEPS').val());
+    NUM_STEPS -= 1;
+
     const thisButton = evt.target;
     const thisRow = $(thisButton).closest('tr');
     $(thisRow).remove();
-
-    let NUM_STEPS = Number($('#NUM_STEPS').val());
-    NUM_STEPS -= 1;
 
     $('#NUM_STEPS').replaceWith(`<input name="NUM_STEPS" id="NUM_STEPS" 
                                     type="hidden" value="${NUM_STEPS}" />`);
@@ -246,18 +260,18 @@ function addStep (evt) {
     $('#steps').append(
                 `<tr>
                     <td>
-                        <input name="step_text" value="Enter text here..." />
+                        <input name="step-text" value="Enter text here..." />
                     </td>
                     <td>
-                        <input name="step_ref" value="No Ref Provided" disabled />
+                        <input name="step-ref" value="No Ref Provided" disabled />
                         <br />
-                        <button class="edit-ref>Edit Ref</button>
+                        <button class="edit ref">Edit Ref</button>
                         <button class="del-ref" disabled>Remove Ref</button>
                     </td>
                     <td>
-                        <input name="step_img" value="toolbox.jpg" disabled />
+                        <input name="step-img" value="toolbox.jpg" disabled />
                         <br />
-                        <button class="edit-img">Edit Img</button>
+                        <button class="edit img">Edit Img</button>
                         <button class="del-img" disabled>Restore Default Img</button>
                     </td>
                     <td>
@@ -273,7 +287,14 @@ function addStep (evt) {
 
     $('#NUM_STEPS').replaceWith(`<input name="NUM_STEPS" id="NUM_STEPS" 
                                     type="hidden" value="${NUM_STEPS}" />`);
-   
+
+    
+    $('button.move').off();
+    $('button.remove-step').off();
+    $('button.edit').off();
+    $('button.move').on('click', moveRow);
+    $('button.remove-step').on('click', removeStep);
+    $('button.edit').on('click', enableEditField);
 }
 
 
@@ -283,7 +304,7 @@ function enableEditField (evt) {
 
     const thisButton = evt.target;
     const thisInput = $(thisButton).prevAll('input');
-    
+
     $(thisInput).attr('disabled', false);
     $(thisButton).attr('disabled', true);
 
@@ -299,7 +320,7 @@ $('#tool-add').on('click', addTool);
 $('button.remove-part').on('click', removePart);
 $('#part-add').on('click', addPart);
 
-$('button.move').on('click', moveRow)
+$('button.move').on('click', moveRow);
 $('button.remove-step').on('click', removeStep);
 $('#step-add').on('click', addStep);
 

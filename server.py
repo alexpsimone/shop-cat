@@ -394,20 +394,20 @@ def show_model_page(make, model_year, model):
                             model = model)
 
 
-@app.route('/vehicle-select', methods=['POST'])
-def apply_selected_vehicle():
-    """Retrieve selected vehicle info and save to session."""
+# @app.route('/vehicle-select', methods=['POST'])
+# def apply_selected_vehicle():
+#     """Retrieve selected vehicle info and save to session."""
 
-    model_year = request.form.get('model-year')
-    make = request.form.get('make')
-    model = request.form.get('model')
+#     model_year = request.form.get('model-year')
+#     make = request.form.get('make')
+#     model = request.form.get('model')
 
-    session['model_year'] = model_year
-    session['make'] = make
-    session['model'] = model
-    print('***************', session['model_year'], session['make'], session['model'])
+#     session['model_year'] = model_year
+#     session['make'] = make
+#     session['model'] = model
+#     print('***************', session['model_year'], session['make'], session['model'])
 
-    return redirect('/write-procedure')
+#     return redirect('/write-procedure')
 
 
 @app.route('/vehicle-select.json', methods=['POST'])

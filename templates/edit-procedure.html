@@ -73,13 +73,13 @@
     </div>
    
     <br />
-    <div id="tools">
+    <div>
         <h1>Required tools:</h1>
         <button id="tool-add">Add a Tool</button>
         <input name="NUM_TOOLS" id="NUM_TOOLS" type="hidden" value="{{ num_tools }}" />
-        <table>
+        <table id="tools">
             {% for proc_tool in proc_tool_obj %}
-            <tr id="row-{{ proc_tool.tool.name }}">
+            <tr>
                 <td>
                     <input name="tools" value="{{ proc_tool.tool.name }}" disabled />
                     <br />
@@ -92,7 +92,7 @@
                     <button class="tool-img del">Restore Default Img</button>
                 </td>
                 <td>
-                    <button class="remove-tool" value="{{ proc_tool.tool.name }}">Remove</button>
+                    <button class="remove-tool">Remove</button>
                 </td>
             </tr>
             {% endfor %}
@@ -100,14 +100,13 @@
     </div>
 
     <br />
-    <div id="parts">
+    <div>
         <input name="NUM_PARTS" id="NUM_PARTS" type="hidden" value="{{ num_parts }}" />
         <h1>Required parts:</h1>
         <button id="part-add">Add a Part</button>
-        <input name="NUM_PARTS" id="NUM_PARTS" type="hidden" value="{{ num_parts }}" />
-        <table>
+        <table id="parts">
             {% for proc_part in proc_part_obj %}
-            <tr id="row-{{ proc_part.part.name }}">
+            <tr>
                 <td>
                     <input name="parts" value="{{ proc_part.part.name }}" disabled />
                     <br />
@@ -120,7 +119,7 @@
                     <button class="part-img del">Restore Default Img</button>
                 </td>
                 <td>
-                    <button class="remove-part" value="{{ proc_part.part.name }}">Remove</button>
+                    <button class="remove-part">Remove</button>
                 </td>
             </tr>
             {% endfor %}
@@ -135,19 +134,19 @@
             {% for step in steps %}
             <tr>
                 <td>
-                    <input name="step_text" value="{{ step.step_text }}" />
+                    <input name="step-text" value="{{ step.step_text }}" />
                 </td>
                 <td>
-                    <input name="step_ref" value="{{ step.reference }}" disabled />
+                    <input name="step-ref" value="{{ step.reference }}" disabled />
                     <br />
-                    <button class="edit-ref" value="{{ step.step_id }}">Edit Ref</button>
-                    <button class="del-ref" value="{{ step.step_id }}">Remove Ref</button>
+                    <button class="edit ref">Edit Ref</button>
+                    <button class="del-ref">Remove Ref</button>
                 </td>
                 <td>
-                    <input name="step_img" value="{{ step.step_img }}" disabled />
+                    <input name="step-img" value="{{ step.step_img }}" disabled />
                     <br />
-                    <button class="edit-img" value="{{ step.step_id }}">Edit Img</button>
-                    <button class="del-img" value="{{ step.step_id }}">Restore Default Img</button>
+                    <button class="edit img">Edit Img</button>
+                    <button class="del-img">Restore Default Img</button>
                 </td>
                 <td>
                     <button class="remove-step">Remove Step</button>
@@ -171,7 +170,5 @@
 
 <br />
 <a href="/home">Return Home</a>
-
-
 
 {% endblock %}
