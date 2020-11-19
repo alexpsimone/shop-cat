@@ -330,8 +330,9 @@ function removeReference (evt) {
     evt.preventDefault();
 
     const thisButton = evt.target;
+    console.log(thisButton);
     const thisInput = $(thisButton).prevAll('input');
-    $(thisInput).val('No Ref Provided');
+    $(thisInput).val('');
 }
 
 
@@ -351,3 +352,4 @@ $('#step-add').on('click', addStep);
 
 $('button.edit').on('click', enableEditField);
 $('button.del-img').on('click', restoreDefaultImg);
+$('button.del-ref').on('click', removeReference);
