@@ -41,13 +41,15 @@ function submitVehicle (evt) {
         modelYear: $('#model-year').val(),
         model: $('#model-select').val()
     };
+    console.log(formData);
 
     $.post('/vehicle-select.json', formData, (res) => {
-        $('#selected-vehicle').replaceWith(`<p>You selected a 
+        $('#selected-vehicle').replaceWith(`<p id="selected-vehicle">
+                                            You selected a 
                                             ${res['model_year']}
                                             ${res['make']}
-                                            ${res['model']}
-                                            .</p>`)
+                                            ${res['model']}.
+                                            </p>`)
     });
 
     $('#proc-title').attr('disabled', false);
