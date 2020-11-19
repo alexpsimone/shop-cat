@@ -86,8 +86,8 @@
                     <button class="name edit">Edit Name</button>
                 </td>
                 <td>
-                    <input name="tool-img" value="{{ proc_tool.tool.tool_img }}" disabled />
-                    <br />
+                    <p>Current image:</p>
+                    <p class="tool-img">{{ proc_tool.tool.tool_img }}</p>
                     <input type="file" name="tool-img" disabled/>
                     <br />
                     <button class="img edit">Edit Img</button>
@@ -115,8 +115,8 @@
                     <button class="name edit">Edit Name</button>
                 </td>
                 <td>
-                    <input name="part-img" value="{{ proc_part.part.part_img }}" disabled />
-                    <br />
+                    <p>Current image:</p>
+                    <p class="part-img">{{ proc_part.part.part_img }}</p>
                     <input type="file" name="part-img" disabled/>
                     <br />
                     <button class="img edit">Edit Img</button>
@@ -155,7 +155,8 @@
                     <button class="del-ref">Remove Ref</button>
                 </td>
                 <td>
-                    <input name="step-img" value="{{ step.step_img }}" disabled />
+                    <p>Current image:</p>
+                    <p class="step-img">{{ step.step_img }}</p>
                     <input name="new-step-img" type="file" disabled />
                     <br />
                     <button class="edit img">Edit Img</button>

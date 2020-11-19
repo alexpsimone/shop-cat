@@ -111,8 +111,8 @@ function addStep (evt) {
                             <br />
                             <label for="img_file_${NUM_STEPS}">
                             Please select an image. </label>
-                            <input type="file" id="img_file_${NUM_STEPS}"
-                            name="img_file_${NUM_STEPS}" />
+                            <input type="file" id="step_img_${NUM_STEPS}"
+                            name="step_img_${NUM_STEPS}" />
                             <br />`
                             );
 

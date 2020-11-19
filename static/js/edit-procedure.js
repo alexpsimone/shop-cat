@@ -37,6 +37,8 @@ function addTool (evt) {
                 </select>
                 <br /><label>If other, please specify: </label>
                 <input type="text" name="tool_other_${NUM_TOOLS}" />
+                <br /><label>If other, add image (optional): </label>
+                <input name="new-tool-img" type="file" />
                 </td>
                 <td>
                 <button class="remove-tool">Remove</button>

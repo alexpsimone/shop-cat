@@ -17,7 +17,7 @@ toolbox = []
 for tool in range(10):
     
     name = f'tool_{tool}'
-    tool_img = f'path_{tool}'
+    tool_img = '/static/img/toolbox.png'
 
     tool = crud.create_tool(name, tool_img)
     toolbox.append(tool)
@@ -28,8 +28,8 @@ parts_bin = []
 for part in range(50):
     
     name = f'part_{part}'
-    part_img = f'path_{part}'
-
+    part_img = '/static/img/toolbox.png'
+    
     part = crud.create_part(name, part_img)
     parts_bin.append(part)
 
