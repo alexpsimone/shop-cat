@@ -277,26 +277,29 @@ def num_tools_by_proc(proc_id):
     return ProcedureTool.query.filter_by(proc_id = proc_id).count()
 
 
-def update_procedure(proc_id, title, remove_label, label):
+def update_procedure(proc_id, title, remove_label, label, tools):
     """Update a procedure with given information."""
 
-    procedure = Procedure.query.filter_by(proc_id = proc_id).first()
+    proc = Procedure.query.filter_by(proc_id = proc_id).first()
 
     # Update procedure.title.
-    procedure.title = title
+    proc.title = title
 
     # Update procedure.label.
     if remove_label:
-        procedure.label = None
+        proc.label = None
     elif label == '':
-        procedure.label = None
+        proc.label = None
     else: 
-        procedure.label = label
+        proc.label = label
 
     # Update ProcedureTool objects.
     # for tool in tools:
-    #     if ProcedureTool.query.filter(ProcedureTool.procedure, ProcedureTool.tool).first() == None:
-    #         procedure_tool = ProcedureTool(proc = procedure, tool = tool)
+    #     if ProcedureTool.query.filter(ProcedureTool.proc == proc, ProcedureTool.tool == tool).first() == None:
+    #         if Tool.query.filter_by(name = tool).first():
+    #             procedure_tool = ProcedureTool(proc = proc, tool = tool)
+    #         else:
+    #             # crud.create_tool(tool, tool_img)
     #         db.session.add(procedure_tool)
 
     db.session.commit()

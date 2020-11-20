@@ -350,11 +350,26 @@ def rebuild_procedure():
     title = request.form.get('title')
     remove_label = request.form.get('label-remove')
     label = request.form.get('label')
-    tools = request.form.getlist('tool')
+    
+    tools = request.form.getlist('tools')
+    tool_imgs = request.form.getlist('tool-img')
+    tools_w_imgs = []
+    for index, tool in enumerate(tools):
+        tools_w_imgs.append((tool, tool_imgs[index]))
+    
+    parts = request.form.getlist('parts')
+    part_imgs = request.form.getlist('part-img')
+    print(f'****************part-imgs: {part_imgs}')
+    parts_w_imgs = []
+    for index, part in enumerate(parts):
+        parts_w_imgs.append((part, part_imgs[index]))
+        print(part_imgs[index])
 
-    print('****************', tools)
+    cars = request.form.getlist('cars')
 
-    # crud.update_procedure(proc_id, title, remove_label, label)
+    print('****************', tools_w_imgs, parts, cars)
+
+    # crud.update_procedure(proc_id, title, remove_label, label, tools)
 
     return redirect(f'/edit-procedure/{proc_id}')
 
