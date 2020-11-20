@@ -139,8 +139,14 @@ def build_procedure():
         elif crud.check_toolbox(tool_other) != None:
             my_tool = crud.check_toolbox(tool_other)
         else:
-            tool_other_img = request.form.get(f'tool_img_{tool}')
-            my_tool = crud.create_tool(tool_other, tool_other_img)
+            tool_img = request.files[f'tool_img_{tool}']
+            if tool_img and crud.allowed_file(tool_img.filename):
+                filename = secure_filename(tool_img.filename)
+                tool_img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                tool_img.close()
+            else:
+                filename = 'toolbox.png'
+            my_tool = crud.create_tool(tool_other, filename)
         
         crud.create_procedure_tool(procedure, my_tool)
      
