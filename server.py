@@ -172,12 +172,18 @@ def build_procedure():
         elif crud.check_parts_bin(part_other) != None:
             my_part = check_parts_bin(part_other)
         else:
-            part_other_img = request.form.get(f'part_img_{tool}')
+            part_img = request.files[f'part_img_{part}']
+            if part_img and crud.allowed_file(part_img.filename):
+                filename = secure_filename(part_img.filename)
+                part_img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                part_img.close()
+            else:
+                filename = 'toolbox.png'
             part_other_name = request.form.get(f'part_{part}_other_name')
             part_other_num = request.form.get(f'part_{part}_other_num')
             part_other_manuf = request.form.get(f'part_{part}_other_manuf')
             oem = request.form.get('oem_{part}')
-            my_part = crud.create_part(part_other_name, part_other_img)
+            my_part = crud.create_part(part_other_name, filename)
             crud.create_part_num(part_other_manuf,
                                  part_other_num,
                                  oem,
