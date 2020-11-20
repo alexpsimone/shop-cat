@@ -4,6 +4,15 @@ import requests
 from bs4 import BeautifulSoup
 
 
+def allowed_file(filename):
+    """from Flask docs: confirm an uploaded img has correct extension"""
+    
+    allowed_extensions = {'png', 'jpg', 'jpeg'}
+
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in allowed_extensions
+
+
 def check_toolbox(tool_name):
     """Check if a tool is in the existing toolbox."""
     

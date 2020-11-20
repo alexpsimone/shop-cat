@@ -51,7 +51,8 @@
     <ol>
         {% for step in steps %}
         <li>
-            {{ step.step_text }}
+            <p>{{ step.step_text }}</p>
+            <img src="/static/img/uploads/{{ step.step_img }}" style="height:100px; width:100px;"/>
             {% if step.reference != "No Ref Provided" %}
                 <br />
                 Reference:

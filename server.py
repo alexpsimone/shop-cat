@@ -1,12 +1,17 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, send_from_directory
 from flask import request, flash, session, jsonify
 from jinja2 import StrictUndefined
+from werkzeug.utils import secure_filename
 import requests, json
+import os
 
 from model import connect_to_db
 import crud
 
 app = Flask(__name__)
+
+UPLOAD_FOLDER = 'static/img/uploads/'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
@@ -55,15 +60,18 @@ def build_procedure():
             ref_text = request.form.get(f'ref_text_{step}')
             if img_check:
                 step_img = request.form.get(f'img_file_{step}')
-                if step_img == '':
-                    step_img = 'toolbox.jpg'
+                if step_img and crud.allowed_file(step_img.filename):
+                    filename = secure_filename(step_img.filename)
+                    step_img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                else:
+                    step_img = '/static/img/toolbox.png'
                 new_step = crud.create_step(step, 
                                             step_text, 
                                             procedure, 
                                             ref_text,
                                             step_img)
             else:
-                step_img = 'toolbox.jpg'
+                step_img = '/static/img/toolbox.png'
                 new_step = crud.create_step(step, 
                                             step_text, 
                                             procedure, 
@@ -72,16 +80,20 @@ def build_procedure():
         else:
             ref_text = 'No Ref Provided'
             if img_check:
-                step_img = request.form.get(f'img_file_{step}')
-                if step_img == '':
-                    step_img = 'toolbox.jpg'
+                step_img = request.files[f'step_img_{step}']
+                if step_img and crud.allowed_file(step_img.filename):
+                    filename = secure_filename(step_img.filename)
+                    step_img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    step_img.close()
+                else:
+                    step_img = '/static/img/toolbox.png'
                 new_step = crud.create_step(step, 
                                             step_text, 
                                             procedure,
                                             ref_text,
-                                            step_img)
+                                            filename)
             else:
-                step_img = 'toolbox.jpg'
+                step_img = '/static/img/toolbox.png'
                 new_step = crud.create_step(step, 
                                             step_text, 
                                             procedure, 
@@ -356,6 +368,13 @@ def show_tool_page(tool_id):
     tool = crud.get_tool_by_id(tool_id)
 
     return render_template('tool.html', tool = tool)
+
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    """Serve an uploaded file."""
+
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
 @app.route('/vehicle/<make>')

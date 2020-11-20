@@ -51,7 +51,7 @@ class Step(db.Model):
     order_num = db.Column(db.Integer, default = 0)
     reference = db.Column(db.String, default = 'No Ref Provided')
     step_text = db.Column(db.Text, nullable = False)
-    step_img = db.Column(db.String, default = 'toolbox.jpg')
+    step_img = db.Column(db.String, default = '/static/img/toolbox.png')
     proc_id = db.Column(db.Integer, db.ForeignKey('procedures.proc_id'))
 
     proc = db.relationship('Procedure', backref = 'steps')
