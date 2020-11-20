@@ -351,6 +351,11 @@ function removeReference (evt) {
     $(thisInput).val('');
 }
 
+// needs refactoring, but gets the job done
+$('form').submit(function() {
+    $('input', this).prop('disabled', false);
+});
+
 
 $('#car-add').on('click', addVehicle);
 $('#make').on('change', getModels);

@@ -28,6 +28,30 @@
     <label for="label-remove">Remove this label.</label>
 
     <br />
+    <div id="cars">
+        <input name="NUM_CARS" id="NUM_CARS" type="hidden" value="{{ num_cars }}" />
+        <h1>Applicable Vehicles:</h1>
+        <table>
+            {% for proc_car in proc_car_obj %}
+            <tr id="row-{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}">
+                <td>
+                    <input name="cars" 
+                            value="{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}" 
+                            disabled />
+                </td>
+                <td>
+                    <button class="remove-car" 
+                            value="{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}">
+                            Remove
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br />
+        <button id="car-add">Add a Vehicle</button>
+    </div>
+    <br />
     <div>
         <h1>Required tools:</h1>
         <button id="tool-add">Add a Tool</button>
@@ -138,27 +162,7 @@
 </form>
 
 
-<br />
-<div id="cars">
-<input name="NUM_CARS" id="NUM_CARS" type="hidden" value="{{ num_cars }}" />
-<h1>Applicable Vehicles:</h1>
-<table>
-    {% for proc_car in proc_car_obj %}
-    <tr id="row-{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}">
-        <td>
-            <input name="cars" 
-                    value="{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}" 
-                    disabled />
-        </td>
-        <td>
-            <button class="remove-car" 
-                    value="{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}">
-                    Remove
-            </button>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+
 <form id="car-add-form" action="/vehicle-select.json" method="POST">
     <label>Car Model Year:</label>
     <input id="model-year" name="model-year" type="number" min="1900" max="2020" />
@@ -179,8 +183,6 @@
     <br />
     <input id="vehicle-submit" type="submit" disabled>
 </form>
-<br />
-<button id="car-add">Add a Vehicle</button>
 </div>
 <br />
 <a href="/home">Return Home</a>
