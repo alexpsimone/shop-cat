@@ -17,7 +17,7 @@ toolbox = []
 for tool in range(10):
     
     name = f'tool_{tool}'
-    tool_img = '/static/img/toolbox.png'
+    tool_img = 'toolbox.png'
 
     tool = crud.create_tool(name, tool_img)
     toolbox.append(tool)
@@ -28,7 +28,7 @@ parts_bin = []
 for part in range(50):
     
     name = f'part_{part}'
-    part_img = '/static/img/toolbox.png'
+    part_img = 'toolbox.png'
     
     part = crud.create_part(name, part_img)
     parts_bin.append(part)
@@ -98,17 +98,17 @@ for user in range(5):
                         f'Procedure_{procedure.proc_id}_step1',
                         procedure,
                         'No Ref Provided',
-                        '/static/img/toolbox.png')
+                        'toolbox.png')
         crud.create_step(2, 
                         f'Procedure_{procedure.proc_id}_step2',
                         procedure,
                         'No Ref Provided',
-                        '/static/img/toolbox.png')
+                        'toolbox.png')
         crud.create_step(3, 
                         f'Procedure_{procedure.proc_id}_step3',
                         procedure,
                         'No Ref Provided',
-                        '/static/img/toolbox.png')
+                        'toolbox.png')
 
 
 
