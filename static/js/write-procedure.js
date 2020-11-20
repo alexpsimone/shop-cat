@@ -105,12 +105,8 @@ function addStep (evt) {
                             placeholder="https://example.com"
                             pattern="https://.*" />
                             <br />
-                            <input type="checkbox" id="img_${NUM_STEPS}"
-                            name="img_${NUM_STEPS}" />
-                            <label for="img_${NUM_STEPS}">Add an image?</label>
-                            <br />
                             <label for="img_file_${NUM_STEPS}">
-                            Please select an image. </label>
+                            Image (optional): </label>
                             <input type="file" id="step_img_${NUM_STEPS}"
                             name="step_img_${NUM_STEPS}" />
                             <br />`

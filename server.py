@@ -54,52 +54,35 @@ def build_procedure():
 
         step_text = request.form.get(f'step_text_{step}')
         ref_check = request.form.get(f'ref_{step}')
-        img_check = request.form.get(f'img_{step}')
         
         if ref_check:
             ref_text = request.form.get(f'ref_text_{step}')
-            if img_check:
-                step_img = request.files[f'step_img_{step}']
-                if step_img and crud.allowed_file(step_img.filename):
-                    filename = secure_filename(step_img.filename)
-                    step_img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                    step_img.close()
-                else:
-                    filename = 'toolbox.png'
-                new_step = crud.create_step(step, 
-                                            step_text, 
-                                            procedure, 
-                                            ref_text,
-                                            filename)
+            step_img = request.files[f'step_img_{step}']
+            if step_img and crud.allowed_file(step_img.filename):
+                filename = secure_filename(step_img.filename)
+                step_img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                step_img.close()
             else:
                 filename = 'toolbox.png'
-                new_step = crud.create_step(step, 
-                                            step_text, 
-                                            procedure, 
-                                            ref_text, 
-                                            filename)      
+            new_step = crud.create_step(step, 
+                                        step_text, 
+                                        procedure, 
+                                        ref_text,
+                                        filename)     
         else:
             ref_text = 'No Ref Provided'
-            if img_check:
-                step_img = request.files[f'step_img_{step}']
-                if step_img and crud.allowed_file(step_img.filename):
-                    filename = secure_filename(step_img.filename)
-                    step_img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                    step_img.close()
-                else:
-                    filename = 'toolbox.png'
-                new_step = crud.create_step(step, 
-                                            step_text, 
-                                            procedure,
-                                            ref_text,
-                                            filename)
+            step_img = request.files[f'step_img_{step}']
+            if step_img and crud.allowed_file(step_img.filename):
+                filename = secure_filename(step_img.filename)
+                step_img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                step_img.close()
             else:
                 filename = 'toolbox.png'
-                new_step = crud.create_step(step, 
-                                            step_text, 
-                                            procedure, 
-                                            ref_text, 
-                                            filename)
+            new_step = crud.create_step(step, 
+                                        step_text, 
+                                        procedure,
+                                        ref_text,
+                                        filename)
 
     """
     Check if the user selected an existing car.

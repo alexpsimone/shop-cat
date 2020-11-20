@@ -304,10 +304,12 @@ function addStep (evt) {
     $('button.remove-step').off();
     $('button.edit').off();
     $('button.del-ref').off();
+    $('button.del-img').off();
     $('button.move').on('click', moveRow);
     $('button.remove-step').on('click', removeStep);
     $('button.edit').on('click', enableEditField);
     $('button.del-ref').on('click', removeReference);
+    $('button.del-img').on('click', restoreDefaultImg);
 }
 
 
@@ -332,7 +334,11 @@ function restoreDefaultImg (evt) {
 
     const thisButton = evt.target;
     const thisInput = $(thisButton).prevAll('input');
-    $(thisInput).val('/static/img/toolbox.png');
+    const otherButton = $(thisButton).prevAll('button');
+    $(thisInput).val('');
+    $(thisInput).attr('disabled', true);
+    $(thisButton).attr('disabled', true);
+    $(otherButton).attr('disabled', false);
 }
 
 
@@ -341,7 +347,6 @@ function removeReference (evt) {
     evt.preventDefault();
 
     const thisButton = evt.target;
-    console.log(thisButton);
     const thisInput = $(thisButton).prevAll('input');
     $(thisInput).val('');
 }
