@@ -350,11 +350,13 @@ def rebuild_procedure():
     title = request.form.get('title')
     remove_label = request.form.get('label-remove')
     label = request.form.get('label')
-    tools = request.form.getlist('tools')
+    tools = request.form.getlist('tool')
 
-    crud.update_procedure(proc_id, title, remove_label, label)
+    print('****************', tools)
 
-    return redirect(f'/procedure/{proc_id}')
+    # crud.update_procedure(proc_id, title, remove_label, label)
+
+    return redirect(f'/edit-procedure/{proc_id}')
 
 
 @app.route('/tool/<tool_id>')
