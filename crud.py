@@ -357,7 +357,8 @@ def update_procedure(proc_id,
             else:
                 tool = Tool.query.filter_by(name = item[1]).first()
                 tool_ids.add(tool.tool_id)
-            create_procedure_tool(proc, tool)
+            if ProcedureTool.query.filter_by(tool_id = tool.tool_id).first() == None:
+                create_procedure_tool(proc, tool)
     # Check all ProcedureTool objects associated with this procedure.
     # If a ProcedureTool object includes a tool ID that isn't in tool_data,
     # delete that ProcedureTool.
