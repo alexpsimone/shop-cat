@@ -158,3 +158,13 @@ function addStep (evt) {
 $('#tool-adder').on('click', getTools);
 $('#part-adder').on('click', getParts);
 $('#step-adder').on('click', addStep);
+
+function requireStep (evt) {
+
+    if (NUM_STEPS === 0) {
+        evt.preventDefault();
+        alert('All procedures must have at least one step!');
+    };
+}
+
+$('form').on('submit', requireStep)
