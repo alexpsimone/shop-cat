@@ -5,6 +5,19 @@ let NUM_PARTS = 0;
 let NUM_STEPS = 0;
 
 
+function requireOptional (evt) {
+
+    const thisSelect = evt.target;
+    const otherName = $(thisSelect).siblings('input.tool-other-name');
+
+    if ($(thisSelect).val() === 'other') {
+        $(otherName).attr('required', true);
+    } else {
+        $(otherName).attr('required', false);
+    };
+}
+
+
 function getTools (evt) {
 
     evt.preventDefault();
@@ -26,11 +39,14 @@ function getTools (evt) {
             <option value="other">Other (please specify)...</option>
             </select>
             <br /><label>If other, please specify: </label>
-            <input type="text" name="tool_other_${NUM_TOOLS}" />
+            <input type="text" class="tool-other-name" name="tool_other_${NUM_TOOLS}" />
             <br />
             <label>Other Tool Image (optional):
-            <input type="file" name="tool_img_${NUM_TOOLS}" />`
+            <input type="file" class="tool-other-img" name="tool_img_${NUM_TOOLS}" />`
         );
+
+        $('select.tool-req').off();
+        $('select.tool-req').on('change', requireOptional);
 
     });
 
