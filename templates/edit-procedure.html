@@ -28,10 +28,10 @@
     <label for="label-remove">Remove this label.</label>
 
     <br />
-    <div id="cars">
+    <div>
         <input name="NUM_CARS" id="NUM_CARS" type="hidden" value="{{ num_cars }}" />
         <h1>Applicable Vehicles:</h1>
-        <table>
+        <table id="cars">
             {% for proc_car in proc_car_obj %}
             <tr id="row-{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}">
                 <td>
@@ -173,7 +173,7 @@
 
 
 
-<form id="car-add-form" action="/vehicle-select.json" method="POST">
+<form id="car-add-form" action="/vehicle-select.json" method="POST" style="display: none;">
     <label>Car Model Year:</label>
     <input id="model-year" name="model-year" type="number" min="1900" max="2020" />
     <br />

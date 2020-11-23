@@ -276,18 +276,16 @@ function selectAddlVehicle (evt) {
     };
 
     $.post('/vehicle-select.json', formData, (res) => {
-        $('#all-cars').append(`<li id="item-${res['model_year']}-${res['make']}-${res['model']}">
-                                ${res['model_year']}
-                                ${res['make']}
-                                ${res['model']}
-                                <input type="checkbox"
-                                    class="car-remove"
-                                    id="remove-${res['model_year']}-${res['make']}-${res['model']}"
-                                    name="remove-${res['model_year']}-${res['make']}-${res['model']}" />
-                                <label for="remove-${res['model_year']}-${res['make']}-${res['model']}">
-                                    Remove This Vehicle
-                                </label>
-                                </li>`)
+        $('#cars').append(`<tr id="row-${res['model_year']}-${res['make']}-${res['model']}">
+                                <td>
+                                <input name="cars" value="${res['model_year']}-${res['make']}-${res['model']}" disabled />
+                                </td>
+                                <td>
+                                    <button class="remove-car" value="${res['model_year']}-${res['make']}-${res['model']}">
+                                    Remove
+                                    </button>
+                                </td>
+                            </tr>`)
     });
 
     $('#NUM_CARS').replaceWith(`<input name="NUM_CARS" 
