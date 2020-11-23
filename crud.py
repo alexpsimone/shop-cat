@@ -277,7 +277,7 @@ def num_tools_by_proc(proc_id):
     return ProcedureTool.query.filter_by(proc_id = proc_id).count()
 
 
-def update_procedure(proc_id, title, remove_label, label, tool_data, part_data):
+def update_procedure(proc_id, title, remove_label, label, tool_data):
     """Update a Procedure with given information."""
 
     proc = Procedure.query.filter_by(proc_id = proc_id).first()

@@ -60,18 +60,18 @@
             {% for proc_tool in proc_tool_obj %}
             <tr>
                 <td id="meta">
-                    <input type="hidden" name="tool-id" value="{{ proc_tool.tool.tool_id }}" />
-                    <input type="hidden" name="tool-other-name" value="" />
+                    <input type="hidden" name="tool-id-{{ loop.index }}" value="{{ proc_tool.tool.tool_id }}" />
+                    <input type="hidden" name="tool-other-name-{{ loop.index }}" value="" />
                     <input type="hidden" id="tool-order" name="order" value="{{ loop.index }}" />
-
-                    <input name="tools" value="{{ proc_tool.tool.name }}" disabled/>
+                    <input type="hidden" name="tool-existing-img-{{ loop.index }}" value="/static/img/uploads/{{ proc_tool.tool.tool_img }}" />
+                    <input name="tool-name-{{ loop.index }}" value="{{ proc_tool.tool.name }}" disabled/>
                     <br />
                     <button class="name edit">Edit Name</button>
                 </td>
                 <td>
                     <p>Current image:</p>
-                    <p class="tool-img">{{ proc_tool.tool.tool_img }}</p>
-                    <input type="file" name="tool-img" disabled/>
+                    <p>{{ proc_tool.tool.tool_img }}</p>
+                    <input type="file" name="tool-img-{{ loop.index }}" disabled/>
                     <br />
                     <button class="img edit">Edit Img</button>
                     <button class="del-img">Restore Default Img</button>

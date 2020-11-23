@@ -346,40 +346,59 @@ def show_procedure_page(proc_id):
 def rebuild_procedure():
     """Rebuild an edited procedure."""
 
+    # Retrieve the procedure to be edited.
     proc_id = int(request.form.get('proc_id'))
+
+    # Retrieve the procedure title.
     title = request.form.get('title')
+
+    # Retrieve the label, if it exists. 
+    # Also retrieve whether or not the label is marked for removal.
     remove_label = request.form.get('label-remove')
     label = request.form.get('label')
     
-    tool_ids = request.form.getlist('tool-id')
-    tool_names = request.form.getlist('tools')
-    # tool_imgs = request.files['tool-img']
-    # print(f'*******************tool_imgs:{tool_imgs}')
-    tool_other_name = request.form.getlist('tool-other-name')
-    tool_data = []
-    for index, tool_name in enumerate(tool_names):
-        tool_data.append((tool_ids[index], tool_name, tool_other_name[index]))
-    #     tool_data.append((tool_ids[index], tool_name, tool_other_name[index], tool_imgs[index]))
-        # print('*****************', tool_data)
+    # Iterate through all tools on the form. Make  a list of tuples (?)
+    # containing this information.
+    NUM_TOOLS = int(request.form.get('NUM_TOOLS'))
     
-    part_ids = request.form.getlist('part-id')
-    part_names = request.form.getlist('parts')
-    part_data = []
-    for index, part_name in enumerate(part_names):
-        part_data.append((part_ids[index], part_name))
+    tool_data = []
 
-    cars = request.form.getlist('cars')
+    for tool in range(1, (NUM_TOOLS + 1)):
+        
+        tool_id = request.form.get(f'tool-id-{tool}')
+        tool_name = request.form.get(f'tool-name-{tool}')
+        tool_existing_img = request.form.get(f'tool-existing-img-{tool}')
+        tool_img = request.files[f'tool-img-{tool}']
+        tool_other = request.form.get(f'tool-other-name-{tool}')
 
-    print('****************', tool_data, part_data, cars)
+        if tool_img != None and crud.allowed_file(tool_img.filename):
+                filename = secure_filename(tool_img.filename)
+                tool_img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                tool_img.close()
+        elif tool_existing_img:
+            filename = tool_existing_img
+        else:
+            filename = 'toolbox.png'
+            
+        tool_data.append((tool_id, tool_name, filename, tool_other))
+    
+    # part_ids = request.form.getlist('part-id')
+    # part_names = request.form.getlist('parts')
+    # part_data = []
+    # for index, part_name in enumerate(part_names):
+    #     part_data.append((part_ids[index], part_name))
+
+    # cars = request.form.getlist('cars')
+
+    print('****************', tool_data)
 
     crud.update_procedure(proc_id, 
                             title, 
                             remove_label, 
                             label, 
-                            tool_data, # LIST of TUPLES of tool ID, NAME, IMG
-                            part_data) # LIST of TUPLES of part ID, NAME, IMG
+                            tool_data)
 
-    return redirect(f'/procedure/{proc_id}')
+    return redirect(f'/edit-procedure/{proc_id}')
 
 
 @app.route('/tool/<tool_id>')

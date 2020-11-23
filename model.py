@@ -87,7 +87,7 @@ class Tool(db.Model):
                         primary_key = True,
                         autoincrement = True)
     name = db.Column(db.String(25), nullable = False)
-    tool_img = db.Column(db.String, default = '')
+    tool_img = db.Column(db.String)
 
     def __repr__(self):
         return f'<Tool tool_id={self.tool_id} name={self.name}>'

@@ -29,18 +29,19 @@ function addTool (evt) {
         $('#tools').append(
             `<tr>
                 <td id="meta">
-                <input type="hidden" name="tool-id" value="NEW" />
+                <input type="hidden" name="tool-id-${NUM_TOOLS}" value="NEW" />
                 <input type="hidden" id="tool-order" name="order" value="${NUM_TOOLS}" />
+                <input type="hidden" id="tool-existing-img-${NUM_TOOLS}" value="toolbox.png" />
                 <label>New Tool: </label>
-                <select name="tool_${NUM_TOOLS}" class="tool-req" id="tool_${NUM_TOOLS}">
+                <select name="tool-name-${NUM_TOOLS}" class="tool" id="tool-${NUM_TOOLS}">
                 <option value="">--Please select a tool--</option>
                 ${str}
                 <option value="other">Other (please specify)...</option>
                 </select>
                 <br /><label>If other, please specify: </label>
-                <input type="text" name="tool-other-name" />
+                <input type="text" name="tool-other-name-${NUM_TOOLS}" />
                 <br /><label>If other, add image (optional): </label>
-                <input type="file" name="tool-img" />
+                <input type="file" name="tool-img-${NUM_TOOLS}" />
                 </td>
                 <td>
                 <button class="remove-tool">Remove</button>
