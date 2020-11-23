@@ -5,10 +5,27 @@ let NUM_PARTS = 0;
 let NUM_STEPS = 0;
 
 
-function requireOptional (evt) {
+function requireOtherToolName (evt) {
 
+    
     const thisSelect = evt.target;
     const otherName = $(thisSelect).siblings('input.tool-other-name');
+    console.log(otherName);
+
+    if ($(thisSelect).val() === 'other') {
+        $(otherName).attr('required', true);
+    } else {
+        $(otherName).attr('required', false);
+    };
+}
+
+
+function requireOtherPartName (evt) {
+
+    const thisSelect = evt.target;
+    const otherName = $(thisSelect).siblings('input.part-other-name');
+    console.log(otherName);
+    console.log($(thisSelect).val());
 
     if ($(thisSelect).val() === 'other') {
         $(otherName).attr('required', true);
@@ -31,22 +48,23 @@ function getTools (evt) {
         }
 
         $('#tool-list').append(
-            `<br />
-            <label>Tool #${NUM_TOOLS}: </label>
-            <select name="tool_req_${NUM_TOOLS}" class="tool-req" id="tool${NUM_TOOLS}">
-            <option value="">--Please select a tool--</option>
-            ${str}
-            <option value="other">Other (please specify)...</option>
-            </select>
-            <br /><label>If other, please specify: </label>
-            <input type="text" class="tool-other-name" name="tool_other_${NUM_TOOLS}" />
-            <br />
-            <label>Other Tool Image (optional):
-            <input type="file" class="tool-other-img" name="tool_img_${NUM_TOOLS}" />`
+            `<div>
+                <label>Tool #${NUM_TOOLS}: </label>
+                <select name="tool_req_${NUM_TOOLS}" class="tool-req" id="tool${NUM_TOOLS}">
+                <option value="">--Please select a tool--</option>
+                ${str}
+                <option value="other">Other (please specify)...</option>
+                </select>
+                <br /><label>If other, please specify: </label>
+                <input type="text" class="tool-other-name" name="tool_other_${NUM_TOOLS}" />
+                <br />
+                <label>Other Tool Image (optional):
+                <input type="file" class="tool-other-img" name="tool_img_${NUM_TOOLS}" />
+            </div>`
         );
 
         $('select.tool-req').off();
-        $('select.tool-req').on('change', requireOptional);
+        $('select.tool-req').on('change', requireOtherToolName);
 
     });
 
@@ -70,30 +88,34 @@ function getParts (evt) {
         }
 
         $('#part-list').append(
-            `<br />
-            <label>Part #${NUM_PARTS}: </label>
-            <select name="part_req_${NUM_PARTS}" class="part-req" id="part${NUM_PARTS}">
-            <option value="">--Please select a part--</option>
-            ${str}
-            <option value="other">Other (please specify)...</option>
-            </select>
-            <br /><label>If other, please specify name: </label>
-            <input type="text" name="part_${NUM_PARTS}_other_name" />
-            <br /><label>If other, please specify P/N: </label>
-            <input type="text" name="part_${NUM_PARTS}_other_num" />
-            <br /><label>If other, please specify manuf: </label>
-            <input type="text" name="part_${NUM_PARTS}_other_manuf" />
-            <br /><label>If other, please specify if OEM: </label>
-            <input type="radio" name="oem_${NUM_PARTS}" value="True" />
-            <label for="is_oem_1">OEM</label>
-            <input type="radio" name="oem1" value="False" />
-            <label for="not_oem_1">Aftermarket</label>
-            <input type="radio" name="oem1" value="False" />
-            <label for="unsure_if_oem_1">Not Sure</label>
-            <br />
-            <label>Other Part Image (optional):
-            <input type="file" name="part_img_${NUM_PARTS}" />`
+            `<div>
+                <label>Part #${NUM_PARTS}: </label>
+                <select name="part_req_${NUM_PARTS}" class="part-req" id="part${NUM_PARTS}">
+                <option value="">--Please select a part--</option>
+                ${str}
+                <option value="other">Other (please specify)...</option>
+                </select>
+                <br /><label>If other, please specify name: </label>
+                <input type="text" class="part-other-name" name="part_${NUM_PARTS}_other_name" />
+                <br /><label>If other, please specify P/N: </label>
+                <input type="text" name="part_${NUM_PARTS}_other_num" />
+                <br /><label>If other, please specify manuf: </label>
+                <input type="text" name="part_${NUM_PARTS}_other_manuf" />
+                <br /><label>If other, please specify if OEM: </label>
+                <input type="radio" name="oem_${NUM_PARTS}" value="True" />
+                <label for="is_oem_1">OEM</label>
+                <input type="radio" name="oem1" value="False" />
+                <label for="not_oem_1">Aftermarket</label>
+                <input type="radio" name="oem1" value="False" />
+                <label for="unsure_if_oem_1">Not Sure</label>
+                <br />
+                <label>Other Part Image (optional):
+                <input type="file" name="part_img_${NUM_PARTS}" />
+            </div>`
         );
+
+        $('select.part-req').off();
+        $('select.part-req').on('change', requireOtherPartName);
 
         $('#NUM_PARTS').replaceWith(`<input name ="NUM_PARTS" id="NUM_PARTS" 
             type="number" value="${NUM_PARTS}" style="display: none;"/>`);
