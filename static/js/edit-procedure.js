@@ -305,39 +305,68 @@ function moveRow (evt) {
     evt.preventDefault();
 
     const thisButton = evt.target;
+
+    // Find the order of the current row.
     const thisRow = $(thisButton).closest('tr');
+    const thisOrderColumn = $(thisRow).children('td.name-order');
+    const thisOrderInput = $(thisOrderColumn).children('input.step-order');
+    const thisOrder = Number($(thisOrderInput).val());
+    console.log(`thisOrder: ${thisOrder}`)
 
     if ($(thisButton).hasClass('up')) {
         thisRow.prev().before(thisRow);
+
     } else {
-        thisRow.next().after(thisRow);
 
-        // const nextLength = ($(thisRow).nextAll('tr')).length;
+        if ($(thisRow).nextAll('tr').length > 0) {
+        
+            // Find the order of the row that just switched with current row.
+            const nextRow = $(thisRow).next('tr');
+            const nextOrderColumn = $(nextRow).children('td.name-order');
+            const nextOrderInput = $(nextOrderColumn).children('input.step-order');
+            const nextOrder = Number($(nextOrderInput).val()); 
+            console.log(`nextOrder: ${nextOrder}`)
 
-        // for (let row = 0; row < nextLength; row += 1) {
+            // Re-index everything in the current row.
+            $(thisOrderInput).attr('name', `step-order-${nextOrder}`);
+            $(thisOrderInput).attr('value', nextOrder);
+
+            const stepInputID = $(thisOrderColumn).children('input.step-id');
+            $(stepInputID).attr('name', `step-id-${nextOrder}`);
+            const stepInputText = $(thisOrderColumn).children('input.step-text');
+            $(stepInputText).attr('name', `step-text-${nextOrder}`);
+
+            const refColumn = $(thisRow).children('td.ref');
+            const stepInputRef = $(refColumn).children('input.step-ref');
+            $(stepInputRef).attr('name', `step-ref-${nextOrder}`);
+
+            const imgColumn = $(thisRow).children('td.img');
+            const stepInputExistingImg = $(imgColumn).children('input.step-existing-img');
+            $(stepInputExistingImg).attr('name', `step-existing-img-${nextOrder}`)
+            const stepInputImg = $(imgColumn).children('input.step-img');
+            $(stepInputImg).attr('name', `step-img-${nextOrder}`);
             
-        //     const nextRow = $(thisRow).nextAll('tr')[row];
-        //     const nameOrderColumn = $(nextRow).children('td.name-order');
-        //     const orderInput = $(nameOrderColumn).children('input.step-order');
-        //     const newOrder = Number($(orderInput).val()) - 1;  
-        //     $(orderInput).attr('name', `step-order-${newOrder}`);
-        //     $(orderInput).attr('value', newOrder);
+            // Re-index everything in the switched row.
+            $(nextOrderInput).attr('name', `step-order-${thisOrder}`);
+            $(nextOrderInput).attr('value', thisOrder);
 
-        //     const stepInputID = $(nameOrderColumn).children('input.step-id');
-        //     $(stepInputID).attr('name', `step-id-${newOrder}`);
-        //     const stepInputText = $(nameOrderColumn).children('input.step-text');
-        //     $(stepInputText).attr('name', `step-text-${newOrder}`);
+            const nextStepInputID = $(nextOrderColumn).children('input.step-id');
+            $(nextStepInputID).attr('name', `step-id-${thisOrder}`);
+            const nextStepInputText = $(nextOrderColumn).children('input.step-text');
+            $(nextStepInputText).attr('name', `step-text-${thisOrder}`);
 
-        //     const refColumn = $(nextRow).children('td.ref');
-        //     const stepInputRef = $(refColumn).children('input.step-ref');
-        //     $(stepInputRef).attr('name', `step-ref-${newOrder}`);
+            const nextRefColumn = $(nextRow).children('td.ref');
+            const nextStepInputRef = $(nextRefColumn).children('input.step-ref');
+            $(nextStepInputRef).attr('name', `step-ref-${thisOrder}`);
 
-        //     const imgColumn = $(nextRow).children('td.img');
-        //     const stepInputExistingImg = $(imgColumn).children('input.step-existing-img');
-        //     $(stepInputExistingImg).attr('name', `step-existing-img-${newOrder}`)
-        //     const stepInputImg = $(imgColumn).children('input.step-img');
-        //     $(stepInputImg).attr('name', `step-img-${newOrder}`);
-        // };
+            const nextImgColumn = $(nextRow).children('td.img');
+            const nextInputExistingImg = $(nextImgColumn).children('input.step-existing-img');
+            $(nextInputExistingImg).attr('name', `step-existing-img-${thisOrder}`);
+            const nextStepInputImg = $(nextImgColumn).children('input.step-img');
+            $(nextStepInputImg).attr('name', `step-img-${thisOrder}`);
+        };
+
+        thisRow.next().after(thisRow);
     }
 }
 
