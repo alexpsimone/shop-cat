@@ -382,21 +382,50 @@ def rebuild_procedure():
 
         tool_data.append((tool_id, tool_name, filename, tool_other))
     
-    # part_ids = request.form.getlist('part-id')
-    # part_names = request.form.getlist('parts')
-    # part_data = []
-    # for index, part_name in enumerate(part_names):
-    #     part_data.append((part_ids[index], part_name))
+    # Iterate through all parts on the form. Make  a list of tuples (?)
+    # containing this information.
+    NUM_PARTS = int(request.form.get('NUM_PARTS'))
+    
+    part_data = []
+
+    for part in range(1, (NUM_PARTS + 1)):
+        
+        part_id = request.form.get(f'part-id-{part}')
+        part_name = request.form.get(f'part-name-{part}')
+        part_existing_img = request.form.get(f'part-existing-img-{part}')
+        part_img = request.files[f'part-img-{part}']
+        part_other = request.form.get(f'part-other-name-{part}')
+        part_pn = request.form.get(f'part-other-pn-{part}')
+        part_manuf = request.form.get(f'part-other-manuf-{part}')
+        part_oem = (request.form.get(f'part-other-oem-{part}') == 'True')
+
+        if part_img != None and crud.allowed_file(part_img.filename):
+                filename = secure_filename(part_img.filename)
+                part_img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                part_img.close()
+        elif part_existing_img:
+            filename = part_existing_img
+        else:
+            filename = 'toolbox.png'
+
+        part_data.append((part_id, 
+                            part_name, 
+                            filename, 
+                            part_other, 
+                            part_pn, 
+                            part_manuf, 
+                            part_oem))
 
     # cars = request.form.getlist('cars')
 
-    print('****************', tool_data)
+    print('****************', part_data)
 
     crud.update_procedure(proc_id, 
                             title, 
                             remove_label, 
                             label, 
-                            tool_data)
+                            tool_data,
+                            part_data)
 
     return redirect(f'/edit-procedure/{proc_id}')
 

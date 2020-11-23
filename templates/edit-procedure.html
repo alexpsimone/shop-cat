@@ -92,16 +92,19 @@
         <table id="parts">
             {% for proc_part in proc_part_obj %}
             <tr>
-                <td>
-                    <input type="hidden" name="part-id" value="{{ proc_part.part.part_id }}" />
-                    <input name="parts" value="{{ proc_part.part.name }}" disabled />
+                <td class="name-order">
+                    <input type="hidden" class="part-order" name="order" value="{{ loop.index }}" />
+                    <input type="hidden" class="part-id" name="part-id-{{ loop.index }}" value="{{ proc_part.part.part_id }}" />
+                    <input type="hidden" class="part-other-name" name="part-other-name-{{ loop.index }}" value="" />
+                    <input type="text" class="part-name" name="part-name-{{ loop.index }}" value="{{ proc_part.part.name }}" disabled />
                     <br />
                     <button class="name edit">Edit Name</button>
                 </td>
-                <td>
+                <td class="img">
+                    <input type="hidden" class="part-existing-img" name="part-existing-img-{{ loop.index }}" value="{{ proc_part.part.part_img }}" />
                     <p>Current image:</p>
-                    <p class="part-img">{{ proc_part.part.part_img }}</p>
-                    <input type="file" name="part-img" disabled/>
+                    <p>{{ proc_part.part.part_img }}</p>
+                    <input type="file" class="part-img" name="part-img-{{ loop.index }}" disabled/>
                     <br />
                     <button class="img edit">Edit Img</button>
                     <button class="del-img">Restore Default Img</button>

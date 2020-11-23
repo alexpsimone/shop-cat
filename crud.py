@@ -277,7 +277,7 @@ def num_tools_by_proc(proc_id):
     return ProcedureTool.query.filter_by(proc_id = proc_id).count()
 
 
-def update_procedure(proc_id, title, remove_label, label, tool_data):
+def update_procedure(proc_id, title, remove_label, label, tool_data, part_data):
     """Update a Procedure with given information."""
 
     proc = Procedure.query.filter_by(proc_id = proc_id).first()
@@ -334,6 +334,29 @@ def update_procedure(proc_id, title, remove_label, label, tool_data):
     #############################################################
     # Go through part_data and make sure all part info is updated.
     # Add any new parts to the database.
+    # part_data: (part_id, part_name, filename, part_other, pn, manuf, oem)
+    part_ids = set()
+    for item in part_data:
+        if item[0] != "NEW":
+            part = Part.query.filter_by(part_id = item[0]).first()
+            if item[1] != part.name:
+                part.name = item[1]
+            if item[2] != part.part_img:
+                part.part_img = item[2]
+            part_ids.add(int(item[0]))
+        else:
+            if item[1] == 'other':
+                if check_parts_bin(item[3]) != None:
+                    part = Part.query.filter_by(name = item[3]).first()
+                    part_ids.add(part.part_id)
+                else:
+                    part = create_part(item[3], item[2])
+                    part_num = create_part_num(item[5], item[4], item[6], part)
+                    part_ids.add(part.part_id)
+            else:
+                part = Part.query.filter_by(name = item[1]).first()
+                part_ids.add(part.part_id)
+            create_procedure_part(proc, part)
     
     db.session.commit()
 

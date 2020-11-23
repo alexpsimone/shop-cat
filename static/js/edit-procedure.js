@@ -103,7 +103,6 @@ function removeTool (evt) {
         const toolInputImg = $(imgColumn).children('input.tool-img');
         $(toolInputImg).attr('name', `tool-img-${newOrder}`);
 
-
     };
 
     $(thisRow).remove();
@@ -147,28 +146,33 @@ function addPart (evt) {
         }
         $('#parts').append(
             `<tr>
-                <td>
+                <td class="name-order">
+                    <input type="hidden" class="part-order" name="order" value="${NUM_PARTS}" />
+                    <input type="hidden" class="part-id" name="part-id-${NUM_PARTS}" value="NEW" />
                     <label>New Part: </label>
-                    <select name="part_req_${NUM_PARTS}" class="part-req" id="part${NUM_PARTS}">
+                    <select class="part-name" name="part-name-${NUM_PARTS}">
                     <option value="">--Please select a part--</option>
                     ${str}
                     <option value="other">Other (please specify)...</option>
                     </select>
                     <br /><label>If other, please specify name: </label>
-                    <input type="text" name="part_${NUM_PARTS}_other_name" />
+                    <input type="text" class="part-other-name" name="part-other-name-${NUM_PARTS}" />
                     <br /><label>If other, please specify P/N: </label>
-                    <input type="text" name="part_${NUM_PARTS}_other_num" />
+                    <input type="text" class="part-other-pn" name="part-other-pn-${NUM_PARTS}" />
                     <br /><label>If other, please specify manuf: </label>
-                    <input type="text" name="part_${NUM_PARTS}_other_manuf" />
+                    <input type="text" class="part-other-manuf" name="part-other-manuf-${NUM_PARTS}" />
                     <br /><label>If other, please specify if OEM: </label>
-                    <input type="radio" name="oem_${NUM_PARTS}" value="True" />
+                    <input type="radio" class="part-other-oem" name="part-other-oem-${NUM_PARTS}" value="True" />
                     <label for="is_oem_1">OEM</label>
                     <input type="radio" name="oem1" value="False" />
                     <label for="not_oem_1">Aftermarket</label>
                     <input type="radio" name="oem1" value="False" />
                     <label for="unsure_if_oem_1">Not Sure</label>
-                    <br /><label>Part Image (optional):</label>
-                    <input type="file" name="part-img" />
+                </td>
+                <td class="img">
+                    <input type="hidden" class="part-existing-img" name="part-existing-img-${NUM_PARTS}" value="toolbox.png" />
+                    <label>Part Image (optional):</label>
+                    <input type="file" class="part-img" name="part-img-${NUM_PARTS}" />
                     <button class="del-img">Restore Default Img</button>
                 </td>
                 <td>
