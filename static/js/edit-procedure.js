@@ -79,13 +79,8 @@ function removeTool (evt) {
         
         const nextRow = $(thisRow).nextAll('tr')[row];
         const nameOrderColumn = $(nextRow).children('td.name-order');
-        console.log(`nameOrderColumn: ${nameOrderColumn}`);
         const orderInput = $(nameOrderColumn).children('input.tool-order');
-        console.log(`orderInput: ${orderInput}`);
         const newOrder = Number($(orderInput).val()) - 1;
-        console.log(`newOrder: ${newOrder}`);
-        
-        
         $(orderInput).attr('value', newOrder);
 
         const toolInputID = $(nameOrderColumn).children('input.tool-id');
@@ -128,13 +123,8 @@ function removePart (evt) {
         
         const nextRow = $(thisRow).nextAll('tr')[row];
         const nameOrderColumn = $(nextRow).children('td.name-order');
-        console.log(`nameOrderColumn: ${nameOrderColumn}`);
         const orderInput = $(nameOrderColumn).children('input.part-order');
-        console.log(`orderInput: ${orderInput}`);
-        const newOrder = Number($(orderInput).val()) - 1;
-        console.log(`newOrder: ${newOrder}`);
-        
-        
+        const newOrder = Number($(orderInput).val()) - 1;    
         $(orderInput).attr('value', newOrder);
 
         const partInputID = $(nameOrderColumn).children('input.part-id');
@@ -334,6 +324,34 @@ function removeStep (evt) {
 
     const thisButton = evt.target;
     const thisRow = $(thisButton).closest('tr');
+    const nextLength = ($(thisRow).nextAll('tr')).length;
+
+    for (let row = 0; row < nextLength; row += 1) {
+        
+        const nextRow = $(thisRow).nextAll('tr')[row];
+        const nameOrderColumn = $(nextRow).children('td.name-order');
+        const orderInput = $(nameOrderColumn).children('input.step-order');
+        const newOrder = Number($(orderInput).val()) - 1;  
+        $(orderInput).attr('name', `step-order-${newOrder}`);
+        $(orderInput).attr('value', newOrder);
+
+        const stepInputID = $(nameOrderColumn).children('input.step-id');
+        $(stepInputID).attr('name', `step-id-${newOrder}`);
+        const stepInputText = $(nameOrderColumn).children('input.step-text');
+        $(stepInputText).attr('name', `step-text-${newOrder}`);
+
+        const refColumn = $(nextRow).children('td.ref');
+        const stepInputRef = $(refColumn).children('input.step-ref');
+        $(stepInputRef).attr('name', `step-ref-${newOrder}`);
+
+        const imgColumn = $(nextRow).children('td.img');
+        const stepInputExistingImg = $(imgColumn).children('input.step-existing-img');
+        $(stepInputExistingImg).attr('name', `step-existing-img-${newOrder}`)
+        const stepInputImg = $(imgColumn).children('input.step-img');
+        $(stepInputImg).attr('name', `step-img-${newOrder}`);
+
+    };
+
     $(thisRow).remove();
 
     $('#NUM_STEPS').replaceWith(`<input name="NUM_STEPS" id="NUM_STEPS" 

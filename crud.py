@@ -387,8 +387,20 @@ def update_procedure(proc_id, title, remove_label, label, tool_data, part_data, 
             if item[4] != step.step_img:
                 step.step_img = item[4]
             step_ids.add(int(item[0]))
+            print('**********AAAAA***********',step_ids)
         else:
-            create_step(item[1], item[2], proc, item[3], item[4])
+            new_step = create_step(item[1], item[2], proc, item[3], item[4])
+            step_ids.add(new_step.step_id)
+            print('**********BBBBB***********',step_ids)
+    
+    # Check all Step objects associated with this procedure.
+    # If a Step object includes a step ID that isn't in part_data,
+    # delete that Step.
+    steps = Step.query.filter_by(proc_id = proc.proc_id).all()
+
+    for step in steps:
+        if step.step_id not in step_ids:
+            db.session.delete(step)
  
     db.session.commit()
 

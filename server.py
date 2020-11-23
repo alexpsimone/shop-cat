@@ -439,16 +439,16 @@ def rebuild_procedure():
         else:
             filename = 'toolbox.png'
         
-    step_data.append((step_id,
-                        step_order,
-                        step_text,
-                        step_ref,
-                        filename))
+        step_data.append((step_id,
+                            step_order,
+                            step_text,
+                            step_ref,
+                            filename))
         
         
     # cars = request.form.getlist('cars')
 
-    print('****************', part_data)
+    print('****************', step_data)
 
     crud.update_procedure(proc_id, 
                             title, 
