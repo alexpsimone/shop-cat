@@ -328,7 +328,13 @@ def update_procedure(proc_id, title, remove_label, label, tool_data):
     for proc_tool in proc_tools:
         if proc_tool.tool_id not in tool_ids:
             db.session.delete(proc_tool)
-
+    
+    #############################################################
+    ############ TODO: refactor w/o list indexing!! #############
+    #############################################################
+    # Go through part_data and make sure all part info is updated.
+    # Add any new parts to the database.
+    
     db.session.commit()
 
     return proc
