@@ -230,6 +230,24 @@ function addVehicle (evt) {
 }
 
 
+function removeVehicle (evt) {
+
+    evt.preventDefault();
+
+    let numCars = Number($('#NUM_CARS').val());
+    numCars -= 1;
+   
+    const thisButton = evt.target;
+    const thisRow = $(thisButton).closest('tr')
+    $(thisRow).remove();
+
+    $('#NUM_CARS').replaceWith(`<input name="NUM_CARS" 
+                                id="NUM_CARS" type="number" 
+                                value="${numCars}" 
+                                style="display: none;"/>`);
+}
+
+
 function getModels (evt) {
 
     evt.preventDefault();
@@ -281,11 +299,14 @@ function selectAddlVehicle (evt) {
                                 <input name="cars" value="${res['model_year']}-${res['make']}-${res['model']}" disabled />
                                 </td>
                                 <td>
-                                    <button class="remove-car" value="${res['model_year']}-${res['make']}-${res['model']}">
+                                    <button class="remove-vehicle" value="${res['model_year']}-${res['make']}-${res['model']}">
                                     Remove
                                     </button>
                                 </td>
                             </tr>`)
+
+        $('button.remove-vehicle').off();
+        $('button.remove-vehicle').on('click', removeVehicle);
     });
 
     $('#NUM_CARS').replaceWith(`<input name="NUM_CARS" 
@@ -295,6 +316,7 @@ function selectAddlVehicle (evt) {
 
     $('checkbox.car-remove').attr('disabled', false);
     $('#car-add-form').hide();
+
 }
 
 
@@ -571,6 +593,7 @@ $('form').submit(function() {
 $('#car-add').on('click', addVehicle);
 $('#make').on('change', getModels);
 $('#vehicle-submit').on('click', selectAddlVehicle);
+$('button.remove-vehicle').on('click', removeVehicle);
 
 $('button.remove-tool').on('click', removeTool);
 $('#tool-add').on('click', addTool);
