@@ -238,7 +238,6 @@ def get_all_models():
     all_models = []
     model_year = request.args.get('modelYear')
     make = request.args.get('make')
-    print('********************',model_year,make)
     # ##########################################################
     # ###TODO: Figure out how to make this PEP-8 compliant!!!###
     # ##########################################################
@@ -448,8 +447,6 @@ def rebuild_procedure():
                             step_ref,
                             filename))
 
-    print('****************', cars)
-
     crud.update_procedure(proc_id, 
                             title, 
                             remove_label, 
@@ -543,7 +540,6 @@ def select_vehicle():
                     'make': make,
                     'model': model
                     }
-    print('***************', vehicle_specs)
 
     session['model_year'] = model_year
     session['make'] = make

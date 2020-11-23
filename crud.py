@@ -308,7 +308,6 @@ def update_procedure(proc_id,
     
     for item in cars:
         car_info = item.split('-')
-        print('***********************',car_info)
         car = Car.query.filter(Car.model_year == car_info[0], Car.make == car_info[1], Car.model == car_info[2]).first()
         if car:
             if not ProcedureCar.query.filter_by(car_id = car.car_id):
@@ -329,7 +328,6 @@ def update_procedure(proc_id,
         if proc_car_by_proc.car_id not in car_ids:
             db.session.delete(proc_car_by_proc)
             proc_cars_by_car = ProcedureCar.query.filter_by(car_id = proc_car_by_proc.car_id).all()
-            print('******************',proc_cars_by_car)
             if proc_cars_by_car == []:
                 db.session.delete(Car.query.filter_by(car_id = proc_car_by_proc.car_id).first())
 
