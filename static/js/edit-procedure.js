@@ -311,6 +311,33 @@ function moveRow (evt) {
         thisRow.prev().before(thisRow);
     } else {
         thisRow.next().after(thisRow);
+
+        // const nextLength = ($(thisRow).nextAll('tr')).length;
+
+        // for (let row = 0; row < nextLength; row += 1) {
+            
+        //     const nextRow = $(thisRow).nextAll('tr')[row];
+        //     const nameOrderColumn = $(nextRow).children('td.name-order');
+        //     const orderInput = $(nameOrderColumn).children('input.step-order');
+        //     const newOrder = Number($(orderInput).val()) - 1;  
+        //     $(orderInput).attr('name', `step-order-${newOrder}`);
+        //     $(orderInput).attr('value', newOrder);
+
+        //     const stepInputID = $(nameOrderColumn).children('input.step-id');
+        //     $(stepInputID).attr('name', `step-id-${newOrder}`);
+        //     const stepInputText = $(nameOrderColumn).children('input.step-text');
+        //     $(stepInputText).attr('name', `step-text-${newOrder}`);
+
+        //     const refColumn = $(nextRow).children('td.ref');
+        //     const stepInputRef = $(refColumn).children('input.step-ref');
+        //     $(stepInputRef).attr('name', `step-ref-${newOrder}`);
+
+        //     const imgColumn = $(nextRow).children('td.img');
+        //     const stepInputExistingImg = $(imgColumn).children('input.step-existing-img');
+        //     $(stepInputExistingImg).attr('name', `step-existing-img-${newOrder}`)
+        //     const stepInputImg = $(imgColumn).children('input.step-img');
+        //     $(stepInputImg).attr('name', `step-img-${newOrder}`);
+        // };
     }
 }
 
