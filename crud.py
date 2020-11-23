@@ -318,15 +318,20 @@ def update_procedure(proc_id,
             create_procedure_car(proc, car)
         car_ids.add(car.car_id)
 
-    proc_cars = ProcedureCar.query.filter_by(proc_id = proc_id).all()
-
     # Check all ProcedureCar objects associated with this procedure.
     # If a ProcedureCar object includes a car ID that isn't in car_ids,
     # delete that ProcedureCar.
-    for proc_car in proc_cars:
-        if proc_car.car_id not in car_ids:
-            db.session.delete(proc_car)
+    # If that car ID is NOT present in any other ProcedureCar objects, then
+    # delete that Car.
+    proc_cars_by_proc = ProcedureCar.query.filter_by(proc_id = proc_id).all()
 
+    for proc_car_by_proc in proc_cars_by_proc:
+        if proc_car_by_proc.car_id not in car_ids:
+            db.session.delete(proc_car_by_proc)
+            proc_cars_by_car = ProcedureCar.query.filter_by(car_id = proc_car_by_proc.car_id).all()
+            print('******************',proc_cars_by_car)
+            if proc_cars_by_car == []:
+                db.session.delete(Car.query.filter_by(car_id = proc_car_by_proc.car_id).first())
 
     #############################################################
     ############ TODO: refactor w/o list indexing!! #############
