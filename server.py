@@ -356,6 +356,9 @@ def rebuild_procedure():
     # Also retrieve whether or not the label is marked for removal.
     remove_label = request.form.get('label-remove')
     label = request.form.get('label')
+
+    # Retrieve all cars listed on the form.
+    cars = request.form.getlist('cars')
     
     # Iterate through all tools on the form. Make  a list of tuples (?)
     # containing this information.
@@ -444,16 +447,14 @@ def rebuild_procedure():
                             step_text,
                             step_ref,
                             filename))
-        
-        
-    # cars = request.form.getlist('cars')
 
-    print('****************', step_data)
+    print('****************', cars)
 
     crud.update_procedure(proc_id, 
                             title, 
                             remove_label, 
-                            label, 
+                            label,
+                            cars,
                             tool_data,
                             part_data,
                             step_data)

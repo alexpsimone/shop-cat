@@ -277,7 +277,14 @@ def num_tools_by_proc(proc_id):
     return ProcedureTool.query.filter_by(proc_id = proc_id).count()
 
 
-def update_procedure(proc_id, title, remove_label, label, tool_data, part_data, step_data):
+def update_procedure(proc_id, 
+                        title, 
+                        remove_label, 
+                        label, 
+                        cars, 
+                        tool_data, 
+                        part_data, 
+                        step_data):
     """Update a Procedure with given information."""
 
     proc = Procedure.query.filter_by(proc_id = proc_id).first()
@@ -292,6 +299,34 @@ def update_procedure(proc_id, title, remove_label, label, tool_data, part_data, 
         proc.label = None
     else: 
         proc.label = label
+
+    #############################################################
+    ############ TODO: refactor w/o list indexing!! #############
+    #############################################################
+    # Update which vehicles are associated with the procedure.
+    car_ids = set()
+    
+    for item in cars:
+        car_info = item.split('-')
+        print('***********************',car_info)
+        car = Car.query.filter(Car.model_year == car_info[0], Car.make == car_info[1], Car.model == car_info[2]).first()
+        if car:
+            if not ProcedureCar.query.filter_by(car_id = car.car_id):
+                create_procedure_car(proc, car)
+        else:
+            car = create_car(car_info[2], car_info[1], car_info[0])
+            create_procedure_car(proc, car)
+        car_ids.add(car.car_id)
+
+    proc_cars = ProcedureCar.query.filter_by(proc_id = proc_id).all()
+
+    # Check all ProcedureCar objects associated with this procedure.
+    # If a ProcedureCar object includes a car ID that isn't in car_ids,
+    # delete that ProcedureCar.
+    for proc_car in proc_cars:
+        if proc_car.car_id not in car_ids:
+            db.session.delete(proc_car)
+
 
     #############################################################
     ############ TODO: refactor w/o list indexing!! #############
@@ -387,11 +422,9 @@ def update_procedure(proc_id, title, remove_label, label, tool_data, part_data, 
             if item[4] != step.step_img:
                 step.step_img = item[4]
             step_ids.add(int(item[0]))
-            print('**********AAAAA***********',step_ids)
         else:
             new_step = create_step(item[1], item[2], proc, item[3], item[4])
             step_ids.add(new_step.step_id)
-            print('**********BBBBB***********',step_ids)
     
     # Check all Step objects associated with this procedure.
     # If a Step object includes a step ID that isn't in part_data,
