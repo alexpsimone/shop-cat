@@ -357,7 +357,7 @@ def update_procedure(proc_id,
             else:
                 tool = Tool.query.filter_by(name = item[1]).first()
                 tool_ids.add(tool.tool_id)
-            if ProcedureTool.query.filter_by(tool_id = tool.tool_id).first() == None:
+            if ProcedureTool.query.filter(ProcedureTool.tool_id == tool.tool_id, ProcedureTool.proc_id == proc.proc_id).first() == None:
                 create_procedure_tool(proc, tool)
     # Check all ProcedureTool objects associated with this procedure.
     # If a ProcedureTool object includes a tool ID that isn't in tool_data,
@@ -395,7 +395,8 @@ def update_procedure(proc_id,
             else:
                 part = Part.query.filter_by(name = item[1]).first()
                 part_ids.add(part.part_id)
-            create_procedure_part(proc, part)
+            if ProcedurePart.query.filter_by(part_id = part.part_id).first() == None:
+                create_procedure_part(proc, part)
     
     # Check all ProcedurePart objects associated with this procedure.
     # If a ProcedurePart object includes a part ID that isn't in part_data,
