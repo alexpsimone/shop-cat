@@ -28,11 +28,11 @@ function addTool (evt) {
 
         $('#tools').append(
             `<tr>
-                <td class="meta">
+                <td class="name-order">
                 <input type="hidden" class="tool-order" name="order" value="${NUM_TOOLS}" />
                 <input type="hidden" class="tool-id" name="tool-id-${NUM_TOOLS}" value="NEW" />
                 <label>New Tool: </label>
-                <select class="tool-name" name="tool-name-${NUM_TOOLS}" value="tool-${NUM_TOOLS}">
+                <select class="tool-name" name="tool-name-${NUM_TOOLS}">
                 <option value="">--Please select a tool--</option>
                 ${str}
                 <option value="other">Other (please specify)...</option>
@@ -92,6 +92,8 @@ function removeTool (evt) {
         $(toolInputID).attr('name', `tool-id-${newOrder}`);
         const toolInputName = $(nameOrderColumn).children('input.tool-name');
         $(toolInputName).attr('name', `tool-name-${newOrder}`);
+        const toolSelectName = $(nameOrderColumn).children('select.tool-name');
+        $(toolSelectName).attr('name', `tool-name-${newOrder}`);
         const toolInputOtherName = $(nameOrderColumn).children('input.tool-other-name');
         $(toolInputOtherName).attr('name', `tool-other-name-${newOrder}`);
 
