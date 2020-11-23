@@ -379,7 +379,7 @@ def rebuild_procedure():
             filename = tool_existing_img
         else:
             filename = 'toolbox.png'
-            
+
         tool_data.append((tool_id, tool_name, filename, tool_other))
     
     # part_ids = request.form.getlist('part-id')

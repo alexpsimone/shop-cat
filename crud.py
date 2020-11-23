@@ -293,29 +293,43 @@ def update_procedure(proc_id, title, remove_label, label, tool_data):
     else: 
         proc.label = label
 
-    # for index, (tool_id, name, other_name, img) in enumerate(tool_data):
-    #     if tool_id == "NEW":
-    #         tool = Tool.query.filter_by(name = name).first()
-    #         print('*************', tool)
-    #         if tool:
-    #             tool_data[index] = (tool.tool_id, name, tool.tool_img)
-    #         else:
-    #             new_tool = create_tool(other_name, img)
-    #             db.session.add(tool)
-    #             tool_data[index] = (new_tool.tool_id, other_name, img)
-    #     else:
-    #         tool = Tool.query.filter_by(tool_id = tool_id).first()
+    #############################################################
+    ############ TODO: refactor w/o list indexing!! #############
+    #############################################################
+    # Go through tool_data and make sure all tool info is updated.
+    # Add any new tools to the database.
+    # tool_data: (tool_id, tool_name, tool_img, tool_other_name)
+    tool_ids = set()
+    for item in tool_data:
+        if item[0] != "NEW":
+            tool = Tool.query.filter_by(tool_id = item[0]).first()
+            if item[1] != tool.name:
+                tool.name = item[1]
+            if item[2] != tool.tool_img:
+                tool.tool_img = item[2]
+            tool_ids.add(int(item[0]))
+        else:
+            if item[1] == 'other':
+                if check_toolbox(item[3]) != None:
+                    tool = Tool.query.filter_by(name = item[3]).first()
+                    tool_ids.add(tool.tool_id)
+                else:
+                    tool = create_tool(item[3], item[2])
+                    tool_ids.add(tool.tool_id)
+            else:
+                tool = Tool.query.filter_by(name = item[1]).first()
+                tool_ids.add(tool.tool_id)
+            create_procedure_tool(proc, tool)
+    # Check all ProcedureTool items associated with this procedure.
+    # If a ProcedureTool object includes a tool ID that isn't in tool_data,
+    # delete that ProcedureTool.
+    proc_tools = ProcedureTool.query.filter_by(proc_id = proc.proc_id).all()
 
-    #         if name != tool.name:
-    #             tool.name = name
-    #         if img != tool.tool_img:
-    #             tool.tool_img = img
-    #         tool_data[index] = (tool.tool_id, tool.name, tool.tool_img)
-            
+    for proc_tool in proc_tools:
+        if proc_tool.tool_id not in tool_ids:
+            db.session.delete(proc_tool)
 
-    #     print(f'************ tool_data: {tool_data}************')
-
-    #     db.session.commit()
+    db.session.commit()
 
     return proc
 

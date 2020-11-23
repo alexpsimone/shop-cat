@@ -76,18 +76,30 @@ function removeTool (evt) {
     for (let row = 0; row < nextLength; row += 1) {
         
         const nextRow = $(thisRow).nextAll('tr')[row];
-        console.log(nextRow);
-        const metaColumn = $(nextRow).children('#meta');
-        console.log(metaColumn);
-        const orderInput = $(metaColumn).children('#tool-order');
-        console.log(orderInput);
+        const nameOrderColumn = $(nextRow).children('td.name-order');
+        console.log(`nameOrderColumn: ${nameOrderColumn}`);
+        const orderInput = $(nameOrderColumn).children('input.tool-order');
+        console.log(`orderInput: ${orderInput}`);
         const newOrder = Number($(orderInput).val()) - 1;
-        console.log(newOrder);
-        $(orderInput).replaceWith(`<input type="hidden" 
-                                    id="tool-order" 
-                                    name="order" 
-                                    value="${newOrder}" />
-                                    `);
+        console.log(`newOrder: ${newOrder}`);
+        
+        
+        $(orderInput).attr('value', newOrder);
+
+        const toolInputID = $(nameOrderColumn).children('input.tool-id');
+        $(toolInputID).attr('name', `tool-id-${newOrder}`);
+        const toolInputName = $(nameOrderColumn).children('input.tool-name');
+        $(toolInputName).attr('name', `tool-name-${newOrder}`);
+        const toolInputOtherName = $(nameOrderColumn).children('input.tool-other-name');
+        $(toolInputOtherName).attr('name', `tool-other-name-${newOrder}`);
+
+        const imgColumn = $(nextRow).children('td.img');
+        const toolInputExistingImg = $(imgColumn).children('input.tool-existing-img');
+        $(toolInputExistingImg).attr('name', `tool-existing-img-${newOrder}`)
+        const toolInputImg = $(imgColumn).children('input.tool-img');
+        $(toolInputImg).attr('name', `tool-img-${newOrder}`);
+
+
     };
 
     $(thisRow).remove();
