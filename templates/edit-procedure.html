@@ -11,7 +11,7 @@
 
 {% block body %}
 
-<form action="/rebuild-procedure", method="POST">
+<form action="/rebuild-procedure", method="POST", enctype="multipart/form-data">
     <input name="proc_id" id="proc_id" type="number" value="{{ procedure.proc_id }}" style="display: none;"/>
 
     <h1>Title:</h1>
@@ -59,7 +59,11 @@
         <table id="tools">
             {% for proc_tool in proc_tool_obj %}
             <tr>
-                <td>
+                <td id="meta">
+                    <input type="hidden" name="tool-id" value="{{ proc_tool.tool.tool_id }}" />
+                    <input type="hidden" name="tool-other-name" value="" />
+                    <input type="hidden" id="tool-order" name="order" value="{{ loop.index }}" />
+
                     <input name="tools" value="{{ proc_tool.tool.name }}" disabled/>
                     <br />
                     <button class="name edit">Edit Name</button>
@@ -89,6 +93,7 @@
             {% for proc_part in proc_part_obj %}
             <tr>
                 <td>
+                    <input type="hidden" name="part-id" value="{{ proc_part.part.part_id }}" />
                     <input name="parts" value="{{ proc_part.part.name }}" disabled />
                     <br />
                     <button class="name edit">Edit Name</button>

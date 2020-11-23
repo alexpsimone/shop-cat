@@ -28,17 +28,19 @@ function addTool (evt) {
 
         $('#tools').append(
             `<tr>
-                <td>
+                <td id="meta">
+                <input type="hidden" name="tool-id" value="NEW" />
+                <input type="hidden" id="tool-order" name="order" value="${NUM_TOOLS}" />
                 <label>New Tool: </label>
-                <select name="tool_req_${NUM_TOOLS}" class="tool-req" id="tool${NUM_TOOLS}">
+                <select name="tool_${NUM_TOOLS}" class="tool-req" id="tool_${NUM_TOOLS}">
                 <option value="">--Please select a tool--</option>
                 ${str}
                 <option value="other">Other (please specify)...</option>
                 </select>
                 <br /><label>If other, please specify: </label>
-                <input type="text" name="tool_other_${NUM_TOOLS}" />
+                <input type="text" name="tool-other-name" />
                 <br /><label>If other, add image (optional): </label>
-                <input name="new-tool-img" type="file" />
+                <input type="file" name="tool-img" />
                 </td>
                 <td>
                 <button class="remove-tool">Remove</button>
@@ -67,6 +69,26 @@ function removeTool (evt) {
 
     const thisButton = evt.target;
     const thisRow = $(thisButton).closest('tr');
+
+    const nextLength = ($(thisRow).nextAll('tr')).length;
+
+    for (let row = 0; row < nextLength; row += 1) {
+        
+        const nextRow = $(thisRow).nextAll('tr')[row];
+        console.log(nextRow);
+        const metaColumn = $(nextRow).children('#meta');
+        console.log(metaColumn);
+        const orderInput = $(metaColumn).children('#tool-order');
+        console.log(orderInput);
+        const newOrder = Number($(orderInput).val()) - 1;
+        console.log(newOrder);
+        $(orderInput).replaceWith(`<input type="hidden" 
+                                    id="tool-order" 
+                                    name="order" 
+                                    value="${newOrder}" />
+                                    `);
+    };
+
     $(thisRow).remove();
 
     let NUM_TOOLS = Number($('#NUM_TOOLS').val());
@@ -353,6 +375,11 @@ function removeReference (evt) {
 
 // needs refactoring, but gets the job done
 $('form').submit(function() {
+
+    // const NUM_TOOLS = Number($('#NUM_TOOLS').val());
+    // const NUM_PARTS = Number($('#NUM_PARTS').val());
+    // const NUM_STEPS = Number($('#NUM_STEPS').val());
+
     $('input', this).prop('disabled', false);
 });
 

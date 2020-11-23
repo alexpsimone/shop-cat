@@ -33,7 +33,8 @@
         {% for proc_tool in proc_tool_obj %}
         <li>
             <a href="/tool/{{ proc_tool.tool.tool_id }}">
-            {{ proc_tool.tool.name }}
+            {{ proc_tool.tool.name }}  
+            <img src="/static/img/uploads/{{ proc_tool.tool.tool_img }}" style="height:100px; width:100px;"/>
             </a>
         </li>
         {% endfor %}
@@ -50,7 +51,7 @@
     <ol>
         {% for step in steps %}
         <li>
-            <p>{{ step.step_text }}</p>
+            {{ step.step_text }}         
             <img src="/static/img/uploads/{{ step.step_img }}" style="height:100px; width:100px;"/>
             {% if step.reference != "No Ref Provided" %}
                 <br />

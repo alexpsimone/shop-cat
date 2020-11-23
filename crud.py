@@ -124,7 +124,7 @@ def create_step(order_num, step_text, proc, reference, step_img):
     return step
 
 
-def create_tool(name, tool_img='empty'):
+def create_tool(name, tool_img='toolbox.png'):
     """Create and return a tool."""
 
     tool = Tool(name = name,
@@ -277,8 +277,8 @@ def num_tools_by_proc(proc_id):
     return ProcedureTool.query.filter_by(proc_id = proc_id).count()
 
 
-def update_procedure(proc_id, title, remove_label, label, tools):
-    """Update a procedure with given information."""
+def update_procedure(proc_id, title, remove_label, label, tool_data, part_data):
+    """Update a Procedure with given information."""
 
     proc = Procedure.query.filter_by(proc_id = proc_id).first()
 
@@ -293,18 +293,31 @@ def update_procedure(proc_id, title, remove_label, label, tools):
     else: 
         proc.label = label
 
-    # Update ProcedureTool objects.
-    # for tool in tools:
-    #     if ProcedureTool.query.filter(ProcedureTool.proc == proc, ProcedureTool.tool == tool).first() == None:
-    #         if Tool.query.filter_by(name = tool).first():
-    #             procedure_tool = ProcedureTool(proc = proc, tool = tool)
+    # for index, (tool_id, name, other_name, img) in enumerate(tool_data):
+    #     if tool_id == "NEW":
+    #         tool = Tool.query.filter_by(name = name).first()
+    #         print('*************', tool)
+    #         if tool:
+    #             tool_data[index] = (tool.tool_id, name, tool.tool_img)
     #         else:
-    #             # crud.create_tool(tool, tool_img)
-    #         db.session.add(procedure_tool)
+    #             new_tool = create_tool(other_name, img)
+    #             db.session.add(tool)
+    #             tool_data[index] = (new_tool.tool_id, other_name, img)
+    #     else:
+    #         tool = Tool.query.filter_by(tool_id = tool_id).first()
 
-    db.session.commit()
+    #         if name != tool.name:
+    #             tool.name = name
+    #         if img != tool.tool_img:
+    #             tool.tool_img = img
+    #         tool_data[index] = (tool.tool_id, tool.name, tool.tool_img)
+            
 
-    return procedure
+    #     print(f'************ tool_data: {tool_data}************')
+
+    #     db.session.commit()
+
+    return proc
 
 
 def get_all_rockauto_makes():

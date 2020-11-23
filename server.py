@@ -351,27 +351,35 @@ def rebuild_procedure():
     remove_label = request.form.get('label-remove')
     label = request.form.get('label')
     
-    tools = request.form.getlist('tools')
-    tool_imgs = request.form.getlist('tool-img')
-    tools_w_imgs = []
-    for index, tool in enumerate(tools):
-        tools_w_imgs.append((tool, tool_imgs[index]))
+    tool_ids = request.form.getlist('tool-id')
+    tool_names = request.form.getlist('tools')
+    # tool_imgs = request.files['tool-img']
+    # print(f'*******************tool_imgs:{tool_imgs}')
+    tool_other_name = request.form.getlist('tool-other-name')
+    tool_data = []
+    for index, tool_name in enumerate(tool_names):
+        tool_data.append((tool_ids[index], tool_name, tool_other_name[index]))
+    #     tool_data.append((tool_ids[index], tool_name, tool_other_name[index], tool_imgs[index]))
+        # print('*****************', tool_data)
     
-    parts = request.form.getlist('parts')
-    part_imgs = request.form.getlist('part-img')
-    print(f'****************part-imgs: {part_imgs}')
-    parts_w_imgs = []
-    for index, part in enumerate(parts):
-        parts_w_imgs.append((part, part_imgs[index]))
-        print(part_imgs[index])
+    part_ids = request.form.getlist('part-id')
+    part_names = request.form.getlist('parts')
+    part_data = []
+    for index, part_name in enumerate(part_names):
+        part_data.append((part_ids[index], part_name))
 
     cars = request.form.getlist('cars')
 
-    print('****************', tools_w_imgs, parts, cars)
+    print('****************', tool_data, part_data, cars)
 
-    # crud.update_procedure(proc_id, title, remove_label, label, tools)
+    crud.update_procedure(proc_id, 
+                            title, 
+                            remove_label, 
+                            label, 
+                            tool_data, # LIST of TUPLES of tool ID, NAME, IMG
+                            part_data) # LIST of TUPLES of part ID, NAME, IMG
 
-    return redirect(f'/edit-procedure/{proc_id}')
+    return redirect(f'/procedure/{proc_id}')
 
 
 @app.route('/tool/<tool_id>')
