@@ -380,7 +380,7 @@ def update_procedure(proc_id, title, remove_label, label, tool_data, part_data, 
             step = Step.query.filter_by(step_id = item[0]).first()
             if item[1] != step.order_num:
                step.order_num = item[1]
-            if item[2] != step.text:
+            if item[2] != step.step_text:
                 step.text = item[2]
             if item[3] != step.reference:
                 step.reference = item[3]

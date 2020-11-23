@@ -426,7 +426,7 @@ def rebuild_procedure():
         step_id = request.form.get(f'step-id-{step}')
         step_order = request.form.get(f'step-order-{step}')
         step_text = request.form.get(f'step-text-{step}')
-        step_ref = request.form.get(f'step-ref{step}')
+        step_ref = request.form.get(f'step-ref-{step}')
         step_existing_img = request.form.get(f'step-existing-img-{step}')
         step_img = request.files[f'step-img-{step}']
 
