@@ -395,7 +395,7 @@ def update_procedure(proc_id,
             else:
                 part = Part.query.filter_by(name = item[1]).first()
                 part_ids.add(part.part_id)
-            if ProcedurePart.query.filter_by(part_id = part.part_id).first() == None:
+            if ProcedurePart.query.filter(ProcedurePart.part_id == part.part_id, ProcedurePart.proc_id == proc.proc_id).first() == None:
                 create_procedure_part(proc, part)
     
     # Check all ProcedurePart objects associated with this procedure.
