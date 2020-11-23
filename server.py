@@ -416,6 +416,36 @@ def rebuild_procedure():
                             part_manuf, 
                             part_oem))
 
+    # Iterate through all steps on the form. Make  a list of tuples (?)
+    # containing this information.
+    step_data = []
+    NUM_STEPS = int(request.form.get('NUM_STEPS'))
+
+    for step in range(1, (NUM_STEPS + 1)):
+        
+        step_id = request.form.get(f'step-id-{step}')
+        step_order = request.form.get(f'step-order-{step}')
+        step_text = request.form.get(f'step-text-{step}')
+        step_ref = request.form.get(f'step-ref{step}')
+        step_existing_img = request.form.get(f'step-existing-img-{step}')
+        step_img = request.files[f'step-img-{step}']
+
+        if step_img != None and crud.allowed_file(step_img.filename):
+                filename = secure_filename(step_img.filename)
+                step_img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                step_img.close()
+        elif step_existing_img:
+            filename = step_existing_img
+        else:
+            filename = 'toolbox.png'
+        
+    step_data.append((step_id,
+                        step_order,
+                        step_text,
+                        step_ref,
+                        filename))
+        
+        
     # cars = request.form.getlist('cars')
 
     print('****************', part_data)
@@ -425,7 +455,8 @@ def rebuild_procedure():
                             remove_label, 
                             label, 
                             tool_data,
-                            part_data)
+                            part_data,
+                            step_data)
 
     return redirect(f'/edit-procedure/{proc_id}')
 

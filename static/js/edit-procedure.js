@@ -351,19 +351,21 @@ function addStep (evt) {
 
     $('#steps').append(
                 `<tr>
-                    <td>
-                        <input name="step-text" value="Enter text here..." />
+                    <td class="name-order">
+                        <input type="hidden" class="step-order" name="step-order-${NUM_STEPS}" value="${NUM_STEPS}" />
+                        <input type="hidden" class="step-id" name="step-id-${NUM_STEPS}" value="NEW" />
+                        <input type="text" class="step-text" name="step-text-${NUM_STEPS}" value="Enter text here..." />
                     </td>
-                    <td>
-                        <input type="url" name="step_ref"
-                            placeholder="https://example.com"
-                            pattern="https://.*" disabled/>
+                    <td class="ref">
+                        <input type="url" class="step-ref" name="step-ref-${NUM_STEPS}"
+                            placeholder="https://example.com" pattern="https://.*" disabled/>
                         <br />
                         <button class="edit ref">Edit Ref</button>
                         <button class="del-ref" disabled>Remove Ref</button>
                     </td>
-                    <td>
-                        <input name="step-img" type="file" value="/static/img/toolbox.png" disabled />
+                    <td class="img">
+                        <input type="hidden" class="step-existing-img" name="step-existing-img-${NUM_STEPS}" value="toolbox.png" />
+                        <input type="file" class="step-img" name="step-img-${NUM_STEPS}" disabled />
                         <br />
                         <button class="edit img">Edit Img</button>
                         <button class="del-img" disabled>Restore Default Img</button>

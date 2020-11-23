@@ -277,7 +277,7 @@ def num_tools_by_proc(proc_id):
     return ProcedureTool.query.filter_by(proc_id = proc_id).count()
 
 
-def update_procedure(proc_id, title, remove_label, label, tool_data, part_data):
+def update_procedure(proc_id, title, remove_label, label, tool_data, part_data, step_data):
     """Update a Procedure with given information."""
 
     proc = Procedure.query.filter_by(proc_id = proc_id).first()
@@ -367,6 +367,29 @@ def update_procedure(proc_id, title, remove_label, label, tool_data, part_data):
         if proc_part.part_id not in part_ids:
             db.session.delete(proc_part)
     
+    #############################################################
+    ############ TODO: refactor w/o list indexing!! #############
+    #############################################################
+    # Go through step_data and make sure all step info is updated.
+    # Add any new steps to the database.
+    # step_data: (step_id, step_order, step_text, step_ref, step_img)
+
+    step_ids = set()
+    for item in step_data:
+        if item[0] != "NEW":
+            step = Step.query.filter_by(step_id = item[0]).first()
+            if item[1] != step.order_num:
+               step.order_num = item[1]
+            if item[2] != step.text:
+                step.text = item[2]
+            if item[3] != step.reference:
+                step.reference = item[3]
+            if item[4] != step.step_img:
+                step.step_img = item[4]
+            step_ids.add(int(item[0]))
+        else:
+            create_step(item[1], item[2], proc, item[3], item[4])
+ 
     db.session.commit()
 
     return proc

@@ -124,27 +124,29 @@
         <table id="steps">
             {% for step in steps %}
             <tr>
-                <td>
+                <td class="name-order">
+                    <input type="hidden" class="step-order" name="step-order-{{ loop.index }}" value="{{ loop.index }}" />
+                    <input type="hidden" class="step-id" name="step-id-{{ loop.index }}" value="{{ step.step_id }}" />
                     <input name="step-text" value="{{ step.step_text }}" />
                 </td>
-                <td>
+                <td class="ref">
                     {% if step.reference == "No Ref Provided" %}
-                        <input type="url" name="step-ref"
-                                placeholder="https://example.com"
-                                pattern="https://.*" disabled/>
+                        <input type="url" class="step-ref" name="step-ref-{{ loop.index }}"
+                                placeholder="https://example.com" pattern="https://.*" disabled/>
                     {% else %}
-                        <input type="url" name="step-ref"
-                                    placeholder="https://example.com"
-                                    pattern="https://.*" value="{{ step.reference }}" disabled/>
+                        <input type="url" class="step-ref" name="step-ref-{{ loop.index }}"
+                                    placeholder="https://example.com" pattern="https://.*" 
+                                    value="{{ step.reference }}" disabled/>
                     {% endif %}
                     <br />
                     <button class="edit ref">Edit Ref</button>
                     <button class="del-ref">Remove Ref</button>
                 </td>
-                <td>
+                <td class="img">
+                    <input type="hidden" class="step-existing-img" name="step-existing-img-{{ loop.index }}" value="{{ step.step_img }}" />
                     <p>Current image:</p>
-                    <p class="step-img">{{ step.step_img }}</p>
-                    <input name="new-step-img" type="file" disabled />
+                    <p>{{ step.step_img }}</p>
+                    <input type="file" class="step-img" name="step-img-{{ loop.index }}" disabled />
                     <br />
                     <button class="edit img">Edit Img</button>
                     <button class="del-img">Restore Default Img</button>
