@@ -121,6 +121,46 @@ function removePart (evt) {
 
     const thisButton = evt.target;
     const thisRow = $(thisButton).closest('tr');
+
+    const nextLength = ($(thisRow).nextAll('tr')).length;
+
+    for (let row = 0; row < nextLength; row += 1) {
+        
+        const nextRow = $(thisRow).nextAll('tr')[row];
+        const nameOrderColumn = $(nextRow).children('td.name-order');
+        console.log(`nameOrderColumn: ${nameOrderColumn}`);
+        const orderInput = $(nameOrderColumn).children('input.part-order');
+        console.log(`orderInput: ${orderInput}`);
+        const newOrder = Number($(orderInput).val()) - 1;
+        console.log(`newOrder: ${newOrder}`);
+        
+        
+        $(orderInput).attr('value', newOrder);
+
+        const partInputID = $(nameOrderColumn).children('input.part-id');
+        $(partInputID).attr('name', `part-id-${newOrder}`);
+        const partInputName = $(nameOrderColumn).children('input.part-name');
+        $(partInputName).attr('name', `part-name-${newOrder}`);
+        const partSelectName = $(nameOrderColumn).children('select.part-name');
+        $(partSelectName).attr('name', `part-name-${newOrder}`);
+        const partInputOtherName = $(nameOrderColumn).children('input.part-other-name');
+        $(partInputOtherName).attr('name', `part-other-name-${newOrder}`);
+
+        const partInputOtherPN = $(nameOrderColumn).children('input.part-other-pn');
+        $(partInputOtherPN).attr('name', `part-other-pn-${newOrder}`);
+        const partInputOtherManuf = $(nameOrderColumn).children('input.part-other-manuf');
+        $(partInputOtherManuf).attr('name', `part-other-manuf-${newOrder}`);
+        const partInputOtherOEM = $(nameOrderColumn).children('input.part-other-oem');
+        $(partInputOtherOEM).attr('name', `part-other-oem-${newOrder}`);
+
+        const imgColumn = $(nextRow).children('td.img');
+        const partInputExistingImg = $(imgColumn).children('input.part-existing-img');
+        $(partInputExistingImg).attr('name', `part-existing-img-${newOrder}`)
+        const partInputImg = $(imgColumn).children('input.part-img');
+        $(partInputImg).attr('name', `part-img-${newOrder}`);
+
+    };
+
     $(thisRow).remove();
 
     let NUM_PARTS = Number($('#NUM_PARTS').val());

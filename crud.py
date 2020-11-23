@@ -320,7 +320,7 @@ def update_procedure(proc_id, title, remove_label, label, tool_data, part_data):
                 tool = Tool.query.filter_by(name = item[1]).first()
                 tool_ids.add(tool.tool_id)
             create_procedure_tool(proc, tool)
-    # Check all ProcedureTool items associated with this procedure.
+    # Check all ProcedureTool objects associated with this procedure.
     # If a ProcedureTool object includes a tool ID that isn't in tool_data,
     # delete that ProcedureTool.
     proc_tools = ProcedureTool.query.filter_by(proc_id = proc.proc_id).all()
@@ -357,6 +357,15 @@ def update_procedure(proc_id, title, remove_label, label, tool_data, part_data):
                 part = Part.query.filter_by(name = item[1]).first()
                 part_ids.add(part.part_id)
             create_procedure_part(proc, part)
+    
+    # Check all ProcedurePart objects associated with this procedure.
+    # If a ProcedurePart object includes a part ID that isn't in part_data,
+    # delete that ProcedurePart.
+    proc_parts = ProcedurePart.query.filter_by(proc_id = proc.proc_id).all()
+
+    for proc_part in proc_parts:
+        if proc_part.part_id not in part_ids:
+            db.session.delete(proc_part)
     
     db.session.commit()
 
