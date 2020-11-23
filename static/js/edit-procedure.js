@@ -314,6 +314,55 @@ function moveRow (evt) {
     console.log(`thisOrder: ${thisOrder}`)
 
     if ($(thisButton).hasClass('up')) {
+
+        if ($(thisRow).prevAll('tr').length > 0) {
+
+            // Find the order of the row that just switched with current row.
+            const prevRow = $(thisRow).prev('tr');
+            const prevOrderColumn = $(prevRow).children('td.name-order');
+            const prevOrderInput = $(prevOrderColumn).children('input.step-order');
+            const prevOrder = Number($(prevOrderInput).val()); 
+            console.log(`prevOrder: ${prevOrder}`)
+
+            // Re-index everything in the current row.
+            $(thisOrderInput).attr('name', `step-order-${prevOrder}`);
+            $(thisOrderInput).attr('value', prevOrder);
+
+            const stepInputID = $(thisOrderColumn).children('input.step-id');
+            $(stepInputID).attr('name', `step-id-${prevOrder}`);
+            const stepInputText = $(thisOrderColumn).children('input.step-text');
+            $(stepInputText).attr('name', `step-text-${prevOrder}`);
+
+            const refColumn = $(thisRow).children('td.ref');
+            const stepInputRef = $(refColumn).children('input.step-ref');
+            $(stepInputRef).attr('name', `step-ref-${prevOrder}`);
+
+            const imgColumn = $(thisRow).children('td.img');
+            const stepInputExistingImg = $(imgColumn).children('input.step-existing-img');
+            $(stepInputExistingImg).attr('name', `step-existing-img-${prevOrder}`)
+            const stepInputImg = $(imgColumn).children('input.step-img');
+            $(stepInputImg).attr('name', `step-img-${prevOrder}`);
+
+            // Re-index everything in the switched row.
+            $(prevOrderInput).attr('name', `step-order-${thisOrder}`);
+            $(prevOrderInput).attr('value', thisOrder);
+
+            const prevStepInputID = $(prevOrderColumn).children('input.step-id');
+            $(prevStepInputID).attr('name', `step-id-${thisOrder}`);
+            const prevStepInputText = $(prevOrderColumn).children('input.step-text');
+            $(prevStepInputText).attr('name', `step-text-${thisOrder}`);
+
+            const prevRefColumn = $(prevRow).children('td.ref');
+            const prevStepInputRef = $(prevRefColumn).children('input.step-ref');
+            $(prevStepInputRef).attr('name', `step-ref-${thisOrder}`);
+
+            const prevImgColumn = $(prevRow).children('td.img');
+            const prevInputExistingImg = $(prevImgColumn).children('input.step-existing-img');
+            $(prevInputExistingImg).attr('name', `step-existing-img-${thisOrder}`);
+            const prevStepInputImg = $(prevImgColumn).children('input.step-img');
+            $(prevStepInputImg).attr('name', `step-img-${thisOrder}`);
+        };
+
         thisRow.prev().before(thisRow);
 
     } else {
