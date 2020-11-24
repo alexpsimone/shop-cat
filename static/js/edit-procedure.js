@@ -579,15 +579,20 @@ function removeReference (evt) {
     $(thisInput).val('');
 }
 
-// needs refactoring, but gets the job done
-$('form').submit(function() {
 
-    // const NUM_TOOLS = Number($('#NUM_TOOLS').val());
-    // const NUM_PARTS = Number($('#NUM_PARTS').val());
-    // const NUM_STEPS = Number($('#NUM_STEPS').val());
+function requireStep (evt) {
 
+    let NUM_STEPS = Number($('#NUM_STEPS').val());
+    console.log(NUM_STEPS);
+    console.log(NUM_STEPS === 0);
+
+    if (NUM_STEPS === 0) {
+        evt.preventDefault();
+        alert('All procedures must have at least one step!');
+    };
+    // needs refactoring, but gets the job done
     $('input', this).prop('disabled', false);
-});
+}
 
 
 $('#car-add').on('click', addVehicle);
@@ -608,3 +613,5 @@ $('#step-add').on('click', addStep);
 $('button.edit').on('click', enableEditField);
 $('button.del-img').on('click', restoreDefaultImg);
 $('button.del-ref').on('click', removeReference);
+
+$('form').on('submit', requireStep)
