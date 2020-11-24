@@ -201,6 +201,12 @@ def get_procedures():
     return Procedure.query.all()
 
 
+def get_procedures_by_user_id(user_id):
+    """Return all procedures created by a given user."""
+
+    return Procedure.query.filter_by(created_by_user_id = user_id).all()
+
+
 def get_proc_car_by_proc_id(proc_id):
     """Return all proc_car objects associated with a given proc_id."""
     

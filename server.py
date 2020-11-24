@@ -177,6 +177,28 @@ def build_procedure():
     return redirect('/home')
 
 
+@app.route('/dashboard/<user_id>')
+def show_dashboard(user_id):
+    """Render the user dashboard."""
+
+    if session:
+
+        user = crud.get_user_by_id(user_id)
+        procedures = crud.get_procedures_by_user_id(user_id)
+        model_year = session.get('model_year')
+        make = session.get('make')
+        model = session.get('model')
+
+        return render_template('dashboard.html',
+                                user = user,
+                                procedures = procedures,
+                                model_year = model_year,
+                                make = make,
+                                model = model)
+    else:
+        return redirect('/')
+
+
 @app.route('/edit-procedure/<proc_id>')
 def edit_procedure(proc_id):
     """Render the procedure editing form."""
@@ -274,7 +296,9 @@ def get_all_tools():
 def show_homepage():
     """Render the homepage."""
 
-    if session:
+    if session: 
+        user_id = session['current_user']
+        user = crud.get_user_by_id(user_id)
         procedures = crud.get_procedures()
         tools = crud.get_tools()
         cars = crud.get_cars()
@@ -282,6 +306,7 @@ def show_homepage():
         makes = set([car.make for car in cars])
 
         return render_template('homepage.html',
+                                user = user,
                                 procedures = procedures,
                                 tools = tools,
                                 model_years = model_years,

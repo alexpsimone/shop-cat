@@ -57,7 +57,7 @@ for user in range(5):
     username = f'user{user}'
     password = f'password{user}'
     nickname = f'nickname{user}'
-    avatar_img_url = f'urlpath{user}'
+    avatar_img_url = 'cat.jpg'
     
     user = crud.create_user(username, password, nickname, avatar_img_url)
     

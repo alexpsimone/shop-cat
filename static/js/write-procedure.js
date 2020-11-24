@@ -123,6 +123,18 @@ function getParts (evt) {
     });   
 }
 
+ 
+// function enableURL(evt) {
+
+//     const thisCheck = evt.target;
+//     const thisURL = $(thisCheck).siblings('input.ref-url');
+
+//     if ($(thisURL).attr('disabled', true)) {
+//         $(thisURL).attr('disabled', false);
+//     } else if ($(thisURL).attr('disabled', false)) {
+//         $(thisURL).attr('disabled', true);
+//     };
+// }
 
 function addStep (evt) {
     
@@ -130,16 +142,17 @@ function addStep (evt) {
         
     NUM_STEPS += 1;
 
-    $('#step-list').append(`<p>Step ${NUM_STEPS}: </p>
+    $('#step-list').append(`<div>
+                            <p>Step ${NUM_STEPS}: </p>
                             <textarea name="step_text_${NUM_STEPS}"></textarea>
                             <br />
-                            <input type="checkbox" id="ref_${NUM_STEPS}"
+                            <input type="checkbox" class="ref-check" id="ref_${NUM_STEPS}"
                             name="ref_${NUM_STEPS}" />
                             <label for="ref_${NUM_STEPS}">Reference?</label>
                             <br />
                             <label for="ref_text_${NUM_STEPS}">
-                            Reference URL (must start with https://): </label>
-                            <input type="url" name="ref_text_${NUM_STEPS}"
+                            Reference URL (optional, must start with https://): </label>
+                            <input type="url" class="ref-url" name="ref_text_${NUM_STEPS}"
                             placeholder="https://example.com"
                             pattern="https://.*" />
                             <br />
@@ -147,8 +160,10 @@ function addStep (evt) {
                             Image (optional): </label>
                             <input type="file" id="step_img_${NUM_STEPS}"
                             name="step_img_${NUM_STEPS}" />
-                            <br />`
-                            );
+                            </div>`);
+    
+    // $('input.ref-check').off(); 
+    // $('input.ref-check').on('click', enableURL);
 
     $('#NUM_STEPS').replaceWith(`<input name ="NUM_STEPS" id="NUM_STEPS" 
         type="number" value="${NUM_STEPS}" style="display: none;"/>`);

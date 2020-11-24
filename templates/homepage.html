@@ -38,5 +38,8 @@
         <br />
     {% endfor %}
     </div>
+
+    <p><em>You're logged in as {{ user.username }}.</em></p>
+    <p>Access your dashboard <a href="/dashboard/{{ user.user_id }}">here</a>.</p>
     
 {% endblock %}
