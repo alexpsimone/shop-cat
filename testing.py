@@ -69,7 +69,7 @@ class ShopCatTestsDatabase(unittest.TestCase):
 
         with self.client as c:
             with c.session_transaction() as sess:
-                sess["current_user"] = "username1"
+                sess["current_user"] = 1
 
     def tearDown(self):
         """Do at end of every test."""
