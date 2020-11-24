@@ -90,6 +90,16 @@ class ShopCatTestsDatabase(unittest.TestCase):
 
         db.session.close()
         db.drop_all()
+    
+
+    def test_user_dashboard_route(self):
+        """Check that the user dashboard is rendering properly."""
+
+        all_users = User.query.all()
+        for user in all_users:
+            result = self.client.get(f"/dashboard/{user.user_id}")
+            self.assertEqual(result.status_code, 200)
+            self.assertIn(b'''<h2>Procedures you've created:</h2>''', result.data)
 
     def test_home_route(self):
         """Check that the home route is rendering properly."""
