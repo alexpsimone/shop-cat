@@ -580,13 +580,15 @@ function removeReference (evt) {
 }
 
 
-function requireStep (evt) {
+function requireStepAndCar (evt) {
 
     let NUM_STEPS = Number($('#NUM_STEPS').val());
-    console.log(NUM_STEPS);
-    console.log(NUM_STEPS === 0);
+    let NUM_CARS = Number($('#NUM_CARS').val());
 
-    if (NUM_STEPS === 0) {
+    if (NUM_CARS === 0) {
+        evt.preventDefault();
+        alert('All procedures must have at least one car!');
+    } else if (NUM_STEPS === 0) {
         evt.preventDefault();
         alert('All procedures must have at least one step!');
     };
@@ -614,4 +616,4 @@ $('button.edit').on('click', enableEditField);
 $('button.del-img').on('click', restoreDefaultImg);
 $('button.del-ref').on('click', removeReference);
 
-$('form').on('submit', requireStep)
+$('form').on('submit', requireStepAndCar);
