@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block js %}   
+{% endblock %}
+
+
+{% block body %}
+
+    <h1>Username</h1>
+    <p>{{ user.username }}</p>
+    <h2>Nickname</h2>
+    <p>{{ user.nickname }}</p>
+    <img src="/static/img/uploads/{{ user.avatar_img_url }}" style="height:100px; width:100px;"/>
+
+    <h2>Procedures you've created:</h2>
+    <ul>
+        {% for procedure in procedures %}
+            <li>
+                <a href="/procedure/{{ procedure.proc_id }}">{{ procedure.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Your last vehicle:</h2>
+    <p>{{ model_year }} {{ make }} {{ model }}</p>
+
+    <a href="/home">Return Home</a>
+
+{% endblock %}
