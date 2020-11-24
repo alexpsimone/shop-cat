@@ -6,8 +6,8 @@ import model
 import server
 
 # Drop and re-create the database.
-os.system('dropdb shopcat')
-os.system('createdb shopcat')
+os.system("dropdb shopcat")
+os.system("createdb shopcat")
 model.connect_to_db(server.app)
 model.db.create_all()
 
@@ -15,9 +15,9 @@ model.db.create_all()
 toolbox = []
 
 for tool in range(10):
-    
-    name = f'tool_{tool}'
-    tool_img = 'toolbox.png'
+
+    name = f"tool_{tool}"
+    tool_img = "toolbox.png"
 
     tool = crud.create_tool(name, tool_img)
     toolbox.append(tool)
@@ -26,27 +26,27 @@ for tool in range(10):
 parts_bin = []
 
 for part in range(50):
-    
-    name = f'part_{part}'
-    part_img = 'toolbox.png'
-    
+
+    name = f"part_{part}"
+    part_img = "toolbox.png"
+
     part = crud.create_part(name, part_img)
     parts_bin.append(part)
 
-    manuf = choice(['ACDelco', 'Delphi', 'Bosch', 'Continental'])
-    part_num = '1234ABCD'
+    manuf = choice(["ACDelco", "Delphi", "Bosch", "Continental"])
+    part_num = "1234ABCD"
     is_oem_part = True
     part = part
 
     part_num = crud.create_part_num(manuf, part_num, is_oem_part, part)
-    
+
 # Create a set of 10 test cars.
 garage = []
 
 for car in range(10):
-    
-    model = f'car_{car}'
-    make = 'CHEVROLET'
+
+    model = f"car_{car}"
+    make = "CHEVROLET"
     model_year = randint(1956, 2020)
 
     car = crud.create_car(model, make, model_year)
@@ -54,18 +54,18 @@ for car in range(10):
 
 # Create 5 test users.
 for user in range(5):
-    username = f'user{user}'
-    password = f'password{user}'
-    nickname = f'nickname{user}'
-    avatar_img_url = 'cat.jpg'
-    
+    username = f"user{user}"
+    password = f"password{user}"
+    nickname = f"nickname{user}"
+    avatar_img_url = "cat.jpg"
+
     user = crud.create_user(username, password, nickname, avatar_img_url)
-    
+
     for x in range(3):
 
         # Create 3 procedures for each new user.
-        title = f'title{user.user_id}_{x}'
-        label = f'label{user.user_id}_{x}'
+        title = f"title{user.user_id}_{x}"
+        label = f"label{user.user_id}_{x}"
 
         procedure = crud.create_procedure(title, label, user)
 
@@ -73,7 +73,7 @@ for user in range(5):
         car_num = randint(0, 9)
         proc_car = crud.create_procedure_car(procedure, garage[car_num])
 
-        # Randomly assign up to 3 tools from the existing set 
+        # Randomly assign up to 3 tools from the existing set
         # to each procedure.
         nums_used = set()
         for x in range(3):
@@ -82,8 +82,8 @@ for user in range(5):
         for num in nums_used:
             tool = toolbox[num]
             proc_tool = crud.create_procedure_tool(procedure, tool)
-        
-        # Randomly assign up to 3 parts from the existing set 
+
+        # Randomly assign up to 3 parts from the existing set
         # to each procedure.
         nums_used = set()
         for x in range(3):
@@ -94,21 +94,24 @@ for user in range(5):
             proc_part = crud.create_procedure_part(procedure, part)
 
         # Create 3 Steps for each Procedure.
-        crud.create_step(1, 
-                        f'Procedure_{procedure.proc_id}_step1',
-                        procedure,
-                        'No Ref Provided',
-                        'toolbox.png')
-        crud.create_step(2, 
-                        f'Procedure_{procedure.proc_id}_step2',
-                        procedure,
-                        'No Ref Provided',
-                        'toolbox.png')
-        crud.create_step(3, 
-                        f'Procedure_{procedure.proc_id}_step3',
-                        procedure,
-                        'No Ref Provided',
-                        'toolbox.png')
-
-
-
+        crud.create_step(
+            1,
+            f"Procedure_{procedure.proc_id}_step1",
+            procedure,
+            "No Ref Provided",
+            "toolbox.png",
+        )
+        crud.create_step(
+            2,
+            f"Procedure_{procedure.proc_id}_step2",
+            procedure,
+            "No Ref Provided",
+            "toolbox.png",
+        )
+        crud.create_step(
+            3,
+            f"Procedure_{procedure.proc_id}_step3",
+            procedure,
+            "No Ref Provided",
+            "toolbox.png",
+        )
