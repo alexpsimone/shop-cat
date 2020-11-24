@@ -32,7 +32,7 @@ function addTool (evt) {
                 <input type="hidden" class="tool-order" name="order" value="${NUM_TOOLS}" />
                 <input type="hidden" class="tool-id" name="tool-id-${NUM_TOOLS}" value="NEW" />
                 <label>New Tool: </label>
-                <select class="tool-name" name="tool-name-${NUM_TOOLS}">
+                <select class="tool-name" name="tool-name-${NUM_TOOLS}" required>
                 <option value="">--Please select a tool--</option>
                 ${str}
                 <option value="other">Other (please specify)...</option>
@@ -54,6 +54,8 @@ function addTool (evt) {
         $('button.remove-tool').off();
         $('button.edit').off();
         $('button.del-img').off();
+        $('select.tool-name').off();
+        $('select.tool-name').on('change', requireOtherToolName);
         $('button.remove-tool').on('click', removeTool);
         $('button.edit').on('click', enableEditField);
         $('button.del-img').on('click', restoreDefaultImg);
@@ -63,6 +65,20 @@ function addTool (evt) {
     $('#NUM_TOOLS').replaceWith(`<input name="NUM_TOOLS" id="NUM_TOOLS" 
                                     type="hidden" value="${NUM_TOOLS}" />`);
     
+}
+
+function requireOtherToolName (evt) {
+
+    
+    const thisSelect = evt.target;
+    const otherName = $(thisSelect).siblings('input.tool-other-name');
+    console.log(otherName);
+
+    if ($(thisSelect).val() === 'other') {
+        $(otherName).attr('required', true);
+    } else {
+        $(otherName).attr('required', false);
+    };
 }
 
 
@@ -180,7 +196,7 @@ function addPart (evt) {
                     <input type="hidden" class="part-order" name="order" value="${NUM_PARTS}" />
                     <input type="hidden" class="part-id" name="part-id-${NUM_PARTS}" value="NEW" />
                     <label>New Part: </label>
-                    <select class="part-name" name="part-name-${NUM_PARTS}">
+                    <select class="part-name" name="part-name-${NUM_PARTS}" required>
                     <option value="">--Please select a part--</option>
                     ${str}
                     <option value="other">Other (please specify)...</option>
@@ -212,6 +228,8 @@ function addPart (evt) {
         );
         $('button.remove-part').off();
         $('button.del-img').off();
+        $('select.part-name').off();
+        $('select.part-name').on('change', requireOtherPartName);
         $('button.remove-part').on('click', removePart);
         $('button.del-img').on('click', restoreDefaultImg);
     });
@@ -221,6 +239,19 @@ function addPart (evt) {
 }
 
 
+function requireOtherPartName (evt) {
+
+    const thisSelect = evt.target;
+    const otherName = $(thisSelect).siblings('input.part-other-name');
+    console.log(otherName);
+    console.log($(thisSelect).val());
+
+    if ($(thisSelect).val() === 'other') {
+        $(otherName).attr('required', true);
+    } else {
+        $(otherName).attr('required', false);
+    };
+}
 function addVehicle (evt) {
 
     evt.preventDefault();
@@ -497,7 +528,7 @@ function addStep (evt) {
                     <td class="name-order">
                         <input type="hidden" class="step-order" name="step-order-${NUM_STEPS}" value="${NUM_STEPS}" />
                         <input type="hidden" class="step-id" name="step-id-${NUM_STEPS}" value="NEW" />
-                        <input type="text" class="step-text" name="step-text-${NUM_STEPS}" value="Enter text here..." />
+                        <input type="text" class="step-text" name="step-text-${NUM_STEPS}" required/>
                     </td>
                     <td class="ref">
                         <input type="url" class="step-ref" name="step-ref-${NUM_STEPS}"
@@ -578,6 +609,9 @@ function removeReference (evt) {
     const thisInput = $(thisButton).prevAll('input');
     $(thisInput).val('');
 }
+
+
+
 
 
 function requireStepAndCar (evt) {
