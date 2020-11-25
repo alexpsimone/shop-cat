@@ -1,6 +1,6 @@
-# shop-cat
+# Shop Cat
 
-## Project Proposal: shop-cat
+## Project Proposal: Shop Cat
 
 ### Overview
 
@@ -12,43 +12,29 @@ It also provides more flexibility and collaborative oversight than a site like I
 
 ### Technologies required (besides typical Hackbright tech stack)
 
+- NHTSA Vehicle API
+- BeautifulSoup 4
+
+(coming soon...)
 - Wikipedia API: https://www.mediawiki.org/wiki/API:Main_page</li>
 - YouTube API: https://developers.google.com/youtube/v3</li>
 
 ### Data
 
-**Items and Procedures are the central building blocks of shop-cat.**
+**Procedures are the central building blocks of Shop Cat.**
 
-A Procedure is tied to a Page with a unique ID, url, etc.  
-Procedures consist of Parts, Tools, and Steps.  
+Procedures consist of Cars, Parts, Tools, and Steps.
+A Procedure can apply to multiple Cars, and multiple Procedures can be written about a Car. (many-many)  
 A Procedure can require multiple Parts, and Parts can be used in multiple Procedures. (many-many)  
 A Procedure can require multiple Tools, and Tools can be used in multiple Procedures. (many-many)  
 A Procedure consists of multiple Steps, but a Step can only exist in a specific Procedure. (one-many)  
-	***exception/special case: when a Procedure is also a Step (i.e. remove wheels, disconnect battery...)***  
-A Part can have multiple Part-Numbers, but a Part-Number can only describe one Part (one-many)  
+	***special case (to be implemented): when a Procedure is also a Step (i.e. remove wheels, disconnect battery...)***  
+A Part can have multiple Part-Numbers, but a Part-Number can only describe one Part (one-many)
 
-**Items are things that aren't procedures (e.g. cars or engines).**  
-Items consist of Statements.  
-An Item is tied to a Page with a unique ID, url, etc.  
-
-Steps also consist of Statements.   
-Either an Item or a Step can have many Statements, but a given Statement can only describe one Item or Step. (one-many)
-
-**Statements consist of Properties (e.g. lug nut torque) and References.**   
-A Statement can have multiple Properties, but Properties can only describe specific Statements. (one-many)  
-A Statement can have multiple References, and References can be used to describe multiple Statements. (many-many)  
-
-*This is the part I am least sure of:*  
-Each Property has at least one Value, but can have many Values.   
-A Value can represent multiple Properties.  
-
-**Users are connected to the things that they can add, remove, or change in shop-cat.**   
-- Only upon creation: Procedures, Items
-- Upon editing, adding, or removing: Parts, Part-Nums, Tools, Steps, Statements, Properties, Values, Refs   
-
-Users can edit many things, and each thing can be edited by many different Users. (many-many)      
-Therefore, Users are connected to these things via their key in the Contribution-History.
-
+**Users are connected to the procedures that they write in Shop Cat.**   
+- Current implementation: only the user who wrote the proceudre is tied to it.
+- Users can edit many things, and each thing can be edited by many different Users, but no changes are tracked.
+- Future implementation: Users will be connected to all the things they change via their key in a contribution history.
 
 ### Roadmap
 
@@ -72,9 +58,9 @@ Therefore, Users are connected to these things via their key in the Contribution
 
 #### 3.0
 
-- [ ] Allow users to add, remove, or edit steps after a procedure is generated for the first time.
-- [ ] Allow users to add, remove, or edit tools/part lists after a procedure is generated for the first time.
-- [ ] Allow users to add or remove cars to a procedure after it is generated.
+- [x] Allow users to add, remove, or edit steps after a procedure is generated for the first time.
+- [x] Allow users to add, remove, or edit tools/part lists after a procedure is generated for the first time.
+- [x] Allow users to add or remove cars to a procedure after it is generated.
 - [ ] Allow users to flag procedures that are unclear.
 - [ ] Adapt site to use React (if it doesn't already).
 
@@ -84,4 +70,3 @@ Therefore, Users are connected to these things via their key in the Contribution
 - [ ] All edits made by a certain user (to a procedure or info page) will be tracked in contribution history.
 - [ ] User can add a central page where all vehicles of a certain make or model are linked.
 - [ ] Link to the Wikipedia API to get general information about the vehicle on the page.
-- [ ] User will be able to create general informational pages that are linked to specific cars, not procedures.
