@@ -141,9 +141,9 @@ def build_procedure():
         part_other = request.form.get(f"part_other_{part}")
 
         if part_req != "other":
-            my_part = crud.check_parts_bin(part_req)
-        elif crud.check_parts_bin(part_other) != None:
-            my_part = check_parts_bin(part_other)
+            my_part = Part.query.filter_by(name=part_req).first()
+        elif Part.query.filter_by(name=part_other).first() != None:
+            my_part = Part.query.filter_by(name=part_other).first()
         else:
             part_img = request.files[f"part_img_{part}"]
             if part_img and crud.allowed_file(part_img.filename):
