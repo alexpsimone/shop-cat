@@ -247,7 +247,7 @@ class ShopCatTestsDatabase(unittest.TestCase):
         self.assertNotIn(b'<form action="/vehicle-select"', result.data)
     
     def test_vehicle_make_my_route(self):
-        """Check that the vehicle make link page is rendering properly."""
+        """Check that the vehicle model year link page is rendering properly."""
 
         first_car = Car.query.first()
         make = first_car.make
@@ -257,6 +257,17 @@ class ShopCatTestsDatabase(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn(b"<p>Models for ", result.data)
         self.assertNotIn(b'<form action="/vehicle-select"', result.data)
+    
+    def test_vehicle_make_my_model_route(self):
+        """Check that the vehicle model link page is rendering properly."""
+
+        first_car = Car.query.first()
+        make = first_car.make
+        model_year = first_car.model_year
+        model = first_car.model
+
+        result = self.client.get(f"/vehicle/{make}/{model_year}/{model}")
+        self.assertEqual(result.status_code, 200)
 
     def test_write_procedure_route(self):
         """Check that the write-procedure route is rendering properly."""
