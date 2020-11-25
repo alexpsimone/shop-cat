@@ -2,22 +2,21 @@
 Routes covered by this file:
 /
 /dashboard/<user_id>
+/existing-user
 /home
 /login
+/new-user
 /procedure/<proc_id>
+/tool/<tool_id>
 /write-procedure
 
 Routes not fully covered by this file:
 /build-procedure
-
 /edit-procedure/<proc_id>
-/existing-user
 /get-models.json
 /get-parts.json
 /get-tools.json
-/new-user
 /rebuild-procedure
-/tool/<tool_id>
 /uploads/<filename>
 /vehicle/<make>
 /vehicle/<make>/<model_year>
@@ -46,7 +45,7 @@ class FlaskTests(unittest.TestCase):
 
         self.client = app.test_client()
         app.config["TESTING"] = True
-
+    
     def test_shopcat_root_route(self):
         """Check that the shopcat root route is rendering properly."""
 
@@ -136,6 +135,7 @@ class ShopCatTestsDatabase(unittest.TestCase):
             self.assertNotIn(b'<form action="/vehicle-select"', result.data)
 
     def test_new_user_route_new(self):
+        """Check that the account creation route works properly with new user info."""
 
         result = self.client.post(
             "/new-user",
@@ -150,11 +150,8 @@ class ShopCatTestsDatabase(unittest.TestCase):
         self.assertIn(b"New account created.", result.data)
         self.assertNotIn(b"A user already exists", result.data)
 
-    #####################################################################
-    ### TODO: Figure out why db queries aren't returning as expected. ###
-    #####################################################################
-
     def test_new_user_route_existing(self):
+        """Check that the account creation route works properly with exisitng user info."""
 
         result = self.client.post(
             "/new-user",
@@ -166,10 +163,11 @@ class ShopCatTestsDatabase(unittest.TestCase):
             follow_redirects=True,
         )
         self.assertEqual(result.status_code, 200)
-        # self.assertIn(b'A user already exists', result.data)
-        # self.assertNotIn(b'New account created.', result.data)
+        self.assertIn(b'A user already exists', result.data)
+        self.assertNotIn(b'New account created.', result.data)
 
     def test_existing_user_route_wrong_pass(self):
+        """Check that the login route works properly with the wrong password filled in."""
 
         result = self.client.post(
             "/existing-user",
@@ -177,9 +175,10 @@ class ShopCatTestsDatabase(unittest.TestCase):
             follow_redirects=True,
         )
         self.assertEqual(result.status_code, 200)
-        # self.assertIn(b'Password is incorrect.', result.data)
+        self.assertIn(b'Password is incorrect.', result.data)
 
     def test_existing_user_route_correct_pass(self):
+        """Check that the login route works properly with the correct password filled in."""
 
         result = self.client.post(
             "/existing-user",
@@ -187,7 +186,30 @@ class ShopCatTestsDatabase(unittest.TestCase):
             follow_redirects=True,
         )
         self.assertEqual(result.status_code, 200)
-        # self.assertIn(b'Browse all the available procedures:', result.data)
+        self.assertIn(b'Browse all the available procedures:', result.data)
+
+    def test_procedure_by_proc_id_route(self):
+        """Check that the procedure view route is rendering properly."""
+
+        all_procedures = Procedure.query.all()
+
+        for procedure in all_procedures:
+            result = self.client.get(f"/procedure/{procedure.proc_id}")
+            self.assertEqual(result.status_code, 200)
+            self.assertIn(b"<p>Here are the steps in the procedure:</p>", result.data)
+            self.assertNotIn(b'<form action="/vehicle-select"', result.data)
+    
+    def test_vehicle_make_route(self):
+        """Check that the vehicle make link page is rendering properly."""
+
+        first_car = Car.query.first()
+        make = first_car.make
+
+        result = self.client.get(f"/vehicle/{make}")
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b"<p>Model years available for all", result.data)
+        self.assertNotIn(b'<form action="/vehicle-select"', result.data)
+    
 
 if __name__ == "__main__":
     unittest.main()
