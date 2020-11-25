@@ -10,6 +10,8 @@ Routes covered by this file:
 /procedure/<proc_id>
 /tool/<tool_id>
 /vehicle/<make>
+/vehicle/<make>/<model_year>
+/vehicle/<make>/<model_year>/<model>
 /write-procedure
 
 Routes not fully covered by this file:
@@ -19,9 +21,6 @@ Routes not fully covered by this file:
 /get-tools.json
 /rebuild-procedure
 /uploads/<filename>
-/vehicle/<make>/<model_year>
-/vehicle/<make>/<model_year>/<model>
-/vehicle-select
 /vehicle-select.json
 any redirects when user not in session
 """
@@ -46,7 +45,7 @@ class FlaskTests(unittest.TestCase):
 
         self.client = app.test_client()
         app.config["TESTING"] = True
-    
+
     # def test_dashboard_no_session_redirect(self):
     #     """Check that the user dashboard redirects if no user in session."""
 
@@ -78,7 +77,7 @@ class ShopCatTestsDatabase(unittest.TestCase):
         """Stuff to do before every test."""
 
         app.config["TESTING"] = True
-        app.config['SECRET_KEY'] = 'key'
+        app.config["SECRET_KEY"] = "key"
         self.client = app.test_client()
 
         # Connect to test database
@@ -100,8 +99,8 @@ class ShopCatTestsDatabase(unittest.TestCase):
         """Do at end of every test."""
 
         db.session.close()
-        db.drop_all() 
-    
+        db.drop_all()
+
     # def test_build_procedure(self):
     #     """Check that the build-procedure route processes properly."""
 
@@ -143,8 +142,8 @@ class ShopCatTestsDatabase(unittest.TestCase):
             follow_redirects=True,
         )
         self.assertEqual(result.status_code, 200)
-        self.assertIn(b'Browse all the available procedures:', result.data)
-    
+        self.assertIn(b"Browse all the available procedures:", result.data)
+
     # def test_get_models_json_route(self):
     #     """Confirm that the get-models.json query works."""
 
@@ -165,15 +164,15 @@ class ShopCatTestsDatabase(unittest.TestCase):
             follow_redirects=True,
         )
         self.assertEqual(result.status_code, 200)
-        self.assertIn(b'Password is incorrect.', result.data)
-    
+        self.assertIn(b"Password is incorrect.", result.data)
+
     def test_home_route(self):
         """Check that the home route is rendering properly."""
 
         result = self.client.get("/home")
         self.assertEqual(result.status_code, 200)
         self.assertIn(b"Browse all the available procedures:", result.data)
-    
+
     def test_new_user_route_new(self):
         """Check that the account creation route works properly with new user info."""
 
@@ -203,8 +202,8 @@ class ShopCatTestsDatabase(unittest.TestCase):
             follow_redirects=True,
         )
         self.assertEqual(result.status_code, 200)
-        self.assertIn(b'A user already exists', result.data)
-        self.assertNotIn(b'New account created.', result.data)
+        self.assertIn(b"A user already exists", result.data)
+        self.assertNotIn(b"New account created.", result.data)
 
     def test_procedure_by_proc_id_route(self):
         """Check that the procedure view route is rendering properly."""
@@ -224,7 +223,7 @@ class ShopCatTestsDatabase(unittest.TestCase):
         for tool in all_tools:
             result = self.client.get(f"/tool/{tool.tool_id}")
             self.assertEqual(result.status_code, 200)
-            self.assertIn(b'<h1>Information about', result.data)
+            self.assertIn(b"<h1>Information about", result.data)
 
     def test_user_dashboard_route(self):
         """Check that the user dashboard is rendering properly."""
@@ -233,8 +232,8 @@ class ShopCatTestsDatabase(unittest.TestCase):
         for user in all_users:
             result = self.client.get(f"/dashboard/{user.user_id}")
             self.assertEqual(result.status_code, 200)
-            self.assertIn(b'''<h2>Procedures you've created:</h2>''', result.data)
-    
+            self.assertIn(b"""<h2>Procedures you've created:</h2>""", result.data)
+
     def test_vehicle_make_route(self):
         """Check that the vehicle make link page is rendering properly."""
 
@@ -245,7 +244,7 @@ class ShopCatTestsDatabase(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn(b"<p>Model years available for all", result.data)
         self.assertNotIn(b'<form action="/vehicle-select"', result.data)
-    
+
     def test_vehicle_make_my_route(self):
         """Check that the vehicle model year link page is rendering properly."""
 
@@ -257,7 +256,7 @@ class ShopCatTestsDatabase(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn(b"<p>Models for ", result.data)
         self.assertNotIn(b'<form action="/vehicle-select"', result.data)
-    
+
     def test_vehicle_make_my_model_route(self):
         """Check that the vehicle model link page is rendering properly."""
 
@@ -274,8 +273,11 @@ class ShopCatTestsDatabase(unittest.TestCase):
 
         result = self.client.get("/write-procedure", follow_redirects=True)
         self.assertEqual(result.status_code, 200)
-        self.assertIn(b'<form action="/build-procedure", method="POST", enctype="multipart/form-data">', result.data)
-    
+        self.assertIn(
+            b'<form action="/build-procedure", method="POST", enctype="multipart/form-data">',
+            result.data,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
