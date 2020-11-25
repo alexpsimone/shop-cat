@@ -13,8 +13,8 @@ Routes covered by this file:
 /write-procedure
 
 Routes not fully covered by this file:
-/build-procedure
-/get-models.json
+/build-procedure <---written but not working
+/get-models.json <---written but not working
 /get-parts.json
 /get-tools.json
 /rebuild-procedure
@@ -23,6 +23,7 @@ Routes not fully covered by this file:
 /vehicle/<make>/<model_year>/<model>
 /vehicle-select
 /vehicle-select.json
+any redirects when user not in session
 """
 
 import unittest
@@ -32,9 +33,9 @@ from model import PartNum, ProcedureCar, ProcedurePart, ProcedureTool
 import os
 
 # Drop and re-create the test database.
-# os.system("dropdb testdb")
-# os.system("createdb testdb")
-# os.system("python3 seed_testdb.py")
+os.system("dropdb testdb")
+os.system("createdb testdb")
+os.system("python3 seed_testdb.py")
 
 
 class FlaskTests(unittest.TestCase):
@@ -46,6 +47,13 @@ class FlaskTests(unittest.TestCase):
         self.client = app.test_client()
         app.config["TESTING"] = True
     
+    # def test_dashboard_no_session_redirect(self):
+    #     """Check that the user dashboard redirects if no user in session."""
+
+    #     user1 = User.query.first()
+    #     result = self.client.get(f"/dashboard/{user1.user_id}", follow_redirects = True)
+    #     self.assertEqual(result.status_code, 200)
+
     def test_shopcat_root_route(self):
         """Check that the shopcat root route is rendering properly."""
 
@@ -236,6 +244,18 @@ class ShopCatTestsDatabase(unittest.TestCase):
         result = self.client.get(f"/vehicle/{make}")
         self.assertEqual(result.status_code, 200)
         self.assertIn(b"<p>Model years available for all", result.data)
+        self.assertNotIn(b'<form action="/vehicle-select"', result.data)
+    
+    def test_vehicle_make_my_route(self):
+        """Check that the vehicle make link page is rendering properly."""
+
+        first_car = Car.query.first()
+        make = first_car.make
+        model_year = first_car.model_year
+
+        result = self.client.get(f"/vehicle/{make}/{model_year}")
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b"<p>Models for ", result.data)
         self.assertNotIn(b'<form action="/vehicle-select"', result.data)
 
     def test_write_procedure_route(self):

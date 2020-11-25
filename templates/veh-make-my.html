@@ -8,7 +8,7 @@
 
 
 {% block body %}
-    <p>{{ make }} {{ model_year }}</p>
+    <p>Models for {{ make }} {{ model_year }}:</p>
 
     <ul>
         {% for model in models %}
@@ -18,7 +18,7 @@
         {% endfor %}
     </ul>
 
-    <a href="/vehicle/{{ make }}">Return to  {{ make }} page.</a>
+    <a href="/vehicle/{{ make }}">Return to {{ make }} page.</a>
     <br />
     <a href="/home">Return Home</a>
 {% endblock %}
