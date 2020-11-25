@@ -5,7 +5,8 @@ from werkzeug.utils import secure_filename
 import requests, json
 import os
 
-from model import connect_to_db
+from model import db, connect_to_db, User, Procedure, Car, Part, Tool, Step
+from model import PartNum, ProcedureCar, ProcedurePart, ProcedureTool
 import crud
 
 app = Flask(__name__)
@@ -107,9 +108,9 @@ def build_procedure():
         tool_other = request.form.get(f"tool_other_{tool}")
 
         if tool_req != "other":
-            my_tool = crud.check_toolbox(tool_req)
-        elif crud.check_toolbox(tool_other) != None:
-            my_tool = crud.check_toolbox(tool_other)
+            my_tool = Tool.query.filter_by(name=tool_req).first()
+        elif Tool.query.filter_by(name=tool_other).first() != None:
+            my_tool = Tool.query.filter_by(name=tool_other).first()
         else:
             tool_img = request.files[f"tool_img_{tool}"]
             if tool_img and crud.allowed_file(tool_img.filename):
@@ -345,6 +346,14 @@ def show_procedure_page(proc_id):
         steps = crud.get_steps_by_proc_id(proc_id)
         proc_num_tools = crud.num_tools_by_proc(proc_id)
         proc_num_parts = crud.num_parts_by_proc(proc_id)
+
+        # url = f"https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/{make}/modelyear/{model_year}?format=json"
+        # res = requests.get(url)
+        # data = res.json()
+
+        # for item in data["Results"]:
+        #     all_models.append(item["Model_Name"])
+        # sorted_models = sorted(all_models)
 
         return render_template(
             "procedure.html",

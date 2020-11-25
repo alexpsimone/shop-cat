@@ -30,12 +30,11 @@ from server import app
 from model import db, connect_to_db, User, Procedure, Car, Part, Tool, Step
 from model import PartNum, ProcedureCar, ProcedurePart, ProcedureTool
 import os
+from seed_testdb import load_all
 
 # Drop and re-create the test database.
 os.system("dropdb testdb")
 os.system("createdb testdb")
-os.system("python3 seed_testdb.py")
-
 
 class FlaskTests(unittest.TestCase):
     """Tests for the Shop Cat site."""
@@ -81,11 +80,9 @@ class ShopCatTestsDatabase(unittest.TestCase):
         self.client = app.test_client()
 
         # Connect to test database
-        os.system("dropdb testdb")
-        os.system("createdb testdb")
-        os.system("python3 seed_testdb.py")
         connect_to_db(app, db_uri="postgresql:///testdb")
-        # db.create_all()
+        db.create_all()
+        load_all()
 
         # Put user1 into session.
         with self.client as c:
@@ -144,6 +141,17 @@ class ShopCatTestsDatabase(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn(b"Browse all the available procedures:", result.data)
 
+    def test_existing_user_route_wrong_pass(self):
+        """Check that the login route works properly with the wrong password filled in."""
+
+        result = self.client.post(
+            "/existing-user",
+            data={"username": "username1", "password": "pass3"},
+            follow_redirects=True,
+        )
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b"Password is incorrect.", result.data)
+    
     # def test_get_models_json_route(self):
     #     """Confirm that the get-models.json query works."""
 
@@ -155,16 +163,6 @@ class ShopCatTestsDatabase(unittest.TestCase):
     #     self.assertEqual(result.status_code, 200)
     #     self.assertIn(b'<option value="">--Please select a Model--</option>')
 
-    def test_existing_user_route_wrong_pass(self):
-        """Check that the login route works properly with the wrong password filled in."""
-
-        result = self.client.post(
-            "/existing-user",
-            data={"username": "username1", "password": "pass3"},
-            follow_redirects=True,
-        )
-        self.assertEqual(result.status_code, 200)
-        self.assertIn(b"Password is incorrect.", result.data)
 
     def test_home_route(self):
         """Check that the home route is rendering properly."""
