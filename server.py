@@ -462,7 +462,7 @@ def rebuild_procedure():
         proc_id, title, remove_label, label, cars, tool_data, part_data, step_data
     )
 
-    return redirect(f"/edit-procedure/{proc_id}")
+    return redirect(f"/procedure/{proc_id}")
 
 
 @app.route("/tool/<tool_id>")
@@ -518,20 +518,20 @@ def show_model_page(make, model_year, model):
     )
 
 
-@app.route("/vehicle-select", methods=["POST"])
-def apply_selected_vehicle():
-    """Retrieve selected vehicle info and save to session."""
+# @app.route("/vehicle-select", methods=["POST"])
+# def apply_selected_vehicle():
+#     """Retrieve selected vehicle info and save to session."""
 
-    model_year = request.form.get("model-year")
-    make = request.form.get("make")
-    model = request.form.get("model")
+#     model_year = request.form.get("model-year")
+#     make = request.form.get("make")
+#     model = request.form.get("model")
 
-    session["model_year"] = model_year
-    session["make"] = make
-    session["model"] = model
-    print("***************", session["model_year"], session["make"], session["model"])
+#     session["model_year"] = model_year
+#     session["make"] = make
+#     session["model"] = model
+#     print("***************", session["model_year"], session["make"], session["model"])
 
-    return redirect("/write-procedure")
+#     return redirect("/write-procedure")
 
 
 @app.route("/vehicle-select.json", methods=["POST"])
