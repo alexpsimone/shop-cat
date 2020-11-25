@@ -1,14 +1,15 @@
 """
 Routes covered by this file:
 /
-/login
+/dashboard/<user_id>
 /home
+/login
 /procedure/<proc_id>
 /write-procedure
 
 Routes not fully covered by this file:
 /build-procedure
-/dashboard/<user_id>
+
 /edit-procedure/<proc_id>
 /existing-user
 /get-models.json
@@ -91,6 +92,14 @@ class ShopCatTestsDatabase(unittest.TestCase):
         db.session.close()
         db.drop_all()
     
+    def test_tool_route(self):
+        """Check that the user dashboard is rendering properly."""
+
+        all_tools = Tool.query.all()
+        for tool in all_tools:
+            result = self.client.get(f"/tool/{tool.tool_id}")
+            self.assertEqual(result.status_code, 200)
+            self.assertIn(b'<h1>Information about', result.data)
 
     def test_user_dashboard_route(self):
         """Check that the user dashboard is rendering properly."""
