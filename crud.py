@@ -12,16 +12,16 @@ def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in allowed_extensions
 
 
-def check_toolbox(tool_name):
-    """Check if a tool is in the existing toolbox."""
+# def check_toolbox(tool_name):
+#     """Check if a tool is in the existing toolbox."""
 
-    return Tool.query.filter_by(name=tool_name).first()
+#     return Tool.query.filter_by(name=tool_name).first()
 
 
-def check_parts_bin(part_name):
-    """Check if a part is in the existing parts bin."""
+# def check_parts_bin(part_name):
+#     """Check if a part is in the existing parts bin."""
 
-    return Part.query.filter_by(name=part_name).first()
+#     return Part.query.filter_by(name=part_name).first()
 
 
 def create_car(model, make, model_year):
@@ -308,10 +308,20 @@ def update_procedure(
         ).first()
         if car:
             if not ProcedureCar.query.filter_by(car_id=car.car_id):
-                create_procedure_car(proc, car)
+                    proc_car = ProcedureCar(proc = proc, car = car)
+                    #*#*#*#*#*#*#*#*#*#*#*#*#*#*
+                    db.session.add(proc_car)
+                    ###THIS COMMIT SEEMS TO MATTER!!!!!############
+                    db.session.commit()
+                # create_procedure_car(proc, car)
         else:
             car = create_car(car_info[2], car_info[1], car_info[0])
-            create_procedure_car(proc, car)
+            proc_car = ProcedureCar(proc = proc, car = car)
+            #*#*#*#*#*#*#*#*#*#*#*#*#*#*
+            db.session.add(proc_car)
+            ###THIS COMMIT SEEMS TO MATTER!!!!!############
+            db.session.commit()
+            # create_procedure_car(proc, car)
         car_ids.add(car.car_id)
 
     # Check all ProcedureCar objects associated with this procedure.
@@ -349,7 +359,7 @@ def update_procedure(
             tool_ids.add(int(item[0]))
         else:
             if item[1] == "other":
-                if check_toolbox(item[3]) != None:
+                if Tool.query.filter_by(name=item[3]).first() != None:
                     tool = Tool.query.filter_by(name=item[3]).first()
                     tool_ids.add(tool.tool_id)
                 else:
@@ -392,7 +402,7 @@ def update_procedure(
             part_ids.add(int(item[0]))
         else:
             if item[1] == "other":
-                if check_parts_bin(item[3]) != None:
+                if Part.query.filter_by(name=item[3]).first() != None:
                     part = Part.query.filter_by(name=item[3]).first()
                     part_ids.add(part.part_id)
                 else:

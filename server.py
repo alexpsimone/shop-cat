@@ -36,9 +36,11 @@ def build_procedure():
     proc_title = request.form.get("proc_title")
     proc_label = request.form.get("proc_label")
 
-    user = crud.get_user_by_id(session["current_user"])
+    user = User.query.filter_by(user_id = session["current_user"]).first()
 
-    procedure = crud.create_procedure(proc_title, proc_label, user)
+    procedure = Procedure(title = proc_title, label = proc_label, user = user)
+    #*#*#*#*#*#*#*#*#*#*#*#*#*#*
+    db.session.add(procedure)
 
     """
     For each step added by the user, create a Step object.
@@ -62,7 +64,6 @@ def build_procedure():
                 step_img.close()
             else:
                 filename = "toolbox.png"
-            new_step = crud.create_step(step, step_text, procedure, ref_text, filename)
         else:
             ref_text = "No Ref Provided"
             step_img = request.files[f"step_img_{step}"]
@@ -72,7 +73,15 @@ def build_procedure():
                 step_img.close()
             else:
                 filename = "toolbox.png"
-            new_step = crud.create_step(step, step_text, procedure, ref_text, filename)
+        new_step = Step(
+                        order_num = step,
+                        step_text = step_text,
+                        proc = procedure,
+                        reference = ref_text,
+                        step_img = filename,
+                    )
+        #*#*#*#*#*#*#*#*#*#*#*#*#*#*
+        db.session.add(new_step)
 
     """
     Check if the user selected an existing car.
@@ -83,13 +92,19 @@ def build_procedure():
     make = session["make"]
     model = session["model"]
 
-    if crud.get_car_by_details(model_year, make, model):
-        car = crud.get_car_by_details(model_year, make, model)
+    if Car.query.filter_by(model_year = model_year, make = make, model = model).first():
+        car = Car.query.filter_by(model_year = model_year, make = make, model = model).first()
     else:
-        car = crud.create_car(model, make, model_year)
+        car = Car(model = model, make = make, model_year = model_year)
+        #*#*#*#*#*#*#*#*#*#*#*#*#*#*
+        db.session.add(car)
 
     # Use the Car and Procedure objects to make a new ProcedureCar.
-    crud.create_procedure_car(procedure, car)
+    proc_car = ProcedureCar(proc = procedure, car = car)
+    #*#*#*#*#*#*#*#*#*#*#*#*#*#*
+    db.session.add(proc_car)
+    ###THIS COMMIT SEEMS TO MATTER!!!!!############
+    db.session.commit()
 
     """
     Check if the user selected an existing tool.
@@ -119,9 +134,14 @@ def build_procedure():
                 tool_img.close()
             else:
                 filename = "toolbox.png"
-            my_tool = crud.create_tool(tool_other, filename)
+            my_tool = Tool(name = tool_other, tool_img = filename)
+            #*#*#*#*#*#*#*#*#*#*#*#*#*#*
+            db.session.add(my_tool)
 
-        crud.create_procedure_tool(procedure, my_tool)
+        proc_tool = ProcedureTool(proc = procedure, tool = my_tool)
+        #*#*#*#*#*#*#*#*#*#*#*#*#*#*
+        db.session.add(proc_tool)
+        db.session.commit()
 
     """
     Check if the user selected an existing part.
@@ -156,10 +176,17 @@ def build_procedure():
             part_other_num = request.form.get(f"part_{part}_other_num")
             part_other_manuf = request.form.get(f"part_{part}_other_manuf")
             oem = request.form.get("oem_{part}")
-            my_part = crud.create_part(part_other_name, filename)
-            crud.create_part_num(part_other_manuf, part_other_num, oem, my_part)
+            my_part = Part(name = part_other_name, part_img = filename)
+            #*#*#*#*#*#*#*#*#*#*#*#*#*#*
+            db.session.add(my_part)
+            part_num = PartNum(manuf=part_other_manuf, part_num=part_other_num, is_oem_part=oem, part=my_part)
+            #*#*#*#*#*#*#*#*#*#*#*#*#*#*
+            db.session.add(part_num)
 
-        crud.create_procedure_part(procedure, my_part)
+        proc_part = ProcedurePart(proc=procedure, part=my_part)
+        #*#*#*#*#*#*#*#*#*#*#*#*#*#*
+        db.session.add(proc_part)
+        db.session.commit()
 
     return redirect("/home")
 
