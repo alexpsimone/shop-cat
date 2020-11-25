@@ -257,7 +257,7 @@ def login_user():
     username = request.form.get("username")
     password = request.form.get("password")
 
-    user = crud.get_user_by_username(username)
+    user = User.query.filter_by(username = username).first()
 
     if user:
         if user.password == password:

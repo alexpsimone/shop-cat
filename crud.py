@@ -24,255 +24,255 @@ def allowed_file(filename):
 #     return Part.query.filter_by(name=part_name).first()
 
 
-def create_car(model, make, model_year):
-    """Create and return a car."""
+# def create_car(model, make, model_year):
+#     """Create and return a car."""
 
-    car = Car(model=model, make=make, model_year=model_year)
+#     car = Car(model=model, make=make, model_year=model_year)
 
-    db.session.add(car)
-    db.session.commit()
+#     db.session.add(car)
+#     db.session.commit()
 
-    return car
+#     return car
 
 
-def create_part(name, part_img):
-    """Create and return a part."""
+# def create_part(name, part_img):
+#     """Create and return a part."""
 
-    part = Part(name=name, part_img=part_img)
+#     part = Part(name=name, part_img=part_img)
 
-    db.session.add(part)
-    db.session.commit()
+#     db.session.add(part)
+#     db.session.commit()
 
-    return part
+#     return part
 
 
-def create_part_num(manuf, part_num, is_oem_part, part):
-    """Create and return a part number."""
+# def create_part_num(manuf, part_num, is_oem_part, part):
+#     """Create and return a part number."""
 
-    part_num = PartNum(
-        manuf=manuf, part_num=part_num, is_oem_part=is_oem_part, part=part
-    )
+#     part_num = PartNum(
+#         manuf=manuf, part_num=part_num, is_oem_part=is_oem_part, part=part
+#     )
 
-    db.session.add(part_num)
-    db.session.commit()
+#     db.session.add(part_num)
+#     db.session.commit()
 
-    return part_num
+#     return part_num
 
 
-def create_procedure(title, label, user):
-    """Create and return a procedure."""
+# def create_procedure(title, label, user):
+#     """Create and return a procedure."""
 
-    procedure = Procedure(title=title, label=label, user=user)
+#     procedure = Procedure(title=title, label=label, user=user)
 
-    db.session.add(procedure)
-    db.session.commit()
+#     db.session.add(procedure)
+#     db.session.commit()
 
-    return procedure
+#     return procedure
 
 
-def create_procedure_car(proc, car):
-    """Create and return a ProcedureCar object."""
+# def create_procedure_car(proc, car):
+#     """Create and return a ProcedureCar object."""
 
-    proc_car = ProcedureCar(proc=proc, car=car)
+#     proc_car = ProcedureCar(proc=proc, car=car)
 
-    db.session.add(proc_car)
-    db.session.commit()
+#     db.session.add(proc_car)
+#     db.session.commit()
 
-    return proc_car
+#     return proc_car
 
 
-def create_procedure_part(proc, part):
-    """Create and return a ProcedureTool object."""
+# def create_procedure_part(proc, part):
+#     """Create and return a ProcedureTool object."""
 
-    proc_part = ProcedurePart(proc=proc, part=part)
+#     proc_part = ProcedurePart(proc=proc, part=part)
 
-    db.session.add(proc_part)
-    db.session.commit()
+#     db.session.add(proc_part)
+#     db.session.commit()
 
-    return proc_part
+#     return proc_part
 
 
-def create_procedure_tool(proc, tool):
-    """Create and return a ProcedureTool object."""
+# def create_procedure_tool(proc, tool):
+#     """Create and return a ProcedureTool object."""
 
-    proc_tool = ProcedureTool(proc=proc, tool=tool)
+#     proc_tool = ProcedureTool(proc=proc, tool=tool)
 
-    db.session.add(proc_tool)
-    db.session.commit()
+#     db.session.add(proc_tool)
+#     db.session.commit()
 
-    return proc_tool
+#     return proc_tool
 
 
-def create_step(order_num, step_text, proc, reference, step_img):
+# def create_step(order_num, step_text, proc, reference, step_img):
 
-    """Create and return a Step object."""
+#     """Create and return a Step object."""
 
-    step = Step(
-        order_num=order_num,
-        step_text=step_text,
-        proc=proc,
-        reference=reference,
-        step_img=step_img,
-    )
+#     step = Step(
+#         order_num=order_num,
+#         step_text=step_text,
+#         proc=proc,
+#         reference=reference,
+#         step_img=step_img,
+#     )
 
-    db.session.add(step)
-    db.session.commit()
+#     db.session.add(step)
+#     db.session.commit()
 
-    return step
+#     return step
 
 
-def create_tool(name, tool_img="toolbox.png"):
-    """Create and return a tool."""
+# def create_tool(name, tool_img="toolbox.png"):
+#     """Create and return a tool."""
 
-    tool = Tool(name=name, tool_img=tool_img)
+#     tool = Tool(name=name, tool_img=tool_img)
 
-    db.session.add(tool)
-    db.session.commit()
+#     db.session.add(tool)
+#     db.session.commit()
 
-    return tool
+#     return tool
 
 
-def create_user(username, password, nickname="nothingyet", img="emptypath"):
-    """Create and return a new user."""
+# def create_user(username, password, nickname="nothingyet", img="emptypath"):
+#     """Create and return a new user."""
 
-    user = User(
-        username=username, password=password, nickname=nickname, avatar_img_url=img
-    )
+#     user = User(
+#         username=username, password=password, nickname=nickname, avatar_img_url=img
+#     )
 
-    db.session.add(user)
-    db.session.commit()
+#     db.session.add(user)
+#     db.session.commit()
 
-    return user
+#     return user
 
 
-def get_car_by_details(model_year, make, model):
-    """Return a car with the specified info, if it exists."""
+# def get_car_by_details(model_year, make, model):
+#     """Return a car with the specified info, if it exists."""
 
-    return Car.query.filter_by(model_year=model_year, make=make, model=model).first()
+#     return Car.query.filter_by(model_year=model_year, make=make, model=model).first()
 
 
-def get_cars():
-    """Return all cars."""
+# def get_cars():
+#     """Return all cars."""
 
-    return Car.query.all()
+#     return Car.query.all()
 
 
-def get_cars_by_make(make):
-    """Return all Car objects with a given model year."""
+# def get_cars_by_make(make):
+#     """Return all Car objects with a given model year."""
 
-    return Car.query.filter_by(make=make).all()
+#     return Car.query.filter_by(make=make).all()
 
 
-def get_cars_by_make_and_model_year(make, model_year):
-    """Return all Car objects with a given make and model year."""
+# def get_cars_by_make_and_model_year(make, model_year):
+#     """Return all Car objects with a given make and model year."""
 
-    return Car.query.filter(Car.make == make, Car.model_year == model_year).all()
+#     return Car.query.filter(Car.make == make, Car.model_year == model_year).all()
 
 
-def get_parts():
-    """Return all parts."""
+# def get_parts():
+#     """Return all parts."""
 
-    return Part.query.all()
+#     return Part.query.all()
 
 
-def get_parts_by_proc_id(proc_id):
-    """Return all parts associated with a given proc_id."""
+# def get_parts_by_proc_id(proc_id):
+#     """Return all parts associated with a given proc_id."""
 
-    return ProcedurePart.query.filter_by(proc_id=proc_id).all()
+#     return ProcedurePart.query.filter_by(proc_id=proc_id).all()
 
 
-def get_procedure_by_id(proc_id):
-    """Return a procedure with a given proc_id."""
+# def get_procedure_by_id(proc_id):
+#     """Return a procedure with a given proc_id."""
 
-    return Procedure.query.get(proc_id)
+#     return Procedure.query.get(proc_id)
 
 
-def get_procedures():
-    """Return all procedures."""
+# def get_procedures():
+#     """Return all procedures."""
 
-    return Procedure.query.all()
+#     return Procedure.query.all()
 
 
-def get_procedures_by_user_id(user_id):
-    """Return all procedures created by a given user."""
+# def get_procedures_by_user_id(user_id):
+#     """Return all procedures created by a given user."""
 
-    return Procedure.query.filter_by(created_by_user_id=user_id).all()
+#     return Procedure.query.filter_by(created_by_user_id=user_id).all()
 
 
-def get_proc_car_by_proc_id(proc_id):
-    """Return all proc_car objects associated with a given proc_id."""
+# def get_proc_car_by_proc_id(proc_id):
+#     """Return all proc_car objects associated with a given proc_id."""
 
-    return ProcedureCar.query.filter_by(proc_id=proc_id).all()
+#     return ProcedureCar.query.filter_by(proc_id=proc_id).all()
 
 
-def get_proc_car_by_car_info(make, model_year, model):
-    """Return all proc_car objects associated with a given car."""
+# def get_proc_car_by_car_info(make, model_year, model):
+#     """Return all proc_car objects associated with a given car."""
 
-    car = Car.query.filter(
-        Car.make == make, Car.model_year == model_year, Car.model == model
-    ).first()
+#     car = Car.query.filter(
+#         Car.make == make, Car.model_year == model_year, Car.model == model
+#     ).first()
 
-    return ProcedureCar.query.filter_by(car_id=car.car_id).all()
+#     return ProcedureCar.query.filter_by(car_id=car.car_id).all()
 
 
-def get_steps_by_proc_id(proc_id):
-    """Return all Step objects associated with a given proc_id."""
+# def get_steps_by_proc_id(proc_id):
+#     """Return all Step objects associated with a given proc_id."""
 
-    return Step.query.filter_by(proc_id=proc_id).all()
+#     return Step.query.filter_by(proc_id=proc_id).all()
 
 
-def get_tools():
-    """Return all tools."""
+# def get_tools():
+#     """Return all tools."""
 
-    return Tool.query.all()
+#     return Tool.query.all()
 
 
-def get_tool_by_id(tool_id):
-    """Return a tool with a given id."""
+# def get_tool_by_id(tool_id):
+#     """Return a tool with a given id."""
 
-    return Tool.query.filter_by(tool_id=tool_id).first()
+#     return Tool.query.filter_by(tool_id=tool_id).first()
 
 
-def get_tools_by_proc_id(proc_id):
-    """Return all tools associated with a given proc_id."""
+# def get_tools_by_proc_id(proc_id):
+#     """Return all tools associated with a given proc_id."""
 
-    return ProcedureTool.query.filter_by(proc_id=proc_id).all()
+#     return ProcedureTool.query.filter_by(proc_id=proc_id).all()
 
 
-def get_user_by_id(user_id):
-    """Get a user with a given ID."""
+# def get_user_by_id(user_id):
+#     """Get a user with a given ID."""
 
-    return User.query.filter_by(user_id=user_id).first()
+#     return User.query.filter_by(user_id=user_id).first()
 
 
-def get_user_by_username(username):
-    """Get a user with a given username."""
+# def get_user_by_username(username):
+#     """Get a user with a given username."""
 
-    return User.query.filter_by(username=username).first()
+#     return User.query.filter_by(username=username).first()
 
 
-def num_cars_by_proc(proc_id):
-    """Return the number of cars associated with a given procedure."""
+# def num_cars_by_proc(proc_id):
+#     """Return the number of cars associated with a given procedure."""
 
-    return ProcedureCar.query.filter_by(proc_id=proc_id).count()
+#     return ProcedureCar.query.filter_by(proc_id=proc_id).count()
 
 
-def num_parts_by_proc(proc_id):
-    """Return the number of tools required for a given procedure."""
+# def num_parts_by_proc(proc_id):
+#     """Return the number of tools required for a given procedure."""
 
-    return ProcedurePart.query.filter_by(proc_id=proc_id).count()
+#     return ProcedurePart.query.filter_by(proc_id=proc_id).count()
 
 
-def num_steps_by_proc(proc_id):
-    """Return the number of tools required for a given procedure."""
+# def num_steps_by_proc(proc_id):
+#     """Return the number of tools required for a given procedure."""
 
-    return Step.query.filter_by(proc_id=proc_id).count()
+#     return Step.query.filter_by(proc_id=proc_id).count()
 
 
-def num_tools_by_proc(proc_id):
-    """Return the number of tools required for a given procedure."""
+# def num_tools_by_proc(proc_id):
+#     """Return the number of tools required for a given procedure."""
 
-    return ProcedureTool.query.filter_by(proc_id=proc_id).count()
+#     return ProcedureTool.query.filter_by(proc_id=proc_id).count()
 
 
 def update_procedure(
@@ -313,15 +313,16 @@ def update_procedure(
                     db.session.add(proc_car)
                     ###THIS COMMIT SEEMS TO MATTER!!!!!############
                     db.session.commit()
-                # create_procedure_car(proc, car)
+
         else:
-            car = create_car(car_info[2], car_info[1], car_info[0])
+            car = Car(model=car_info[2], make=car_info[1], model_year=car_info[0])
+            db.session.add(car)
             proc_car = ProcedureCar(proc = proc, car = car)
             #*#*#*#*#*#*#*#*#*#*#*#*#*#*
             db.session.add(proc_car)
             ###THIS COMMIT SEEMS TO MATTER!!!!!############
             db.session.commit()
-            # create_procedure_car(proc, car)
+
         car_ids.add(car.car_id)
 
     # Check all ProcedureCar objects associated with this procedure.
@@ -406,8 +407,13 @@ def update_procedure(
                     part = Part.query.filter_by(name=item[3]).first()
                     part_ids.add(part.part_id)
                 else:
-                    part = create_part(item[3], item[2])
-                    part_num = create_part_num(item[5], item[4], item[6], part)
+                    part = Part(name=item[3], part_img=item[2])
+                    db.session.add(part)
+                    db.session.commit()
+                    part_num = PartNum(
+                            manuf=item[5], part_num=item[4], is_oem_part=item[6], part=part
+                        )
+                    db.session.add(part_num)
                     part_ids.add(part.part_id)
             else:
                 part = Part.query.filter_by(name=item[1]).first()
@@ -419,7 +425,10 @@ def update_procedure(
                 ).first()
                 == None
             ):
-                create_procedure_part(proc, part)
+                proc_part = ProcedurePart(proc=proc, part=part)
+                db.session.add(proc_part)
+                db.session.commit()
+                # create_procedure_part(proc, part)
 
     # Check all ProcedurePart objects associated with this procedure.
     # If a ProcedurePart object includes a part ID that isn't in part_data,
@@ -451,7 +460,15 @@ def update_procedure(
                 step.step_img = item[4]
             step_ids.add(int(item[0]))
         else:
-            new_step = create_step(item[1], item[2], proc, item[3], item[4])
+            step = Step(
+                order_num=item[1],
+                step_text=item[2],
+                proc=item[3],
+                reference=reference,
+                step_img=item[4],
+            )
+
+            db.session.add(step)
             step_ids.add(new_step.step_id)
 
     # Check all Step objects associated with this procedure.
