@@ -41,13 +41,8 @@ def build_procedure():
     procedure = Procedure(title = proc_title, label = proc_label, user = user)
     #*#*#*#*#*#*#*#*#*#*#*#*#*#*
     db.session.add(procedure)
-
-    """
-    For each step added by the user, create a Step object.
-    Check to see if reference or image checkboxes were selecteed.
-    If they were, then look to the corresponding input fields for data.
-    Add image and reference info to the Step objects as required.
-    """
+    
+    # For each step added by the user, create a Step object.
     NUM_STEPS = int(request.form.get("NUM_STEPS"))
 
     for step in range(1, (NUM_STEPS + 1)):
@@ -107,22 +102,9 @@ def build_procedure():
 
         tool_req = request.form.get(f"tool_req_{tool}")
         tool_other = request.form.get(f"tool_other_{tool}")
+        tool_img = request.files[f"tool_img_{tool}"]
 
-        if tool_req != "other":
-            my_tool = Tool.query.filter_by(name=tool_req).first()
-        elif Tool.query.filter_by(name=tool_other).first() != None:
-            my_tool = Tool.query.filter_by(name=tool_other).first()
-        else:
-            tool_img = request.files[f"tool_img_{tool}"]
-            if tool_img and crud.allowed_file(tool_img.filename):
-                filename = secure_filename(tool_img.filename)
-                tool_img.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-                tool_img.close()
-            else:
-                filename = "toolbox.png"
-            my_tool = Tool(name = tool_other, tool_img = filename)
-            #*#*#*#*#*#*#*#*#*#*#*#*#*#*
-            db.session.add(my_tool)
+        my_tool = crud.create_tool(tool_req, tool_other, tool_img)
 
         proc_tool = ProcedureTool(proc = procedure, tool = my_tool)
         #*#*#*#*#*#*#*#*#*#*#*#*#*#*

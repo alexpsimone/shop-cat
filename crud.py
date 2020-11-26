@@ -15,7 +15,12 @@ def allowed_file(filename):
 
 
 def get_step_ref_and_img(is_ref, reference, step_img):
-    """For each step added by the user, create a Step object."""
+    """Determine if a reference and/or img needs to be added to the Step.
+    
+    Check to see if reference or image checkboxes were selecteed.
+    If they were, then look to the corresponding input fields for data.
+    Add image and reference info to the Step objects as required.
+    """
 
     if is_ref:
         ref_text = reference
@@ -36,6 +41,32 @@ def get_step_ref_and_img(is_ref, reference, step_img):
 
     return [ref_text, filename]
 
+
+def create_tool(req_name, other_name, tool_img):
+    """Determine if a tool is new, and if so, if an img should be added.
+
+    Check if the user selected an existing tool.
+    If they did, then keep it handy, and don't create a new Tool object.
+    If they didn't, then double-check that the tool is actually new.
+    If it isn't, then select the corresponding existing tool.
+    Otherwise. create a new Tool object with the new info.
+    """
+
+    if req_name != "other":
+        my_tool = Tool.query.filter_by(name=req_name).first()
+    elif Tool.query.filter_by(name=other_name).first() != None:
+        my_tool = Tool.query.filter_by(name=other_name).first()
+    else:
+        if tool_img and allowed_file(tool_img.filename):
+            filename = secure_filename(tool_img.filename)
+            tool_img.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+            tool_img.close()
+        else:
+            filename = "toolbox.png"
+        my_tool = Tool(name = other_name, tool_img = filename)
+        db.session.add(my_tool)
+    
+    return my_tool
 
 
 def update_procedure(
