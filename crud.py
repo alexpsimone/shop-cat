@@ -43,7 +43,7 @@ def get_step_ref_and_img(is_ref, reference, step_img):
 
 
 def create_tool(req_name, other_name, tool_img):
-    """Determine if a tool is new, and if so, if an img should be added.
+    """Determine if a tool is new, and if so, then create one.
 
     Check if the user selected an existing tool.
     If they did, then keep it handy, and don't create a new Tool object.
@@ -67,6 +67,38 @@ def create_tool(req_name, other_name, tool_img):
         db.session.add(my_tool)
     
     return my_tool
+
+
+def create_part(req_name, other_name, part_img, other_num, other_manuf, is_oem):
+    """Determine if a part is new, and if so, then create one.
+
+    Check if the user selected an existing part.
+    If they did, then keep it handy, and don't create a new Part object.
+    If they didn't, then double-check that the part is actually new.
+    If it isn't, then select the corresponding existing part.
+    Otherwise. create a new Part object with the new info.
+        This will also require a new PartNumber object."""
+    
+    if req_name != "other":
+        my_part = Part.query.filter_by(name=req_name).first()
+    elif Part.query.filter_by(name=other_name).first() != None:
+        my_part = Part.query.filter_by(name=other_name).first()
+    else:
+        if part_img and allowed_file(part_img.filename):
+            filename = secure_filename(part_img.filename)
+            part_img.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+            part_img.close()
+        else:
+            filename = "toolbox.png"
+        my_part = Part(name = other_name, part_img = filename)
+        #*#*#*#*#*#*#*#*#*#*#*#*#*#*
+        db.session.add(my_part)
+        part_num = PartNum(manuf=other_manuf, part_num=other_num, is_oem_part=is_oem, part=my_part)
+        #*#*#*#*#*#*#*#*#*#*#*#*#*#*
+        db.session.add(part_num)
+    
+    return my_part
+    
 
 
 def update_procedure(

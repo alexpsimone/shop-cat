@@ -87,15 +87,7 @@ def build_procedure():
     ###THIS COMMIT SEEMS TO MATTER!!!!!############
     db.session.commit()
 
-    """
-    Check if the user selected an existing tool.
-    If they did, then keep it handy, and don't create a new Tool object.
-    If they didn't, then double-check that the tool is actually new.
-    If it isn't, then select the corresponding existing tool.
-    Otherwise. create a new Tool object with the new info.
-    Then create a corresponding ProcedureTool object.
-    Do this for all tools added to the procedure.
-    """
+    # Add tools to the procedure based on form info.
     NUM_TOOLS = int(request.form.get("NUM_TOOLS"))
 
     for tool in range(1, (NUM_TOOLS + 1)):
@@ -111,45 +103,20 @@ def build_procedure():
         db.session.add(proc_tool)
         db.session.commit()
 
-    """
-    Check if the user selected an existing part.
-    If they did, then keep it handy, and don't create a new Part object.
-    If they didn't, then double-check that the part is actually new.
-    If it isn't, then select the corresponding existing part.
-    Otherwise. create a new Part object with the new info.
-        This will also require a new PartNumber object.
-    Then create a corresponding ProcedurePart object.
-    Do this for all parts added to the procedure.
-    """
+    # Add parts to the procedure based on form info.
     NUM_PARTS = int(request.form.get("NUM_PARTS"))
 
     for part in range(1, (NUM_PARTS + 1)):
 
         part_req = request.form.get(f"part_req_{part}")
-        part_other = request.form.get(f"part_other_{part}")
+        # part_other = request.form.get(f"part_other_{part}")
+        part_img = request.files[f"part_img_{part}"]
+        part_other = request.form.get(f"part_{part}_other_name")
+        part_other_num = request.form.get(f"part_{part}_other_num")
+        part_other_manuf = request.form.get(f"part_{part}_other_manuf")
+        oem = (request.form.get(f"oem_{part}") == 'True')
 
-        if part_req != "other":
-            my_part = Part.query.filter_by(name=part_req).first()
-        elif Part.query.filter_by(name=part_other).first() != None:
-            my_part = Part.query.filter_by(name=part_other).first()
-        else:
-            part_img = request.files[f"part_img_{part}"]
-            if part_img and crud.allowed_file(part_img.filename):
-                filename = secure_filename(part_img.filename)
-                part_img.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-                part_img.close()
-            else:
-                filename = "toolbox.png"
-            part_other_name = request.form.get(f"part_{part}_other_name")
-            part_other_num = request.form.get(f"part_{part}_other_num")
-            part_other_manuf = request.form.get(f"part_{part}_other_manuf")
-            oem = request.form.get("oem_{part}")
-            my_part = Part(name = part_other_name, part_img = filename)
-            #*#*#*#*#*#*#*#*#*#*#*#*#*#*
-            db.session.add(my_part)
-            part_num = PartNum(manuf=part_other_manuf, part_num=part_other_num, is_oem_part=oem, part=my_part)
-            #*#*#*#*#*#*#*#*#*#*#*#*#*#*
-            db.session.add(part_num)
+        my_part = crud.create_part(part_req, part_other, part_img, part_other_num, part_other_manuf, oem)
 
         proc_part = ProcedurePart(proc=procedure, part=my_part)
         #*#*#*#*#*#*#*#*#*#*#*#*#*#*
