@@ -364,7 +364,7 @@ def rebuild_procedure():
         tool_img = request.files[f"tool-img-{tool}"]
         tool_other = request.form.get(f"tool-other-name-{tool}")
 
-        if tool_img != None and crud.allowed_file(tool_img.filename):
+        if tool_img != None and allowed_file(tool_img.filename):
             filename = secure_filename(tool_img.filename)
             tool_img.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
             tool_img.close()
@@ -392,7 +392,7 @@ def rebuild_procedure():
         part_manuf = request.form.get(f"part-other-manuf-{part}")
         part_oem = request.form.get(f"part-other-oem-{part}") == "True"
 
-        if part_img != None and crud.allowed_file(part_img.filename):
+        if part_img != None and allowed_file(part_img.filename):
             filename = secure_filename(part_img.filename)
             part_img.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
             part_img.close()
@@ -419,7 +419,7 @@ def rebuild_procedure():
         step_existing_img = request.form.get(f"step-existing-img-{step}")
         step_img = request.files[f"step-img-{step}"]
 
-        if step_img != None and crud.allowed_file(step_img.filename):
+        if step_img != None and allowed_file(step_img.filename):
             filename = secure_filename(step_img.filename)
             step_img.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
             step_img.close()
