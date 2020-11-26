@@ -54,30 +54,16 @@ def build_procedure():
 
         step_text = request.form.get(f"step_text_{step}")
         ref_check = request.form.get(f"ref_{step}")
+        ref_text = request.form.get(f"ref_text_{step}")
+        step_img = request.files[f"step_img_{step}"]
 
-        if ref_check:
-            ref_text = request.form.get(f"ref_text_{step}")
-            step_img = request.files[f"step_img_{step}"]
-            if step_img and crud.allowed_file(step_img.filename):
-                filename = secure_filename(step_img.filename)
-                step_img.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-                step_img.close()
-            else:
-                filename = "toolbox.png"
-        else:
-            ref_text = "No Ref Provided"
-            step_img = request.files[f"step_img_{step}"]
-            if step_img and crud.allowed_file(step_img.filename):
-                filename = secure_filename(step_img.filename)
-                step_img.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-                step_img.close()
-            else:
-                filename = "toolbox.png"
+        [reference, filename] = crud.get_step_ref_and_img(ref_check, ref_text, step_img)
+
         new_step = Step(
                         order_num = step,
                         step_text = step_text,
                         proc = procedure,
-                        reference = ref_text,
+                        reference = reference,
                         step_img = filename,
                     )
         #*#*#*#*#*#*#*#*#*#*#*#*#*#*
