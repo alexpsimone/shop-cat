@@ -3,6 +3,7 @@
 {% block title %}{{ procedure.title }}{% endblock %}
 
 {% block js %}
+<script src="/static/js/view-procedure.js" type="text/jsx"></script>
 {% endblock %}
 
 
@@ -57,10 +58,26 @@
                 <br />
                 Reference:
                 <a href="{{ step.reference }}">{{ step.reference }}</a>
+
             {% endif %}
         </li>
         {% endfor %}
     </ol>
+
+    <table>
+        <tr>
+            {% for step in steps %}
+                {% if step.reference != "No Ref Provided" %}
+                    {% if 'youtube.com' in step.reference %}
+                        <td>
+                            <p>Step {{ step.order_num }} reference video:</p>
+                            <div id="player"></div>
+                        </td>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </tr>
+    </table>
 
     {% if procedure.user.nickname %}
         <p>This procedure was created by {{ procedure.user.nickname }}.</p>

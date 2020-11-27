@@ -213,9 +213,6 @@ def get_all_models():
     all_models = []
     model_year = request.args.get("modelYear")
     make = request.args.get("make")
-    # ##########################################################
-    # ###TODO: Figure out how to make this PEP-8 compliant!!!###
-    # ##########################################################
     url = f"https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/{make}/modelyear/{model_year}?format=json"
     res = requests.get(url)
     data = res.json()
@@ -250,7 +247,7 @@ def show_homepage():
     """Render the homepage."""
 
     if session:
-        user_id = session["current_user"]
+        user_id = session['current_user']
         user = User.query.filter_by(user_id = user_id).first()
         procedures = Procedure.query.all()
         tools = Tool.query.all()
@@ -419,7 +416,7 @@ def rebuild_procedure():
         step_existing_img = request.form.get(f"step-existing-img-{step}")
         step_img = request.files[f"step-img-{step}"]
 
-        if step_img != None and allowed_file(step_img.filename):
+        if step_img != None and crud.allowed_file(step_img.filename):
             filename = secure_filename(step_img.filename)
             step_img.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
             step_img.close()
@@ -541,7 +538,7 @@ def write_procedure():
         )
     else:
         return redirect("/")
-
+    
 
 if __name__ == "__main__":
     connect_to_db(app)

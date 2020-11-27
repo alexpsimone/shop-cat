@@ -12,12 +12,13 @@ It also provides more flexibility and collaborative oversight than a site like I
 
 ### Technologies required (besides typical Hackbright tech stack)
 
-- NHTSA Vehicle API
+- NHTSA Vehicle API: https://vpic.nhtsa.dot.gov/api/
+- YouTube iFrame Player API: https://developers.google.com/youtube/v3
 - BeautifulSoup 4
 
-(coming soon...)
-- Wikipedia API: https://www.mediawiki.org/wiki/API:Main_page</li>
-- YouTube API: https://developers.google.com/youtube/v3</li>
+(to be implemented...)
+- Wikipedia API: https://www.mediawiki.org/wiki/API:Main_page
+
 
 ### Data
 
