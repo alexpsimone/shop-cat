@@ -50,18 +50,24 @@ class FlaskTests(unittest.TestCase):
 
         result = self.client.get(f"/dashboard/1", follow_redirects = True)
         self.assertEqual(result.status_code, 200)
+        self.assertIn(b'<form action="/new-user" method="POST">', result.data)
+        self.assertNotIn(b'<form action="/existing-user"', result.data)
     
     def test_edit_proc_no_session_redirect(self):
         """Check that /edit-procedure redirects if no user in session."""
 
         result = self.client.get(f"/edit-procedure/1", follow_redirects = True)
         self.assertEqual(result.status_code, 200)
+        self.assertIn(b'<form action="/new-user" method="POST">', result.data)
+        self.assertNotIn(b'<form action="/existing-user"', result.data)
 
     def test_home_redirect(self):
         """Check that the home route redirects with no session."""
         
         result = self.client.get("/home", follow_redirects = True)
         self.assertEqual(result.status_code, 200)
+        self.assertIn(b'<form action="/new-user" method="POST">', result.data)
+        self.assertNotIn(b'<form action="/existing-user"', result.data)
 
     def test_login_route(self):
         """Check that the login route renders properly."""
