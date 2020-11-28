@@ -176,6 +176,17 @@ class ShopCatTestsDatabase(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn(b"Password is incorrect.", result.data)
     
+    def test_existing_user_route_wrong_username(self):
+        """Check that the login route works properly with the wrong username filled in."""
+
+        result = self.client.post(
+            "/existing-user",
+            data={"username": "usernameX", "password": "pass1"},
+            follow_redirects=True,
+        )
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b"No account exists with this username", result.data)
+    
     def test_get_models_json_route(self):
         """Confirm that the get-models.json query works."""
 
