@@ -77,10 +77,26 @@ class FlaskTests(unittest.TestCase):
         self.assertIn(b'<form action="/existing-user"', result.data)
         self.assertNotIn(b'<form action="/new-user"', result.data)
     
+    def test_proc_no_session_redirect(self):
+        """Check that /procedure redirects if no user in session."""
+
+        result = self.client.get(f"/procedure/1", follow_redirects = True)
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b'<form action="/new-user" method="POST">', result.data)
+        self.assertNotIn(b'<form action="/existing-user"', result.data)
+    
     def test_shopcat_root_route(self):
         """Check that the shopcat root route is rendering properly."""
 
         result = self.client.get("/")
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b'<form action="/new-user" method="POST">', result.data)
+        self.assertNotIn(b'<form action="/existing-user"', result.data)
+    
+    def test_write_proc_no_session_redirect(self):
+        """Check that /write-procedure redirects if no user in session."""
+
+        result = self.client.get(f"/write-procedure", follow_redirects = True)
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<form action="/new-user" method="POST">', result.data)
         self.assertNotIn(b'<form action="/existing-user"', result.data)
@@ -310,6 +326,16 @@ class ShopCatTestsDatabase(unittest.TestCase):
 
         result = self.client.get(f"/vehicle/{make}/{model_year}/{model}")
         self.assertEqual(result.status_code, 200)
+    
+    # def test_vehicle_select_json_route(self):
+    #     """Confirm that the vehicle-select.json query works."""
+
+    #     result = self.client.get(
+    #         "/vehicle-select.json",
+    #         data={"modelYear": 2011, "make": 'CHEVROLET', "model": 'Cruze'},
+    #         follow_redirects=True,
+    #     )
+    #     self.assertEqual(result.status_code, 200)
 
     def test_write_procedure_route(self):
         """Check that the write-procedure route is rendering properly."""
