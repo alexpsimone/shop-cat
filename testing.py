@@ -15,15 +15,13 @@ Routes covered by this file:
 /vehicle/<make>
 /vehicle/<make>/<model_year>
 /vehicle/<make>/<model_year>/<model>
-/vehicle-select.json
 /write-procedure
 
 Routes not fully covered by this file:
 /build-procedure <---written but not working
 /rebuild-procedure
+/vehicle-select.json
 /uploads/<filename>
-
-any redirects when user not in session
 """
 
 import unittest
