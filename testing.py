@@ -4,6 +4,9 @@ Routes covered by this file:
 /dashboard/<user_id>
 /edit-procedure/<proc_id>
 /existing-user
+/get-models.json
+/get-parts.json
+/get-tools.json
 /home
 /login
 /new-user
@@ -12,16 +15,14 @@ Routes covered by this file:
 /vehicle/<make>
 /vehicle/<make>/<model_year>
 /vehicle/<make>/<model_year>/<model>
+/vehicle-select.json
 /write-procedure
 
 Routes not fully covered by this file:
 /build-procedure <---written but not working
-/get-models.json <---written but not working
-/get-parts.json
-/get-tools.json
 /rebuild-procedure
 /uploads/<filename>
-/vehicle-select.json
+
 any redirects when user not in session
 """
 
