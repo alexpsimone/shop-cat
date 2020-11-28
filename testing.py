@@ -26,7 +26,7 @@ any redirects when user not in session
 """
 
 import unittest
-from server import app
+from crud import app
 from model import db, connect_to_db, User, Procedure, Car, Part, Tool, Step
 from model import PartNum, ProcedureCar, ProcedurePart, ProcedureTool
 import os

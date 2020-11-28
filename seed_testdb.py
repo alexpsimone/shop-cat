@@ -1,5 +1,5 @@
 from random import randint, choice
-from server import app
+from crud import app
 from model import db, connect_to_db, Car, Part, PartNum, Step, Tool, User
 from model import Procedure, ProcedureCar, ProcedurePart, ProcedureTool
 
