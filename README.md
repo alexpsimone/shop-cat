@@ -54,7 +54,7 @@ A Part can have multiple Part-Numbers, but a Part-Number can only describe one P
 - [x] Allow user to add any number of required tools and parts to their procedure.
 - [x] Allow user to add discrete steps to their procedure.
 - [x] User will be able to link to references to specific steps in their procedures.
-    - [ ] References can link to YouTube videos using the YouTube API.
+    - [x] References to YouTube lead to embedded video players on procedure page.
 
 
 #### 3.0
