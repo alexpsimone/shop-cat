@@ -61,9 +61,9 @@
                     Reference:
                     <a id="ref" href="{{ step.reference }}">{{ step.reference }}</a>
                 {% else %}
-                    <input type="hidden" id="ref" value="{{ step.reference }}" />
+                    <input type="hidden" id="vid-ref-{{ loop.index }}" value="{{ step.reference }}" />
                     <p>Step {{ step.order_num }} reference video:</p>
-                    <div id="player"></div>
+                    <div id="player-{{ loop.index }}"></div>
                 {% endif %}
             {% endif %}
         </li>

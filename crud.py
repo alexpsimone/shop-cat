@@ -21,14 +21,11 @@ def get_step_ref_and_img(is_ref, reference, step_img):
     If they were, then look to the corresponding input fields for data.
     Add image and reference info to the Step objects as required.
     """
-
     if is_ref:
         if "youtube.com" in reference:
-            print('*****************************', reference)
             ref_remove_https = reference.replace('https://', '')
-            print('*****************************', ref_remove_https)
-            ref_text = ref_remove_https.replace('www.youtube.com/watch?v=', '')
-            print('*****************************', ref_text)
+            ref_remove_www = ref_remove_https.replace('www.youtube.com/watch?v=', '')
+            ref_text = ref_remove_www[:11]
         else:
             ref_text = reference
         if step_img and allowed_file(step_img.filename):
@@ -46,7 +43,7 @@ def get_step_ref_and_img(is_ref, reference, step_img):
         else:
             filename = "toolbox.png"
 
-    return [ref_text, filename]
+    return [ref_text, filename, num_vid_refs]
 
 
 def create_tool(req_name, other_name, tool_img):

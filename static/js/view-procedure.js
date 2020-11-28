@@ -1,52 +1,38 @@
-'use-strict';
+'use strict';
 
 // From YouTube Developer API example code.
 // This code loads the IFrame Player API code asynchronously.
-const tag = document.createElement('script');
+let tag = document.createElement('script');
 
 tag.src = "https://www.youtube.com/iframe_api";
-const firstScriptTag = document.getElementsByTagName('script')[0];
+let firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 // From YouTube Developer API example code, modified to accept any video ID.
 // This function creates an <iframe> (and YouTube player)
 // after the API code downloads.
-// const player;
+
+let vidIDs = ['_8JtnUpkP0s', 'G_l3N0jTNIY'];
+let player;
+
 function onYouTubeIframeAPIReady () {
 
-    const vidID = $('#ref').val();
+  for (let count = 0; count < vidIDs.length; count += 1) {
+
+    console.log(count);
+    const vidInput = $(`#vid-ref-${count + 1}`);
+    console.log(vidInput);
+    const vidID = vidIDs[count];
     console.log(vidID);
 
-    const player = new YT.Player('player', {
-    height: '390',
-    width: '640',
-    videoId: vidID,
-    events: {
-      'onReady': onPlayerReady,
-      'onStateChange': onPlayerStateChange
-    }
-  });
+    $(vidInput).replaceWith(
+    player = new YT.Player(`player-${count + 1}`, {
+    height: '195',
+    width: '320',
+    videoId: vidIDs[count],
+    }));
+  };
+
 }
 
-// Adapeted from YouTube Developer API example code.
-// The API will call this function when the video player is ready.
-function onPlayerReady (evt) {
-    evt.target.playVideo();
-}
-
-// From YouTube Developer API example code.
-// The API calls this function when the player's state changes.
-// The function indicates that when playing a video (state=1),
-// the player should play for six seconds and then stop.
-let done = false;
-function onPlayerStateChange(evt) {
-  if (evt.data == YT.PlayerState.PLAYING && !done) {
-    setTimeout(stopVideo, 0);
-    done = true;
-  }
-}
-function stopVideo() {
-  player.stopVideo();
-}
-
-// $('#ref').on('load', onYouTubeIframeAPIReady);
+$(document).on('load', onYouTubeIframeAPIReady);

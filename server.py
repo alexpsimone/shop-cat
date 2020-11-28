@@ -52,7 +52,7 @@ def build_procedure():
         ref_text = request.form.get(f"ref_text_{step}")
         step_img = request.files[f"step_img_{step}"]
 
-        [reference, filename] = crud.get_step_ref_and_img(ref_check, ref_text, step_img)
+        [reference, filename, num_vid_refs] = crud.get_step_ref_and_img(ref_check, ref_text, step_img)
 
         new_step = Step(
                         order_num = step,
@@ -123,7 +123,7 @@ def build_procedure():
         db.session.add(proc_part)
         db.session.commit()
 
-    return redirect("/home")
+    return redirect('/home')
 
 
 @app.route("/dashboard/<user_id>")
@@ -307,13 +307,6 @@ def show_procedure_page(proc_id):
         steps = Step.query.filter_by(proc_id = proc_id).all()
         proc_num_tools = ProcedureTool.query.filter_by(proc_id = proc_id).count()
         proc_num_parts = ProcedurePart.query.filter_by(proc_id = proc_id).count()
-        # url = f"https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/{make}/modelyear/{model_year}?format=json"
-        # res = requests.get(url)
-        # data = res.json()
-
-        # for item in data["Results"]:
-        #     all_models.append(item["Model_Name"])
-        # sorted_models = sorted(all_models)
 
         return render_template(
             "procedure.html",
