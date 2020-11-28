@@ -43,7 +43,7 @@ def get_step_ref_and_img(is_ref, reference, step_img):
         else:
             filename = "toolbox.png"
 
-    return [ref_text, filename, num_vid_refs]
+    return [ref_text, filename]
 
 
 def create_tool(req_name, other_name, tool_img):

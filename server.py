@@ -52,7 +52,7 @@ def build_procedure():
         ref_text = request.form.get(f"ref_text_{step}")
         step_img = request.files[f"step_img_{step}"]
 
-        [reference, filename, num_vid_refs] = crud.get_step_ref_and_img(ref_check, ref_text, step_img)
+        [reference, filename] = crud.get_step_ref_and_img(ref_check, ref_text, step_img)
 
         new_step = Step(
                         order_num = step,
@@ -307,6 +307,7 @@ def show_procedure_page(proc_id):
         steps = Step.query.filter_by(proc_id = proc_id).all()
         proc_num_tools = ProcedureTool.query.filter_by(proc_id = proc_id).count()
         proc_num_parts = ProcedurePart.query.filter_by(proc_id = proc_id).count()
+        proc_num_steps = Step.query.filter_by(proc_id = proc_id).count()
 
         return render_template(
             "procedure.html",
@@ -317,6 +318,7 @@ def show_procedure_page(proc_id):
             steps=steps,
             proc_num_tools=proc_num_tools,
             proc_num_parts=proc_num_parts,
+            proc_num_steps=proc_num_steps,
         )
     else:
         return redirect("/")

@@ -8,31 +8,50 @@ tag.src = "https://www.youtube.com/iframe_api";
 let firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-// From YouTube Developer API example code, modified to accept any video ID.
+
+// From YouTube Developer API example code, heavily modified to extract
+// references from the DOM, determine if they're YouTube video IDs, and then
+// generating a new YT player for each arbitrary video ID.
+
 // This function creates an <iframe> (and YouTube player)
 // after the API code downloads.
 
-let vidIDs = ['_8JtnUpkP0s', 'G_l3N0jTNIY'];
 let player;
+let vidIDs = [];
 
 function onYouTubeIframeAPIReady () {
 
-  for (let count = 0; count < vidIDs.length; count += 1) {
+  const numStepsInput = $('#num-steps');
+  console.log(numStepsInput);
+  const NUM_STEPS = $(numStepsInput).val();
+  console.log(NUM_STEPS);
 
+  for (let count = 1; count <= NUM_STEPS; count += 1) {
+    
     console.log(count);
-    const vidInput = $(`#vid-ref-${count + 1}`);
+    const vidInput = $(`#vid-ref-${count}`);
     console.log(vidInput);
-    const vidID = vidIDs[count];
+    const vidID = $(vidInput).val();
     console.log(vidID);
 
-    $(vidInput).replaceWith(
-    player = new YT.Player(`player-${count + 1}`, {
-    height: '195',
-    width: '320',
-    videoId: vidIDs[count],
-    }));
-  };
+    if (vidID != 'No Ref Provided' & !vidID.includes('https://')) {
+      
+      vidIDs.push(vidID);
+      console.log(`vidIDs: ${vidIDs}`);
 
+      $(vidInput).replaceWith(
+      player = new YT.Player(`player-${count}`, {
+      height: '195',
+      width: '320',
+      videoId: vidID,
+      }));
+
+    };
+  
+  }
 }
+
+
+
 
 $(document).on('load', onYouTubeIframeAPIReady);
