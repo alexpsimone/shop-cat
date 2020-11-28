@@ -16,10 +16,6 @@ It also provides more flexibility and collaborative oversight than a site like I
 - YouTube iFrame Player API: https://developers.google.com/youtube/v3
 - BeautifulSoup 4
 
-(to be implemented...)
-- Wikipedia API: https://www.mediawiki.org/wiki/API:Main_page
-
-
 ### Data
 
 **Procedures are the central building blocks of Shop Cat.**
