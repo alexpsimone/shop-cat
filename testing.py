@@ -45,20 +45,23 @@ class FlaskTests(unittest.TestCase):
         self.client = app.test_client()
         app.config["TESTING"] = True
 
-    # def test_dashboard_no_session_redirect(self):
-    #     """Check that the user dashboard redirects if no user in session."""
+    def test_dashboard_no_session_redirect(self):
+        """Check that the user dashboard redirects if no user in session."""
 
-    #     user1 = User.query.first()
-    #     result = self.client.get(f"/dashboard/{user1.user_id}", follow_redirects = True)
-    #     self.assertEqual(result.status_code, 200)
-
-    def test_shopcat_root_route(self):
-        """Check that the shopcat root route is rendering properly."""
-
-        result = self.client.get("/")
+        result = self.client.get(f"/dashboard/1", follow_redirects = True)
         self.assertEqual(result.status_code, 200)
-        self.assertIn(b'<form action="/new-user" method="POST">', result.data)
-        self.assertNotIn(b'<form action="/existing-user"', result.data)
+    
+    def test_edit_proc_no_session_redirect(self):
+        """Check that /edit-procedure redirects if no user in session."""
+
+        result = self.client.get(f"/edit-procedure/1", follow_redirects = True)
+        self.assertEqual(result.status_code, 200)
+
+    def test_home_redirect(self):
+        """Check that the home route redirects with no session."""
+        
+        result = self.client.get("/home", follow_redirects = True)
+        self.assertEqual(result.status_code, 200)
 
     def test_login_route(self):
         """Check that the login route renders properly."""
@@ -67,6 +70,14 @@ class FlaskTests(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<form action="/existing-user"', result.data)
         self.assertNotIn(b'<form action="/new-user"', result.data)
+    
+    def test_shopcat_root_route(self):
+        """Check that the shopcat root route is rendering properly."""
+
+        result = self.client.get("/")
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b'<form action="/new-user" method="POST">', result.data)
+        self.assertNotIn(b'<form action="/existing-user"', result.data)
 
 
 class ShopCatTestsDatabase(unittest.TestCase):
@@ -98,27 +109,34 @@ class ShopCatTestsDatabase(unittest.TestCase):
         db.session.close()
         db.drop_all()
 
-    # def test_build_procedure(self):
-    #     """Check that the build-procedure route processes properly."""
+    def test_build_procedure(self):
+        """Check that the build-procedure route processes properly."""
 
-    #     result = self.client.post(
-    #         "/build-procedure",
-    #         data={
-    #             'proc_title': "title",
-    #             'proc_label': "label",
-    #             'NUM_STEPS': '1',
-    #             'NUM_TOOLS': '1',
-    #             'NUM_PARTS': '1',
-    #             'step_text_1': "step 1 text",
-    #             'ref_check_1': 'True',
-    #             'step_img_1': None,
-    #             'ref_text_1': "https://google.com",
-    #             'tool_req_1':'' "screwdriver",
-    #             'part_req_1': "oil filter",
-    #         },
-    #         follow_redirects = True,
-    #     )
-    #     self.assertEqual(result.status_code, 200)
+        result = self.client.post(
+            "/build-procedure",
+            data={
+                'proc_title': 'new_title',
+                'proc_label': 'new_label',
+                'NUM_STEPS': '1',
+                'NUM_TOOLS': '1',
+                'NUM_PARTS': '1',
+                'step_text_1': 'step 1 text',
+                'ref_1': 'True',
+                'step_img_1': 'cat.png',
+                'ref_text_1': 'https://google.com',
+                'tool_req_1': 'screwdriver',
+                'tool_other_1': None,
+                'tool_img_1': None,
+                'part_req_1': 'oil filter',
+                'part_img_1': None,
+                'part_1_other_name': None,
+                'part_1_other_num': None,
+                'part_1_other_manuf': None,
+                'oem_1': 'True',
+            },
+            follow_redirects = True,
+        )
+        self.assertEqual(result.status_code, 200)
 
     def test_edit_procedure(self):
         """Check that the edit-procedure route processes properly."""
@@ -152,17 +170,27 @@ class ShopCatTestsDatabase(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn(b"Password is incorrect.", result.data)
     
-    # def test_get_models_json_route(self):
-    #     """Confirm that the get-models.json query works."""
+    def test_get_models_json_route(self):
+        """Confirm that the get-models.json query works."""
 
-    #     result = self.client.get(
-    #         "/get-models.json",
-    #         data={"modelYear": 2005, "make": 'HONDA'},
-    #         follow_redirects=True,
-    #     )
-    #     self.assertEqual(result.status_code, 200)
-    #     self.assertIn(b'<option value="">--Please select a Model--</option>')
+        result = self.client.get(
+            "/get-models.json",
+            data={"modelYear": 2005, "make": 'HONDA'},
+            follow_redirects=True,
+        )
+        self.assertEqual(result.status_code, 200)
 
+    def test_get_parts_json_route(self):
+        """Confirm that the get-parts.json query works."""
+
+        result = self.client.get("/get-parts.json")
+        self.assertEqual(result.status_code, 200)
+    
+    def test_get_tools_json_route(self):
+        """Confirm that the get-parts.json query works."""
+
+        result = self.client.get("/get-tools.json")
+        self.assertEqual(result.status_code, 200)
 
     def test_home_route(self):
         """Check that the home route is rendering properly."""
