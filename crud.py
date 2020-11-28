@@ -285,7 +285,10 @@ def update_procedure(
             if item[2] != step.step_text:
                 step.text = item[2]
             if item[3] != step.reference:
-                step.reference = item[3]
+                if item[3] == '' or item[3] == None:
+                    step.reference = 'No Ref Provided'
+                else:
+                    step.reference = item[3]
             if item[4] != step.step_img:
                 step.step_img = item[4]
             step_ids.add(int(item[0]))
