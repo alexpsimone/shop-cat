@@ -23,7 +23,14 @@ def get_step_ref_and_img(is_ref, reference, step_img):
     """
 
     if is_ref:
-        ref_text = reference
+        if "youtube.com" in reference:
+            print('*****************************', reference)
+            ref_remove_https = reference.replace('https://', '')
+            print('*****************************', ref_remove_https)
+            ref_text = ref_remove_https.replace('www.youtube.com/watch?v=', '')
+            print('*****************************', ref_text)
+        else:
+            ref_text = reference
         if step_img and allowed_file(step_img.filename):
             filename = secure_filename(step_img.filename)
             step_img.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
