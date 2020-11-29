@@ -366,16 +366,15 @@ def rebuild_procedure():
             filename = "toolbox.png"
 
         tool_data[tool] = {}
-        tool_data[tool]['tool_id'] = tool_id
-        tool_data[tool]['tool_name'] = tool_name
-        tool_data[tool]['tool_img'] = filename
-        tool_data[tool]['tool_other'] = tool_other
+        tool_data[tool]['id'] = tool_id
+        tool_data[tool]['name'] = tool_name
+        tool_data[tool]['img'] = filename
+        tool_data[tool]['other'] = tool_other
 
     # Iterate through all parts on the form. Make  a list of tuples (?)
     # containing this information.
     NUM_PARTS = int(request.form.get("NUM_PARTS"))
 
-    # part_data = []
     part_data = {}
 
     for part in range(1, (NUM_PARTS + 1)):
@@ -407,13 +406,10 @@ def rebuild_procedure():
         part_data[part]['manuf'] = part_manuf
         part_data[part]['oem'] = part_oem
 
-        # part_data.append(
-        #     (part_id, part_name, filename, part_other, part_pn, part_manuf, part_oem)
-        # )
-
     # Iterate through all steps on the form. Make  a list of tuples (?)
     # containing this information.
-    step_data = []
+    # step_data = []
+    step_data = {}
     NUM_STEPS = int(request.form.get("NUM_STEPS"))
 
     for step in range(1, (NUM_STEPS + 1)):
@@ -434,7 +430,14 @@ def rebuild_procedure():
         else:
             filename = "toolbox.png"
 
-        step_data.append((step_id, step_order, step_text, step_ref, filename))
+        step_data[step] = {}
+        step_data[step]['id'] = step_id
+        step_data[step]['order'] = step_order
+        step_data[step]['text'] = step_text
+        step_data[step]['ref'] = step_ref
+        step_data[step]['img'] = filename
+
+        # step_data.append((step_id, step_order, step_text, step_ref, filename))
 
     crud.update_procedure(
         proc_id, title, remove_label, label, cars, tool_data, part_data, step_data

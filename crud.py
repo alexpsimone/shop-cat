@@ -273,31 +273,35 @@ def update_procedure(
 
     step_ids = set()
     for item in step_data:
-        if item[0] != "NEW":
-            step = Step.query.filter_by(step_id=item[0]).first()
-            if item[1] != step.order_num:
-                step.order_num = item[1]
-            if item[2] != step.step_text:
-                step.text = item[2]
-            if item[3] != step.reference:
-                if item[3] == '' or item[3] == None:
+        if step_data[item]['id'] != "NEW":
+            step = Step.query.filter_by(step_id=step_data[item]['id']).first()
+            if step_data[item]['order'] != step.order_num:
+                step.order_num = step_data[item]['order']
+            if step_data[item]['text'] != step.step_text:
+                step.text = step_data[item]['text']
+            if step_data[item]['ref'] != step.reference:
+                if step_data[item]['ref'] == '' or step_data[item]['ref'] == None:
                     step.reference = 'No Ref Provided'
                 else:
-                    step.reference = item[3]
-            if item[4] != step.step_img:
-                step.step_img = item[4]
-            step_ids.add(int(item[0]))
+                    step.reference = step_data[item]['ref']
+            if step_data[item]['img'] != step.step_img:
+                step.step_img = step_data[item]['img']
+            step_ids.add(int(step_data[item]['id']))
         else:
+            if step_data[item]['ref'] == '' or step_data[item]['ref'] == None:
+                    step_data[item]['ref'] = 'No Ref Provided'
+                    
             step = Step(
-                order_num=item[1],
-                step_text=item[2],
-                proc=item[3],
-                reference=reference,
-                step_img=item[4],
+                order_num=step_data[item]['order'],
+                step_text=step_data[item]['text'],
+                proc_id=proc.proc_id,
+                reference=step_data[item]['ref'],
+                step_img=step_data[item]['img'],
             )
 
             db.session.add(step)
-            step_ids.add(new_step.step_id)
+            db.session.commit()
+            step_ids.add(step.step_id)
 
     # Check all Step objects associated with this procedure.
     # If a Step object includes a step ID that isn't in part_data,
