@@ -77,6 +77,7 @@ for user in range(5):
 
         procedure = Procedure(title = title, label = label, user = user)
         db.session.add(procedure)
+        db.session.commit()
 
         # Randomly assign a car from the garage to each procedure.
         car_num = randint(0, 9)
