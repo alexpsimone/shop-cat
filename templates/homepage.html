@@ -7,39 +7,43 @@
 
 
 {% block body %}
-    <h1>Write a new procedure!</h1>
-    <a href = "/write-procedure">Search for a car to begin writing a new procedure!</a>
+<div class="container-fluid">
 
-    <div>
-    <h1>Browse all the available procedures:</h1>
-    {% for procedure in procedures %}
-        <a href = "/procedure/{{ procedure.proc_id }}">{{ procedure.title }}</a>
-        <br />
-    {% endfor %}
+    <div class="row">
+        <div class="col">
+        <h1>Browse all the available procedures:</h1>
+        {% for procedure in procedures %}
+            <a href = "/procedure/{{ procedure.proc_id }}">{{ procedure.title }}</a>
+            <br />
+        {% endfor %}
+        </div>
+
+        <div class="col">
+        <h1>Browse all the available tools:</h1>
+        <p>Don't see the tool that you need?</p>
+        <p>You can add a new tool when you write or edit a procedure!</p>
+        {% for tool in tools %}
+            <a href = "/tool/{{ tool.tool_id }}">{{ tool.name }}</a>
+            <br />
+        {% endfor %}
+        </div>
+
+        <div class="col">
+        <h1>Browse all the cars with existing ShopCat procedures:</h1>
+        {% for make in makes %}
+            <a href = "/vehicle/{{ make }}">
+                {{ make }}
+            </a>
+            <br />
+        {% endfor %}
+        </div>
+
     </div>
 
-    <div>
-    <h1>Browse all the available tools:</h1>
-    <p>Don't see the tool that you need?</p>
-    <p>You can add a new tool when you write or edit a procedure!</p>
-    {% for tool in tools %}
-        <a href = "/tool/{{ tool.tool_id }}">{{ tool.name }}</a>
-        <br />
-    {% endfor %}
-    </div>
+    <div class="row">
+        <p><em>You're logged in as {{ user.username }}.</em></p>
+        <p>Access your dashboard <a href="/dashboard/{{ user.user_id }}">here</a>.</p>
+    </div>  
 
-    <div>
-    <h1>Browse all the cars with existing ShopCat procedures:</h1>
-    <h2>Browse by Make:</h2>
-    {% for make in makes %}
-        <a href = "/vehicle/{{ make }}">
-            {{ make }}
-        </a>
-        <br />
-    {% endfor %}
-    </div>
-
-    <p><em>You're logged in as {{ user.username }}.</em></p>
-    <p>Access your dashboard <a href="/dashboard/{{ user.user_id }}">here</a>.</p>
-    
+</div>
 {% endblock %}

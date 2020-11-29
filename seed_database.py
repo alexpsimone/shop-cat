@@ -6,6 +6,7 @@ import model
 from model import db, connect_to_db, User, Procedure, Car, Part, Tool, Step
 from model import PartNum, ProcedureCar, ProcedurePart, ProcedureTool
 import server
+import json
 
 # Drop and re-create the database.
 os.system("dropdb shopcat")
@@ -13,14 +14,16 @@ os.system("createdb shopcat")
 model.connect_to_db(server.app)
 model.db.create_all()
 
-# Create a set of 10 test tools.
+# Create a set of tools using info in tools.json.
 toolbox = []
 
-for tool in range(10):
+with open('data/tools.json') as filename:
+    tools_json = json.loads(filename.read())
 
-    name = f"tool_{tool}"
+for tool_json in tools_json:
+
+    name = tool_json
     tool_img = "toolbox.png"
-
     tool = Tool(name = name, tool_img = tool_img)
     db.session.add(tool)
     toolbox.append(tool)
@@ -84,12 +87,13 @@ for user in range(5):
         proc_car = ProcedureCar(proc = procedure, car = garage[car_num])
         db.session.add(proc_car)
 
-        # Randomly assign up to 3 tools from the existing set
+        # Randomly assign up to 5 tools from the existing set
         # to each procedure.
         nums_used = set()
-        for x in range(3):
-            num = randint(0, 9)
+        for x in range(5):
+            num = randint(0, len(toolbox))
             nums_used.add(num)
+
         for num in nums_used:
             tool = toolbox[num]
             proc_tool = ProcedureTool(proc = procedure, tool = tool)

@@ -76,7 +76,7 @@ class Tool(db.Model):
     __tablename__ = "tools"
 
     tool_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(25), nullable=False)
+    name = db.Column(db.String(100), nullable=False)
     tool_img = db.Column(db.String)
 
     def __repr__(self):
