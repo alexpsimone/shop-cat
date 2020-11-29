@@ -375,7 +375,8 @@ def rebuild_procedure():
     # containing this information.
     NUM_PARTS = int(request.form.get("NUM_PARTS"))
 
-    part_data = []
+    # part_data = []
+    part_data = {}
 
     for part in range(1, (NUM_PARTS + 1)):
 
@@ -397,9 +398,18 @@ def rebuild_procedure():
         else:
             filename = "toolbox.png"
 
-        part_data.append(
-            (part_id, part_name, filename, part_other, part_pn, part_manuf, part_oem)
-        )
+        part_data[part] = {}
+        part_data[part]['id'] = part_id
+        part_data[part]['name'] = part_name
+        part_data[part]['img'] = filename
+        part_data[part]['other'] = part_other
+        part_data[part]['pn'] = part_pn
+        part_data[part]['manuf'] = part_manuf
+        part_data[part]['oem'] = part_oem
+
+        # part_data.append(
+        #     (part_id, part_name, filename, part_other, part_pn, part_manuf, part_oem)
+        # )
 
     # Iterate through all steps on the form. Make  a list of tuples (?)
     # containing this information.

@@ -216,37 +216,33 @@ def update_procedure(
         if proc_tool.tool_id not in tool_ids:
             db.session.delete(proc_tool)
 
-    #############################################################
-    ############ TODO: refactor w/o list indexing!! #############
-    #############################################################
     # Go through part_data and make sure all part info is updated.
-    # Add any new parts to the database.
-    # part_data: (part_id, part_name, filename, part_other, pn, manuf, oem)
+    # Add any new parts, part numbers, and procedure-part objects to the db.
     part_ids = set()
     for item in part_data:
-        if item[0] != "NEW":
-            part = Part.query.filter_by(part_id=item[0]).first()
-            if item[1] != part.name:
-                part.name = item[1]
-            if item[2] != part.part_img:
-                part.part_img = item[2]
-            part_ids.add(int(item[0]))
+        if part_data[item]['id'] != "NEW":
+            part = Part.query.filter_by(part_id=part_data[item]['id']).first()
+            if part_data[item]['name'] != part.name:
+                part.name = part_data[item]['name']
+            if part_data[item]['img'] != part.part_img:
+                part.part_img = part_data[item]['img']
+            part_ids.add(int(part_data[item]['id']))
         else:
-            if item[1] == "other":
-                if Part.query.filter_by(name=item[3]).first() != None:
-                    part = Part.query.filter_by(name=item[3]).first()
+            if part_data[item]['name'] == "other":
+                if Part.query.filter_by(name=part_data[item]['other']).first() != None:
+                    part = Part.query.filter_by(name=part_data[item]['other']).first()
                     part_ids.add(part.part_id)
                 else:
-                    part = Part(name=item[3], part_img=item[2])
+                    part = Part(name=part_data[item]['other'], part_img=part_data[item]['img'])
                     db.session.add(part)
                     db.session.commit()
                     part_num = PartNum(
-                            manuf=item[5], part_num=item[4], is_oem_part=item[6], part=part
+                            manuf=part_data[item]['manuf'], part_num=part_data[item]['pn'], is_oem_part=part_data[item]['oem'], part=part
                         )
                     db.session.add(part_num)
                     part_ids.add(part.part_id)
             else:
-                part = Part.query.filter_by(name=item[1]).first()
+                part = Part.query.filter_by(name=part_data[item]['name']).first()
                 part_ids.add(part.part_id)
             if (
                 ProcedurePart.query.filter(
