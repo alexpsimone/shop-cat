@@ -177,25 +177,25 @@ def update_procedure(
     # Add any new tools and procedure-tool objects to the database.
     tool_ids = set()
     for item in tool_data:
-        if tool_data[item]['tool_id'] != "NEW":
-            tool = Tool.query.filter_by(tool_id=int(tool_data[item]['tool_id'])).first()
-            if tool_data[item]['tool_name'] != tool.name:
-                tool.name = tool_data[item]['tool_name']
-            if tool_data[item]['tool_img'] != tool.tool_img:
-                tool.tool_img = tool_data[item]['tool_img']
-            tool_ids.add(int(tool_data[item]['tool_id']))
+        if tool_data[item]['id'] != "NEW":
+            tool = Tool.query.filter_by(tool_id=int(tool_data[item]['id'])).first()
+            if tool_data[item]['name'] != tool.name:
+                tool.name = tool_data[item]['name']
+            if tool_data[item]['img'] != tool.tool_img:
+                tool.tool_img = tool_data[item]['img']
+            tool_ids.add(int(tool_data[item]['id']))
         else:
-            if tool_data[item]['tool_name'] == "other":
-                if Tool.query.filter_by(name=tool_data[item]['tool_other']).first() != None:
-                    tool = Tool.query.filter_by(name=tool_data[item]['tool_other']).first()
+            if tool_data[item]['name'] == "other":
+                if Tool.query.filter_by(name=tool_data[item]['other']).first() != None:
+                    tool = Tool.query.filter_by(name=tool_data[item]['other']).first()
                     tool_ids.add(tool.tool_id)
                 else:
-                    tool = Tool(name = tool_data[item]['tool_other'], tool_img = tool_data[item]['tool_img'])
+                    tool = Tool(name = tool_data[item]['other'], tool_img = tool_data[item]['img'])
                     db.session.add(tool)
                     db.session.commit()
                     tool_ids.add(tool.tool_id)
             else:
-                tool = Tool.query.filter_by(name=tool_data[item]['tool_name']).first()
+                tool = Tool.query.filter_by(name=tool_data[item]['name']).first()
                 tool_ids.add(tool.tool_id)
             if (
                 ProcedureTool.query.filter(
