@@ -346,7 +346,7 @@ def rebuild_procedure():
     # containing this information.
     NUM_TOOLS = int(request.form.get("NUM_TOOLS"))
 
-    tool_data = []
+    tool_data = {}
 
     for tool in range(1, (NUM_TOOLS + 1)):
 
@@ -356,7 +356,7 @@ def rebuild_procedure():
         tool_img = request.files[f"tool-img-{tool}"]
         tool_other = request.form.get(f"tool-other-name-{tool}")
 
-        if tool_img != None and allowed_file(tool_img.filename):
+        if tool_img != None and crud.allowed_file(tool_img.filename):
             filename = secure_filename(tool_img.filename)
             tool_img.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
             tool_img.close()
@@ -365,7 +365,11 @@ def rebuild_procedure():
         else:
             filename = "toolbox.png"
 
-        tool_data.append((tool_id, tool_name, filename, tool_other))
+        tool_data[tool] = {}
+        tool_data[tool]['tool_id'] = tool_id
+        tool_data[tool]['tool_name'] = tool_name
+        tool_data[tool]['tool_img'] = filename
+        tool_data[tool]['tool_other'] = tool_other
 
     # Iterate through all parts on the form. Make  a list of tuples (?)
     # containing this information.
@@ -384,7 +388,7 @@ def rebuild_procedure():
         part_manuf = request.form.get(f"part-other-manuf-{part}")
         part_oem = request.form.get(f"part-other-oem-{part}") == "True"
 
-        if part_img != None and allowed_file(part_img.filename):
+        if part_img != None and crud.allowed_file(part_img.filename):
             filename = secure_filename(part_img.filename)
             part_img.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
             part_img.close()

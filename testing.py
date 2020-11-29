@@ -91,6 +91,8 @@ class FlaskTests(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<form action="/new-user" method="POST">', result.data)
         self.assertNotIn(b'<form action="/existing-user"', result.data)
+
+    
     
     def test_write_proc_no_session_redirect(self):
         """Check that /write-procedure redirects if no user in session."""
