@@ -4,7 +4,7 @@ import requests
 import os
 from bs4 import BeautifulSoup
 from werkzeug.utils import secure_filename
-from server import app
+# from server import app
 
 def allowed_file(filename):
     """from Flask docs: confirm an uploaded img has correct extension"""
@@ -331,3 +331,20 @@ def get_all_rockauto_makes():
     car_makes_important = [div_important.string for div_important in divs_important]
 
     return sorted(car_makes_normal + car_makes_important)
+
+def get_all_rockauto_model_years(make):
+    """Scrape all model years for a given make from RockAuto's website."""
+
+    make_split = make.split(' ')
+    make_join = '+'.join(make_split)
+
+    url = f"http://www.rockauto.com/en/catalog/{make_join}"
+    req = requests.get(url)
+    src = req.content
+    soup = BeautifulSoup(src, "lxml")
+
+    divs_normal = soup.findAll("a", {"class": "navlabellink nvoffset nnormal"})
+    model_years = [div_normal.string for div_normal in divs_normal][1:]
+    print(model_years)
+
+get_all_rockauto_model_years('ACURA')

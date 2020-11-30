@@ -51,10 +51,12 @@ for part in range(50):
 # Create a set of 10 test cars.
 garage = []
 
+makes = crud.get_all_rockauto_makes()
+
 for car in range(10):
 
     model = f"car_{car}"
-    make = "CHEVROLET"
+    make = choice(makes)
     model_year = randint(1956, 2020)
 
     car = Car(model = model, make = make, model_year = model_year)
