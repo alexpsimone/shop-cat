@@ -205,13 +205,23 @@ def login_user():
         flash(f"No account exists with this username")
         return redirect("/login")
 
+
+@app.route("/get-model-years.json")
+def get_all_model_years():
+
+    make = request.args.get("make")
+    model_years = crud.get_all_rockauto_model_years(make)
+
+    return jsonify(model_years)
+
+
 @app.route("/get-models.json")
 def get_all_models():
 
-    model_year = request.args.get("modelYear")
-    print('******************', model_year)
     make = request.args.get("make")
     print('******************', make)
+    model_year = request.args.get("modelYear")
+    print('******************', model_year)
 
     models = crud.get_all_rockauto_models(make, model_year)
 
@@ -509,20 +519,20 @@ def show_model_page(make, model_year, model):
     )
 
 
-@app.route("/vehicle-select", methods=["POST"])
-def apply_selected_vehicle():
-    """Retrieve selected vehicle info and save to session."""
+# @app.route("/vehicle-select", methods=["POST"])
+# def apply_selected_vehicle():
+#     """Retrieve selected vehicle info and save to session."""
 
-    model_year = request.form.get("model-year")
-    make = request.form.get("make")
-    model = request.form.get("model")
+#     model_year = request.form.get("model-year")
+#     make = request.form.get("make")
+#     model = request.form.get("model")
 
-    session["model_year"] = model_year
-    session["make"] = make
-    session["model"] = model
-    print("***************", session["model_year"], session["make"], session["model"])
+#     session["model_year"] = model_year
+#     session["make"] = make
+#     session["model"] = model
+#     print("***************", session["model_year"], session["make"], session["model"])
 
-    return redirect("/write-procedure")
+#     return redirect("/write-procedure")
 
 
 @app.route("/vehicle-select.json", methods=["POST"])

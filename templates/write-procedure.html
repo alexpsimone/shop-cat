@@ -12,16 +12,17 @@
 {% block body %}
 
 <form>
-    <label>Car Model Year:</label>
-        <input id="model-year" name="model-year" type="number" min="1900" max="2020" />
-    <br />
     <label>Car Make:</label>
     <select id="make" name="make">
         <option value="">--Please select a Make--</option>
         {% for make in sorted_makes %}
         <option value="{{ make }}">{{ make }}</option>
         {% endfor %}
-        <option value="other">Other (please specify)...</option>
+    </select>
+    <br />
+    <label>Car Model Year:</label>
+    <select id="model-year" name="model-year">
+        <option value="">--Please select a Model Year--</option>
     </select>
     <br />
     <label>Car Model:</label>

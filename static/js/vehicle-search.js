@@ -1,7 +1,9 @@
 'use strict';
 
-function getModels (evt) {
 
+
+function getModels (evt) {
+    
     evt.preventDefault();
 
     const formData = {
@@ -30,6 +32,35 @@ function getModels (evt) {
     $('#model-select').attr('disabled', false);
     $('#vehicle-submit').attr('disabled', false);
 }
+
+
+function getModelYears (evt) {
+
+    evt.preventDefault();
+
+    const formData = {
+        make: $('#make').val(),
+    };
+
+    $.get('/get-model-years.json', formData, (res) => {
+
+        let str = '';
+        for (const model_year of res) {
+            str = str + `<option value="${model_year}">${model_year}</option>`;
+        }
+        $('#model-year').replaceWith(
+            `<select id="model-year" name="model-year">
+            <option value="">--Please select a Model Year--</option>
+            ${str}
+            </select>`
+        );
+
+        $('#model-year').on('change', getModels);
+    });
+
+    
+}
+
 
 function submitVehicle (evt) {
 
@@ -61,6 +92,6 @@ function submitVehicle (evt) {
     $('#step-adder').attr('disabled', false);
 }
 
-$('#make').on('change', getModels);
+$('#make').on('change', getModelYears);
 $('#vehicle-submit').on('click', submitVehicle);
 
