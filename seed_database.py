@@ -88,18 +88,20 @@ for user in range(5):
         car_num = randint(0, 9)
         proc_car = ProcedureCar(proc = procedure, car = garage[car_num])
         db.session.add(proc_car)
+        db.session.commit()
 
         # Randomly assign up to 5 tools from the existing set
         # to each procedure.
         nums_used = set()
         for x in range(5):
-            num = randint(0, len(toolbox))
+            num = randint(0, (len(toolbox)-1))
             nums_used.add(num)
 
         for num in nums_used:
             tool = toolbox[num]
             proc_tool = ProcedureTool(proc = procedure, tool = tool)
             db.session.add(proc_tool)
+            db.session.commit()
 
         # Randomly assign up to 3 parts from the existing set
         # to each procedure.
@@ -111,6 +113,7 @@ for user in range(5):
             part = parts_bin[num]
             proc_part = ProcedurePart(proc = procedure, part = part)
             db.session.add(proc_part)
+            db.session.commit()
 
         # Create 3 Steps for each Procedure.
         step1 = Step(

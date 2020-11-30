@@ -109,7 +109,6 @@ def build_procedure():
     for part in range(1, (NUM_PARTS + 1)):
 
         part_req = request.form.get(f"part_req_{part}")
-        # part_other = request.form.get(f"part_other_{part}")
         part_img = request.files[f"part_img_{part}"]
         part_other = request.form.get(f"part_{part}_other_name")
         part_other_num = request.form.get(f"part_{part}_other_num")
@@ -206,22 +205,31 @@ def login_user():
         flash(f"No account exists with this username")
         return redirect("/login")
 
-
 @app.route("/get-models.json")
 def get_all_models():
 
-    all_models = []
     model_year = request.args.get("modelYear")
+    print('******************', model_year)
     make = request.args.get("make")
-    url = f"https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/{make}/modelyear/{model_year}?format=json"
-    res = requests.get(url)
-    data = res.json()
+    print('******************', make)
 
-    for item in data["Results"]:
-        all_models.append(item["Model_Name"])
-    sorted_models = sorted(all_models)
+    models = crud.get_all_rockauto_models(make, model_year)
 
-    return jsonify(sorted_models)
+    return jsonify(models)
+
+    ####################################
+    ##### Using NHTSA Vehicle API: #####
+    ####################################
+    # all_models = []
+    # url = f"https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/{make}/modelyear/{model_year}?format=json"
+    # res = requests.get(url)
+    # data = res.json()
+
+    # for item in data["Results"]:
+    #     all_models.append(item["Model_Name"])
+    # sorted_models = sorted(all_models)
+
+    # return jsonify(sorted_models)
 
 
 @app.route("/get-parts.json")
@@ -437,8 +445,6 @@ def rebuild_procedure():
         step_data[step]['ref'] = step_ref
         step_data[step]['img'] = filename
 
-        # step_data.append((step_id, step_order, step_text, step_ref, filename))
-
     crud.update_procedure(
         proc_id, title, remove_label, label, cars, tool_data, part_data, step_data
     )
@@ -503,20 +509,20 @@ def show_model_page(make, model_year, model):
     )
 
 
-# @app.route("/vehicle-select", methods=["POST"])
-# def apply_selected_vehicle():
-#     """Retrieve selected vehicle info and save to session."""
+@app.route("/vehicle-select", methods=["POST"])
+def apply_selected_vehicle():
+    """Retrieve selected vehicle info and save to session."""
 
-#     model_year = request.form.get("model-year")
-#     make = request.form.get("make")
-#     model = request.form.get("model")
+    model_year = request.form.get("model-year")
+    make = request.form.get("make")
+    model = request.form.get("model")
 
-#     session["model_year"] = model_year
-#     session["make"] = make
-#     session["model"] = model
-#     print("***************", session["model_year"], session["make"], session["model"])
+    session["model_year"] = model_year
+    session["make"] = make
+    session["model"] = model
+    print("***************", session["model_year"], session["make"], session["model"])
 
-#     return redirect("/write-procedure")
+    return redirect("/write-procedure")
 
 
 @app.route("/vehicle-select.json", methods=["POST"])

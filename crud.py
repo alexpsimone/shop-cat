@@ -4,7 +4,7 @@ import requests
 import os
 from bs4 import BeautifulSoup
 from werkzeug.utils import secure_filename
-# from server import app
+from server import app
 
 def allowed_file(filename):
     """from Flask docs: confirm an uploaded img has correct extension"""

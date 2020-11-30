@@ -1,6 +1,5 @@
 'use strict';
 
-
 function getModels (evt) {
 
     evt.preventDefault();
@@ -26,7 +25,7 @@ function getModels (evt) {
             <option value="other">Other (please specify)...</option>
             </select>`
         );
-    })
+    });
 
     $('#model-select').attr('disabled', false);
     $('#vehicle-submit').attr('disabled', false);
