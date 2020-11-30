@@ -21,7 +21,7 @@ function getModels (evt) {
             str = str + `<option value="${model}">${model}</option>`;
         }
         $('#model-select').replaceWith(
-            `<select id="model-select" name="model">
+            `<select id="model-select" name="model" required>
             <option value="">--Please select a Model--</option>
             ${str}
             <option value="other">Other (please specify)...</option>
@@ -49,7 +49,7 @@ function getModelYears (evt) {
             str = str + `<option value="${model_year}">${model_year}</option>`;
         }
         $('#model-year').replaceWith(
-            `<select id="model-year" name="model-year">
+            `<select id="model-year" name="model-year" required>
             <option value="">--Please select a Model Year--</option>
             ${str}
             </select>`
@@ -73,6 +73,10 @@ function submitVehicle (evt) {
     };
     console.log(formData);
 
+    if (!formData['model'] | !formData['modelYear'] | !formData['make']) {
+        alert('Please fill out vehicle selection form completely.');
+    } else {
+
     $.post('/vehicle-select.json', formData, (res) => {
         $('#selected-vehicle').replaceWith(`<p id="selected-vehicle">
                                             You selected a 
@@ -90,6 +94,7 @@ function submitVehicle (evt) {
     $('#tool-adder').attr('disabled', false);
     $('#part-adder').attr('disabled', false);
     $('#step-adder').attr('disabled', false);
+};
 }
 
 $('#make').on('change', getModelYears);

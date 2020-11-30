@@ -298,7 +298,7 @@ function getModels (evt) {
             str = str + `<option value="${model}">${model}</option>`;
         }
         $('#model-select').replaceWith(
-            `<select id="model-select" name="model">
+            `<select id="model-select" name="model" required>
             <option value="">--Please select a Model--</option>
             ${str}
             <option value="other">Other (please specify)...</option>
@@ -308,6 +308,33 @@ function getModels (evt) {
 
     $('#model-select').attr('disabled', false);
     $('#vehicle-submit').attr('disabled', false);
+}
+
+function getModelYears (evt) {
+
+    evt.preventDefault();
+
+    const formData = {
+        make: $('#make').val(),
+    };
+
+    $.get('/get-model-years.json', formData, (res) => {
+
+        let str = '';
+        for (const model_year of res) {
+            str = str + `<option value="${model_year}">${model_year}</option>`;
+        }
+        $('#model-year').replaceWith(
+            `<select id="model-year" name="model-year" required>
+            <option value="">--Please select a Model Year--</option>
+            ${str}
+            </select>`
+        );
+
+        $('#model-year').on('change', getModels);
+    });
+
+    
 }
 
 
@@ -323,7 +350,11 @@ function selectAddlVehicle (evt) {
         modelYear: $('#model-year').val(),
         model: $('#model-select').val()
     };
+    console.log(formData);
 
+    if (!formData['model'] | !formData['modelYear'] | !formData['make']) {
+        alert('Please fill out vehicle selection form completely.');
+    } else {
     $.post('/vehicle-select.json', formData, (res) => {
         $('#cars').append(`<tr id="row-${res['model_year']}-${res['make']}-${res['model']}">
                                 <td>
@@ -347,7 +378,7 @@ function selectAddlVehicle (evt) {
 
     $('checkbox.car-remove').attr('disabled', false);
     $('#car-add-form').hide();
-
+    };
 }
 
 
@@ -632,7 +663,7 @@ function requireStepAndCar (evt) {
 
 
 $('#car-add').on('click', addVehicle);
-$('#make').on('change', getModels);
+$('#make').on('change', getModelYears);
 $('#vehicle-submit').on('click', selectAddlVehicle);
 $('button.remove-vehicle').on('click', removeVehicle);
 
