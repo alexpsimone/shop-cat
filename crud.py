@@ -345,6 +345,21 @@ def get_all_rockauto_model_years(make):
 
     divs_normal = soup.findAll("a", {"class": "navlabellink nvoffset nnormal"})
     model_years = [div_normal.string for div_normal in divs_normal][1:]
-    print(model_years)
+    
+    return model_years
 
-get_all_rockauto_model_years('ACURA')
+def get_all_rockauto_models(make, model_year):
+    """Scrape all models for a given model_year and make from RockAuto's website."""
+
+    make_split = make.split(' ')
+    make_join = '+'.join(make_split)
+
+    url = f"http://www.rockauto.com/en/catalog/{make_join},{model_year}"
+    req = requests.get(url)
+    src = req.content
+    soup = BeautifulSoup(src, "lxml")
+
+    divs_normal = soup.findAll("a", {"class": "navlabellink nvoffset nnormal"})
+    models = [div_normal.string for div_normal in divs_normal][2:]
+   
+    return sorted(models)
