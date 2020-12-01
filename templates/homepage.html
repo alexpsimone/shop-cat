@@ -13,10 +13,9 @@
         <div class="col">
             <h1>Browse all the cars with existing ShopCat procedures:</h1>
             {% for make in makes %}
-                <a href = "/vehicle/{{ make }}">
-                    {{ make }}
-                </a>
-                <br />
+                <form action="/vehicle/{{ make }}">
+                    <input type="submit" value="{{ make }}" class="btn btn-outline-primary"></input>
+                </form>
             {% endfor %}
         </div>
     </div>

@@ -270,15 +270,13 @@ def show_homepage():
         procedures = Procedure.query.all()
         tools = Tool.query.all()
         cars = Car.query.all()
-        model_years = set([car.model_year for car in cars])
-        makes = set([car.make for car in cars])
+        makes = sorted(set([car.make for car in cars]))
 
         return render_template(
             "homepage.html",
             user=user,
             procedures=procedures,
             tools=tools,
-            model_years=model_years,
             makes=makes,
         )
     else:
