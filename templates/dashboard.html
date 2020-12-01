@@ -7,25 +7,34 @@
 
 
 {% block body %}
+<div class="container-fluid">
 
-    <h1>Username</h1>
-    <p>{{ user.username }}</p>
-    <h2>Nickname</h2>
-    <p>{{ user.nickname }}</p>
-    <img src="/static/img/uploads/{{ user.avatar_img_url }}" style="height:100px; width:100px;"/>
-
-    <h2>Procedures you've created:</h2>
-    <ul>
-        {% for procedure in procedures %}
-            <li>
-                <a href="/procedure/{{ procedure.proc_id }}">{{ procedure.title }}</a>
-            </li>
-        {% endfor %}
-    </ul>
-
-    <h2>Your last vehicle:</h2>
-    <p>{{ model_year }} {{ make }} {{ model }}</p>
-
-    <a href="/home">Return Home</a>
-
+    <div class="row align-items-center">
+        <div class="col">
+            <img src="/static/img/uploads/{{ user.avatar_img_url }}" style="height:100px; width:100px;"/>
+            <p>{{ user.username }}</p>
+            <p>{{ user.nickname }}</p>
+        </div>
+        <div class="col">
+            <h2>Procedures you've created:</h2>
+            <ul>
+                {% for procedure in procedures %}
+                    <li>
+                        <a href="/procedure/{{ procedure.proc_id }}">{{ procedure.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h2>Your last vehicle:</h2>
+            {% if model_year and make and model %}
+            <p>{{ model_year }} {{ make }} {{ model }}</p>
+            {% else %}
+            <p>No vehicle to show.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}
