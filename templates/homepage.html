@@ -9,18 +9,18 @@
 {% block body %}
 <div class="container-fluid">
 
-    <div class="row">
+    <div class="row vehicles-procs">
         <div class="col">
             <h1>Browse all the cars with existing ShopCat procedures:</h1>
             {% for make in makes %}
                 <form action="/vehicle/{{ make }}">
-                    <input type="submit" value="{{ make }}" class="btn btn-outline-primary"></input>
+                    <input type="submit" value="{{ make }}" class="btn btn-primary"></input>
                 </form>
             {% endfor %}
         </div>
     </div>
 
-    <div class="row">
+    <div class="row h-100">
         <div class="col">
             <h1>Browse the available procedures:</h1>
             {% for procedure in procedures %}
