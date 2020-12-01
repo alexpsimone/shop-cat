@@ -11,6 +11,18 @@
 
     <div class="row">
         <div class="col">
+            <h1>Browse all the cars with existing ShopCat procedures:</h1>
+            {% for make in makes %}
+                <a href = "/vehicle/{{ make }}">
+                    {{ make }}
+                </a>
+                <br />
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
             <h1>Browse the available procedures:</h1>
             {% for procedure in procedures %}
             <div class="card" style="width: 18em;">
@@ -24,18 +36,7 @@
             {% endfor %}
         </div>
     </div>
-    <div class="row">
-        <div class="col">
-            <h1>Browse all the cars with existing ShopCat procedures:</h1>
-            {% for make in makes %}
-                <a href = "/vehicle/{{ make }}">
-                    {{ make }}
-                </a>
-                <br />
-            {% endfor %}
-        </div>
-    </div>
-
+    
     <div class="row">
         <div class="col">
             <h1>Browse all the available tools:</h1>

@@ -7,20 +7,30 @@
 
 
 {% block body %}
-    <div id="app"></div>
-    <h2>Log in with your Shop Cat account here.</h2>
+<div id="login" class="homepage container-fluid">
     
-    <form action="/existing-user" method="POST">
-        <label>Username: </label>
-        <input type="text" name="username" />
-        <br />
-        <label>Password: </label>
-        <input type="password" name="password" />
-        <br />
-        <input type="submit">
-    </form>
+    <section class="container-fluid">
 
-    <p>Whoops, did you mean to create a new account? Return home
-        <a href="/">here</a>.
-    </p>
+        <div class="row h-100 mx-5 justify-content-end">
+            <div class="col-3 h-100 login-menu justify-content-center">
+
+                <h2 class="menu-text">Log in with your Shop Cat account here.</h2>
+                
+                <form class="menu-text" action="/existing-user" method="POST">
+                    <label>Username: </label>
+                    <input type="text" name="username" />
+                    <br />
+                    <label>Password: </label>
+                    <input type="password" name="password" />
+                    <br />
+                    <input type="submit">
+                </form>
+
+                <p class="menu-text">Whoops, did you mean to create a new account? Return home
+                    <a class="menu-text" href="/">here</a>.
+                </p>
+            </div>
+        </div>
+    </section>
+</div>
 {% endblock %}
