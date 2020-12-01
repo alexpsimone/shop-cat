@@ -9,75 +9,89 @@
 
 
 {% block body %}
+<div class="container-fluid">
 
-    <h1>Here's your procedure info!</h1>
-    <br />
-    <h1>{{ procedure.title }}</h1>
-    <h3>Label: {{procedure.label }}</h3>
+    <div class="row">
+        <div class="col">
+            <h1>{{ procedure.title }}</h1>
+            <h3>Label: {{procedure.label }}</h3>
+        </div>
+    </div>
 
-    <p>This procedure applies to the following cars:</p>
-    <ul>
-        {% for proc_car in proc_car_obj %}
-        <li>
-            {{ proc_car.car.model_year }}
-            <a href="/vehicle/{{ proc_car.car.make }}">
-            {{ proc_car.car.make }}
-            </a>
-            <a href="/vehicle/{{ proc_car.car.make }}/{{ proc_car.car.model_year }}/{{ proc_car.car.model }}">
-            {{ proc_car.car.model }}
-            </a>
-        </li>
-        {% endfor %}
-    </ul>    
+    <div class="row">
+        <div class="col">
+            <p>This procedure applies to the following cars:</p>
+            <ul>
+                {% for proc_car in proc_car_obj %}
+                <li>
+                    {{ proc_car.car.model_year }}
+                    <a href="/vehicle/{{ proc_car.car.make }}">
+                    {{ proc_car.car.make }}
+                    </a>
+                    <a href="/vehicle/{{ proc_car.car.make }}/{{ proc_car.car.model_year }}/{{ proc_car.car.model }}">
+                    {{ proc_car.car.model }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>    
+        </div>
+        <div class="col">
+            <p>You'll need {{ proc_num_tools }} tools for the job:</p>
+            <ul>
+                {% for proc_tool in proc_tool_obj %}
+                <li>
+                    <a href="/tool/{{ proc_tool.tool.tool_id }}">
+                    {{ proc_tool.tool.name }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col">
+            <p>You'll need {{ proc_num_parts }} parts for the job:</p>
+            <ul>
+                {% for proc_part in proc_part_obj %}
+                <li>{{ proc_part.part.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 
-    <p>You'll need {{ proc_num_tools }} tools for the job:</p>
-    <ul>
-        {% for proc_tool in proc_tool_obj %}
-        <li>
-            <a href="/tool/{{ proc_tool.tool.tool_id }}">
-            {{ proc_tool.tool.name }}  
-            <img src="/static/img/uploads/{{ proc_tool.tool.tool_img }}" style="height:100px; width:100px;"/>
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
+    <div class="row">
+        <div class="col">
+            <p>Here are the steps in the procedure:</p>
+            <ol>
+                {% for step in steps %}
+                <li>
+                    {{ step.step_text }}         
+                    <img src="/static/img/uploads/{{ step.step_img }}" style="height:100px; width:100px;"/>
+                    {% if step.reference != "No Ref Provided" %}
+                        {% if 'https://' in step.reference %}
+                            <br />
+                            Reference:
+                            <a id="ref" href="{{ step.reference }}">{{ step.reference }}</a>
+                        {% else %}
+                            <p>Step {{ step.order_num }} reference video:</p>
+                            <div id="player-{{ loop.index }}"></div>
+                        {% endif %}
+                    {% endif %}
+                    <input type="hidden" id="vid-ref-{{ loop.index }}" value="{{ step.reference }}" />
+                </li>
+                {% endfor %}
+            </ol>
+            <input type="hidden" id="num-steps" value="{{ proc_num_steps }}" />
+        </div>
+    </div>
 
-    <p>You'll need {{ proc_num_parts }} parts for the job:</p>
-    <ul>
-        {% for proc_part in proc_part_obj %}
-        <li>{{ proc_part.part.name }}</li>
-        {% endfor %}
-    </ul>
-
-    <p>Here are the steps in the procedure:</p>
-    <ol>
-        {% for step in steps %}
-        <li>
-            {{ step.step_text }}         
-            <img src="/static/img/uploads/{{ step.step_img }}" style="height:100px; width:100px;"/>
-            {% if step.reference != "No Ref Provided" %}
-                {% if 'https://' in step.reference %}
-                    <br />
-                    Reference:
-                    <a id="ref" href="{{ step.reference }}">{{ step.reference }}</a>
-                {% else %}
-                    <p>Step {{ step.order_num }} reference video:</p>
-                    <div id="player-{{ loop.index }}"></div>
-                {% endif %}
+    <div class="row">
+        <div class="col">
+            {% if procedure.user.nickname %}
+                <p>This procedure was created by {{ procedure.user.nickname }}.</p>
+            {% else %}
+                <p>This procedure was created by {{ procedure.user.username }}.</p>
             {% endif %}
-            <input type="hidden" id="vid-ref-{{ loop.index }}" value="{{ step.reference }}" />
-        </li>
-        {% endfor %}
-    </ol>
-    <input type="hidden" id="num-steps" value="{{ proc_num_steps }}" />
 
-    {% if procedure.user.nickname %}
-        <p>This procedure was created by {{ procedure.user.nickname }}.</p>
-    {% else %}
-        <p>This procedure was created by {{ procedure.user.username }}.</p>
-    {% endif %}
-
-    <a href="/edit-procedure/{{ procedure.proc_id }}">Edit this procedure.</a>
-    
-    <a href="/home">Return Home</a>
+            <a href="/edit-procedure/{{ procedure.proc_id }}">Edit this procedure.</a>
+        </div>
+    </div>
 {% endblock %}
