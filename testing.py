@@ -204,15 +204,7 @@ class ShopCatTestsDatabase(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn(b"No account exists with this username", result.data)
     
-    def test_get_models_json_route(self):
-        """Confirm that the get-models.json query works."""
-
-        result = self.client.get(
-            "/get-models.json",
-            data={"modelYear": 2005, "make": 'HONDA'},
-            follow_redirects=True,
-        )
-        self.assertEqual(result.status_code, 200)
+     
 
     def test_get_parts_json_route(self):
         """Confirm that the get-parts.json query works."""

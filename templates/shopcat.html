@@ -2,26 +2,47 @@
 
 {% block title %}Shop Cat{% endblock %}
 
-{% block js %}
-{% endblock %}
-
+{% block js %}{% endblock %}
 
 {% block body %}
-    <div id="app"></div>
-    <h2>Create a ShopCat Account!</h2>
-    
-    <form action="/new-user" method="POST">
-        <label>Username: </label>
-        <input type="text" name="username" />
-        <br />
-        <label>Password: </label>
-        <input type="password" name="password" />
-        <br />
-        <label>Nickname: </label>
-        <input type="nickname" name="nickname" />
-        <br />
-        <input type="submit">
-    </form>
 
-    <p>Already have an account? Log in <a href="/login">here</a>.</p>
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col">
+            <img class="img-fluid" src="/static/img/site/Cruze_Banner.jpg">
+        </div>
+        <div class="col-3">
+            <h2>Create a ShopCat Account!</h2>
+    
+            <form action="/new-user" method="POST">
+                <label>Username: </label>
+                <input type="text" name="username" />
+                <br />
+                <label>Password: </label>
+                <input type="password" name="password" />
+                <br />
+                <label>Nickname: </label>
+                <input type="nickname" name="nickname" />
+                <br />
+                <input type="submit">
+            </form>
+
+            <p>Already have an account? Log in <a href="/login">here</a>.</p>
+        </div>        
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <p>PARAGRAPH 1</p>
+        </div>
+        <div class="col">
+            <p>PARAGRAPH 2</p>
+        </div>
+        <div class="col">
+            <p>PARAGRAPH 3</p>
+        </div>
+    </div>
+
+</div>
 {% endblock %}
