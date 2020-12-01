@@ -5,44 +5,42 @@
 {% block js %}{% endblock %}
 
 {% block body %}
-
-<div class="container-fluid">
-
-    <div class="row">
-        <div class="col">
-            <img class="img-fluid" src="/static/img/site/Cruze_Banner.jpg">
-        </div>
-        <div class="col-3">
-            <h2>Create a ShopCat Account!</h2>
+<div id="landing" class="homepage container-fluid">
     
-            <form action="/new-user" method="POST">
-                <label>Username: </label>
-                <input type="text" name="username" />
-                <br />
-                <label>Password: </label>
-                <input type="password" name="password" />
-                <br />
-                <label>Nickname: </label>
-                <input type="nickname" name="nickname" />
-                <br />
-                <input type="submit">
-            </form>
+    <section class="container-fluid">
 
-            <p>Already have an account? Log in <a href="/login">here</a>.</p>
-        </div>        
-    </div>
+        <div class="row h-100 mx-5 justify-content-end">
+            <div class="col-3 h-100 login-menu justify-content-center">
+                <h2 class="menu-text">Create an Account</h2>
+        
+                <form class="menu-text" action="/new-user" method="POST">
+                    <label>Username: </label>
+                    <input type="text" name="username" />
+                    <br />
+                    <label>Password: </label>
+                    <input type="password" name="password" />
+                    <br />
+                    <label>Nickname: </label>
+                    <input type="nickname" name="nickname" />
+                    <br />
+                    <input type="submit">
+                </form>
+                <p class="menu-text">Already have an account? Log in <a href="/login">here</a>.</p>
+            </div>        
+        </div>
 
-    <div class="row">
-        <div class="col">
-            <p>PARAGRAPH 1</p>
+        <div class="row">
+            <div class="col">
+                <p>PARAGRAPH 1</p>
+            </div>
+            <div class="col">
+                <p>PARAGRAPH 2</p>
+            </div>
+            <div class="col">
+                <p>PARAGRAPH 3</p>
+            </div>
         </div>
-        <div class="col">
-            <p>PARAGRAPH 2</p>
-        </div>
-        <div class="col">
-            <p>PARAGRAPH 3</p>
-        </div>
-    </div>
 
+    </section>
 </div>
 {% endblock %}
