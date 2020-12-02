@@ -7,11 +7,11 @@
 
 
 {% block body %}
-<div class="container-fluid">
+<div class="container-fluid dashboard">
 
-    <div class="row align-items-center">
+    <div class="row">
         <div class="col">
-            <img src="/static/img/uploads/{{ user.avatar_img_url }}" style="height:100px; width:100px;"/>
+            <img class="avatar" src="/static/img/uploads/{{ user.avatar_img_url }}"/>
             <p>{{ user.username }}</p>
             <p>{{ user.nickname }}</p>
         </div>

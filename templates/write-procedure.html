@@ -12,8 +12,8 @@
 {% block body %}
 <div class="container-fluid">
 
-    <div class="row">
-        <div class="col d-flex justify-content-center">
+    <div class="row justify-content-center">
+        <div class="col-3">
             <form>
                 <div  class="write-proc form-group">
                     <select class="custom-select" id="make" name="make">
@@ -23,7 +23,7 @@
                         {% endfor %}
                     </select>
 
-                    <select class="custom-select" id="model-year" name="model-year">
+                    <select class="custom-select" id="model-year" name="model-year" disabled>
                         <option value="">Vehicle Model Year</option>
                     </select>
 
@@ -31,53 +31,59 @@
                         <option value="">Vehicle Model</option>
                     </select>
                     <br />
-                    <input id="vehicle-submit" type="submit" disabled>
+                    <input id="vehicle-submit" type="submit" value="select vehicle" disabled>
                 </div>
             </form>
-                
-            <p id="selected-vehicle">Select a vehicle to continue.</p>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <p id="selected-vehicle">Select a vehicle to continue.</p>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <form action="/build-procedure", method="POST", enctype="multipart/form-data">
+                <div class="form-row justify-content-center">
+                    <div class="col">
+                        <label>Procedure Name: </label>
+                        <input id="proc-title" type="text" name="proc_title" required disabled/>
+                    </div>
+                    <div class="col">
+                        <label>Procedure Label (optional): </label>
+                        <input id="proc-label" type="text" name="proc_label" disabled/>
+                    </div>
+                </div>
             
+                <div class="row">
+                    <div class="col">
+                        <h3>Tool List</h3>
+                        <div id="tool-list"></div>
+                        <input name="NUM_TOOLS" id="NUM_TOOLS" type="number" value="0" style="display: none;"/>
+                        <button id="tool-adder" disabled>Add a Tool</button>
+                    </div>
+                    <div class="col">
+                        <h3>Parts List</h3>
+                        <div id="part-list"></div>
+                        <input name="NUM_PARTS" id="NUM_PARTS" type="number" value="0" style="display: none;"/>
+                        <button id="part-adder" disabled>Add a Part</button>
+                    </div>
+                    <div class="col">
+                        <h3>Step List</h3>
+                        <div id="step-list"></div>
+                        <input name="NUM_STEPS" id="NUM_STEPS" type="number" value="0" style="display: none;"/>
+                        <button id="step-adder" disabled>Add a Step</button>
+                    </div>
+                </div>
+            
+                <div class="row">
+                    <div class="col">
+                        <input id="proc-submit" type="submit" disabled></input>
+                    </div>
+                </div>
+                </form>
         </div>
     </div>
-
-    <form action="/build-procedure", method="POST", enctype="multipart/form-data">
     
-    <div class="row">
-        <div class="col">
-            <label>Procedure Name: </label>
-            <input id="proc-title" type="text" name="proc_title" required disabled/>
-            <label>Procedure Label (optional): </label>
-            <input id="proc-label" type="text" name="proc_label" disabled/>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col">
-            <h3>Tool List</h3>
-            <div id="tool-list"></div>
-            <input name="NUM_TOOLS" id="NUM_TOOLS" type="number" value="0" style="display: none;"/>
-            <button id="tool-adder" disabled>Add a Tool</button>
-        </div>
-        <div class="col">
-            <h3>Parts List</h3>
-            <div id="part-list"></div>
-            <input name="NUM_PARTS" id="NUM_PARTS" type="number" value="0" style="display: none;"/>
-            <button id="part-adder" disabled>Add a Part</button>
-        </div>
-        <div class="col">
-            <h3>Step List</h3>
-            <div id="step-list"></div>
-            <input name="NUM_STEPS" id="NUM_STEPS" type="number" value="0" style="display: none;"/>
-            <button id="step-adder" disabled>Add a Step</button>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col">
-            <input id="proc-submit" type="submit" disabled></input>
-        </div>
-    </div>
-    </form>
 
 </div>
 
