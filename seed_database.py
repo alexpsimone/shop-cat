@@ -122,7 +122,7 @@ for user_json in users_json:
 
         # Create 3 Steps for each Procedure.
 
-        possible_imgs = ['demo_1.jpg', 'demo_2.jpg', 'demo_3.jpg', 'demo_4.jpg', 'demo_5.jpg']
+        possible_imgs = ['demo_1.jpg', 'demo_2.jpg', 'demo_3.jpg', 'demo_4.jpg', 'demo_5.jpg', 'heater_core_1.PNG', 'heater_core_3.PNG' 'heater_core_5.PNG' 'heater_core_6.PNG' 'heater_core_9.PNG']
         possible_videos = ["n4vusY2-rkQ", "I-ZNBaZbNF4", "oWqZQX0HvTQ", "UyG-wpTbZDI", "25gYezR_k6c"]
 
         step1 = Step(

@@ -58,28 +58,34 @@
     </div>
 
     <div class="row">
-        <div class="col">
-            <p>Here are the steps in the procedure:</p>
-            <ol>
-                {% for step in steps %}
-                <li>
-                    {{ step.step_text }}         
-                    <img src="/static/img/uploads/{{ step.step_img }}" style="height:100px; width:100px;"/>
-                    {% if step.reference != "No Ref Provided" %}
-                        {% if 'https://' in step.reference %}
-                            <br />
-                            Reference:
-                            <a id="ref" href="{{ step.reference }}">{{ step.reference }}</a>
-                        {% else %}
-                            <p>Step {{ step.order_num }} reference video:</p>
-                            <div id="player-{{ loop.index }}"></div>
-                        {% endif %}
+        <p>Here are the steps in the procedure:</p>
+    </div>
+        {% for step in steps %}
+        <div class="row step align-items-center">
+            <div class="col-1">
+                <p>{{ step.order_num }}</p>
+            </div>
+            <div class="col">
+                <p>{{ step.step_text }}</p>
+            </div>
+            <div class="col-2">         
+                <img class="step-img" src="/static/img/uploads/{{ step.step_img }}"/>
+            </div>
+            <div class="col-2">
+                {% if step.reference != "No Ref Provided" %}
+                    {% if 'https://' in step.reference %}
+                        <br />
+                        Reference:
+                        <a id="ref" href="{{ step.reference }}">{{ step.reference }}</a>
+                    {% else %}
+                        <div id="player-{{ loop.index }}"></div>
                     {% endif %}
-                    <input type="hidden" id="vid-ref-{{ loop.index }}" value="{{ step.reference }}" />
-                </li>
-                {% endfor %}
-            </ol>
-            <input type="hidden" id="num-steps" value="{{ proc_num_steps }}" />
+                {% endif %}
+                <input type="hidden" id="vid-ref-{{ loop.index }}" value="{{ step.reference }}" />
+            </div>
+        </div>
+        {% endfor %}
+        <input type="hidden" id="num-steps" value="{{ proc_num_steps }}" />
         </div>
     </div>
 
