@@ -68,10 +68,10 @@
             <div class="col">
                 <p>{{ step.step_text }}</p>
             </div>
-            <div class="col-2">         
+            <div class="col-3">         
                 <img class="step-img" src="/static/img/uploads/{{ step.step_img }}"/>
             </div>
-            <div class="col-2">
+            <div class="col-3">
                 {% if step.reference != "No Ref Provided" %}
                     {% if 'https://' in step.reference %}
                         <br />

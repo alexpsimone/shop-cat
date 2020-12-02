@@ -41,8 +41,8 @@ function onYouTubeIframeAPIReady () {
 
       $(vidInput).replaceWith(
       player = new YT.Player(`player-${count}`, {
-      height: '195',
-      width: '320',
+      height: '390',
+      width: '640',
       videoId: vidID,
       }));
 
