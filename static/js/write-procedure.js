@@ -48,14 +48,14 @@ function getTools (evt) {
         }
 
         $('#tool-list').append(
-            `<div class="card tool-item ">
+            `<div class="card sub-item">
                 <label>Tool #${NUM_TOOLS}: </label>
                 <select class="custom-select" name="tool_req_${NUM_TOOLS}" class="tool-req" id="tool${NUM_TOOLS}">
                 <option value="">--Please select a tool--</option>
                 ${str}
                 <option value="other">Other (please specify)...</option>
                 </select>
-                <div class="card tool-other">
+                <div class="card sub-other">
                     <label>If other, please specify: </label>
                     <input type="text" class="tool-other-name form-control" name="tool_other_${NUM_TOOLS}" />
                     <br />
@@ -90,29 +90,30 @@ function getParts (evt) {
         }
 
         $('#part-list').append(
-            `<div>
+            `<div class="card sub-item">
                 <label>Part #${NUM_PARTS}: </label>
                 <select class="custom-select" name="part_req_${NUM_PARTS}" class="part-req" id="part${NUM_PARTS}">
                 <option value="">--Please select a part--</option>
                 ${str}
                 <option value="other">Other (please specify)...</option>
                 </select>
-                <br /><label>If other, please specify name: </label>
-                <input type="text" class="part-other-name" name="part_${NUM_PARTS}_other_name" />
-                <br /><label>If other, please specify P/N: </label>
-                <input type="text" name="part_${NUM_PARTS}_other_num" />
-                <br /><label>If other, please specify manuf: </label>
-                <input type="text" name="part_${NUM_PARTS}_other_manuf" />
-                <br /><label>If other, please specify if OEM: </label>
-                <input type="radio" name="oem_${NUM_PARTS}" value="True" />
-                <label for="is_oem_1">OEM</label>
-                <input type="radio" name="oem1" value="False" />
-                <label for="not_oem_1">Aftermarket</label>
-                <input type="radio" name="oem1" value="False" />
-                <label for="unsure_if_oem_1">Not Sure</label>
-                <br />
-                <label>Other Part Image (optional):
-                <input type="file" name="part_img_${NUM_PARTS}" />
+                <div class="card sub-other">
+                    <label for="part-other-name">If other, please specify name: </label>
+                    <input type="text" class="form-control part-other-name" name="part_${NUM_PARTS}_other_name" />
+                    <label for="part-other-num">If other, please specify P/N: </label>
+                    <input type="text" class="form-control part-other-num" name="part_${NUM_PARTS}_other_num" />
+                    <label for="part-other-manuf">If other, please specify manuf: </label>
+                    <input type="text" class="form-control part-other-manuf" name="part_${NUM_PARTS}_other_manuf" />
+                    <label>If other, please specify if OEM: </label>
+                    <input type="radio" class="form-check part-other-isoem" name="oem_${NUM_PARTS}" value="True" />
+                    <label for="part-other-isoem">OEM</label>
+                    <input type="radio" class="form-check part-other-notoem" name="oem1" value="False" />
+                    <label for="part-other-not-oem">Aftermarket</label>
+                    <input type="radio" class="form-check part-other-unsure" name="oem1" value="False" />
+                    <label for="part-other-unsure">Not Sure</label>
+                    <label>Other Part Image (optional):
+                    <input type="file" class="form-control-file" name="part_img_${NUM_PARTS}" />
+                </div>
             </div>`
         );
 
