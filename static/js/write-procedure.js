@@ -104,12 +104,12 @@ function getParts (evt) {
                     <input type="text" class="form-control part-other-num" name="part_${NUM_PARTS}_other_num" />
                     <label for="part-other-manuf">If other, please specify manuf: </label>
                     <input type="text" class="form-control part-other-manuf" name="part_${NUM_PARTS}_other_manuf" />
-                    <label>If other, please specify if OEM: </label>
-                    <input type="radio" class="form-check part-other-isoem" name="oem_${NUM_PARTS}" value="True" />
+                    <label>If other, please specify if OEM: </label><br />
+                    <input type="radio" class="form-check part-check part-other-isoem" name="oem_${NUM_PARTS}" value="True" />
                     <label for="part-other-isoem">OEM</label>
-                    <input type="radio" class="form-check part-other-notoem" name="oem1" value="False" />
+                    <input type="radio" class="form-check part-check part-other-notoem" name="oem1" value="False" />
                     <label for="part-other-not-oem">Aftermarket</label>
-                    <input type="radio" class="form-check part-other-unsure" name="oem1" value="False" />
+                    <input type="radio" class="form-check part-check part-other-unsure" name="oem1" value="False" />
                     <label for="part-other-unsure">Not Sure</label>
                     <label>Other Part Image (optional):
                     <input type="file" class="form-control-file" name="part_img_${NUM_PARTS}" />
@@ -145,23 +145,20 @@ function addStep (evt) {
         
     NUM_STEPS += 1;
 
-    $('#step-list').append(`<div>
+    $('#step-list').append(`<div class="card sub-item">
                             <p>Step ${NUM_STEPS}: </p>
-                            <textarea name="step_text_${NUM_STEPS}"></textarea>
-                            <br />
-                            <input type="checkbox" class="ref-check" id="ref_${NUM_STEPS}"
+                            <textarea class="form-control" name="step_text_${NUM_STEPS}"></textarea>
+                            <input type="checkbox" class="form-check ref-check" id="ref_${NUM_STEPS}"
                             name="ref_${NUM_STEPS}" />
                             <label for="ref_${NUM_STEPS}">Reference?</label>
-                            <br />
                             <label for="ref_text_${NUM_STEPS}">
                             Reference URL (optional, must start with https://): </label>
-                            <input type="url" class="ref-url" name="ref_text_${NUM_STEPS}"
+                            <input type="url" class="form-control ref-url" name="ref_text_${NUM_STEPS}"
                             placeholder="https://example.com"
                             pattern="https://.*" />
-                            <br />
                             <label for="img_file_${NUM_STEPS}">
                             Image (optional): </label>
-                            <input type="file" id="step_img_${NUM_STEPS}"
+                            <input type="file" class="form-control-file" id="step_img_${NUM_STEPS}"
                             name="step_img_${NUM_STEPS}" />
                             </div>`);
     
