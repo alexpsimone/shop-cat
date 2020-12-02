@@ -21,8 +21,8 @@ function getModels (evt) {
             str = str + `<option value="${model}">${model}</option>`;
         }
         $('#model-select').replaceWith(
-            `<select id="model-select" name="model" required>
-            <option value="">--Please select a Model--</option>
+            `<select class="custom-select" id="model-select" name="model" required>
+            <option value="">Vehicle Model</option>
             ${str}
             <option value="other">Other (please specify)...</option>
             </select>`
@@ -49,8 +49,8 @@ function getModelYears (evt) {
             str = str + `<option value="${model_year}">${model_year}</option>`;
         }
         $('#model-year').replaceWith(
-            `<select id="model-year" name="model-year" required>
-            <option value="">--Please select a Model Year--</option>
+            `<select class="custom-select" id="model-year" name="model-year" required>
+            <option value="">Vehicle Model Year</option>
             ${str}
             </select>`
         );

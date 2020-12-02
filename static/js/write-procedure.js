@@ -50,7 +50,7 @@ function getTools (evt) {
         $('#tool-list').append(
             `<div>
                 <label>Tool #${NUM_TOOLS}: </label>
-                <select name="tool_req_${NUM_TOOLS}" class="tool-req" id="tool${NUM_TOOLS}">
+                <select class="custom-select" name="tool_req_${NUM_TOOLS}" class="tool-req" id="tool${NUM_TOOLS}">
                 <option value="">--Please select a tool--</option>
                 ${str}
                 <option value="other">Other (please specify)...</option>
@@ -90,7 +90,7 @@ function getParts (evt) {
         $('#part-list').append(
             `<div>
                 <label>Part #${NUM_PARTS}: </label>
-                <select name="part_req_${NUM_PARTS}" class="part-req" id="part${NUM_PARTS}">
+                <select class="custom-select" name="part_req_${NUM_PARTS}" class="part-req" id="part${NUM_PARTS}">
                 <option value="">--Please select a part--</option>
                 ${str}
                 <option value="other">Other (please specify)...</option>
