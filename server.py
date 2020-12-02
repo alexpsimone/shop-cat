@@ -4,6 +4,7 @@ from jinja2 import StrictUndefined
 from werkzeug.utils import secure_filename
 import requests, json
 import os
+from random import shuffle
 
 from model import db, connect_to_db, User, Procedure, Car, Part, Tool, Step
 from model import PartNum, ProcedureCar, ProcedurePart, ProcedureTool
@@ -268,6 +269,11 @@ def show_homepage():
         user_id = session['current_user']
         user = User.query.filter_by(user_id = user_id).first()
         procedures = Procedure.query.all()
+        print('*************************', procedures)
+        shuffle(procedures)
+        print('*************************', procedures)
+        featured = procedures[:10]
+
         tools = Tool.query.all()
         cars = Car.query.all()
         makes = sorted(set([car.make for car in cars]))
@@ -275,7 +281,7 @@ def show_homepage():
         return render_template(
             "homepage.html",
             user=user,
-            procedures=procedures,
+            procedures=featured,
             tools=tools,
             makes=makes,
         )

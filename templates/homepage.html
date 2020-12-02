@@ -10,42 +10,32 @@
 <div class="container-fluid">
 
     <div class="row vehicles-procs">
-        <div class="col">
-            <h1>Browse all the cars with existing ShopCat procedures:</h1>
-            {% for make in makes %}
-                <form action="/vehicle/{{ make }}">
-                    <input type="submit" value="{{ make }}" class="btn btn-primary"></input>
-                </form>
-            {% endfor %}
-        </div>
+        <p class="welcome-title">Let's fix something.</p>
     </div>
 
     <div class="row">
-        <div class="col">
-            <h1>Browse the available procedures:</h1>
-            {% for procedure in procedures %}
-            <div class="card" style="width: 18em;">
-                <div class="card-body">
-                  <h5 class="card-title">{{ procedure.title }}</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">{{ procedure.label }}</h6>
-                  <p class="card-text">written by {{ procedure.user.username }}</p>
-                  <a href="/procedure/{{ procedure.proc_id }}" class="btn btn-primary">See This Procedure</a>
+        <h1>Browse all the cars with existing ShopCat procedures:</h1>
+        {% for make in makes %}
+            <form action="/vehicle/{{ make }}">
+                <input type="submit" value="{{ make }}" class="btn btn-primary"></input>
+            </form>
+        {% endfor %}
+    </div>
+
+    <div class="row">
+        <h1>Featured Procedures</h1>
+        {% for procedure in procedures %}
+            <div class="col">
+                <div class="card" style="width: 18em;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ procedure.title }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ procedure.label }}</h6>
+                        <p class="card-text">written by {{ procedure.user.username }}</p>
+                        <a href="/procedure/{{ procedure.proc_id }}" class="btn btn-primary">See This Procedure</a>
+                    </div>
                 </div>
             </div>
-            {% endfor %}
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="col">
-            <h1>Browse all the available tools:</h1>
-            <p>Don't see the tool that you need?</p>
-            <p>You can add a new tool when you write or edit a procedure!</p>
-            {% for tool in tools %}
-                <a href = "/tool/{{ tool.tool_id }}">{{ tool.name }}</a>
-                <br />
-            {% endfor %}
-        </div>
+        {% endfor %}
     </div>
 
     <div class="row">
