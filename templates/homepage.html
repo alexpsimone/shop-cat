@@ -9,21 +9,25 @@
 {% block body %}
 <div class="container-fluid">
 
-    <div class="row vehicles-procs">
-        <p class="welcome-title">Let's fix something.</p>
+    <div class="row home-img">
+        <div class="col-1">
+            <p class="welcome-title text-left">Let's fix something.</p>
+        </div>
     </div>
 
-    <div class="row">
-        <h1>Browse all the cars with existing ShopCat procedures:</h1>
+    <div class="row justify-content-center">
+        <h1>Browse ShopCat Procedures by Car</h1>
+    </div>
+    <div class="row justify-content-center">
         {% for make in makes %}
-            <form action="/vehicle/{{ make }}">
-                <input type="submit" value="{{ make }}" class="btn btn-primary"></input>
-            </form>
+            <a class="btn btn-primary" href="/vehicle/{{ make }}">{{ make }}</a>
         {% endfor %}
     </div>
 
-    <div class="row">
+    <div class="row justify-content-center">
         <h1>Featured Procedures</h1>
+    </div>
+    <div class="row justify-content-center">
         {% for procedure in procedures %}
             <div class="col">
                 <div class="card" style="width: 18em;">

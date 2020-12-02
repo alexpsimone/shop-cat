@@ -64,10 +64,15 @@ for car in range(10):
     garage.append(car)
 
 # Create 5 test users.
-for user in range(5):
-    username = f"user{user}"
-    password = f"password{user}"
-    nickname = f"nickname{user}"
+
+with open('data/users.json') as filename:
+    users_json = json.loads(filename.read())
+
+for user_json in users_json:
+
+    username = user_json["username"]
+    password = "pass"
+    nickname = user_json["nickname"]
     avatar_img_url = "cat.jpg"
 
     user = User(username = username, password = password, nickname = nickname, avatar_img_url = avatar_img_url)

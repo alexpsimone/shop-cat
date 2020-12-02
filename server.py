@@ -272,7 +272,7 @@ def show_homepage():
         print('*************************', procedures)
         shuffle(procedures)
         print('*************************', procedures)
-        featured = procedures[:10]
+        featured = procedures[:12]
 
         tools = Tool.query.all()
         cars = Car.query.all()
