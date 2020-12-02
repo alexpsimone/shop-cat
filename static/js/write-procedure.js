@@ -48,18 +48,20 @@ function getTools (evt) {
         }
 
         $('#tool-list').append(
-            `<div>
+            `<div class="card tool-item ">
                 <label>Tool #${NUM_TOOLS}: </label>
                 <select class="custom-select" name="tool_req_${NUM_TOOLS}" class="tool-req" id="tool${NUM_TOOLS}">
                 <option value="">--Please select a tool--</option>
                 ${str}
                 <option value="other">Other (please specify)...</option>
                 </select>
-                <br /><label>If other, please specify: </label>
-                <input type="text" class="tool-other-name" name="tool_other_${NUM_TOOLS}" />
-                <br />
-                <label>Other Tool Image (optional):
-                <input type="file" class="tool-other-img" name="tool_img_${NUM_TOOLS}" />
+                <div class="card tool-other">
+                    <label>If other, please specify: </label>
+                    <input type="text" class="tool-other-name form-control" name="tool_other_${NUM_TOOLS}" />
+                    <br />
+                    <label>Other Tool Image (optional):
+                    <input type="file" class="tool-other-img form-control-file" name="tool_img_${NUM_TOOLS}" />
+                </div>
             </div>`
         );
 

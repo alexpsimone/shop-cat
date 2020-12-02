@@ -36,42 +36,46 @@
             </form>
         </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row align-items-center justify-content-center">
         <p id="selected-vehicle">Select a vehicle to continue.</p>
     </div>
 
-    <div class="row">
+    <div class="row ">
         <div class="col">
             <form action="/build-procedure", method="POST", enctype="multipart/form-data">
-                <div class="form-row justify-content-center">
-                    <div class="col">
-                        <label>Procedure Name: </label>
-                        <input id="proc-title" type="text" name="proc_title" required disabled/>
+                <div class="form-row ">
+                    <div class="col d-flex align-items-center justify-content-center">
+                        <label for="proc-title">Procedure Name: </label>
+                        <input id="proc-title" class="form-control" type="text" name="proc_title" required disabled/>
                     </div>
-                    <div class="col">
-                        <label>Procedure Label (optional): </label>
-                        <input id="proc-label" type="text" name="proc_label" disabled/>
+                    <div class="col d-flex align-items-center justify-content-center">
+                        <label for="proc-label">Procedure Label (optional): </label>
+                        <input id="proc-label" class="form-control" type="text" name="proc_label" disabled/>
                     </div>
                 </div>
             
-                <div class="row">
+                <div class="form-row">
                     <div class="col">
-                        <h3>Tool List</h3>
+                        <div class="form-group d-flex align-items-center justify-content-center">
+                                <h3>Tool List</h3>
+                                <button id="tool-adder" class="btn btn-primary" role="button" disabled>Add a Tool</button>
+                                <input name="NUM_TOOLS" id="NUM_TOOLS" type="number" value="0" style="display: none;"/>
+                        </div>
                         <div id="tool-list"></div>
-                        <input name="NUM_TOOLS" id="NUM_TOOLS" type="number" value="0" style="display: none;"/>
-                        <button id="tool-adder" disabled>Add a Tool</button>
                     </div>
                     <div class="col">
-                        <h3>Parts List</h3>
-                        <div id="part-list"></div>
-                        <input name="NUM_PARTS" id="NUM_PARTS" type="number" value="0" style="display: none;"/>
-                        <button id="part-adder" disabled>Add a Part</button>
+                        <div id="part-list" class="form-group d-flex align-items-center justify-content-center">
+                            <h3>Parts List</h3>
+                            <button id="part-adder" class="btn btn-primary" role="button" disabled>Add a Part</button>
+                            <input name="NUM_PARTS" id="NUM_PARTS" type="number" value="0" style="display: none;"/>
+                        </div>
                     </div>
                     <div class="col">
-                        <h3>Step List</h3>
-                        <div id="step-list"></div>
-                        <input name="NUM_STEPS" id="NUM_STEPS" type="number" value="0" style="display: none;"/>
-                        <button id="step-adder" disabled>Add a Step</button>
+                        <div id="step-list" class="form-group  d-flex align-items-center justify-content-center">
+                            <h3>Step List</h3>
+                            <button id="step-adder" class="btn btn-primary" role="button" disabled>Add a Step</button>
+                            <input name="NUM_STEPS" id="NUM_STEPS" type="number" value="0" style="display: none;"/>
+                        </div>
                     </div>
                 </div>
             
