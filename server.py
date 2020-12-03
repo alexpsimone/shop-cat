@@ -28,7 +28,10 @@ def show_login():
     else:
         return render_template("shopcat.html")
 
-
+############################################################
+#### TODO: Maybe integrate request.json to make smaller? ###
+#### TODO: Use flush so require only one db commit #########
+############################################################
 @app.route("/build-procedure", methods=["POST"])
 def build_procedure():
     """Build a procedure with the info given in the form."""
@@ -265,9 +268,9 @@ def show_homepage():
     if session:
         user_id = session["current_user"]
         user = User.query.filter_by(user_id=user_id).first()
-        procedures = Procedure.query.all()
-        shuffle(procedures)
-        featured = procedures[:12]
+        proc_car_objs = ProcedureCar.query.all()
+        shuffle(proc_car_objs)
+        featured = proc_car_objs[:12]
 
         tools = Tool.query.all()
         cars = Car.query.all()
@@ -276,7 +279,7 @@ def show_homepage():
         return render_template(
             "homepage.html",
             user=user,
-            procedures=featured,
+            proc_car_objs=featured,
             tools=tools,
             makes=makes,
         )

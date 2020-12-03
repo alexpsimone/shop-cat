@@ -11,7 +11,10 @@ table {
 td {
     padding: 1em;
 }
-
+.btn-primary {
+    background-color: #335C67;
+    border-color: #335C67;
+}
 .align-items-center {
     align-items: center !important;
 }
@@ -136,4 +139,8 @@ background-size: cover;
 .edit-proc {
     margin: 2%;
     padding: 2%;
+}
+.label-header {
+    font-size: 1.5em;
+    font-style: italic;
 }

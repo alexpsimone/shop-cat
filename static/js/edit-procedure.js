@@ -248,11 +248,11 @@ function addVehicle (evt) {
     evt.preventDefault();
 
     $('#vehicle-modal').on('shown.bs.modal', function () {
-        $('#car-add').trigger('focus')
-      })
+        $('#car-add').trigger('focus');
 
-    $('#make').on('change', getModelYears);
-    $('#vehicle-submit').on('click', selectAddlVehicle);
+      });
+      $('#make').on('change', getModelYears);
+      $('#vehicle-submit').on('click', selectAddlVehicle);
 }
 
 function removeVehicle (evt) {

@@ -28,14 +28,14 @@
         <h1>Featured Procedures</h1>
     </div>
     <div class="row justify-content-center">
-        {% for procedure in procedures %}
+        {% for proc_car_obj in proc_car_objs %}
             <div class="col">
                 <div class="card" style="width: 18em;">
                     <div class="card-body">
-                        <h5 class="card-title">{{ procedure.title }}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">{{ procedure.label }}</h6>
-                        <p class="card-text">written by {{ procedure.user.username }}</p>
-                        <a href="/procedure/{{ procedure.proc_id }}" class="btn btn-primary">See This Procedure</a>
+                        <h5 class="card-title">{{ proc_car_obj.proc.title }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ proc_car_obj.proc.label }}</h6>
+                        <p class="card-text">{{ proc_car_obj.car.model_year }} {{ proc_car_obj.car.make }} {{ proc_car_obj.car.model }}</p>
+                        <a href="/procedure/{{ proc_car_obj.proc.proc_id }}" class="btn btn-primary">See This Procedure</a>
                     </div>
                 </div>
             </div>
