@@ -1,0 +1,82 @@
+[
+    {
+        "title": "Ball Joint Replacement",
+        "label": "repair"
+    },
+    {
+        "title": "Coolant Flush",
+        "label": "regular maintenance"
+    },
+    {
+        "title": "Cabin Air Filter Replacement",
+        "label": "regular maintenance"
+    },
+    {
+        "title": "A/C Compressor Replacement",
+        "label": "repair"
+    },
+    {
+        "title": "Oil Change",
+        "label": "regular maintenance"
+    },
+    {
+        "title": "Exhaust Gasket Replacement",
+        "label": "repair"
+    },
+    {
+        "title": "Spark Plug Gap Adjustment",
+        "label": "regular maintenance"
+    },
+    {
+        "title": "Engine Swap - L16 to SR20DET",
+        "label": "modification"
+    },
+    {
+        "title": "Roll Fender Lips",
+        "label": "modification"
+    },
+    {
+        "title": "Air Bag Dash Light Diagnosis",
+        "label": "repair"
+    },
+    {
+        "title": "Carpet Deep Cleaning",
+        "label": "cleaning"
+    },
+    {
+        "title": "Tire Rotation",
+        "label": "regular maintenance"
+    },
+    {
+        "title": "Headlight Height Adjustment",
+        "label": "regular maintenance"
+    },
+    {
+        "title": "Brake Light Replacement",
+        "label": "repair"
+    },
+    {
+        "title": "Water Pump Replacement",
+        "label": "repair"
+    },
+    {
+        "title": "Adjust Tensioner",
+        "label": "repair"
+    },
+    {
+        "title": "Steering Wheel Swap",
+        "label": "modification"
+    },
+    {
+        "title": "Door Interior Panel Replacement",
+        "label": "repair"
+    },
+    {
+        "title": "Windshield Wiper Replacement",
+        "label": "regular maintenance"
+    },
+    {
+        "title": "Windshield Crack Repair",
+        "label": "repair"
+    }
+]

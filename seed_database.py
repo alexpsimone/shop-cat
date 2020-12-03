@@ -70,6 +70,9 @@ for car in range(10):
 with open('data/users.json') as filename:
     users_json = json.loads(filename.read())
 
+with open('data/procedures.json') as filename:
+    procs_json = json.loads(filename.read())
+
 for user_json in users_json:
 
     username = user_json["username"]
@@ -84,8 +87,9 @@ for user_json in users_json:
     for x in range(3):
 
         # Create 3 procedures for each new user.
-        title = f"title{user.user_id}_{x}"
-        label = choice(["regular maintenance", "modification/upgrade", "repair", "cleaning"])
+        proc_json = choice(procs_json)
+        title = proc_json['title']
+        label = proc_json['label']
 
         procedure = Procedure(title = title, label = label, user = user)
         db.session.add(procedure)

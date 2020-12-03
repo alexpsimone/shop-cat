@@ -63,17 +63,17 @@
 
                 <div class="col-4">
                     <h1>Label</h1>
-                    <select class="custom-select" id="proc-label" name="proc_label" value="{{ procedure.label }}">
+                    <select class="custom-select" id="proc-label" name="proc_label" value="{{ procedure.label }}" required>
                         <option value="">Label</option>
                         {% if procedure.label == "regular maintenance" %}
                         <option value="regular maintenance" selected>regular maintenance</option>
                         {% else %}
                         <option value="regular maintenance">regular maintenance</option>
                         {% endif %}
-                        {% if procedure.label == "modification/upgradee" %}
-                        <option value="modification/upgrade" selected>modification/upgrade</option>
+                        {% if procedure.label == "modification" %}
+                        <option value="modification" selected>modification</option>
                         {% else %}
-                        <option value="modification/upgrade">modification/upgrade</option>
+                        <option value="modification">modification</option>
                         {% endif %}
                         {% if procedure.label == "repair" %}
                         <option value="repair" selected>repair</option>

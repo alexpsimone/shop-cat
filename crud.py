@@ -106,7 +106,7 @@ def create_part(req_name, other_name, part_img, other_num, other_manuf, is_oem):
 
 
 def update_procedure(
-    proc_id, title, remove_label, label, cars, tool_data, part_data, step_data
+    proc_id, title, label, cars, tool_data, part_data, step_data
 ):
     """Update a Procedure with given information."""
 
@@ -116,12 +116,7 @@ def update_procedure(
     proc.title = title
 
     # Update procedure.label.
-    if remove_label:
-        proc.label = None
-    elif label == "":
-        proc.label = None
-    else:
-        proc.label = label
+    proc.label = label
 
     #############################################################
     ############ TODO: refactor w/o list indexing!! #############

@@ -356,10 +356,8 @@ def rebuild_procedure():
     # Retrieve the procedure title.
     title = request.form.get("title")
 
-    # Retrieve the label, if it exists.
-    # Also retrieve whether or not the label is marked for removal.
-    remove_label = request.form.get("label-remove")
-    label = request.form.get("label")
+    # Retrieve the label.
+    label = request.form.get("proc_label")
 
     # Retrieve all cars listed on the form.
     cars = request.form.getlist("cars")
@@ -460,7 +458,7 @@ def rebuild_procedure():
         step_data[step]['img'] = filename
 
     crud.update_procedure(
-        proc_id, title, remove_label, label, cars, tool_data, part_data, step_data
+        proc_id, title, label, cars, tool_data, part_data, step_data
     )
 
     return redirect(f"/procedure/{proc_id}")
