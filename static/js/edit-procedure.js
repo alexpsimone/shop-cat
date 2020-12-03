@@ -243,38 +243,13 @@ function requireOtherPartName (evt) {
     };
 }
 
-function getModelYears (evt) {
-
-    evt.preventDefault();
-
-    const formData = {
-        make: $('#make').val(),
-    };
-
-    $.get('/get-model-years.json', formData, (res) => {
-
-        let str = '';
-        for (const model_year of res) {
-            str = str + `<option value="${model_year}">${model_year}</option>`;
-        }
-        $('#model-year').replaceWith(
-            `<select id="model-year" class="custom-select" name="model-year" required>
-            <option value="">Vehicle Model Year</option>
-            ${str}
-            </select>`
-        );
-
-        $('#model-year').on('change', getModels);
-    });
-
-    
-}
 
 
 function addVehicle (evt) {
 
     evt.preventDefault();
 
+    // $('#car-add-form').show();
     $('#vehicle-modal').on('shown.bs.modal', function () {
 
         $('#car-add').trigger('focus');
@@ -303,6 +278,32 @@ function removeVehicle (evt) {
                                 style="display: none;"/>`);
 }
 
+function getModelYears (evt) {
+
+    evt.preventDefault();
+
+    const formData = {
+        make: $('#make').val(),
+    };
+
+    $.get('/get-model-years.json', formData, (res) => {
+
+        let str = '';
+        for (const model_year of res) {
+            str = str + `<option value="${model_year}">${model_year}</option>`;
+        }
+        $('#model-year').replaceWith(
+            `<select id="model-year" class="custom-select" name="model-year" required>
+            <option value="">Vehicle Model Year</option>
+            ${str}
+            </select>`
+        );
+
+        $('#model-year').on('change', getModels);
+    });
+
+    
+}
 
 function getModels (evt) {
 
@@ -354,31 +355,31 @@ function selectAddlVehicle (evt) {
     if (!formData['model'] | !formData['modelYear'] | !formData['make']) {
         alert('Please fill out vehicle selection form completely.');
     } else {
-    $.post('/vehicle-select.json', formData, (res) => {
-        $('#cars').append(`<tr id="row-${res['model_year']}-${res['make']}-${res['model']}">
-                                <td>
-                                <input name="cars" class="form-control" value="${res['model_year']}-${res['make']}-${res['model']}" disabled />
-                                </td>
-                                <td>
-                                    <button class="remove-vehicle btn btn-primary" value="${res['model_year']}-${res['make']}-${res['model']}">
-                                    Remove Vehicle
-                                    </button>
-                                </td>
-                            </tr>`)
+        $.post('/vehicle-select.json', formData, (res) => {
+            $('#cars').append(`<tr id="row-${res['model_year']}-${res['make']}-${res['model']}">
+                                    <td>
+                                    <input name="cars" class="form-control" value="${res['model_year']}-${res['make']}-${res['model']}" disabled />
+                                    </td>
+                                    <td>
+                                        <button class="remove-vehicle btn btn-primary" value="${res['model_year']}-${res['make']}-${res['model']}">
+                                        Remove Vehicle
+                                        </button>
+                                    </td>
+                                </tr>`)
 
-        $('button.remove-vehicle').off();
-        $('button.remove-vehicle').on('click', removeVehicle);
-    });
+            $('button.remove-vehicle').off();
+            $('button.remove-vehicle').on('click', removeVehicle);
+        });
 
-    $('#NUM_CARS').replaceWith(`<input name="NUM_CARS" 
-                                id="NUM_CARS" type="number" 
-                                value="${numCars}" 
-                                style="display: none;"/>`);
+        $('#NUM_CARS').replaceWith(`<input name="NUM_CARS" 
+                                    id="NUM_CARS" type="number" 
+                                    value="${numCars}" 
+                                    style="display: none;"/>`);
 
-    $('checkbox.car-remove').attr('disabled', false);
-    $('#car-add-form').hide();
-    $('#model-year').attr('disabled', true);
-    $('#model').attr('disabled', true);
+        $('checkbox.car-remove').attr('disabled', false);
+        $('#car-add-form').hide();
+        $('#model-year').attr('disabled', true);
+        $('#model').attr('disabled', true);
     };
 }
 
