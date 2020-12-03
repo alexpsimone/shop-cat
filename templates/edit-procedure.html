@@ -9,203 +9,269 @@
 
 
 {% block body %}
+  
+  <!-- Modal -->
+  <div class="modal fade" id="vehicle-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Select a Vehicle</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="/vehicle-select.json" method="POST">
+                <div  class="write-proc form-group sub-item">
+                    <select class="custom-select" id="make" name="make" required>
+                        <option value="">Vehicle Make</option>
+                        {% for make in sorted_makes %}
+                        <option value="{{ make }}">{{ make }}</option>
+                        {% endfor %}
+                        <option value="other">Other (please specify)...</option>
+                    </select>
+                    <select class="custom-select" id="model-year" name="model-year" disabled>
+                        <option value="">Vehicle Model Year</option>
+                    </select>
+                    <select class="custom-select" id="model-select" name="model" disabled>
+                    <option value="">Vehicle Model</option>
+                    </select>
+                    <input id="vehicle-submit" class="btn btn-primary" type="submit" disabled>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+
 <div class="container-fluid">
-
+    <div class="row">
+        
+    </div>
     <form action="/rebuild-procedure", method="POST", enctype="multipart/form-data">
+
+        <div class="row">
+            <div class="col border edit-proc">
+                <input name="proc_id" id="proc_id" type="number" value="{{ procedure.proc_id }}" style="display: none;"/>
     
-    <div class="row">
-        <div class="col">
-            <input name="proc_id" id="proc_id" type="number" value="{{ procedure.proc_id }}" style="display: none;"/>
+                <div class="col-4 ">
+                    <h1>Title</h1>
+                    <input type="text" class="form-control" name="title" id="title", value="{{ procedure.title }}" />
+                </div>
 
-            <h1>Title:</h1>
-            <input type="text" name="title" id="title", value="{{ procedure.title }}" />
+                <div class="col-4">
+                    <h1>Label</h1>
+                    <select class="custom-select" id="proc-label" name="proc_label" value="{{ procedure.label }}">
+                        <option value="">Label</option>
+                        {% if procedure.label == "regular maintenance" %}
+                        <option value="regular maintenance" selected>regular maintenance</option>
+                        {% else %}
+                        <option value="regular maintenance">regular maintenance</option>
+                        {% endif %}
+                        {% if procedure.label == "modification/upgradee" %}
+                        <option value="modification/upgrade" selected>modification/upgrade</option>
+                        {% else %}
+                        <option value="modification/upgrade">modification/upgrade</option>
+                        {% endif %}
+                        {% if procedure.label == "repair" %}
+                        <option value="repair" selected>repair</option>
+                        {% else %}
+                        <option value="repair">repair</option>
+                        {% endif %}
+                        {% if procedure.label == "cleaning" %}
+                        <option value="cleaning" selected>cleaning</option>
+                        {% else %}
+                        <option value="cleaning">cleaning</option>
+                        {% endif %}
+                    </select>
+                </div>
+            </div>
         </div>
-        <div class="col">
-            <h1>Label (optional):</h1>
-            {% if procedure.label %}
-                <input type="text" name="label" id="label" value="{{ procedure.label }}" />
-            {% else %}
-                <input type="text" name="label" id="label" />
-            {% endif %}
-            <br />
-            <input type="checkbox" name="label-remove" id="label-remove" />
-            <label for="label-remove">Remove this label.</label>
+
+        <div class="row">
+            <div class="col border edit-proc">
+                    <input name="NUM_CARS" id="NUM_CARS" type="hidden" value="{{ num_cars }}" />
+                    <h1>Applicable Vehicles</h1>
+                    <table id="cars">
+                        {% for proc_car in proc_car_obj %}
+                        <tr id="row-{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}">
+                            <td>
+                                <input  class="form-control"
+                                        name="cars" 
+                                        value="{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}" 
+                                        disabled />
+                            </td>
+                            <td>
+                                <button class="remove-vehicle btn btn-primary" 
+                                        value="{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}">
+                                        Remove Vehicle
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <button id="car-add" class="btn btn-primary" data-toggle="modal" data-target="#vehicle-modal">Add a Vehicle</button>
+            </div>
         </div>
-        <div class="col">
-            <input name="NUM_CARS" id="NUM_CARS" type="hidden" value="{{ num_cars }}" />
-            <h1>Applicable Vehicles:</h1>
-            <table id="cars">
-                {% for proc_car in proc_car_obj %}
-                <tr id="row-{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}">
-                    <td>
-                        <input name="cars" 
-                                value="{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}" 
-                                disabled />
-                    </td>
-                    <td>
-                        <button class="remove-vehicle" 
-                                value="{{ proc_car.car.model_year }}-{{ proc_car.car.make }}-{{ proc_car.car.model }}">
-                                Remove
-                        </button>
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
-            <br />
-            <button id="car-add">Add a Vehicle</button>
+
+        <div class="row">
+            <div class="col border edit-proc">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h1>Tool Editor</h1>
+                        <input name="NUM_TOOLS" id="NUM_TOOLS" type="hidden" value="{{ num_tools }}" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <table id="tools">
+                        {% for proc_tool in proc_tool_obj %}
+                            <tr class="border-top">
+                                <td class="name-order">
+                                    <input type="hidden" class="tool-order" name="order" value="{{ loop.index }}" />
+                                    <input type="hidden" class="tool-id" name="tool-id-{{ loop.index }}" value="{{ proc_tool.tool.tool_id }}" />
+                                    <input type="hidden" class="tool-other-name" name="tool-other-name-{{ loop.index }}" value="" />
+                                    <input type="text" class="tool-name form-control" name="tool-name-{{ loop.index }}" value="{{ proc_tool.tool.name }}" disabled required/>
+                                    <button class="name edit btn btn-primary">Edit Name</button>
+                                </td>
+                                <td class="img">
+                                    <input type="hidden" class="tool-existing-img" name="tool-existing-img-{{ loop.index }}" value="{{ proc_tool.tool.tool_img }}" />
+                                    <p>Current image:</p>
+                                    <p>{{ proc_tool.tool.tool_img }}</p>
+                                    <input type="file" class="tool-img form-control-file" name="tool-img-{{ loop.index }}" disabled/>
+                                    <br />
+                                    <button class="img edit btn btn-primary">Edit Img</button>
+                                    <button class="del-img btn btn-primary">Restore Default Img</button>
+                                </td>
+                                <td>
+                                    <button class="remove-tool btn btn-primary">Remove Tool</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="row border-top">
+                    <div class="col">
+                        <button id="tool-add" class="btn btn-primary">Add a Tool</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col border edit-proc">
+                <div class="row">
+                    <div class="col">
+                        <input name="NUM_PARTS" id="NUM_PARTS" type="hidden" value="{{ num_parts }}" />
+                        <h1>Part Editor</h1>
+                    </div>
+                </div>
+                <div class="row">
+                <table id="parts">
+                    {% for proc_part in proc_part_obj %}
+                    <tr class="border-top">
+                        <td class="name-order">
+                            <input type="hidden" class="part-order" name="order" value="{{ loop.index }}" />
+                            <input type="hidden" class="part-id" name="part-id-{{ loop.index }}" value="{{ proc_part.part.part_id }}" />
+                            <input type="hidden" class="part-other-name" name="part-other-name-{{ loop.index }}" value="" />
+                            <input type="text" class="part-name form-control" name="part-name-{{ loop.index }}" value="{{ proc_part.part.name }}" disabled required/>
+                            <br />
+                            <button class="name edit btn btn-primary">Edit Name</button>
+                        </td>
+                        <td class="img">
+                            <input type="hidden" class="part-existing-img" name="part-existing-img-{{ loop.index }}" value="{{ proc_part.part.part_img }}" />
+                            <p>Current image:</p>
+                            <p>{{ proc_part.part.part_img }}</p>
+                            <input type="file" class="part-img form-control-file" name="part-img-{{ loop.index }}" disabled/>
+                            <br />
+                            <button class="img edit btn btn-primary">Edit Img</button>
+                            <button class="del-img btn btn-primary">Restore Default Img</button>
+                        </td>
+                        <td>
+                            <button class="remove-part btn btn-primary">Remove Part</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                </div>
+                <div class="row border-top">
+                    <div class="col">
+                        <button id="part-add" class="btn btn-primary">Add a Part</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col border edit-proc">
+                <div class="row">
+                    <div class="col">
+                        <input name="NUM_STEPS" id="NUM_STEPS" type="hidden" value="{{ num_steps }}" />
+                        <h1>Procedure Step Editor</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <table id="steps">
+                        {% for step in steps %}
+                        <tr class="border-top">
+                            <td class="name-order">
+                                <input type="hidden" class="step-order" name="step-order-{{ loop.index }}" value="{{ loop.index }}" />
+                                <input type="hidden" class="step-id" name="step-id-{{ loop.index }}" value="{{ step.step_id }}" />
+                                <textarea name="step-text" class="form-control" required>{{ step.step_text }}</textarea>
+                            </td>
+                            <td class="ref">
+                                {% if step.reference == "No Ref Provided" %}
+                                    <input type="url" class="step-ref form-control" name="step-ref-{{ loop.index }}"
+                                            placeholder="https://example.com" pattern="https://.*" disabled/>
+                                {% else %}
+                                    <input type="url" class="step-ref form-control" name="step-ref-{{ loop.index }}"
+                                                placeholder="https://example.com" pattern="https://.*" 
+                                                value="{{ step.reference }}" disabled/>
+                                {% endif %}
+                                <br />
+                                <button class="edit ref btn btn-primary">Edit Ref</button>
+                                <button class="del-ref btn btn-primary">Remove Ref</button>
+                            </td>
+                            <td class="img">
+                                <input type="hidden" class="step-existing-img form-control" name="step-existing-img-{{ loop.index }}" value="{{ step.step_img }}" />
+                                <p>Current image:</p>
+                                <p>{{ step.step_img }}</p>
+                                <input type="file" class="step-img-edit form-control-file" name="step-img-{{ loop.index }}" disabled />
+                                <br />
+                                <button class="edit img btn btn-primary">Edit Img</button>
+                                <button class="del-img btn btn-primary">Restore Default Img</button>
+                            </td>
+                            <td class="buttonrow">
+                                <button class="remove-step btn btn-primary">Remove Step</button>
+                            </td>
+                            <td class="buttonrow">
+                                <button class="move up btn btn-primary">UP</button>
+                            </td>
+                            <td class="buttonrow">
+                                <button class="move down btn btn-primary">DOWN</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="row border-top">
+                    <button id="step-add" class="btn btn-primary">Add a Step</button>
+                </div>
+            </div>
+        </div>
+
+        </div class="row">
+            <div class="col">
+                <input type="submit" class="btn btn-primary border-top">
+            </div>
         </div>
     </div>
+    </form>
 
-    <div class="row">
-        <div class="col">
-            <h1>Required tools:</h1>
-            <button id="tool-add">Add a Tool</button>
-            <input name="NUM_TOOLS" id="NUM_TOOLS" type="hidden" value="{{ num_tools }}" />
-            <table id="tools">
-                {% for proc_tool in proc_tool_obj %}
-                <tr>
-                    <td class="name-order">
-                        <input type="hidden" class="tool-order" name="order" value="{{ loop.index }}" />
-                        <input type="hidden" class="tool-id" name="tool-id-{{ loop.index }}" value="{{ proc_tool.tool.tool_id }}" />
-                        <input type="hidden" class="tool-other-name" name="tool-other-name-{{ loop.index }}" value="" />
-                        <input type="text" class="tool-name" name="tool-name-{{ loop.index }}" value="{{ proc_tool.tool.name }}" disabled required/>
-                        <br />
-                        <button class="name edit">Edit Name</button>
-                    </td>
-                    <td class="img">
-                        <input type="hidden" class="tool-existing-img" name="tool-existing-img-{{ loop.index }}" value="{{ proc_tool.tool.tool_img }}" />
-                        <p>Current image:</p>
-                        <p>{{ proc_tool.tool.tool_img }}</p>
-                        <input type="file" class="tool-img" name="tool-img-{{ loop.index }}" disabled/>
-                        <br />
-                        <button class="img edit">Edit Img</button>
-                        <button class="del-img">Restore Default Img</button>
-                    </td>
-                    <td>
-                        <button class="remove-tool">Remove</button>
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
-        <div class="col">
-            <input name="NUM_PARTS" id="NUM_PARTS" type="hidden" value="{{ num_parts }}" />
-            <h1>Required parts:</h1>
-            <button id="part-add">Add a Part</button>
-            <table id="parts">
-                {% for proc_part in proc_part_obj %}
-                <tr>
-                    <td class="name-order">
-                        <input type="hidden" class="part-order" name="order" value="{{ loop.index }}" />
-                        <input type="hidden" class="part-id" name="part-id-{{ loop.index }}" value="{{ proc_part.part.part_id }}" />
-                        <input type="hidden" class="part-other-name" name="part-other-name-{{ loop.index }}" value="" />
-                        <input type="text" class="part-name" name="part-name-{{ loop.index }}" value="{{ proc_part.part.name }}" disabled required/>
-                        <br />
-                        <button class="name edit">Edit Name</button>
-                    </td>
-                    <td class="img">
-                        <input type="hidden" class="part-existing-img" name="part-existing-img-{{ loop.index }}" value="{{ proc_part.part.part_img }}" />
-                        <p>Current image:</p>
-                        <p>{{ proc_part.part.part_img }}</p>
-                        <input type="file" class="part-img" name="part-img-{{ loop.index }}" disabled/>
-                        <br />
-                        <button class="img edit">Edit Img</button>
-                        <button class="del-img">Restore Default Img</button>
-                    </td>
-                    <td>
-                        <button class="remove-part">Remove</button>
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col">
-            <input name="NUM_STEPS" id="NUM_STEPS" type="hidden" value="{{ num_steps }}" />
-        <h1>Procedure Steps:</h1>
-        <table id="steps">
-            {% for step in steps %}
-            <tr>
-                <td class="name-order">
-                    <input type="hidden" class="step-order" name="step-order-{{ loop.index }}" value="{{ loop.index }}" />
-                    <input type="hidden" class="step-id" name="step-id-{{ loop.index }}" value="{{ step.step_id }}" />
-                    <input name="step-text" value="{{ step.step_text }}" required/>
-                </td>
-                <td class="ref">
-                    {% if step.reference == "No Ref Provided" %}
-                        <input type="url" class="step-ref" name="step-ref-{{ loop.index }}"
-                                placeholder="https://example.com" pattern="https://.*" disabled/>
-                    {% else %}
-                        <input type="url" class="step-ref" name="step-ref-{{ loop.index }}"
-                                    placeholder="https://example.com" pattern="https://.*" 
-                                    value="{{ step.reference }}" disabled/>
-                    {% endif %}
-                    <br />
-                    <button class="edit ref">Edit Ref</button>
-                    <button class="del-ref">Remove Ref</button>
-                </td>
-                <td class="img">
-                    <input type="hidden" class="step-existing-img" name="step-existing-img-{{ loop.index }}" value="{{ step.step_img }}" />
-                    <p>Current image:</p>
-                    <p>{{ step.step_img }}</p>
-                    <input type="file" class="step-img" name="step-img-{{ loop.index }}" disabled />
-                    <br />
-                    <button class="edit img">Edit Img</button>
-                    <button class="del-img">Restore Default Img</button>
-                </td>
-                <td>
-                    <button class="remove-step">Remove Step</button>
-                </td>
-                <td>
-                    <button class="move up">UP</button>
-                </td>
-                <td>
-                    <button class="move down">DOWN</button>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
-        <br />
-        <button id="step-add">Add a Step</button>
-        </div>
-    </div>
-
-    </div class="row">
-        <div class="col">
-            <input type="submit">
-        </div>
-    </div>
-    
-</form>
-
-
-
-<form id="car-add-form" action="/vehicle-select.json" method="POST" style="display: none;">
-    <label>Car Make:</label>
-    <select id="make" name="make" required>
-    <option value="">--Please select a Make--</option>
-    {% for make in sorted_makes %}
-    <option value="{{ make }}">{{ make }}</option>
-    {% endfor %}
-    <option value="other">Other (please specify)...</option>
-    </select>
-    <br />
-    <label>Car Model Year:</label>
-    <select id="model-year" name="model-year" disabled>
-        <option value="">--Please select a Model Year--</option>
-    </select>
-    <br />
-    <label>Car Model:</label>
-    <select id="model-select" name="model" disabled>
-    <option value="">--Please select a Model--</option>
-    </select>
-    <br />
-    <input id="vehicle-submit" type="submit" disabled>
-</form>
 </div>
-<br />
-<a href="/home">Return Home</a>
-</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>  
 {% endblock %}

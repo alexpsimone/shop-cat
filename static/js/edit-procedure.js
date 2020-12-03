@@ -1,17 +1,5 @@
 'use strict';
 
-// Toggle the label change field to active/inactive for changes based on
-// checkbox selection. Checked box means the user wishes to delete the label,
-// so make the label unavailable for edits.
-$('#label-remove').on('change', () => {
-    if ($('#label-remove').is(':checked')) {
-        $('#label').prop('disabled', true);
-    } else {
-        $('#label').prop('disabled', false);
-    };
-});
-
-
 function addTool (evt) {
 
     evt.preventDefault();
@@ -27,26 +15,26 @@ function addTool (evt) {
         }
 
         $('#tools').append(
-            `<tr>
+            `<tr class="border-top">
                 <td class="name-order">
                 <input type="hidden" class="tool-order" name="order" value="${NUM_TOOLS}" />
                 <input type="hidden" class="tool-id" name="tool-id-${NUM_TOOLS}" value="NEW" />
                 <label>New Tool: </label>
-                <select class="tool-name" name="tool-name-${NUM_TOOLS}" required>
-                <option value="">--Please select a tool--</option>
+                <select class="tool-name custom-select" name="tool-name-${NUM_TOOLS}" required>
+                <option value="">Please Select a Tool</option>
                 ${str}
                 <option value="other">Other (please specify)...</option>
                 </select>
-                <br /><label>If other, please specify: </label>
-                <input type="text" class="tool-other-name" name="tool-other-name-${NUM_TOOLS}" />
+                <label for="tool-other-name">If other, please specify: </label>
+                <input type="text" class="tool-other-name form-control" name="tool-other-name-${NUM_TOOLS}" />
                 </td>
                 <td class="img">
-                <input type="hidden" class="tool-existing-img" name="tool-existing-img-${NUM_TOOLS}" value="toolbox.png" />
-                <label>If other, add image (optional): </label>
-                <input type="file" class="tool-img" name="tool-img-${NUM_TOOLS}" />
+                <input type="hidden" class="tool-existing-img form-control" name="tool-existing-img-${NUM_TOOLS}" value="toolbox.png" />
+                <label for="tool-img">If other, add image (optional): </label>
+                <input type="file" class="tool-img form-control-file" name="tool-img-${NUM_TOOLS}" />
                 </td>
                 <td>
-                <button class="remove-tool">Remove</button>
+                <button class="remove-tool btn btn-primary">Remove Tool</button>
                 </td>
             </tr>`
         );
@@ -191,38 +179,40 @@ function addPart (evt) {
             str = str + `<option value="${part}">${part}</option>`;
         }
         $('#parts').append(
-            `<tr>
+            `<tr class="border-top">
                 <td class="name-order">
                     <input type="hidden" class="part-order" name="order" value="${NUM_PARTS}" />
                     <input type="hidden" class="part-id" name="part-id-${NUM_PARTS}" value="NEW" />
-                    <label>New Part: </label>
-                    <select class="part-name" name="part-name-${NUM_PARTS}" required>
-                    <option value="">--Please select a part--</option>
+                    <label for="part-name">New Part: </label>
+                    <select class="part-name custom-select" name="part-name-${NUM_PARTS}" required>
+                    <option value="">Please Select a Part</option>
                     ${str}
                     <option value="other">Other (please specify)...</option>
                     </select>
-                    <br /><label>If other, please specify name: </label>
-                    <input type="text" class="part-other-name" name="part-other-name-${NUM_PARTS}" />
-                    <br /><label>If other, please specify P/N: </label>
-                    <input type="text" class="part-other-pn" name="part-other-pn-${NUM_PARTS}" />
-                    <br /><label>If other, please specify manuf: </label>
-                    <input type="text" class="part-other-manuf" name="part-other-manuf-${NUM_PARTS}" />
-                    <br /><label>If other, please specify if OEM: </label>
-                    <input type="radio" class="part-other-oem" name="part-other-oem-${NUM_PARTS}" value="True" />
+                    <div class="card sub-other">
+                    <br /><label for="part-other-name">If other, please specify name: </label>
+                    <input type="text" class="part-other-name form-control" name="part-other-name-${NUM_PARTS}" />
+                    <br /><label for="part-other-pn">If other, please specify P/N: </label>
+                    <input type="text" class="part-other-pn form-control" name="part-other-pn-${NUM_PARTS}" />
+                    <br /><label for="part-other-manuf">If other, please specify manuf: </label>
+                    <input type="text" class="part-other-manuf form-control" name="part-other-manuf-${NUM_PARTS}" />
+                    <br /><label for="part-other-oem">If other, please specify if OEM: </label>
+                    <br /><input type="radio" class="form-check part-check" name="part-other-oem-${NUM_PARTS}" value="True" />
                     <label for="is_oem_1">OEM</label>
-                    <input type="radio" name="oem1" value="False" />
+                    <input type="radio" class="form-check part-check" name="oem1" value="False" />
                     <label for="not_oem_1">Aftermarket</label>
-                    <input type="radio" name="oem1" value="False" />
+                    <input type="radio" class="form-check part-check" name="oem1" value="False" />
                     <label for="unsure_if_oem_1">Not Sure</label>
+                    </div>
                 </td>
                 <td class="img">
-                    <input type="hidden" class="part-existing-img" name="part-existing-img-${NUM_PARTS}" value="toolbox.png" />
-                    <label>Part Image (optional):</label>
-                    <input type="file" class="part-img" name="part-img-${NUM_PARTS}" />
-                    <button class="del-img">Restore Default Img</button>
+                    <input type="hidden" class="part-existing-img form-control" name="part-existing-img-${NUM_PARTS}" value="toolbox.png" />
+                    <label for="part-img">Part Image (optional):</label>
+                    <input type="file" class="part-img form-control-file" name="part-img-${NUM_PARTS}" />
+                    <button class="del-img btn btn-primary">Restore Default Img</button>
                 </td>
                 <td>
-                    <button class="remove-part">Remove</button>
+                    <button class="remove-part btn btn-primary">Remove Part</button>
                 </td>
             </tr>`
         );
@@ -252,14 +242,18 @@ function requireOtherPartName (evt) {
         $(otherName).attr('required', false);
     };
 }
+
 function addVehicle (evt) {
 
     evt.preventDefault();
-   
-    $('#car-add-form').show()
 
+    $('#vehicle-modal').on('shown.bs.modal', function () {
+        $('#car-add').trigger('focus')
+      })
+
+    $('#make').on('change', getModelYears);
+    $('#vehicle-submit').on('click', selectAddlVehicle);
 }
-
 
 function removeVehicle (evt) {
 
@@ -298,16 +292,16 @@ function getModels (evt) {
             str = str + `<option value="${model}">${model}</option>`;
         }
         $('#model-select').replaceWith(
-            `<select id="model-select" name="model" required>
-            <option value="">--Please select a Model--</option>
+            `<select id="model-select" class="custom-select" name="model" required>
+            <option value="">Vehicle Model</option>
             ${str}
-            <option value="other">Other (please specify)...</option>
             </select>`
         );
     })
 
     $('#model-select').attr('disabled', false);
     $('#vehicle-submit').attr('disabled', false);
+    $('#vehicle-submit').on('click', hideVehicleAdder);
 }
 
 function getModelYears (evt) {
@@ -325,8 +319,8 @@ function getModelYears (evt) {
             str = str + `<option value="${model_year}">${model_year}</option>`;
         }
         $('#model-year').replaceWith(
-            `<select id="model-year" name="model-year" required>
-            <option value="">--Please select a Model Year--</option>
+            `<select id="model-year" class="custom-select" name="model-year" required>
+            <option value="">Vehicle Model Year</option>
             ${str}
             </select>`
         );
@@ -358,11 +352,11 @@ function selectAddlVehicle (evt) {
     $.post('/vehicle-select.json', formData, (res) => {
         $('#cars').append(`<tr id="row-${res['model_year']}-${res['make']}-${res['model']}">
                                 <td>
-                                <input name="cars" value="${res['model_year']}-${res['make']}-${res['model']}" disabled />
+                                <input name="cars" class="form-control" value="${res['model_year']}-${res['make']}-${res['model']}" disabled />
                                 </td>
                                 <td>
-                                    <button class="remove-vehicle" value="${res['model_year']}-${res['make']}-${res['model']}">
-                                    Remove
+                                    <button class="remove-vehicle btn btn-primary" value="${res['model_year']}-${res['make']}-${res['model']}">
+                                    Remove Vehicle
                                     </button>
                                 </td>
                             </tr>`)
@@ -377,7 +371,7 @@ function selectAddlVehicle (evt) {
                                 style="display: none;"/>`);
 
     $('checkbox.car-remove').attr('disabled', false);
-    $('#car-add-form').hide();
+    // $('#car-add-form').hide();
     };
 }
 
@@ -422,7 +416,7 @@ function moveRow (evt) {
             const imgColumn = $(thisRow).children('td.img');
             const stepInputExistingImg = $(imgColumn).children('input.step-existing-img');
             $(stepInputExistingImg).attr('name', `step-existing-img-${prevOrder}`)
-            const stepInputImg = $(imgColumn).children('input.step-img');
+            const stepInputImg = $(imgColumn).children('input.step-img-edit');
             $(stepInputImg).attr('name', `step-img-${prevOrder}`);
 
             // Re-index everything in the switched row.
@@ -441,7 +435,7 @@ function moveRow (evt) {
             const prevImgColumn = $(prevRow).children('td.img');
             const prevInputExistingImg = $(prevImgColumn).children('input.step-existing-img');
             $(prevInputExistingImg).attr('name', `step-existing-img-${thisOrder}`);
-            const prevStepInputImg = $(prevImgColumn).children('input.step-img');
+            const prevStepInputImg = $(prevImgColumn).children('input.step-img-edit');
             $(prevStepInputImg).attr('name', `step-img-${thisOrder}`);
         };
 
@@ -474,7 +468,7 @@ function moveRow (evt) {
             const imgColumn = $(thisRow).children('td.img');
             const stepInputExistingImg = $(imgColumn).children('input.step-existing-img');
             $(stepInputExistingImg).attr('name', `step-existing-img-${nextOrder}`)
-            const stepInputImg = $(imgColumn).children('input.step-img');
+            const stepInputImg = $(imgColumn).children('input.step-img-edit');
             $(stepInputImg).attr('name', `step-img-${nextOrder}`);
             
             // Re-index everything in the switched row.
@@ -493,7 +487,7 @@ function moveRow (evt) {
             const nextImgColumn = $(nextRow).children('td.img');
             const nextInputExistingImg = $(nextImgColumn).children('input.step-existing-img');
             $(nextInputExistingImg).attr('name', `step-existing-img-${thisOrder}`);
-            const nextStepInputImg = $(nextImgColumn).children('input.step-img');
+            const nextStepInputImg = $(nextImgColumn).children('input.step-img-edit');
             $(nextStepInputImg).attr('name', `step-img-${thisOrder}`);
         };
 
@@ -534,7 +528,7 @@ function removeStep (evt) {
         const imgColumn = $(nextRow).children('td.img');
         const stepInputExistingImg = $(imgColumn).children('input.step-existing-img');
         $(stepInputExistingImg).attr('name', `step-existing-img-${newOrder}`)
-        const stepInputImg = $(imgColumn).children('input.step-img');
+        const stepInputImg = $(imgColumn).children('input.step-img-edit');
         $(stepInputImg).attr('name', `step-img-${newOrder}`);
 
     };
@@ -555,34 +549,34 @@ function addStep (evt) {
     NUM_STEPS += 1;
 
     $('#steps').append(
-                `<tr>
+                `<tr class="border-top">
                     <td class="name-order">
                         <input type="hidden" class="step-order" name="step-order-${NUM_STEPS}" value="${NUM_STEPS}" />
                         <input type="hidden" class="step-id" name="step-id-${NUM_STEPS}" value="NEW" />
-                        <input type="text" class="step-text" name="step-text-${NUM_STEPS}" required/>
+                        <textarea class="step-text form-control" name="step-text-${NUM_STEPS}" required></textarea>
                     </td>
                     <td class="ref">
-                        <input type="url" class="step-ref" name="step-ref-${NUM_STEPS}"
+                        <input type="url" class="step-ref form-control" name="step-ref-${NUM_STEPS}"
                             placeholder="https://example.com" pattern="https://.*" disabled/>
                         <br />
-                        <button class="edit ref">Edit Ref</button>
-                        <button class="del-ref" disabled>Remove Ref</button>
+                        <button class="edit ref btn btn-primary">Edit Ref</button>
+                        <button class="del-ref btn btn-primary" disabled>Remove Ref</button>
                     </td>
                     <td class="img">
                         <input type="hidden" class="step-existing-img" name="step-existing-img-${NUM_STEPS}" value="toolbox.png" />
-                        <input type="file" class="step-img" name="step-img-${NUM_STEPS}" disabled />
+                        <input type="file" class="step-img-edit form-control-file" name="step-img-${NUM_STEPS}" disabled />
                         <br />
-                        <button class="edit img">Edit Img</button>
-                        <button class="del-img" disabled>Restore Default Img</button>
+                        <button class="edit img btn btn-primary">Edit Img</button>
+                        <button class="del-img btn btn-primary" disabled>Restore Default Img</button>
                     </td>
                     <td>
-                        <button class="remove-step">Remove Step</button>
+                        <button class="remove-step btn btn-primary">Remove Step</button>
                     </td>
                     <td>
-                        <button class="move up">UP</button>
+                        <button class="move up btn btn-primary">UP</button>
                     </td>
                     <td>
-                        <button class="move down">DOWN</button>
+                        <button class="move down btn btn-primary">DOWN</button>
                     </td>
                 </tr>`);
 
