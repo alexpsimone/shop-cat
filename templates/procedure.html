@@ -20,7 +20,7 @@
 
         <div class="row">
             <div class="col">
-                <p>This procedure applies to the following cars:</p>
+                <p class="form-subtitle">This procedure applies to the following cars:</p>
                 <ul>
                     {% for proc_car in proc_car_obj %}
                     <li>
@@ -36,7 +36,7 @@
                 </ul>    
             </div>
             <div class="col">
-                <p>You'll need {{ proc_num_tools }} tools for the job:</p>
+                <p class="form-subtitle">You'll need {{ proc_num_tools }} tools for the job:</p>
                 <ul>
                     {% for proc_tool in proc_tool_obj %}
                     <li>
@@ -48,7 +48,7 @@
                 </ul>
             </div>
             <div class="col">
-                <p>You'll need {{ proc_num_parts }} parts for the job:</p>
+                <p class="form-subtitle">You'll need {{ proc_num_parts }} parts for the job:</p>
                 <ul>
                     {% for proc_part in proc_part_obj %}
                     <li>{{ proc_part.part.name }}</li>
@@ -76,7 +76,7 @@
         {% for step in steps %}
         <div class="row">
             <div class="col-1">
-                <p>{{ step.order_num }}</p>
+                <p class="form-subtitle">{{ step.order_num }}</p>
             </div>
             <div class="col">
                 {% if step.reference != "No Ref Provided" %}

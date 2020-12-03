@@ -243,17 +243,48 @@ function requireOtherPartName (evt) {
     };
 }
 
+function getModelYears (evt) {
+
+    evt.preventDefault();
+
+    const formData = {
+        make: $('#make').val(),
+    };
+
+    $.get('/get-model-years.json', formData, (res) => {
+
+        let str = '';
+        for (const model_year of res) {
+            str = str + `<option value="${model_year}">${model_year}</option>`;
+        }
+        $('#model-year').replaceWith(
+            `<select id="model-year" class="custom-select" name="model-year" required>
+            <option value="">Vehicle Model Year</option>
+            ${str}
+            </select>`
+        );
+
+        $('#model-year').on('change', getModels);
+    });
+
+    
+}
+
+
 function addVehicle (evt) {
 
     evt.preventDefault();
 
     $('#vehicle-modal').on('shown.bs.modal', function () {
+
         $('#car-add').trigger('focus');
 
-      });
-      $('#make').on('change', getModelYears);
-      $('#vehicle-submit').on('click', selectAddlVehicle);
+    });
+
+    // $('#make').on('change', getModelYears);
+    // $('#vehicle-submit').on('click', selectAddlVehicle);
 }
+
 
 function removeVehicle (evt) {
 
@@ -304,32 +335,6 @@ function getModels (evt) {
     $('#vehicle-submit').on('click', hideVehicleAdder);
 }
 
-function getModelYears (evt) {
-
-    evt.preventDefault();
-
-    const formData = {
-        make: $('#make').val(),
-    };
-
-    $.get('/get-model-years.json', formData, (res) => {
-
-        let str = '';
-        for (const model_year of res) {
-            str = str + `<option value="${model_year}">${model_year}</option>`;
-        }
-        $('#model-year').replaceWith(
-            `<select id="model-year" class="custom-select" name="model-year" required>
-            <option value="">Vehicle Model Year</option>
-            ${str}
-            </select>`
-        );
-
-        $('#model-year').on('change', getModels);
-    });
-
-    
-}
 
 
 function selectAddlVehicle (evt) {
@@ -371,7 +376,9 @@ function selectAddlVehicle (evt) {
                                 style="display: none;"/>`);
 
     $('checkbox.car-remove').attr('disabled', false);
-    // $('#car-add-form').hide();
+    $('#car-add-form').hide();
+    $('#model-year').attr('disabled', true);
+    $('#model').attr('disabled', true);
     };
 }
 

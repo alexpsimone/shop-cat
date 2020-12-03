@@ -66,13 +66,10 @@ h1 {
 }
 
 .login-menu {
-    background-color: white;
-    opacity: 0.8;
+    background-color: rgba(255, 255, 255, 0.8);
+    /* opacity: 0.8; */
 }
 
-.menu-text {
-    opacity: 1;
-}
 .overflow-y {
     overflow-y: auto !important;
   }
@@ -143,4 +140,8 @@ background-size: cover;
 .label-header {
     font-size: 1.5em;
     font-style: italic;
+}
+.form-subtitle {
+    font-size: 18px;
+    font-weight: 600;
 }

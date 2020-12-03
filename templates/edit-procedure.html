@@ -46,6 +46,24 @@
     </div>
   </div>
 
+  <!-- <form id="car-add-form" action="/vehicle-select.json" method="POST" style="display: none;">
+    <div  class="write-proc form-group sub-item">
+        <select class="custom-select" id="make" name="make" required>
+            <option value="">Vehicle Make</option>
+            {% for make in sorted_makes %}
+            <option value="{{ make }}">{{ make }}</option>
+            {% endfor %}
+            <option value="other">Other (please specify)...</option>
+        </select>
+        <select class="custom-select" id="model-year" name="model-year" disabled>
+            <option value="">Vehicle Model Year</option>
+        </select>
+        <select class="custom-select" id="model-select" name="model" disabled>
+        <option value="">Vehicle Model</option>
+        </select>
+        <input id="vehicle-submit" class="btn btn-primary" type="submit" disabled>
+    </div>
+</form> -->
 <div class="container-fluid">
     <div class="row">
         
@@ -242,13 +260,13 @@
                                 <button class="del-img btn btn-secondary">Restore Default Img</button>
                             </td>
                             <td class="buttonrow">
-                                <button class="remove-step btn btn-primary">Remove Step</button>
-                            </td>
-                            <td class="buttonrow">
                                 <button class="move up btn btn-secondary">UP</button>
                             </td>
                             <td class="buttonrow">
                                 <button class="move down btn btn-secondary">DOWN</button>
+                            </td>
+                            <td class="buttonrow">
+                                <button class="remove-step btn btn-primary">Remove Step</button>
                             </td>
                         </tr>
                         {% endfor %}
