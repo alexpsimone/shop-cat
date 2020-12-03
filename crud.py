@@ -106,7 +106,9 @@ def create_part(req_name, other_name, part_img, other_num, other_manuf, is_oem):
 
     return my_part
 
-
+#################################################
+#### TODO: Break down into smaller functions. ###
+#################################################
 def update_procedure(proc_id, title, label, cars, tool_data, part_data, step_data):
     """Update a Procedure with given information."""
 
@@ -118,14 +120,11 @@ def update_procedure(proc_id, title, label, cars, tool_data, part_data, step_dat
     # Update procedure.label.
     proc.label = label
 
-    #############################################################
-    ############ TODO: refactor w/o list indexing!! #############
-    #############################################################
     # Update which vehicles are associated with the procedure.
     car_ids = set()
 
     for item in cars:
-        car_info = item.split("-")
+        car_info = item.split("-") # Returns [model_year, make, model] for each car.
         car = Car.query.filter(
             Car.model_year == car_info[0],
             Car.make == car_info[1],
@@ -134,18 +133,16 @@ def update_procedure(proc_id, title, label, cars, tool_data, part_data, step_dat
         if car:
             if not ProcedureCar.query.filter_by(car_id=car.car_id):
                 proc_car = ProcedureCar(proc=proc, car=car)
-                # *#*#*#*#*#*#*#*#*#*#*#*#*#*
                 db.session.add(proc_car)
-                ###THIS COMMIT SEEMS TO MATTER!!!!!############
+                # *#*#*#*#*#*#*#*#*#*#*#*#*#*
                 db.session.commit()
 
         else:
             car = Car(model=car_info[2], make=car_info[1], model_year=car_info[0])
             db.session.add(car)
             proc_car = ProcedureCar(proc=proc, car=car)
-            # *#*#*#*#*#*#*#*#*#*#*#*#*#*
             db.session.add(proc_car)
-            ###THIS COMMIT SEEMS TO MATTER!!!!!############
+            # *#*#*#*#*#*#*#*#*#*#*#*#*#*
             db.session.commit()
 
         car_ids.add(car.car_id)
@@ -266,9 +263,6 @@ def update_procedure(proc_id, title, label, cars, tool_data, part_data, step_dat
         if proc_part.part_id not in part_ids:
             db.session.delete(proc_part)
 
-    #############################################################
-    ############ TODO: refactor w/o list indexing!! #############
-    #############################################################
     # Go through step_data and make sure all step info is updated.
     # Add any new steps to the database.
     # step_data: (step_id, step_order, step_text, step_ref, step_img)

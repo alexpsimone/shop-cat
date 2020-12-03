@@ -40,7 +40,6 @@ def build_procedure():
     user = User.query.filter_by(user_id=session["current_user"]).first()
 
     procedure = Procedure(title=proc_title, label=proc_label, user=user)
-    # *#*#*#*#*#*#*#*#*#*#*#*#*#*
     db.session.add(procedure)
 
     # For each step added by the user, create a Step object.
@@ -62,7 +61,6 @@ def build_procedure():
             reference=reference,
             step_img=filename,
         )
-        # *#*#*#*#*#*#*#*#*#*#*#*#*#*
         db.session.add(new_step)
 
     """
@@ -78,14 +76,12 @@ def build_procedure():
         car = Car.query.filter_by(model_year=model_year, make=make, model=model).first()
     else:
         car = Car(model=model, make=make, model_year=model_year)
-        # *#*#*#*#*#*#*#*#*#*#*#*#*#*
         db.session.add(car)
 
     # Use the Car and Procedure objects to make a new ProcedureCar.
     proc_car = ProcedureCar(proc=procedure, car=car)
-    # *#*#*#*#*#*#*#*#*#*#*#*#*#*
     db.session.add(proc_car)
-    ###THIS COMMIT SEEMS TO MATTER!!!!!############
+    # *#*#*#*#*#*#*#*#*#*#*#*#*#*
     db.session.commit()
 
     # Add tools to the procedure based on form info.
