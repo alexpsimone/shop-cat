@@ -195,7 +195,6 @@ def login_user():
     if user:
         if user.password == password:
             session["current_user"] = user.user_id
-            flash(f"Welcome, {user.username}!")
             return redirect("/home")
         else:
             flash("Password is incorrect.")
