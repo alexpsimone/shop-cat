@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 from werkzeug.utils import secure_filename
 from server import app
 
+
 def allowed_file(filename):
     """from Flask docs: confirm an uploaded img has correct extension"""
 
@@ -16,15 +17,15 @@ def allowed_file(filename):
 
 def get_step_ref_and_img(is_ref, reference, step_img):
     """Determine if a reference and/or img needs to be added to the Step.
-    
+
     Check to see if reference or image checkboxes were selecteed.
     If they were, then look to the corresponding input fields for data.
     Add image and reference info to the Step objects as required.
     """
     if is_ref:
         if "youtube.com" in reference:
-            ref_remove_https = reference.replace('https://', '')
-            ref_remove_www = ref_remove_https.replace('www.youtube.com/watch?v=', '')
+            ref_remove_https = reference.replace("https://", "")
+            ref_remove_www = ref_remove_https.replace("www.youtube.com/watch?v=", "")
             ref_text = ref_remove_www[:11]
         else:
             ref_text = reference
@@ -33,7 +34,7 @@ def get_step_ref_and_img(is_ref, reference, step_img):
             step_img.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
             step_img.close()
         else:
-                filename = "toolbox.png"
+            filename = "toolbox.png"
     else:
         ref_text = "No Ref Provided"
         if step_img and allowed_file(step_img.filename):
@@ -67,9 +68,9 @@ def create_tool(req_name, other_name, tool_img):
             tool_img.close()
         else:
             filename = "toolbox.png"
-        my_tool = Tool(name = other_name, tool_img = filename)
+        my_tool = Tool(name=other_name, tool_img=filename)
         db.session.add(my_tool)
-    
+
     return my_tool
 
 
@@ -82,7 +83,7 @@ def create_part(req_name, other_name, part_img, other_num, other_manuf, is_oem):
     If it isn't, then select the corresponding existing part.
     Otherwise. create a new Part object with the new info.
         This will also require a new PartNumber object."""
-    
+
     if req_name != "other":
         my_part = Part.query.filter_by(name=req_name).first()
     elif Part.query.filter_by(name=other_name).first() != None:
@@ -94,20 +95,19 @@ def create_part(req_name, other_name, part_img, other_num, other_manuf, is_oem):
             part_img.close()
         else:
             filename = "toolbox.png"
-        my_part = Part(name = other_name, part_img = filename)
-        #*#*#*#*#*#*#*#*#*#*#*#*#*#*
+        my_part = Part(name=other_name, part_img=filename)
+        # *#*#*#*#*#*#*#*#*#*#*#*#*#*
         db.session.add(my_part)
-        part_num = PartNum(manuf=other_manuf, part_num=other_num, is_oem_part=is_oem, part=my_part)
-        #*#*#*#*#*#*#*#*#*#*#*#*#*#*
+        part_num = PartNum(
+            manuf=other_manuf, part_num=other_num, is_oem_part=is_oem, part=my_part
+        )
+        # *#*#*#*#*#*#*#*#*#*#*#*#*#*
         db.session.add(part_num)
-    
+
     return my_part
-    
 
 
-def update_procedure(
-    proc_id, title, label, cars, tool_data, part_data, step_data
-):
+def update_procedure(proc_id, title, label, cars, tool_data, part_data, step_data):
     """Update a Procedure with given information."""
 
     proc = Procedure.query.filter_by(proc_id=proc_id).first()
@@ -133,17 +133,17 @@ def update_procedure(
         ).first()
         if car:
             if not ProcedureCar.query.filter_by(car_id=car.car_id):
-                    proc_car = ProcedureCar(proc = proc, car = car)
-                    #*#*#*#*#*#*#*#*#*#*#*#*#*#*
-                    db.session.add(proc_car)
-                    ###THIS COMMIT SEEMS TO MATTER!!!!!############
-                    db.session.commit()
+                proc_car = ProcedureCar(proc=proc, car=car)
+                # *#*#*#*#*#*#*#*#*#*#*#*#*#*
+                db.session.add(proc_car)
+                ###THIS COMMIT SEEMS TO MATTER!!!!!############
+                db.session.commit()
 
         else:
             car = Car(model=car_info[2], make=car_info[1], model_year=car_info[0])
             db.session.add(car)
-            proc_car = ProcedureCar(proc = proc, car = car)
-            #*#*#*#*#*#*#*#*#*#*#*#*#*#*
+            proc_car = ProcedureCar(proc=proc, car=car)
+            # *#*#*#*#*#*#*#*#*#*#*#*#*#*
             db.session.add(proc_car)
             ###THIS COMMIT SEEMS TO MATTER!!!!!############
             db.session.commit()
@@ -172,25 +172,27 @@ def update_procedure(
     # Add any new tools and procedure-tool objects to the database.
     tool_ids = set()
     for item in tool_data:
-        if tool_data[item]['id'] != "NEW":
-            tool = Tool.query.filter_by(tool_id=int(tool_data[item]['id'])).first()
-            if tool_data[item]['name'] != tool.name:
-                tool.name = tool_data[item]['name']
-            if tool_data[item]['img'] != tool.tool_img:
-                tool.tool_img = tool_data[item]['img']
-            tool_ids.add(int(tool_data[item]['id']))
+        if tool_data[item]["id"] != "NEW":
+            tool = Tool.query.filter_by(tool_id=int(tool_data[item]["id"])).first()
+            if tool_data[item]["name"] != tool.name:
+                tool.name = tool_data[item]["name"]
+            if tool_data[item]["img"] != tool.tool_img:
+                tool.tool_img = tool_data[item]["img"]
+            tool_ids.add(int(tool_data[item]["id"]))
         else:
-            if tool_data[item]['name'] == "other":
-                if Tool.query.filter_by(name=tool_data[item]['other']).first() != None:
-                    tool = Tool.query.filter_by(name=tool_data[item]['other']).first()
+            if tool_data[item]["name"] == "other":
+                if Tool.query.filter_by(name=tool_data[item]["other"]).first() != None:
+                    tool = Tool.query.filter_by(name=tool_data[item]["other"]).first()
                     tool_ids.add(tool.tool_id)
                 else:
-                    tool = Tool(name = tool_data[item]['other'], tool_img = tool_data[item]['img'])
+                    tool = Tool(
+                        name=tool_data[item]["other"], tool_img=tool_data[item]["img"]
+                    )
                     db.session.add(tool)
                     db.session.commit()
                     tool_ids.add(tool.tool_id)
             else:
-                tool = Tool.query.filter_by(name=tool_data[item]['name']).first()
+                tool = Tool.query.filter_by(name=tool_data[item]["name"]).first()
                 tool_ids.add(tool.tool_id)
             if (
                 ProcedureTool.query.filter(
@@ -199,7 +201,7 @@ def update_procedure(
                 ).first()
                 == None
             ):
-                proc_tool = ProcedureTool(proc = proc, tool = tool)
+                proc_tool = ProcedureTool(proc=proc, tool=tool)
                 db.session.add(proc_tool)
                 db.session.commit()
     # Check all ProcedureTool objects associated with this procedure.
@@ -215,29 +217,34 @@ def update_procedure(
     # Add any new parts, part numbers, and procedure-part objects to the db.
     part_ids = set()
     for item in part_data:
-        if part_data[item]['id'] != "NEW":
-            part = Part.query.filter_by(part_id=part_data[item]['id']).first()
-            if part_data[item]['name'] != part.name:
-                part.name = part_data[item]['name']
-            if part_data[item]['img'] != part.part_img:
-                part.part_img = part_data[item]['img']
-            part_ids.add(int(part_data[item]['id']))
+        if part_data[item]["id"] != "NEW":
+            part = Part.query.filter_by(part_id=part_data[item]["id"]).first()
+            if part_data[item]["name"] != part.name:
+                part.name = part_data[item]["name"]
+            if part_data[item]["img"] != part.part_img:
+                part.part_img = part_data[item]["img"]
+            part_ids.add(int(part_data[item]["id"]))
         else:
-            if part_data[item]['name'] == "other":
-                if Part.query.filter_by(name=part_data[item]['other']).first() != None:
-                    part = Part.query.filter_by(name=part_data[item]['other']).first()
+            if part_data[item]["name"] == "other":
+                if Part.query.filter_by(name=part_data[item]["other"]).first() != None:
+                    part = Part.query.filter_by(name=part_data[item]["other"]).first()
                     part_ids.add(part.part_id)
                 else:
-                    part = Part(name=part_data[item]['other'], part_img=part_data[item]['img'])
+                    part = Part(
+                        name=part_data[item]["other"], part_img=part_data[item]["img"]
+                    )
                     db.session.add(part)
                     db.session.commit()
                     part_num = PartNum(
-                            manuf=part_data[item]['manuf'], part_num=part_data[item]['pn'], is_oem_part=part_data[item]['oem'], part=part
-                        )
+                        manuf=part_data[item]["manuf"],
+                        part_num=part_data[item]["pn"],
+                        is_oem_part=part_data[item]["oem"],
+                        part=part,
+                    )
                     db.session.add(part_num)
                     part_ids.add(part.part_id)
             else:
-                part = Part.query.filter_by(name=part_data[item]['name']).first()
+                part = Part.query.filter_by(name=part_data[item]["name"]).first()
                 part_ids.add(part.part_id)
             if (
                 ProcedurePart.query.filter(
@@ -268,30 +275,30 @@ def update_procedure(
 
     step_ids = set()
     for item in step_data:
-        if step_data[item]['id'] != "NEW":
-            step = Step.query.filter_by(step_id=step_data[item]['id']).first()
-            if step_data[item]['order'] != step.order_num:
-                step.order_num = step_data[item]['order']
-            if step_data[item]['text'] != step.step_text:
-                step.text = step_data[item]['text']
-            if step_data[item]['ref'] != step.reference:
-                if step_data[item]['ref'] == '' or step_data[item]['ref'] == None:
-                    step.reference = 'No Ref Provided'
+        if step_data[item]["id"] != "NEW":
+            step = Step.query.filter_by(step_id=step_data[item]["id"]).first()
+            if step_data[item]["order"] != step.order_num:
+                step.order_num = step_data[item]["order"]
+            if step_data[item]["text"] != step.step_text:
+                step.text = step_data[item]["text"]
+            if step_data[item]["ref"] != step.reference:
+                if step_data[item]["ref"] == "" or step_data[item]["ref"] == None:
+                    step.reference = "No Ref Provided"
                 else:
-                    step.reference = step_data[item]['ref']
-            if step_data[item]['img'] != step.step_img:
-                step.step_img = step_data[item]['img']
-            step_ids.add(int(step_data[item]['id']))
+                    step.reference = step_data[item]["ref"]
+            if step_data[item]["img"] != step.step_img:
+                step.step_img = step_data[item]["img"]
+            step_ids.add(int(step_data[item]["id"]))
         else:
-            if step_data[item]['ref'] == '' or step_data[item]['ref'] == None:
-                    step_data[item]['ref'] = 'No Ref Provided'
-                    
+            if step_data[item]["ref"] == "" or step_data[item]["ref"] == None:
+                step_data[item]["ref"] = "No Ref Provided"
+
             step = Step(
-                order_num=step_data[item]['order'],
-                step_text=step_data[item]['text'],
+                order_num=step_data[item]["order"],
+                step_text=step_data[item]["text"],
                 proc_id=proc.proc_id,
-                reference=step_data[item]['ref'],
-                step_img=step_data[item]['img'],
+                reference=step_data[item]["ref"],
+                step_img=step_data[item]["img"],
             )
 
             db.session.add(step)
@@ -327,11 +334,12 @@ def get_all_rockauto_makes():
 
     return sorted(car_makes_normal + car_makes_important)
 
+
 def get_all_rockauto_model_years(make):
     """Scrape all model years for a given make from RockAuto's website."""
 
-    make_split = make.split(' ')
-    make_join = '+'.join(make_split)
+    make_split = make.split(" ")
+    make_join = "+".join(make_split)
 
     url = f"http://www.rockauto.com/en/catalog/{make_join}"
     req = requests.get(url)
@@ -340,14 +348,15 @@ def get_all_rockauto_model_years(make):
 
     divs_normal = soup.findAll("a", {"class": "navlabellink nvoffset nnormal"})
     model_years = [div_normal.string for div_normal in divs_normal][1:]
-    
+
     return model_years
+
 
 def get_all_rockauto_models(make, model_year):
     """Scrape all models for a given model_year and make from RockAuto's website."""
 
-    make_split = make.split(' ')
-    make_join = '+'.join(make_split)
+    make_split = make.split(" ")
+    make_join = "+".join(make_split)
 
     url = f"http://www.rockauto.com/en/catalog/{make_join},{model_year}"
     req = requests.get(url)
@@ -356,5 +365,5 @@ def get_all_rockauto_models(make, model_year):
 
     divs_normal = soup.findAll("a", {"class": "navlabellink nvoffset nnormal"})
     models = [div_normal.string for div_normal in divs_normal][2:]
-   
+
     return sorted(models)

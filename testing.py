@@ -35,6 +35,7 @@ from seed_testdb import load_all
 os.system("dropdb testdb")
 os.system("createdb testdb")
 
+
 class FlaskTests(unittest.TestCase):
     """Tests for the Shop Cat site."""
 
@@ -47,23 +48,23 @@ class FlaskTests(unittest.TestCase):
     def test_dashboard_no_session_redirect(self):
         """Check that the user dashboard redirects if no user in session."""
 
-        result = self.client.get(f"/dashboard/1", follow_redirects = True)
+        result = self.client.get(f"/dashboard/1", follow_redirects=True)
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<form action="/new-user" method="POST">', result.data)
         self.assertNotIn(b'<form action="/existing-user"', result.data)
-    
+
     def test_edit_proc_no_session_redirect(self):
         """Check that /edit-procedure redirects if no user in session."""
 
-        result = self.client.get(f"/edit-procedure/1", follow_redirects = True)
+        result = self.client.get(f"/edit-procedure/1", follow_redirects=True)
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<form action="/new-user" method="POST">', result.data)
         self.assertNotIn(b'<form action="/existing-user"', result.data)
 
     def test_home_redirect(self):
         """Check that the home route redirects with no session."""
-        
-        result = self.client.get("/home", follow_redirects = True)
+
+        result = self.client.get("/home", follow_redirects=True)
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<form action="/new-user" method="POST">', result.data)
         self.assertNotIn(b'<form action="/existing-user"', result.data)
@@ -75,15 +76,15 @@ class FlaskTests(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<form action="/existing-user"', result.data)
         self.assertNotIn(b'<form action="/new-user"', result.data)
-    
+
     def test_proc_no_session_redirect(self):
         """Check that /procedure redirects if no user in session."""
 
-        result = self.client.get(f"/procedure/1", follow_redirects = True)
+        result = self.client.get(f"/procedure/1", follow_redirects=True)
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<form action="/new-user" method="POST">', result.data)
         self.assertNotIn(b'<form action="/existing-user"', result.data)
-    
+
     def test_shopcat_root_route(self):
         """Check that the shopcat root route is rendering properly."""
 
@@ -92,12 +93,10 @@ class FlaskTests(unittest.TestCase):
         self.assertIn(b'<form action="/new-user" method="POST">', result.data)
         self.assertNotIn(b'<form action="/existing-user"', result.data)
 
-    
-    
     def test_write_proc_no_session_redirect(self):
         """Check that /write-procedure redirects if no user in session."""
 
-        result = self.client.get(f"/write-procedure", follow_redirects = True)
+        result = self.client.get(f"/write-procedure", follow_redirects=True)
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<form action="/new-user" method="POST">', result.data)
         self.assertNotIn(b'<form action="/existing-user"', result.data)
@@ -138,26 +137,26 @@ class ShopCatTestsDatabase(unittest.TestCase):
         result = self.client.post(
             "/build-procedure",
             data={
-                'proc_title': 'new_title',
-                'proc_label': 'new_label',
-                'NUM_STEPS': '1',
-                'NUM_TOOLS': '1',
-                'NUM_PARTS': '1',
-                'step_text_1': 'step 1 text',
-                'ref_1': 'True',
-                'step_img_1': 'cat.png',
-                'ref_text_1': 'https://google.com',
-                'tool_req_1': 'screwdriver',
-                'tool_other_1': None,
-                'tool_img_1': None,
-                'part_req_1': 'oil filter',
-                'part_img_1': None,
-                'part_1_other_name': None,
-                'part_1_other_num': None,
-                'part_1_other_manuf': None,
-                'oem_1': 'True',
+                "proc_title": "new_title",
+                "proc_label": "new_label",
+                "NUM_STEPS": "1",
+                "NUM_TOOLS": "1",
+                "NUM_PARTS": "1",
+                "step_text_1": "step 1 text",
+                "ref_1": "True",
+                "step_img_1": "cat.png",
+                "ref_text_1": "https://google.com",
+                "tool_req_1": "screwdriver",
+                "tool_other_1": None,
+                "tool_img_1": None,
+                "part_req_1": "oil filter",
+                "part_img_1": None,
+                "part_1_other_name": None,
+                "part_1_other_num": None,
+                "part_1_other_manuf": None,
+                "oem_1": "True",
             },
-            follow_redirects = True,
+            follow_redirects=True,
         )
         self.assertEqual(result.status_code, 200)
 
@@ -192,7 +191,7 @@ class ShopCatTestsDatabase(unittest.TestCase):
         )
         self.assertEqual(result.status_code, 200)
         self.assertIn(b"Password is incorrect.", result.data)
-    
+
     def test_existing_user_route_wrong_username(self):
         """Check that the login route works properly with the wrong username filled in."""
 
@@ -203,15 +202,13 @@ class ShopCatTestsDatabase(unittest.TestCase):
         )
         self.assertEqual(result.status_code, 200)
         self.assertIn(b"No account exists with this username", result.data)
-    
-     
 
     def test_get_parts_json_route(self):
         """Confirm that the get-parts.json query works."""
 
         result = self.client.get("/get-parts.json")
         self.assertEqual(result.status_code, 200)
-    
+
     def test_get_tools_json_route(self):
         """Confirm that the get-parts.json query works."""
 
@@ -319,7 +316,7 @@ class ShopCatTestsDatabase(unittest.TestCase):
 
         result = self.client.get(f"/vehicle/{make}/{model_year}/{model}")
         self.assertEqual(result.status_code, 200)
-    
+
     # def test_vehicle_select_json_route(self):
     #     """Confirm that the vehicle-select.json query works."""
 

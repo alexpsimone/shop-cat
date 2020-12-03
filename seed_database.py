@@ -17,14 +17,14 @@ model.db.create_all()
 # Create a set of tools using info in tools.json.
 toolbox = []
 
-with open('data/tools.json') as filename:
+with open("data/tools.json") as filename:
     tools_json = json.loads(filename.read())
 
 for tool_json in tools_json:
 
     name = tool_json
     tool_img = "toolbox.png"
-    tool = Tool(name = name, tool_img = tool_img)
+    tool = Tool(name=name, tool_img=tool_img)
     db.session.add(tool)
     toolbox.append(tool)
 
@@ -36,7 +36,7 @@ for part in range(50):
     name = f"part_{part}"
     part_img = "toolbox.png"
 
-    part = Part(name = name, part_img = part_img)
+    part = Part(name=name, part_img=part_img)
     db.session.add(part)
     parts_bin.append(part)
 
@@ -45,7 +45,9 @@ for part in range(50):
     is_oem_part = True
     part = part
 
-    part_num = PartNum(manuf = manuf, part_num = part_num, is_oem_part = is_oem_part, part = part)
+    part_num = PartNum(
+        manuf=manuf, part_num=part_num, is_oem_part=is_oem_part, part=part
+    )
     db.session.add(part_num)
 
 # Create a set of 10 test cars.
@@ -61,16 +63,16 @@ for car in range(10):
     models = crud.get_all_rockauto_models(make, model_year)
     model = choice(models)
 
-    car = Car(model = model, make = make, model_year = model_year)
+    car = Car(model=model, make=make, model_year=model_year)
     db.session.add(car)
     garage.append(car)
 
 # Create 5 test users.
 
-with open('data/users.json') as filename:
+with open("data/users.json") as filename:
     users_json = json.loads(filename.read())
 
-with open('data/procedures.json') as filename:
+with open("data/procedures.json") as filename:
     procs_json = json.loads(filename.read())
 
 for user_json in users_json:
@@ -80,24 +82,29 @@ for user_json in users_json:
     nickname = user_json["nickname"]
     avatar_img_url = "cat.jpg"
 
-    user = User(username = username, password = password, nickname = nickname, avatar_img_url = avatar_img_url)
+    user = User(
+        username=username,
+        password=password,
+        nickname=nickname,
+        avatar_img_url=avatar_img_url,
+    )
     db.session.add(user)
     db.session.commit()
-    
+
     for x in range(3):
 
         # Create 3 procedures for each new user.
         proc_json = choice(procs_json)
-        title = proc_json['title']
-        label = proc_json['label']
+        title = proc_json["title"]
+        label = proc_json["label"]
 
-        procedure = Procedure(title = title, label = label, user = user)
+        procedure = Procedure(title=title, label=label, user=user)
         db.session.add(procedure)
         db.session.commit()
 
         # Randomly assign a car from the garage to each procedure.
         car_num = randint(0, 9)
-        proc_car = ProcedureCar(proc = procedure, car = garage[car_num])
+        proc_car = ProcedureCar(proc=procedure, car=garage[car_num])
         db.session.add(proc_car)
         db.session.commit()
 
@@ -105,12 +112,12 @@ for user_json in users_json:
         # to each procedure.
         nums_used = set()
         for x in range(5):
-            num = randint(0, (len(toolbox)-1))
+            num = randint(0, (len(toolbox) - 1))
             nums_used.add(num)
 
         for num in nums_used:
             tool = toolbox[num]
-            proc_tool = ProcedureTool(proc = procedure, tool = tool)
+            proc_tool = ProcedureTool(proc=procedure, tool=tool)
             db.session.add(proc_tool)
             db.session.commit()
 
@@ -122,42 +129,59 @@ for user_json in users_json:
             nums_used.add(num)
         for num in nums_used:
             part = parts_bin[num]
-            proc_part = ProcedurePart(proc = procedure, part = part)
+            proc_part = ProcedurePart(proc=procedure, part=part)
             db.session.add(proc_part)
             db.session.commit()
 
         # Create 3 Steps for each Procedure.
 
-        possible_imgs = ['demo_1.jpg', 'demo_2.jpg', 'demo_3.jpg', 'demo_4.jpg', 'demo_5.jpg', 'heater_core_1.PNG', 'heater_core_4.PNG', 'heater_core_5.PNG', 'heater_core_6.PNG', 'heater_core_9.PNG']
-        possible_videos = ["n4vusY2-rkQ", "I-ZNBaZbNF4", "oWqZQX0HvTQ", "UyG-wpTbZDI", "25gYezR_k6c"]
+        possible_imgs = [
+            "demo_1.jpg",
+            "demo_2.jpg",
+            "demo_3.jpg",
+            "demo_4.jpg",
+            "demo_5.jpg",
+            "heater_core_1.PNG",
+            "heater_core_4.PNG",
+            "heater_core_5.PNG",
+            "heater_core_6.PNG",
+            "heater_core_9.PNG",
+        ]
+        possible_videos = [
+            "n4vusY2-rkQ",
+            "I-ZNBaZbNF4",
+            "oWqZQX0HvTQ",
+            "UyG-wpTbZDI",
+            "25gYezR_k6c",
+        ]
 
         step1 = Step(
-            order_num = 1,
-            step_text = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
-            proc = procedure,
-            reference = "https://camaro6.com",
-            step_img = choice(possible_imgs),
+            order_num=1,
+            step_text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+            proc=procedure,
+            reference="https://camaro6.com",
+            step_img=choice(possible_imgs),
         )
         step2 = Step(
-            order_num = 2,
-            step_text = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
-            proc = procedure,
-            reference = "No Ref Provided",
-            step_img = choice(possible_imgs),
+            order_num=2,
+            step_text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+            proc=procedure,
+            reference="No Ref Provided",
+            step_img=choice(possible_imgs),
         )
         step3 = Step(
-            order_num = 3,
-            step_text = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
-            proc = procedure,
-            reference = choice(possible_videos),
-            step_img = choice(possible_imgs),
+            order_num=3,
+            step_text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+            proc=procedure,
+            reference=choice(possible_videos),
+            step_img=choice(possible_imgs),
         )
         step4 = Step(
-            order_num = 4,
-            step_text = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
-            proc = procedure,
-            reference = "https://ratsun.net",
-            step_img = choice(possible_imgs),
+            order_num=4,
+            step_text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+            proc=procedure,
+            reference="https://ratsun.net",
+            step_img=choice(possible_imgs),
         )
         db.session.add(step1)
         db.session.add(step2)

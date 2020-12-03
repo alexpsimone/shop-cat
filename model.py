@@ -47,7 +47,7 @@ class Step(db.Model):
     step_text = db.Column(db.Text, nullable=False)
     step_img = db.Column(db.String, default="/static/img/toolbox.png")
     proc_id = db.Column(db.Integer, db.ForeignKey("procedures.proc_id"))
-    
+
     proc = db.relationship("Procedure", backref="steps")
 
     def __repr__(self):

@@ -37,12 +37,12 @@ def build_procedure():
     proc_title = request.form.get("proc_title")
     proc_label = request.form.get("proc_label")
 
-    user = User.query.filter_by(user_id = session["current_user"]).first()
+    user = User.query.filter_by(user_id=session["current_user"]).first()
 
-    procedure = Procedure(title = proc_title, label = proc_label, user = user)
-    #*#*#*#*#*#*#*#*#*#*#*#*#*#*
+    procedure = Procedure(title=proc_title, label=proc_label, user=user)
+    # *#*#*#*#*#*#*#*#*#*#*#*#*#*
     db.session.add(procedure)
-    
+
     # For each step added by the user, create a Step object.
     NUM_STEPS = int(request.form.get("NUM_STEPS"))
 
@@ -56,13 +56,13 @@ def build_procedure():
         [reference, filename] = crud.get_step_ref_and_img(ref_check, ref_text, step_img)
 
         new_step = Step(
-                        order_num = step,
-                        step_text = step_text,
-                        proc = procedure,
-                        reference = reference,
-                        step_img = filename,
-                    )
-        #*#*#*#*#*#*#*#*#*#*#*#*#*#*
+            order_num=step,
+            step_text=step_text,
+            proc=procedure,
+            reference=reference,
+            step_img=filename,
+        )
+        # *#*#*#*#*#*#*#*#*#*#*#*#*#*
         db.session.add(new_step)
 
     """
@@ -74,16 +74,16 @@ def build_procedure():
     make = session["make"]
     model = session["model"]
 
-    if Car.query.filter_by(model_year = model_year, make = make, model = model).first():
-        car = Car.query.filter_by(model_year = model_year, make = make, model = model).first()
+    if Car.query.filter_by(model_year=model_year, make=make, model=model).first():
+        car = Car.query.filter_by(model_year=model_year, make=make, model=model).first()
     else:
-        car = Car(model = model, make = make, model_year = model_year)
-        #*#*#*#*#*#*#*#*#*#*#*#*#*#*
+        car = Car(model=model, make=make, model_year=model_year)
+        # *#*#*#*#*#*#*#*#*#*#*#*#*#*
         db.session.add(car)
 
     # Use the Car and Procedure objects to make a new ProcedureCar.
-    proc_car = ProcedureCar(proc = procedure, car = car)
-    #*#*#*#*#*#*#*#*#*#*#*#*#*#*
+    proc_car = ProcedureCar(proc=procedure, car=car)
+    # *#*#*#*#*#*#*#*#*#*#*#*#*#*
     db.session.add(proc_car)
     ###THIS COMMIT SEEMS TO MATTER!!!!!############
     db.session.commit()
@@ -99,8 +99,8 @@ def build_procedure():
 
         my_tool = crud.create_tool(tool_req, tool_other, tool_img)
 
-        proc_tool = ProcedureTool(proc = procedure, tool = my_tool)
-        #*#*#*#*#*#*#*#*#*#*#*#*#*#*
+        proc_tool = ProcedureTool(proc=procedure, tool=my_tool)
+        # *#*#*#*#*#*#*#*#*#*#*#*#*#*
         db.session.add(proc_tool)
         db.session.commit()
 
@@ -114,16 +114,18 @@ def build_procedure():
         part_other = request.form.get(f"part_{part}_other_name")
         part_other_num = request.form.get(f"part_{part}_other_num")
         part_other_manuf = request.form.get(f"part_{part}_other_manuf")
-        oem = (request.form.get(f"oem_{part}") == 'True')
+        oem = request.form.get(f"oem_{part}") == "True"
 
-        my_part = crud.create_part(part_req, part_other, part_img, part_other_num, part_other_manuf, oem)
+        my_part = crud.create_part(
+            part_req, part_other, part_img, part_other_num, part_other_manuf, oem
+        )
 
         proc_part = ProcedurePart(proc=procedure, part=my_part)
-        #*#*#*#*#*#*#*#*#*#*#*#*#*#*
+        # *#*#*#*#*#*#*#*#*#*#*#*#*#*
         db.session.add(proc_part)
         db.session.commit()
 
-    return redirect('/home')
+    return redirect("/home")
 
 
 @app.route("/dashboard/<user_id>")
@@ -132,8 +134,8 @@ def show_dashboard(user_id):
 
     if session:
 
-        user = User.query.filter_by(user_id = user_id).first()
-        procedures = Procedure.query.filter_by(created_by_user_id = user_id).all()
+        user = User.query.filter_by(user_id=user_id).first()
+        procedures = Procedure.query.filter_by(created_by_user_id=user_id).all()
         model_year = session.get("model_year")
         make = session.get("make")
         model = session.get("model")
@@ -156,14 +158,14 @@ def edit_procedure(proc_id):
 
     if session:
         procedure = Procedure.query.get(proc_id)
-        proc_car_obj = ProcedureCar.query.filter_by(proc_id = proc_id).all()
-        proc_part_obj = ProcedurePart.query.filter_by(proc_id = proc_id).all()
-        proc_tool_obj = ProcedureTool.query.filter_by(proc_id = proc_id).all()
-        num_tools = ProcedureTool.query.filter_by(proc_id = proc_id).count()
-        num_parts = ProcedurePart.query.filter_by(proc_id = proc_id).count()
-        num_cars = ProcedureCar.query.filter_by(proc_id = proc_id).count()
-        num_steps = Step.query.filter_by(proc_id = proc_id).count()
-        steps = Step.query.filter_by(proc_id = proc_id).all()
+        proc_car_obj = ProcedureCar.query.filter_by(proc_id=proc_id).all()
+        proc_part_obj = ProcedurePart.query.filter_by(proc_id=proc_id).all()
+        proc_tool_obj = ProcedureTool.query.filter_by(proc_id=proc_id).all()
+        num_tools = ProcedureTool.query.filter_by(proc_id=proc_id).count()
+        num_parts = ProcedurePart.query.filter_by(proc_id=proc_id).count()
+        num_cars = ProcedureCar.query.filter_by(proc_id=proc_id).count()
+        num_steps = Step.query.filter_by(proc_id=proc_id).count()
+        steps = Step.query.filter_by(proc_id=proc_id).all()
         sorted_makes = crud.get_all_rockauto_makes()
 
         return render_template(
@@ -192,7 +194,7 @@ def login_user():
     username = request.form.get("username")
     password = request.form.get("password")
 
-    user = User.query.filter_by(username = username).first()
+    user = User.query.filter_by(username=username).first()
 
     if user:
         if user.password == password:
@@ -220,9 +222,9 @@ def get_all_model_years():
 def get_all_models():
 
     make = request.args.get("make")
-    print('******************', make)
+    print("******************", make)
     model_year = request.args.get("modelYear")
-    print('******************', model_year)
+    print("******************", model_year)
 
     models = crud.get_all_rockauto_models(make, model_year)
 
@@ -255,7 +257,7 @@ def get_all_parts():
 @app.route("/get-tools.json")
 def get_all_tools():
     """Get all tools from the shopcat database and return as JSON."""
-    
+
     tools = [tool.name for tool in Tool.query.all()]
 
     return jsonify(tools)
@@ -266,12 +268,10 @@ def show_homepage():
     """Render the homepage."""
 
     if session:
-        user_id = session['current_user']
-        user = User.query.filter_by(user_id = user_id).first()
+        user_id = session["current_user"]
+        user = User.query.filter_by(user_id=user_id).first()
         procedures = Procedure.query.all()
-        print('*************************', procedures)
         shuffle(procedures)
-        print('*************************', procedures)
         featured = procedures[:12]
 
         tools = Tool.query.all()
@@ -304,13 +304,13 @@ def new_user():
     password = request.form.get("password")
     nickname = request.form.get("nickname")
 
-    user = User.query.filter_by(username = username).first()
+    user = User.query.filter_by(username=username).first()
 
     if user:
         flash("A user already exists with that username.")
         return redirect("/")
     else:
-        user = User(username = username, password = password, nickname = nickname)
+        user = User(username=username, password=password, nickname=nickname)
         db.session.add(user)
         db.session.commit()
         flash(f"New account created. Please use your credentials to log in.")
@@ -323,13 +323,13 @@ def show_procedure_page(proc_id):
 
     if session:
         procedure = Procedure.query.get(proc_id)
-        proc_car_obj = ProcedureCar.query.filter_by(proc_id = proc_id).all()
-        proc_part_obj = ProcedurePart.query.filter_by(proc_id = proc_id).all()
-        proc_tool_obj = ProcedureTool.query.filter_by(proc_id = proc_id).all()
-        steps = Step.query.filter_by(proc_id = proc_id).all()
-        proc_num_tools = ProcedureTool.query.filter_by(proc_id = proc_id).count()
-        proc_num_parts = ProcedurePart.query.filter_by(proc_id = proc_id).count()
-        proc_num_steps = Step.query.filter_by(proc_id = proc_id).count()
+        proc_car_obj = ProcedureCar.query.filter_by(proc_id=proc_id).all()
+        proc_part_obj = ProcedurePart.query.filter_by(proc_id=proc_id).all()
+        proc_tool_obj = ProcedureTool.query.filter_by(proc_id=proc_id).all()
+        steps = Step.query.filter_by(proc_id=proc_id).all()
+        proc_num_tools = ProcedureTool.query.filter_by(proc_id=proc_id).count()
+        proc_num_parts = ProcedurePart.query.filter_by(proc_id=proc_id).count()
+        proc_num_steps = Step.query.filter_by(proc_id=proc_id).count()
 
         return render_template(
             "procedure.html",
@@ -386,10 +386,10 @@ def rebuild_procedure():
             filename = "toolbox.png"
 
         tool_data[tool] = {}
-        tool_data[tool]['id'] = tool_id
-        tool_data[tool]['name'] = tool_name
-        tool_data[tool]['img'] = filename
-        tool_data[tool]['other'] = tool_other
+        tool_data[tool]["id"] = tool_id
+        tool_data[tool]["name"] = tool_name
+        tool_data[tool]["img"] = filename
+        tool_data[tool]["other"] = tool_other
 
     # Iterate through all parts on the form. Make  a list of tuples (?)
     # containing this information.
@@ -418,13 +418,13 @@ def rebuild_procedure():
             filename = "toolbox.png"
 
         part_data[part] = {}
-        part_data[part]['id'] = part_id
-        part_data[part]['name'] = part_name
-        part_data[part]['img'] = filename
-        part_data[part]['other'] = part_other
-        part_data[part]['pn'] = part_pn
-        part_data[part]['manuf'] = part_manuf
-        part_data[part]['oem'] = part_oem
+        part_data[part]["id"] = part_id
+        part_data[part]["name"] = part_name
+        part_data[part]["img"] = filename
+        part_data[part]["other"] = part_other
+        part_data[part]["pn"] = part_pn
+        part_data[part]["manuf"] = part_manuf
+        part_data[part]["oem"] = part_oem
 
     # Iterate through all steps on the form. Make  a list of tuples (?)
     # containing this information.
@@ -451,15 +451,13 @@ def rebuild_procedure():
             filename = "toolbox.png"
 
         step_data[step] = {}
-        step_data[step]['id'] = step_id
-        step_data[step]['order'] = step_order
-        step_data[step]['text'] = step_text
-        step_data[step]['ref'] = step_ref
-        step_data[step]['img'] = filename
+        step_data[step]["id"] = step_id
+        step_data[step]["order"] = step_order
+        step_data[step]["text"] = step_text
+        step_data[step]["ref"] = step_ref
+        step_data[step]["img"] = filename
 
-    crud.update_procedure(
-        proc_id, title, label, cars, tool_data, part_data, step_data
-    )
+    crud.update_procedure(proc_id, title, label, cars, tool_data, part_data, step_data)
 
     return redirect(f"/procedure/{proc_id}")
 
@@ -468,9 +466,9 @@ def rebuild_procedure():
 def show_tool_page(tool_id):
     """Render a tool page."""
 
-    tool = Tool.query.filter_by(tool_id = tool_id).first()
+    tool = Tool.query.filter_by(tool_id=tool_id).first()
 
-    return render_template("tool.html", tool = tool)
+    return render_template("tool.html", tool=tool)
 
 
 @app.route("/uploads/<filename>")
@@ -484,10 +482,10 @@ def uploaded_file(filename):
 def show_make_page(make):
     """Render a page that shows all model years for a given make in the db."""
 
-    cars = Car.query.filter_by(make = make).all()
+    cars = Car.query.filter_by(make=make).all()
     model_years = set(sorted([car.model_year for car in cars]))
 
-    return render_template("veh-make.html", make = make, model_years = model_years)
+    return render_template("veh-make.html", make=make, model_years=model_years)
 
 
 @app.route("/vehicle/<make>/<model_year>")
@@ -498,7 +496,7 @@ def show_model_year_page(make, model_year):
     models = set(sorted([car.model for car in cars]))
 
     return render_template(
-        "veh-make-my.html", make = make, model_year = model_year, models = models
+        "veh-make-my.html", make=make, model_year=model_year, models=models
     )
 
 
@@ -568,7 +566,7 @@ def write_procedure():
         )
     else:
         return redirect("/")
-    
+
 
 if __name__ == "__main__":
     connect_to_db(app)
