@@ -45,25 +45,6 @@
 </div>
 </div>
 
-  <!-- <form id="car-add-form" action="/vehicle-select.json" method="POST" style="display: none;">
-    <div  class="write-proc form-group sub-item">
-        <select class="custom-select" id="make" name="make" required>
-            <option value="">Vehicle Make</option>
-            {% for make in sorted_makes %}
-            <option value="{{ make }}">{{ make }}</option>
-            {% endfor %}
-            <option value="other">Other (please specify)...</option>
-        </select>
-        <select class="custom-select" id="model-year" name="model-year" disabled>
-            <option value="">Vehicle Model Year</option>
-        </select>
-        <select class="custom-select" id="model-select" name="model" disabled>
-        <option value="">Vehicle Model</option>
-        </select>
-        <input id="vehicle-submit" class="btn btn-primary" type="submit" disabled>
-    </div>
-</form> -->
-
 <div class="container-fluid">
     <div class="row">
         
@@ -152,15 +133,15 @@
                                     <input type="hidden" class="tool-id" name="tool-id-{{ loop.index }}" value="{{ proc_tool.tool.tool_id }}" />
                                     <input type="hidden" class="tool-other-name" name="tool-other-name-{{ loop.index }}" value="" />
                                     <input type="text" class="tool-name form-control" name="tool-name-{{ loop.index }}" value="{{ proc_tool.tool.name }}" disabled required/>
-                                    <button class="name edit btn btn-secondary">Edit Name</button>
+                                    <button class="name edit btn btn-secondary btn-sm">Edit Name</button>
                                 </td>
                                 <td class="img">
                                     <input type="hidden" class="tool-existing-img" name="tool-existing-img-{{ loop.index }}" value="{{ proc_tool.tool.tool_img }}" />
                                     <p>Current image: {{ proc_tool.tool.tool_img }}</p>
                                     <input type="file" class="tool-img form-control-file" name="tool-img-{{ loop.index }}" disabled/>
                                     <br />
-                                    <button class="img edit btn btn-secondary">Edit Img</button>
-                                    <button class="del-img btn btn-secondary">Restore Default Img</button>
+                                    <button class="img edit btn btn-secondary btn-sm">Edit Image</button>
+                                    <button class="del-img btn btn-secondary btn-sm">Restore Default Image</button>
                                 </td>
                                 <td>
                                     <button class="remove-tool btn btn-primary">Remove Tool</button>
@@ -194,7 +175,7 @@
                             <input type="hidden" class="part-other-name" name="part-other-name-{{ loop.index }}" value="" />
                             <input type="text" class="part-name form-control" name="part-name-{{ loop.index }}" value="{{ proc_part.part.name }}" disabled required/>
                             <br />
-                            <button class="name edit btn btn-secondary">Edit Name</button>
+                            <button class="name edit btn btn-secondary btn-sm">Edit Name</button>
                         </td>
                         <td class="img">
                             <input type="hidden" class="part-existing-img" name="part-existing-img-{{ loop.index }}" value="{{ proc_part.part.part_img }}" />
@@ -202,8 +183,8 @@
                             <p>{{ proc_part.part.part_img }}</p>
                             <input type="file" class="part-img form-control-file" name="part-img-{{ loop.index }}" disabled/>
                             <br />
-                            <button class="img edit btn btn-secondary">Edit Img</button>
-                            <button class="del-img btn btn-secondary">Restore Default Img</button>
+                            <button class="img edit btn btn-secondary btn-sm">Edit Image</button>
+                            <button class="del-img btn btn-secondary btn-sm">Restore Default Image</button>
                         </td>
                         <td>
                             <button class="remove-part btn btn-primary">Remove Part</button>
@@ -247,8 +228,8 @@
                                                 value="{{ step.reference }}" disabled/>
                                 {% endif %}
                                 <br />
-                                <button class="edit ref btn btn-secondary">Edit Ref</button>
-                                <button class="del-ref btn btn-secondary">Remove Ref</button>
+                                <button class="edit ref btn btn-secondary btn-sm">Edit Reference</button>
+                                <button class="del-ref btn btn-secondary btn-sm">Remove Reference</button>
                             </td>
                             <td class="img">
                                 <input type="hidden" class="step-existing-img form-control" name="step-existing-img-{{ loop.index }}" value="{{ step.step_img }}" />
@@ -256,14 +237,14 @@
                                 <p>{{ step.step_img }}</p>
                                 <input type="file" class="step-img-edit form-control-file" name="step-img-{{ loop.index }}" disabled />
                                 <br />
-                                <button class="edit img btn btn-secondary">Edit Img</button>
-                                <button class="del-img btn btn-secondary">Restore Default Img</button>
+                                <button class="edit img btn btn-secondary btn-sm">Edit Image</button>
+                                <button class="del-img btn btn-secondary btn-sm">Restore Default Image</button>
                             </td>
                             <td class="buttonrow">
-                                <button class="move up btn btn-secondary">UP</button>
+                                <button class="move up btn btn-secondary btn-sm">UP</button>
                             </td>
                             <td class="buttonrow">
-                                <button class="move down btn btn-secondary">DOWN</button>
+                                <button class="move down btn btn-secondary btn-sm">DOWN</button>
                             </td>
                             <td class="buttonrow">
                                 <button class="remove-step btn btn-primary">Remove Step</button>

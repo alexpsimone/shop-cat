@@ -569,21 +569,21 @@ function addStep (evt) {
                         <input type="url" class="step-ref form-control" name="step-ref-${NUM_STEPS}"
                             placeholder="https://example.com" pattern="https://.*" disabled/>
                         <br />
-                        <button class="edit ref btn btn-secondary">Edit Reference</button>
-                        <button class="del-ref btn btn-secondary" disabled>Remove Reference</button>
+                        <button class="edit ref btn btn-secondary btn-sm">Edit Reference</button>
+                        <button class="del-ref btn btn-secondary btn-sm" disabled>Remove Reference</button>
                     </td>
                     <td class="img">
                         <input type="hidden" class="step-existing-img" name="step-existing-img-${NUM_STEPS}" value="toolbox.png" />
                         <input type="file" class="step-img-edit form-control-file" name="step-img-${NUM_STEPS}" disabled />
                         <br />
-                        <button class="edit img btn btn-secondary">Edit Image</button>
-                        <button class="del-img btn btn-secondary" disabled>Restore Default Image</button>
+                        <button class="edit img btn btn-secondary btn-sm">Edit Image</button>
+                        <button class="del-img btn btn-secondary btn-sm" disabled>Restore Default Image</button>
                     </td>
                     <td>
-                        <button class="move up btn btn-secondary">UP</button>
+                        <button class="move up btn btn-secondary btn-sm">UP</button>
                     </td>
                     <td>
-                        <button class="move down btn btn-secondary">DOWN</button>
+                        <button class="move down btn btn-secondary btn-sm">DOWN</button>
                     </td>
                     <td>
                     <button class="remove-step btn btn-primary">Remove Step</button>
