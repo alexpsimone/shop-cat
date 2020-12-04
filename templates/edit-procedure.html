@@ -10,41 +10,40 @@
 
 {% block body %}
   
-  <!-- Modal -->
-  <div class="modal fade" id="vehicle-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Select a Vehicle</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <form action="/vehicle-select.json" method="POST">
-                <div  class="write-proc form-group sub-item">
-                    <select class="custom-select" id="make" name="make" required>
-                        <option value="">Vehicle Make</option>
-                        {% for make in sorted_makes %}
-                        <option value="{{ make }}">{{ make }}</option>
-                        {% endfor %}
-                        <option value="other">Other (please specify)...</option>
-                    </select>
-                    <select class="custom-select" id="model-year" name="model-year" disabled>
-                        <option value="">Vehicle Model Year</option>
-                    </select>
-                    <select class="custom-select" id="model-select" name="model" disabled>
-                    <option value="">Vehicle Model</option>
-                    </select>
-                    <input id="vehicle-submit" class="btn btn-primary" type="submit" data-dismiss="modal" disabled>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-        </div>
-      </div>
+<div class="modal fade" id="vehicle-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Select a Vehicle</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
     </div>
-  </div>
+    <div class="modal-body">
+        <form action="/vehicle-select.json" method="POST">
+            <div  class="write-proc form-group sub-item">
+                <select class="custom-select" id="make" name="make" required>
+                    <option value="">Vehicle Make</option>
+                    {% for make in sorted_makes %}
+                    <option value="{{ make }}">{{ make }}</option>
+                    {% endfor %}
+                    <option value="other">Other (please specify)...</option>
+                </select>
+                <select class="custom-select" id="model-year" name="model-year" disabled>
+                    <option value="">Vehicle Model Year</option>
+                </select>
+                <select class="custom-select" id="model-select" name="model" disabled>
+                <option value="">Vehicle Model</option>
+                </select>
+                <input id="vehicle-submit" class="btn btn-primary" type="submit" data-dismiss="modal" disabled>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+    </div>
+    </div>
+</div>
+</div>
 
   <!-- <form id="car-add-form" action="/vehicle-select.json" method="POST" style="display: none;">
     <div  class="write-proc form-group sub-item">

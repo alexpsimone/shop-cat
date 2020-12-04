@@ -369,6 +369,11 @@ function selectAddlVehicle (evt) {
 
             $('button.remove-vehicle').off();
             $('button.remove-vehicle').on('click', removeVehicle);
+            $('#make').val('');
+            $('#model-year').val('');
+            $('#model-year').attr('disabled', true);
+            $('#model-select').val('');
+            $('#model-select').attr('disabled', true);
         });
 
         $('#NUM_CARS').replaceWith(`<input name="NUM_CARS" 
@@ -377,9 +382,6 @@ function selectAddlVehicle (evt) {
                                     style="display: none;"/>`);
 
         $('checkbox.car-remove').attr('disabled', false);
-        $('#car-add-form').hide();
-        $('#model-year').attr('disabled', true);
-        $('#model').attr('disabled', true);
     };
 }
 
