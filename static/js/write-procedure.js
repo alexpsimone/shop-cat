@@ -147,7 +147,7 @@ function addStep (evt) {
 
     $('#step-list').append(`<div class="card sub-item">
                             <p>Step ${NUM_STEPS}: </p>
-                            <textarea class="form-control" name="step_text_${NUM_STEPS}"></textarea>
+                            <textarea class="form-control" name="step_text_${NUM_STEPS}" rows="6"></textarea>
                             <label for="ref_text_${NUM_STEPS}">
                             Reference URL (optional, must start with https://): </label>
                             <input type="url" class="form-control ref-url" name="ref_text_${NUM_STEPS}"

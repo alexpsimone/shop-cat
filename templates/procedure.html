@@ -10,15 +10,15 @@
 
 {% block body %}
 <div class="container-fluid">
-    <div class="card sub-item">
-        <div class="row">
+    <div class="col proc-main">
+        <div class="row border-bottom proc-overview">
             <div class="col">
                 <h1>{{ procedure.title }}</h1>
                 <h2 class="label-header">{{procedure.label }}</h2>
             </div>
         </div>
 
-        <div class="row">
+        <div class="row border-bottom proc-overview">
             <div class="col">
                 <p class="form-subtitle">This procedure applies to the following cars:</p>
                 <ul>
@@ -59,13 +59,14 @@
 
         {% for step in steps %}
         <div class="row step align-items-center">
-            <div class="col d-flex justify-content-center align-items-center">  
-                <img class="step-img" src="/static/img/uploads/{{ step.step_img }}"/>
-            </div>
-            <div class="col">
-                <p>{{ step.order_num }}</p>
-                <p>{{ step.step_text }}</p>
-            </div>
+            <h2 class="step-title">Step {{ step.order_num }}</h2>
+            <!-- <div class="col d-flex justify-content-center align-items-center">   -->
+        </div>
+        <div class="row step align-items-center">
+            <img class="step-img" src="/static/img/uploads/{{ step.step_img }}"/>
+        </div>
+        <div class="row step align-items-center border-bottom">
+            <p>{{ step.step_text }}</p>
         </div>
         {% endfor %}
 

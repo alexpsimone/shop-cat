@@ -235,7 +235,7 @@
                             <td class="name-order">
                                 <input type="hidden" class="step-order" name="step-order-{{ loop.index }}" value="{{ loop.index }}" />
                                 <input type="hidden" class="step-id" name="step-id-{{ loop.index }}" value="{{ step.step_id }}" />
-                                <textarea name="step-text" class="form-control" required>{{ step.step_text }}</textarea>
+                                <textarea name="step-text" class="form-control" rows="6" required>{{ step.step_text }}</textarea>
                             </td>
                             <td class="ref">
                                 {% if step.reference == "No Ref Provided" %}
@@ -280,7 +280,7 @@
 
         </div class="row">
             <div class="col edit-proc">
-                <a id="cancel" href="/home">cancel</a>
+                <a id="cancel" href="/procedure/{{ procedure.proc_id }}">cancel</a>
                 <input type="submit" class="btn btn-primary border-top">
             </div>
         </div>

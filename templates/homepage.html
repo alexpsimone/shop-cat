@@ -30,7 +30,7 @@
     <div class="row justify-content-center">
         {% for proc_car_obj in proc_car_objs %}
             <div class="col">
-                <div class="card" style="width: 18em;">
+                <div class="border featured" style="width: 18em;">
                     <div class="card-body">
                         <h5 class="card-title">{{ proc_car_obj.proc.title }}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">{{ proc_car_obj.proc.label }}</h6>
@@ -41,11 +41,5 @@
             </div>
         {% endfor %}
     </div>
-
-    <div class="row">
-        <p><em>You're logged in as {{ user.username }}.</em></p>
-        <p>Access your dashboard <a href="/dashboard/{{ user.user_id }}">here</a>.</p>
-    </div>  
-
 </div>
 {% endblock %}

@@ -145,3 +145,14 @@ background-size: cover;
     font-size: 18px;
     font-weight: 600;
 }
+.proc-overview {
+    padding: 1%;
+}
+.proc-main {
+    padding: 5%;
+}
+.featured {
+    margin: 1%;
+    height: 250px;
+    width: 300px;
+}

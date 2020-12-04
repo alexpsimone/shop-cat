@@ -46,7 +46,7 @@ function addTool (evt) {
         $('select.tool-name').on('change', requireOtherToolName);
         $('button.remove-tool').on('click', removeTool);
         $('button.edit').on('click', enableEditField);
-        $('button.del-img').on('click', restoreDefaultImg);
+        $('button.del-img').on('click', restoreDefault);
 
     });
 
@@ -221,7 +221,7 @@ function addPart (evt) {
         $('select.part-name').off();
         $('select.part-name').on('change', requireOtherPartName);
         $('button.remove-part').on('click', removePart);
-        $('button.del-img').on('click', restoreDefaultImg);
+        $('button.del-img').on('click', restoreDefault);
     });
 
     $('#NUM_PARTS').replaceWith(`<input name="NUM_PARTS" id="NUM_PARTS" 
@@ -563,31 +563,31 @@ function addStep (evt) {
                     <td class="name-order">
                         <input type="hidden" class="step-order" name="step-order-${NUM_STEPS}" value="${NUM_STEPS}" />
                         <input type="hidden" class="step-id" name="step-id-${NUM_STEPS}" value="NEW" />
-                        <textarea class="step-text form-control" name="step-text-${NUM_STEPS}" required></textarea>
+                        <textarea class="step-text form-control" name="step-text-${NUM_STEPS}" rows="6" required></textarea>
                     </td>
                     <td class="ref">
                         <input type="url" class="step-ref form-control" name="step-ref-${NUM_STEPS}"
                             placeholder="https://example.com" pattern="https://.*" disabled/>
                         <br />
-                        <button class="edit ref btn btn-primary">Edit Ref</button>
-                        <button class="del-ref btn btn-primary" disabled>Remove Ref</button>
+                        <button class="edit ref btn btn-secondary">Edit Reference</button>
+                        <button class="del-ref btn btn-secondary" disabled>Remove Reference</button>
                     </td>
                     <td class="img">
                         <input type="hidden" class="step-existing-img" name="step-existing-img-${NUM_STEPS}" value="toolbox.png" />
                         <input type="file" class="step-img-edit form-control-file" name="step-img-${NUM_STEPS}" disabled />
                         <br />
-                        <button class="edit img btn btn-primary">Edit Img</button>
-                        <button class="del-img btn btn-primary" disabled>Restore Default Img</button>
+                        <button class="edit img btn btn-secondary">Edit Image</button>
+                        <button class="del-img btn btn-secondary" disabled>Restore Default Image</button>
                     </td>
                     <td>
-                        <button class="remove-step btn btn-primary">Remove Step</button>
+                        <button class="move up btn btn-secondary">UP</button>
                     </td>
                     <td>
-                        <button class="move up btn btn-primary">UP</button>
+                        <button class="move down btn btn-secondary">DOWN</button>
                     </td>
                     <td>
-                        <button class="move down btn btn-primary">DOWN</button>
-                    </td>
+                    <button class="remove-step btn btn-primary">Remove Step</button>
+                </td>
                 </tr>`);
 
     $('#NUM_STEPS').replaceWith(`<input name="NUM_STEPS" id="NUM_STEPS" 
@@ -602,8 +602,8 @@ function addStep (evt) {
     $('button.move').on('click', moveRow);
     $('button.remove-step').on('click', removeStep);
     $('button.edit').on('click', enableEditField);
-    $('button.del-ref').on('click', removeReference);
-    $('button.del-img').on('click', restoreDefaultImg);
+    $('button.del-ref').on('click', restoreDefault);
+    $('button.del-img').on('click', restoreDefault);
 }
 
 
@@ -621,8 +621,7 @@ function enableEditField (evt) {
 
 }
 
-
-function restoreDefaultImg (evt) {
+function restoreDefault (evt) {
 
     evt.preventDefault();
 
@@ -635,15 +634,16 @@ function restoreDefaultImg (evt) {
     $(otherButton).attr('disabled', false);
 }
 
+// function removeReference (evt) {
 
-function removeReference (evt) {
+//     evt.preventDefault();
 
-    evt.preventDefault();
-
-    const thisButton = evt.target;
-    const thisInput = $(thisButton).prevAll('input');
-    $(thisInput).val('');
-}
+//     const thisButton = evt.target;
+//     const thisInput = $(thisButton).prevAll('input');
+//     const otherButton = $(thisButton).prevAll('button');
+//     $(thisInput).val('');
+//     $(otherButton).attr('disabled', false);
+// }
 
 
 
@@ -681,7 +681,7 @@ $('button.remove-step').on('click', removeStep);
 $('#step-add').on('click', addStep);
 
 $('button.edit').on('click', enableEditField);
-$('button.del-img').on('click', restoreDefaultImg);
-$('button.del-ref').on('click', removeReference);
+$('button.del-img').on('click', restoreDefault);
+$('button.del-ref').on('click', restoreDefault);
 
 $('form').on('submit', requireStepAndCar);
