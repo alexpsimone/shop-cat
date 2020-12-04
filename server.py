@@ -51,11 +51,10 @@ def build_procedure():
     for step in range(1, (NUM_STEPS + 1)):
 
         step_text = request.form.get(f"step_text_{step}")
-        ref_check = request.form.get(f"ref_{step}")
         ref_text = request.form.get(f"ref_text_{step}")
         step_img = request.files[f"step_img_{step}"]
 
-        [reference, filename] = crud.get_step_ref_and_img(ref_check, ref_text, step_img)
+        [reference, filename] = crud.get_step_ref_and_img(ref_text, step_img)
 
         new_step = Step(
             order_num=step,

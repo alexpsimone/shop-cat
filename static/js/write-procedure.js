@@ -148,9 +148,6 @@ function addStep (evt) {
     $('#step-list').append(`<div class="card sub-item">
                             <p>Step ${NUM_STEPS}: </p>
                             <textarea class="form-control" name="step_text_${NUM_STEPS}"></textarea>
-                            <input type="checkbox" class="form-check ref-check" id="ref_${NUM_STEPS}"
-                            name="ref_${NUM_STEPS}" />
-                            <label for="ref_${NUM_STEPS}">Reference?</label>
                             <label for="ref_text_${NUM_STEPS}">
                             Reference URL (optional, must start with https://): </label>
                             <input type="url" class="form-control ref-url" name="ref_text_${NUM_STEPS}"

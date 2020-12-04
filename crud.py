@@ -15,14 +15,14 @@ def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in allowed_extensions
 
 
-def get_step_ref_and_img(is_ref, reference, step_img):
+def get_step_ref_and_img(reference, step_img):
     """Determine if a reference and/or img needs to be added to the Step.
 
     Check to see if reference or image checkboxes were selecteed.
     If they were, then look to the corresponding input fields for data.
     Add image and reference info to the Step objects as required.
     """
-    if is_ref:
+    if reference:
         if "youtube.com" in reference:
             ref_remove_https = reference.replace("https://", "")
             ref_remove_www = ref_remove_https.replace("www.youtube.com/watch?v=", "")
