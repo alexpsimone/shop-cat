@@ -665,7 +665,6 @@ function requireStepAndCar (evt) {
     $('input', this).prop('disabled', false);
 }
 
-
 $('#car-add').on('click', addVehicle);
 $('#make').on('change', getModelYears);
 $('#vehicle-submit').on('click', selectAddlVehicle);

@@ -86,6 +86,9 @@ def build_procedure():
     # *#*#*#*#*#*#*#*#*#*#*#*#*#*
     db.session.commit()
 
+    # Retrieve procedure ID after 1st commit, to render procedure page later
+    proc_id = procedure.proc_id 
+
     # Add tools to the procedure based on form info.
     NUM_TOOLS = int(request.form.get("NUM_TOOLS"))
 
@@ -123,7 +126,7 @@ def build_procedure():
         db.session.add(proc_part)
         db.session.commit()
 
-    return redirect("/home")
+    return redirect(f'procedure/{proc_id}')
 
 
 @app.route("/dashboard/<user_id>")
