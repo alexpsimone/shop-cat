@@ -156,6 +156,7 @@ def edit_procedure(proc_id):
     """Render the procedure editing form."""
 
     if session:
+        user = User.query.filter_by(user_id=session["current_user"]).first()
         procedure = Procedure.query.get(proc_id)
         proc_car_obj = ProcedureCar.query.filter_by(proc_id=proc_id).all()
         proc_part_obj = ProcedurePart.query.filter_by(proc_id=proc_id).all()
@@ -169,6 +170,7 @@ def edit_procedure(proc_id):
 
         return render_template(
             "edit-procedure.html",
+            user=user,
             procedure=procedure,
             proc_car_obj=proc_car_obj,
             proc_part_obj=proc_part_obj,
@@ -266,8 +268,7 @@ def show_homepage():
     """Render the homepage."""
 
     if session:
-        user_id = session["current_user"]
-        user = User.query.filter_by(user_id=user_id).first()
+        user = User.query.filter_by(user_id=session["current_user"]).first()
         proc_car_objs = ProcedureCar.query.all()
         shuffle(proc_car_objs)
         featured = proc_car_objs[:12]
@@ -320,6 +321,7 @@ def show_procedure_page(proc_id):
     """Render a procedure page."""
 
     if session:
+        user = User.query.filter_by(user_id=session["current_user"]).first()
         procedure = Procedure.query.get(proc_id)
         proc_car_obj = ProcedureCar.query.filter_by(proc_id=proc_id).all()
         proc_part_obj = ProcedurePart.query.filter_by(proc_id=proc_id).all()
@@ -331,6 +333,7 @@ def show_procedure_page(proc_id):
 
         return render_template(
             "procedure.html",
+            user=user,
             procedure=procedure,
             proc_car_obj=proc_car_obj,
             proc_part_obj=proc_part_obj,
@@ -464,9 +467,10 @@ def rebuild_procedure():
 def show_tool_page(tool_id):
     """Render a tool page."""
 
+    user = User.query.filter_by(user_id=session["current_user"]).first()
     tool = Tool.query.filter_by(tool_id=tool_id).first()
 
-    return render_template("tool.html", tool=tool)
+    return render_template("tool.html", tool=tool, user=user)
 
 
 @app.route("/uploads/<filename>")
@@ -480,21 +484,23 @@ def uploaded_file(filename):
 def show_make_page(make):
     """Render a page that shows all model years for a given make in the db."""
 
+    user = User.query.filter_by(user_id=session["current_user"]).first()
     cars = Car.query.filter_by(make=make).all()
     model_years = set(sorted([car.model_year for car in cars]))
 
-    return render_template("veh-make.html", make=make, model_years=model_years)
+    return render_template("veh-make.html", make=make, model_years=model_years, user=user)
 
 
 @app.route("/vehicle/<make>/<model_year>")
 def show_model_year_page(make, model_year):
     """Render a page that shows all cars in db with given make/MY."""
 
+    user = User.query.filter_by(user_id=session["current_user"]).first()
     cars = Car.query.filter(Car.make == make, Car.model_year == model_year).all()
     models = set(sorted([car.model for car in cars]))
 
     return render_template(
-        "veh-make-my.html", make=make, model_year=model_year, models=models
+        "veh-make-my.html", make=make, model_year=model_year, models=models, user=user
     )
 
 
@@ -502,6 +508,7 @@ def show_model_year_page(make, model_year):
 def show_model_page(make, model_year, model):
     """Render a page that shows all procedures for a given vehicle."""
 
+    user = User.query.filter_by(user_id=session["current_user"]).first()
     car = Car.query.filter(
         Car.make == make, Car.model_year == model_year, Car.model == model
     ).first()
@@ -510,6 +517,7 @@ def show_model_page(make, model_year, model):
 
     return render_template(
         "veh-make-my-model.html",
+        user=user,
         proc_cars=proc_cars,
         make=make,
         model_year=model_year,
@@ -555,12 +563,13 @@ def write_procedure():
     """Render the write-procedure template using existing Part/Tool objects."""
 
     if session:
+        user = User.query.filter_by(user_id=session["current_user"]).first()
         tools = Tool.query.all()
         parts = Part.query.all()
         sorted_makes = crud.get_all_rockauto_makes()
 
         return render_template(
-            "write-procedure.html", tools=tools, parts=parts, sorted_makes=sorted_makes
+            "write-procedure.html", tools=tools, parts=parts, sorted_makes=sorted_makes, user=user
         )
     else:
         return redirect("/")
