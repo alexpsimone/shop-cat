@@ -8,18 +8,25 @@
 
 
 {% block body %}
-
-    <ul>
-        {% for proc_car in proc_cars %}
-            <li>
-                <a href="/procedure/{{ proc_car.proc.proc_id }}">{{ proc_car.proc.title }}</a>
-            </li>
-        {% endfor %}
-    </ul>
-
-    <a href="/vehicle/{{ make }}/{{ model_year }}">Return to all {{ make }} vehicles from {{ model_year }}.</a>
-    <br />
-    <a href="/vehicle/{{ make }}">Return to all {{ make }} vehicles.</a>
-    <br />
-    <a href="/home">Return Home</a>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <p>All procedures written for {{ model_year }} {{ make }} {{ model }}:</p>
+            <ul>
+                {% for proc_car in proc_cars %}
+                    <li>
+                        <a href="/procedure/{{ proc_car.proc.proc_id }}">{{ proc_car.proc.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <a href="/vehicle/{{ make }}/{{ model_year }}" class="btn btn-secondary btn-sm">Return to all {{ make }} vehicles from {{ model_year }}.</a>
+            <a href="/vehicle/{{ make }}" class="btn btn-secondary btn-sm">Return to all {{ make }} vehicles.</a>
+        </div>
+    </div>
+</div>
+   
 {% endblock %}

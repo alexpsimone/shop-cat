@@ -8,17 +8,15 @@
 
 
 {% block body %}
-    <p>Models for {{ make }} {{ model_year }}:</p>
-
-    <ul>
+<div class="container-fluid">
+    <div class="row">
+        <p>Models for all {{ make }} vehicles with MY{{ model_year }}:</p>
         {% for model in models %}
-            <li>
-                <a href="/vehicle/{{ make }}/{{ model_year }}/{{ model }}">{{ model }}</a>
-            </li>
+            <a href="/vehicle/{{ make }}/{{ model_year }}/{{ model }}" class="btn btn-primary">{{ model }}</a>
         {% endfor %}
-    </ul>
-
-    <a href="/vehicle/{{ make }}">Return to {{ make }} page.</a>
-    <br />
-    <a href="/home">Return Home</a>
+    </div>
+    <div class="row">
+        <a href="/vehicle/{{ make }}" class="btn btn-secondary btn-sm">Return to {{ make }} page.</a>
+    </div>
+</div>
 {% endblock %}
