@@ -91,9 +91,10 @@ background-size: cover;
 }
 
 .welcome-title {
-    color: black;
-    font-size: 5em;
-    font-weight: 900;
+    color: #E1DFD5;
+    -webkit-text-stroke:#464828 2px;
+    font-size: 4em;
+    font-weight: 600;
 }
 
 .write-proc {
@@ -150,6 +151,9 @@ background-size: cover;
 }
 .proc-main {
     padding: 5%;
+}
+.home-pad {
+    padding: 2%;
 }
 .featured {
     margin: 1%;

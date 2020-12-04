@@ -40,9 +40,9 @@
 
 
     <div class="row">
-        <div class="col card sub-item">
+        <div class="col sub-item">
             <form action="/build-procedure", method="POST", enctype="multipart/form-data">
-                <div class="form-row justify-content-around">
+                <div class="form-row justify-content-around border-bottom proc-main">
                     <div class="col-4 d-flex align-items-center justify-content-center">
                         <label for="proc-title">Title: </label>
                         <input id="proc-title" class="form-control" type="text" name="proc_title" required disabled/>
@@ -58,7 +58,7 @@
                     </div>
                 </div>
             
-                <div class="form-row">
+                <div class="form-row proc-main border-bottom">
                     <div class="col">
                         <div class="form-group d-flex align-items-center justify-content-center">
                                 <button id="tool-adder" class="btn btn-primary" role="button" disabled>Add a Tool</button>
@@ -82,7 +82,7 @@
                     </div>
                 </div>
             
-                <div class="row">
+                <div class="row proc-main">
                     <div class="col">
                         <a id="cancel" href="/home">cancel</a>
                         <input id="proc-submit" class="btn btn-primary" type="submit" disabled></input>
