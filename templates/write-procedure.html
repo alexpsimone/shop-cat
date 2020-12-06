@@ -4,8 +4,13 @@
 
 {% block js %}
     <script src="http://code.jquery.com/jquery.js"></script>
+    <!-- <script type="text/javascript" src="jquery.serializejson.js"></script> -->
     <script src="/static/js/vehicle-search.js" type="text/jsx"></script>
     <script src="/static/js/write-procedure.js" type="text/jsx"></script>
+    <!-- <script>
+        const formData = $('#serialform').serializeJSON();
+        console.log(formData)
+    </script> -->
 {% endblock %}
 
 
@@ -41,7 +46,8 @@
 
     <div class="row">
         <div class="col sub-item">
-            <form action="/build-procedure", method="POST", enctype="multipart/form-data">
+            <!-- <form action="/new-form-send" id="serialform" method="POST" enctype="multipart/form-data"> -->
+            <form id="serialform" action="/build-procedure", method="POST", enctype="multipart/form-data">
                 <div class="form-row justify-content-around border-bottom proc-main">
                     <div class="col-4 d-flex align-items-center justify-content-center">
                         <label for="proc-title">Title: </label>

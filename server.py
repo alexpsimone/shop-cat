@@ -576,6 +576,11 @@ def write_procedure():
     else:
         return redirect("/")
 
+@app.route("/new-fom-send", methods=["POST"])
+def alt_form_json_send():
+
+    data = request.form.get_json()
+    print(data)
 
 if __name__ == "__main__":
     connect_to_db(app)

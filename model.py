@@ -107,8 +107,8 @@ class Part(db.Model):
     __tablename__ = "parts"
 
     part_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(25), nullable=False)
-    part_img = db.Column(db.String(50))
+    name = db.Column(db.String(100), nullable=False)
+    part_img = db.Column(db.String)
 
     def __repr__(self):
         return f"<Part part_id={self.part_id} name={self.name}>"

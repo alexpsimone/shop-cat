@@ -31,9 +31,12 @@ for tool_json in tools_json:
 # Create a set of 50 test parts.
 parts_bin = []
 
-for part in range(50):
+with open("data/parts.json") as filename:
+    parts_json = json.loads(filename.read())
 
-    name = f"part_{part}"
+for part_json in parts_json:
+
+    name = part_json
     part_img = "toolbox.png"
 
     part = Part(name=name, part_img=part_img)
