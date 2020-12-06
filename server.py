@@ -30,7 +30,6 @@ def show_login():
 
 ############################################################
 #### TODO: Maybe integrate request.json to make smaller? ###
-#### TODO: Use flush so require only one db commit #########
 ############################################################
 @app.route("/build-procedure", methods=["POST"])
 def build_procedure():
@@ -84,7 +83,7 @@ def build_procedure():
     proc_car = ProcedureCar(proc=procedure, car=car)
     db.session.add(proc_car)
     # *#*#*#*#*#*#*#*#*#*#*#*#*#*
-    db.session.commit()
+    db.session.flush()
 
     # Retrieve procedure ID after 1st commit, to render procedure page later
     proc_id = procedure.proc_id 
@@ -103,7 +102,7 @@ def build_procedure():
         proc_tool = ProcedureTool(proc=procedure, tool=my_tool)
         # *#*#*#*#*#*#*#*#*#*#*#*#*#*
         db.session.add(proc_tool)
-        db.session.commit()
+        db.session.flush()
 
     # Add parts to the procedure based on form info.
     NUM_PARTS = int(request.form.get("NUM_PARTS"))
@@ -122,9 +121,10 @@ def build_procedure():
         )
 
         proc_part = ProcedurePart(proc=procedure, part=my_part)
-        # *#*#*#*#*#*#*#*#*#*#*#*#*#*
         db.session.add(proc_part)
-        db.session.commit()
+        db.session.flush()
+    
+    db.session.commit()
 
     return redirect(f'procedure/{proc_id}')
 

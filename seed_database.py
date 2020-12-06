@@ -92,7 +92,7 @@ for user_json in users_json:
         avatar_img_url=avatar_img_url,
     )
     db.session.add(user)
-    db.session.commit()
+    db.session.flush()
 
     for x in range(3):
 
@@ -103,13 +103,13 @@ for user_json in users_json:
 
         procedure = Procedure(title=title, label=label, user=user)
         db.session.add(procedure)
-        db.session.commit()
+        db.session.flush()
 
         # Randomly assign a car from the garage to each procedure.
         car_num = randint(0, 9)
         proc_car = ProcedureCar(proc=procedure, car=garage[car_num])
         db.session.add(proc_car)
-        db.session.commit()
+        db.session.flush()
 
         # Randomly assign up to 5 tools from the existing set
         # to each procedure.
@@ -122,7 +122,7 @@ for user_json in users_json:
             tool = toolbox[num]
             proc_tool = ProcedureTool(proc=procedure, tool=tool)
             db.session.add(proc_tool)
-            db.session.commit()
+            db.session.flush()
 
         # Randomly assign up to 3 parts from the existing set
         # to each procedure.
@@ -134,7 +134,7 @@ for user_json in users_json:
             part = parts_bin[num]
             proc_part = ProcedurePart(proc=procedure, part=part)
             db.session.add(proc_part)
-            db.session.commit()
+            db.session.flush()
 
         # Create 3 Steps for each Procedure.
 
@@ -190,5 +190,73 @@ for user_json in users_json:
         db.session.add(step2)
         db.session.add(step3)
         db.session.add(step4)
+
+# Seed database with a procedure that's complete enough to share at demo night.
+# with open("data/gold_proc.json") as filename:
+#     demo_proc_json = json.loads(filename.read())
+
+# title = demo_proc_json["title"]
+# label = demo_proc_json["label"]
+# user = demo_proc_json["created_by_user_id"]
+# demo_proc = Procedure(title=title, label=label, user=user)
+
+# db.session.add(demo_proc)
+
+# model_years = demo_proc_json['model_years']
+# make = demo_proc_json["make"]
+# models = demo_proc_json["models"]
+
+# for model_year in model_years[:-1]:
+#     model = models[0]
+#     car = Car(model_year=model_year, make=make, model=model)
+#     db.session.add(car)
+#     proc_car = ProcedureCar(proc=demo_proc, car=car)
+#     db.session.add(proc_car)
+
+# for model_year in model_years[1:]:
+#     model = models[1]
+#     car = Car(model_year=model_year, make=make, model=model)
+#     db.session.add(car)
+#     proc_car = ProcedureCar(proc=demo_proc, car=car)
+#     db.session.add(proc_car)
+
+# db.session.commit()
+
+# tool1 = Tool(name=demo_proc_json['tool_1']['name'], tool_img=demo_proc_json['tool_1']['tool_img'])
+# tool2 = Tool(name=demo_proc_json['tool_2']['name'], tool_img=demo_proc_json['tool_2']['tool_img'])
+# tool3 = Tool(name=demo_proc_json['tool_3']['name'], tool_img=demo_proc_json['tool_3']['tool_img'])
+# db.session.add(tool1)
+# db.session.add(tool2)
+# db.session.add(tool3)
+# proc_tool_1 = ProcedureTool(proc=demo_proc, tool=tool1)
+# proc_tool_2 = ProcedureTool(proc=demo_proc, tool=tool2)
+# proc_tool_3 = ProcedureTool(proc=demo_proc, tool=tool3)
+# db.session.add(proc_tool_1)
+# db.session.add(proc_tool_2)
+# db.session.add(proc_tool_3)
+
+# db.session.commit()
+
+# part1 = Tool(name=demo_proc_json['part_1']['name'], part_img=demo_proc_json['part_1']['part_img'])
+# part2 = Tool(name=demo_proc_json['part_2']['name'], part_img=demo_proc_json['part_2']['part_img'])
+# db.session.add(part1)
+# db.session.add(part2)
+# proc_part_1 = ProcedurePart(proc=demo_proc, part=part1)
+# proc_part_2 = ProcedurePart(proc=demo_proc, part=part2)
+# db.session.add(proc_part_1)
+# db.session.add(proc_part_2)
+
+# db.session.commit()
+
+# for count in range(1,9):
+#     if count % 3 == 0:
+
+#     step = Step(order_num=demo_proc_json[f'step_{count}']['order_num'], 
+#                 reference=demo_proc_json[f'step_{count}']['order_num'], 
+#                 step_text=demo_proc_json[f'step_{count}']['step_text'], 
+#                 step_img= demo_proc_json[f'step_{count}']['step_img'],
+#                 proc=demo_proc_json)
+#     db.session.add(step)
+#     db.session.commit()
 
 db.session.commit()

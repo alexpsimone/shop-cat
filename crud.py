@@ -135,7 +135,7 @@ def update_procedure(proc_id, title, label, cars, tool_data, part_data, step_dat
                 proc_car = ProcedureCar(proc=proc, car=car)
                 db.session.add(proc_car)
                 # *#*#*#*#*#*#*#*#*#*#*#*#*#*
-                db.session.commit()
+                db.session.flush()
 
         else:
             car = Car(model=car_info[2], make=car_info[1], model_year=car_info[0])
@@ -143,7 +143,7 @@ def update_procedure(proc_id, title, label, cars, tool_data, part_data, step_dat
             proc_car = ProcedureCar(proc=proc, car=car)
             db.session.add(proc_car)
             # *#*#*#*#*#*#*#*#*#*#*#*#*#*
-            db.session.commit()
+            db.session.flush()
 
         car_ids.add(car.car_id)
 
@@ -186,7 +186,7 @@ def update_procedure(proc_id, title, label, cars, tool_data, part_data, step_dat
                         name=tool_data[item]["other"], tool_img=tool_data[item]["img"]
                     )
                     db.session.add(tool)
-                    db.session.commit()
+                    db.session.flush()
                     tool_ids.add(tool.tool_id)
             else:
                 tool = Tool.query.filter_by(name=tool_data[item]["name"]).first()
@@ -200,7 +200,7 @@ def update_procedure(proc_id, title, label, cars, tool_data, part_data, step_dat
             ):
                 proc_tool = ProcedureTool(proc=proc, tool=tool)
                 db.session.add(proc_tool)
-                db.session.commit()
+                db.session.flush()
     # Check all ProcedureTool objects associated with this procedure.
     # If a ProcedureTool object includes a tool ID that isn't in tool_data,
     # delete that ProcedureTool.
@@ -231,7 +231,7 @@ def update_procedure(proc_id, title, label, cars, tool_data, part_data, step_dat
                         name=part_data[item]["other"], part_img=part_data[item]["img"]
                     )
                     db.session.add(part)
-                    db.session.commit()
+                    db.session.flush()
                     part_num = PartNum(
                         manuf=part_data[item]["manuf"],
                         part_num=part_data[item]["pn"],
@@ -252,7 +252,7 @@ def update_procedure(proc_id, title, label, cars, tool_data, part_data, step_dat
             ):
                 proc_part = ProcedurePart(proc=proc, part=part)
                 db.session.add(proc_part)
-                db.session.commit()
+                db.session.flush()
 
     # Check all ProcedurePart objects associated with this procedure.
     # If a ProcedurePart object includes a part ID that isn't in part_data,
@@ -296,7 +296,7 @@ def update_procedure(proc_id, title, label, cars, tool_data, part_data, step_dat
             )
 
             db.session.add(step)
-            db.session.commit()
+            db.session.flush()
             step_ids.add(step.step_id)
 
     # Check all Step objects associated with this procedure.
