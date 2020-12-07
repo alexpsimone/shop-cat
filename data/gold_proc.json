@@ -1,0 +1,73 @@
+{
+        "title": "Engine Oil Level Check",
+        "label": "regular maintenance",
+        "created_by_user_id": 10,
+
+        "model_years": [2011, 2012, 2013, 2014],
+        "make": "CHEVROLET",
+        "models": ["Cruze", "Sonic"],
+
+        "tool_1": {
+            "name": "Funnel",
+            "tool_img": "IMG"
+        },
+        "tool_2": {
+            "name": "Deep 10mm Socket, 6-point",
+            "tool_img": "IMG"
+        },
+        "tool_3": {
+            "name": "Oil Drip Pan",
+            "tool_img": "IMG"
+        },
+
+        "part_1": {
+            "name": "Engine Oil - 5W-30",
+            "part_img": "IMG"
+        },
+        "part_2": {
+            "name": "Shop Cloth",
+            "part_img": "IMG"
+        },
+
+        "step_1": {
+            "step_text": "Make sure the car is parked on level ground. Then, pop the hood using the lever under the dashboard.",
+            "order_num": 1
+        },
+        "step_2": {
+            "step_text": "Use the hood prop to hold up the hood.",
+            "order_num": 2
+        },
+        "step_3": {
+            "step_text": "Remove dipstick from engine and clean it with a shop cloth.",
+            "order_num": 3
+        },
+        "step_4": {
+            "step_text": "Re-insert the dipstick into the engine. Then, remove it, but don't clean the end this time.",
+            "order_num": 4,
+            "step_img": "IMG"
+        },
+        "step_5": {
+            "step_text": "Inspect the end of the dipstick with the metal tip. You should see wet oil up to the top of the hash marks.",
+            "order_num": 5,
+            "step_img": "IMG"
+        },
+        "step_6": {
+            "step_text": "If the oil level is too low, then open the oil cap on the valve cover and add oil, re-cleaning the dipstick and checking oil level every 1/2 quart that you add.",
+            "order_num": 6,
+            "step_img": "IMG"
+        },
+        "step_7": {
+            "step_text": "After oil level is back up to normal, close the valve cover and idle the engine for 3-5 minutes.",
+            "order_num": 7,
+            "step_img": "IMG"
+        },
+        "step_8": {
+            "step_text": "Confirm one last time that the oil level is appropriate by repeating steps 3-6.",
+            "order_num": 8,
+            "step_img": "IMG"
+        },
+
+        "ref_1": "https://www.cruzetalk.com/threads/mystery-oil-leak-from-bell-housing-weep-hole.249578/",
+        "ref_2": "https://www.sonicownersforum.com/forum/1-4l-turbo-sonic-engine-discussion/25496-wastegate-actuating-during-boost-leak-test.html",
+        "ref_3": "https://www.youtube.com/watch?v=Ze1WaTynKgk"
+}
