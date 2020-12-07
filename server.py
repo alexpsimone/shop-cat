@@ -322,17 +322,18 @@ def show_part_page(part_id):
     proc_parts = set(ProcedurePart.query.filter_by(part=part).all())
     
     all_cars = set()
+
     for proc_part in proc_parts:
         proc = proc_part.proc
-        print('*******************************', proc)
         proc_cars = set(ProcedureCar.query.filter_by(proc=proc).all())
-        print('*******************************', proc_cars)
         for proc_car in proc_cars:
             all_cars.add(proc_car.car)
-            print('*******************************', all_cars)
+    
+    part_nums = PartNum.query.filter_by(part=part).all()
+    print('*********************************',part_nums)
 
 
-    return render_template("part.html", part=part, user=user, proc_parts=proc_parts, all_cars=all_cars)
+    return render_template("part.html", part=part, user=user, proc_parts=proc_parts, all_cars=all_cars, part_nums=part_nums)
 
 
 @app.route("/procedure/<proc_id>")
