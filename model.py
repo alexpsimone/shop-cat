@@ -4,7 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-
 class User(db.Model):
     """A user."""
 
@@ -43,7 +42,7 @@ class Step(db.Model):
 
     step_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     order_num = db.Column(db.Integer, default=0)
-    reference = db.Column(db.String, default="No Ref Provided")
+    reference = db.Column(db.Text, default="No Ref Provided")
     step_text = db.Column(db.Text, nullable=False)
     step_img = db.Column(db.String, default="/static/img/toolbox.png")
     proc_id = db.Column(db.Integer, db.ForeignKey("procedures.proc_id"))

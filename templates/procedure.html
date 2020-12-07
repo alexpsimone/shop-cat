@@ -80,12 +80,12 @@
                 <p class="form-subtitle">{{ step.order_num }}</p>
             </div>
             <div class="col">
+                <input type="hidden" id="vid-ref-{{ loop.index }}" value="{{ step.reference }}" />
                 {% if step.reference != "No Ref Provided" %}
                     {% if 'https://' in step.reference %}
                         <a id="ref" href="{{ step.reference }}">{{ step.reference }}</a>
                     {% else %}
                         <div id="player-{{ loop.index }}"></div>
-                        <input type="hidden" id="vid-ref-{{ loop.index }}" value="{{ step.reference }}" />
                     {% endif %}
                 {% endif %}
             </div>

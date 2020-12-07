@@ -53,8 +53,9 @@ def build_procedure():
         ref_text = request.form.get(f"ref_text_{step}")
         step_img = request.files[f"step_img_{step}"]
 
-        [reference, filename] = crud.get_step_ref_and_img(ref_text, step_img)
-
+        reference = crud.get_step_ref(ref_text)
+        filename = crud.get_step_img(step_img)
+    
         new_step = Step(
             order_num=step,
             step_text=step_text,
@@ -82,7 +83,6 @@ def build_procedure():
     # Use the Car and Procedure objects to make a new ProcedureCar.
     proc_car = ProcedureCar(proc=procedure, car=car)
     db.session.add(proc_car)
-    # *#*#*#*#*#*#*#*#*#*#*#*#*#*
     db.session.flush()
 
     # Retrieve procedure ID after 1st commit, to render procedure page later
@@ -100,7 +100,6 @@ def build_procedure():
         my_tool = crud.create_tool(tool_req, tool_other, tool_img)
 
         proc_tool = ProcedureTool(proc=procedure, tool=my_tool)
-        # *#*#*#*#*#*#*#*#*#*#*#*#*#*
         db.session.add(proc_tool)
         db.session.flush()
 
@@ -224,10 +223,7 @@ def get_all_model_years():
 def get_all_models():
 
     make = request.args.get("make")
-    print("******************", make)
     model_year = request.args.get("modelYear")
-    print("******************", model_year)
-
     models = crud.get_all_rockauto_models(make, model_year)
 
     return jsonify(models)
@@ -328,7 +324,7 @@ def show_procedure_page(proc_id):
         proc_car_obj = ProcedureCar.query.filter_by(proc_id=proc_id).all()
         proc_part_obj = ProcedurePart.query.filter_by(proc_id=proc_id).all()
         proc_tool_obj = ProcedureTool.query.filter_by(proc_id=proc_id).all()
-        steps = Step.query.filter_by(proc_id=proc_id).all()
+        steps = Step.query.filter_by(proc_id=proc_id).order_by(Step.order_num).all()
         proc_num_tools = ProcedureTool.query.filter_by(proc_id=proc_id).count()
         proc_num_parts = ProcedurePart.query.filter_by(proc_id=proc_id).count()
         proc_num_steps = Step.query.filter_by(proc_id=proc_id).count()
@@ -431,7 +427,6 @@ def rebuild_procedure():
 
     # Iterate through all steps on the form. Make  a list of tuples (?)
     # containing this information.
-    # step_data = []
     step_data = {}
     NUM_STEPS = int(request.form.get("NUM_STEPS"))
 
@@ -525,23 +520,6 @@ def show_model_page(make, model_year, model):
         model_year=model_year,
         model=model,
     )
-
-
-# @app.route("/vehicle-select", methods=["POST"])
-# def apply_selected_vehicle():
-#     """Retrieve selected vehicle info and save to session."""
-
-#     model_year = request.form.get("model-year")
-#     make = request.form.get("make")
-#     model = request.form.get("model")
-
-#     session["model_year"] = model_year
-#     session["make"] = make
-#     session["model"] = model
-#     print("***************", session["model_year"], session["make"], session["model"])
-
-#     return redirect("/write-procedure")
-
 
 @app.route("/vehicle-select.json", methods=["POST"])
 def select_vehicle():

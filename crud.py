@@ -14,6 +14,28 @@ def allowed_file(filename):
 
     return "." in filename and filename.rsplit(".", 1)[1].lower() in allowed_extensions
 
+def get_step_ref(reference):
+    if reference:
+        if "youtube.com" in reference:
+            ref_remove_https = reference.replace("https://", "")
+            ref_remove_www = ref_remove_https.replace("www.youtube.com/watch?v=", "")
+            ref_text = ref_remove_www[:11]
+        else:
+            ref_text = reference
+    else:
+        ref_text = "No Ref Provided"
+    
+    return ref_text
+
+def get_step_img(step_img):
+    if step_img and allowed_file(step_img.filename):
+            filename = secure_filename(step_img.filename)
+            step_img.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+            step_img.close()
+    else:
+        filename = "toolbox.png"
+            
+    return filename
 
 def get_step_ref_and_img(reference, step_img):
     """Determine if a reference and/or img needs to be added to the Step.
@@ -96,12 +118,10 @@ def create_part(req_name, other_name, part_img, other_num, other_manuf, is_oem):
         else:
             filename = "toolbox.png"
         my_part = Part(name=other_name, part_img=filename)
-        # *#*#*#*#*#*#*#*#*#*#*#*#*#*
         db.session.add(my_part)
         part_num = PartNum(
             manuf=other_manuf, part_num=other_num, is_oem_part=is_oem, part=my_part
         )
-        # *#*#*#*#*#*#*#*#*#*#*#*#*#*
         db.session.add(part_num)
 
     return my_part
@@ -134,7 +154,6 @@ def update_procedure(proc_id, title, label, cars, tool_data, part_data, step_dat
             if not ProcedureCar.query.filter_by(car_id=car.car_id):
                 proc_car = ProcedureCar(proc=proc, car=car)
                 db.session.add(proc_car)
-                # *#*#*#*#*#*#*#*#*#*#*#*#*#*
                 db.session.flush()
 
         else:
@@ -142,7 +161,6 @@ def update_procedure(proc_id, title, label, cars, tool_data, part_data, step_dat
             db.session.add(car)
             proc_car = ProcedureCar(proc=proc, car=car)
             db.session.add(proc_car)
-            # *#*#*#*#*#*#*#*#*#*#*#*#*#*
             db.session.flush()
 
         car_ids.add(car.car_id)
@@ -275,11 +293,13 @@ def update_procedure(proc_id, title, label, cars, tool_data, part_data, step_dat
                 step.order_num = step_data[item]["order"]
             if step_data[item]["text"] != step.step_text:
                 step.text = step_data[item]["text"]
-            if step_data[item]["ref"] != step.reference:
-                if step_data[item]["ref"] == "" or step_data[item]["ref"] == None:
-                    step.reference = "No Ref Provided"
-                else:
-                    step.reference = step_data[item]["ref"]
+            # if step_data[item]["ref"] != step.reference:
+            #     if step_data[item]["ref"] == "" or step_data[item]["ref"] == None:
+            #         step.reference = "No Ref Provided"
+            #     else:
+            #         step.reference = step_data[item]["ref"]
+
+            step.reference = get_step_ref(step_data[item]["ref"])
             if step_data[item]["img"] != step.step_img:
                 step.step_img = step_data[item]["img"]
             step_ids.add(int(step_data[item]["id"]))
