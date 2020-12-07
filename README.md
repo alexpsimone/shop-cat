@@ -7,12 +7,11 @@
 A collaborative wiki for vehicle repair.<br>
 This app allows users to create individual pages for different processes, with step-by-step instructions.<br>
 Pages will be linked by keyword and moderated by the community.<br>
-The app is meant to be a better-moderated, more structured alternative to traditional vehicle forum writeups and YouTube videos.<br>
-It also provides more flexibility and collaborative oversight than a site like Instructables.
+The app is meant to be a better-moderated, more structured alternative to traditional vehicle forum writeups and videos.<br>
+It also provides room for flexibility and collaborative oversight.
 
 ### Technologies required (besides typical Hackbright tech stack)
 
-- NHTSA Vehicle API: https://vpic.nhtsa.dot.gov/api/
 - YouTube iFrame Player API: https://developers.google.com/youtube/v3
 - BeautifulSoup 4
 
@@ -58,12 +57,10 @@ A Part can have multiple Part-Numbers, but a Part-Number can only describe one P
 - [x] Allow users to add, remove, or edit steps after a procedure is generated for the first time.
 - [x] Allow users to add, remove, or edit tools/part lists after a procedure is generated for the first time.
 - [x] Allow users to add or remove cars to a procedure after it is generated.
-- [ ] Allow users to flag procedures that are unclear.
-- [ ] Adapt site to use React (if it doesn't already).
 
 
 #### 4.0
-
+- [ ] Adapt site to use React.
+- [ ] Allow users to flag procedures that are unclear.
 - [ ] All edits made by a certain user (to a procedure or info page) will be tracked in contribution history.
-- [ ] User can add a central page where all vehicles of a certain make or model are linked.
 - [ ] Link to the Wikipedia API to get general information about the vehicle on the page.
