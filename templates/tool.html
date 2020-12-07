@@ -10,11 +10,11 @@
 {% block body %}
 <div class="container-fluid dashboard">
     <div class="row row d-flex justify-content-around">
-        <div class="col-3">
+        <div class="col-4">
             <h1>{{ tool.name }}</h1>
             <img class="tool-part-page-img" src="/static/img/uploads/{{ tool.tool_img }}" />
         </div>
-        <div class="col-3">
+        <div class="col-4">
             <p>This tool is used in the following procedures:</p>
             <ul>
                 {% for proc_tool in proc_tools %}
