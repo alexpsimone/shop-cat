@@ -51,7 +51,11 @@
                 <p class="form-subtitle">You'll need {{ proc_num_parts }} parts for the job:</p>
                 <ul>
                     {% for proc_part in proc_part_obj %}
-                    <li>{{ proc_part.part.name }}</li>
+                    <li>
+                        <a href="/part/{{ proc_part.part.part_id }}">
+                            {{ proc_part.part.name }}
+                        </a>
+                    </li>
                     {% endfor %}
                 </ul>
             </div>

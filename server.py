@@ -313,6 +313,27 @@ def new_user():
         flash(f"New account created. Please use your credentials to log in.")
         return redirect("/login")
 
+@app.route("/part/<part_id>")
+def show_part_page(part_id):
+    """Render a part page."""
+
+    user = User.query.filter_by(user_id=session["current_user"]).first()
+    part = Part.query.filter_by(part_id=part_id).first()
+    proc_parts = set(ProcedurePart.query.filter_by(part=part).all())
+    
+    all_cars = set()
+    for proc_part in proc_parts:
+        proc = proc_part.proc
+        print('*******************************', proc)
+        proc_cars = set(ProcedureCar.query.filter_by(proc=proc).all())
+        print('*******************************', proc_cars)
+        for proc_car in proc_cars:
+            all_cars.add(proc_car.car)
+            print('*******************************', all_cars)
+
+
+    return render_template("part.html", part=part, user=user, proc_parts=proc_parts, all_cars=all_cars)
+
 
 @app.route("/procedure/<proc_id>")
 def show_procedure_page(proc_id):
@@ -466,8 +487,9 @@ def show_tool_page(tool_id):
 
     user = User.query.filter_by(user_id=session["current_user"]).first()
     tool = Tool.query.filter_by(tool_id=tool_id).first()
+    proc_tools = set(ProcedureTool.query.filter_by(tool = tool).all())
 
-    return render_template("tool.html", tool=tool, user=user)
+    return render_template("tool.html", tool=tool, user=user, proc_tools=proc_tools)
 
 
 @app.route("/uploads/<filename>")

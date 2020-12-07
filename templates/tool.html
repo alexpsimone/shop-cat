@@ -8,11 +8,22 @@
 
 
 {% block body %}
-
-<h1>Information about {{ tool.name }}:</h1>
-
-<img src="/static/img/uploads/{{ tool.tool_img }}" />
-<br />
-<a href="/home">Return Home</a>
-
+<div class="container-fluid dashboard">
+    <div class="row row d-flex justify-content-around">
+        <div class="col-3">
+            <h1>{{ tool.name }}</h1>
+            <img class="tool-part-page-img" src="/static/img/uploads/{{ tool.tool_img }}" />
+        </div>
+        <div class="col-3">
+            <p>This tool is used in the following procedures:</p>
+            <ul>
+                {% for proc_tool in proc_tools %}
+                <li>
+                    <a href="/procedure/{{ proc_tool.proc.proc_id }}">{{ proc_tool.proc.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}
