@@ -28,6 +28,7 @@ def show_login():
     else:
         return render_template("shopcat.html")
 
+
 ############################################################
 #### TODO: Maybe integrate request.json to make smaller? ###
 ############################################################
@@ -55,7 +56,7 @@ def build_procedure():
 
         reference = crud.get_step_ref(ref_text)
         filename = crud.get_step_img(step_img)
-    
+
         new_step = Step(
             order_num=step,
             step_text=step_text,
@@ -86,7 +87,7 @@ def build_procedure():
     db.session.flush()
 
     # Retrieve procedure ID after 1st commit, to render procedure page later
-    proc_id = procedure.proc_id 
+    proc_id = procedure.proc_id
 
     # Add tools to the procedure based on form info.
     NUM_TOOLS = int(request.form.get("NUM_TOOLS"))
@@ -122,10 +123,10 @@ def build_procedure():
         proc_part = ProcedurePart(proc=procedure, part=my_part)
         db.session.add(proc_part)
         db.session.flush()
-    
+
     db.session.commit()
 
-    return redirect(f'procedure/{proc_id}')
+    return redirect(f"procedure/{proc_id}")
 
 
 @app.route("/dashboard/<user_id>")
@@ -313,6 +314,7 @@ def new_user():
         flash(f"New account created. Please use your credentials to log in.")
         return redirect("/login")
 
+
 @app.route("/part/<part_id>")
 def show_part_page(part_id):
     """Render a part page."""
@@ -320,7 +322,7 @@ def show_part_page(part_id):
     user = User.query.filter_by(user_id=session["current_user"]).first()
     part = Part.query.filter_by(part_id=part_id).first()
     proc_parts = set(ProcedurePart.query.filter_by(part=part).all())
-    
+
     all_cars = set()
 
     for proc_part in proc_parts:
@@ -328,12 +330,18 @@ def show_part_page(part_id):
         proc_cars = set(ProcedureCar.query.filter_by(proc=proc).all())
         for proc_car in proc_cars:
             all_cars.add(proc_car.car)
-    
+
     part_nums = PartNum.query.filter_by(part=part).all()
-    print('*********************************',part_nums)
+    print("*********************************", part_nums)
 
-
-    return render_template("part.html", part=part, user=user, proc_parts=proc_parts, all_cars=all_cars, part_nums=part_nums)
+    return render_template(
+        "part.html",
+        part=part,
+        user=user,
+        proc_parts=proc_parts,
+        all_cars=all_cars,
+        part_nums=part_nums,
+    )
 
 
 @app.route("/procedure/<proc_id>")
@@ -488,7 +496,7 @@ def show_tool_page(tool_id):
 
     user = User.query.filter_by(user_id=session["current_user"]).first()
     tool = Tool.query.filter_by(tool_id=tool_id).first()
-    proc_tools = set(ProcedureTool.query.filter_by(tool = tool).all())
+    proc_tools = set(ProcedureTool.query.filter_by(tool=tool).all())
 
     return render_template("tool.html", tool=tool, user=user, proc_tools=proc_tools)
 
@@ -508,7 +516,9 @@ def show_make_page(make):
     cars = Car.query.filter_by(make=make).all()
     model_years = set(sorted([car.model_year for car in cars]))
 
-    return render_template("veh-make.html", make=make, model_years=model_years, user=user)
+    return render_template(
+        "veh-make.html", make=make, model_years=model_years, user=user
+    )
 
 
 @app.route("/vehicle/<make>/<model_year>")
@@ -544,6 +554,7 @@ def show_model_page(make, model_year, model):
         model=model,
     )
 
+
 @app.route("/vehicle-select.json", methods=["POST"])
 def select_vehicle():
 
@@ -572,16 +583,22 @@ def write_procedure():
         sorted_makes = crud.get_all_rockauto_makes()
 
         return render_template(
-            "write-procedure.html", tools=tools, parts=parts, sorted_makes=sorted_makes, user=user
+            "write-procedure.html",
+            tools=tools,
+            parts=parts,
+            sorted_makes=sorted_makes,
+            user=user,
         )
     else:
         return redirect("/")
+
 
 @app.route("/new-fom-send", methods=["POST"])
 def alt_form_json_send():
 
     data = request.form.get_json()
     print(data)
+
 
 if __name__ == "__main__":
     connect_to_db(app)

@@ -92,7 +92,7 @@ for user_json in users_json:
     )
     db.session.add(user)
     db.session.flush()
-  
+
     for x in range(3):
 
         # Create 3 procedures for each new user.
@@ -191,7 +191,6 @@ for user_json in users_json:
             db.session.add(proc_part)
             db.session.flush()
 
-        
 
 # Seed database with a procedure that's complete enough to share at demo night.
 with open("data/gold_proc.json") as filename:
@@ -207,7 +206,7 @@ demo_proc = Procedure(title=title, label=label, created_by_user_id=user)
 
 db.session.add(demo_proc)
 
-model_years = demo_proc_json['model_years']
+model_years = demo_proc_json["model_years"]
 make = demo_proc_json["make"]
 models = demo_proc_json["models"]
 
@@ -227,9 +226,15 @@ for model_year in model_years[1:]:
 
 db.session.flush()
 
-tool1 = Tool(name=demo_proc_json['tool_1']['name'], tool_img=demo_proc_json['tool_1']['tool_img'])
-tool2 = Tool(name=demo_proc_json['tool_2']['name'], tool_img=demo_proc_json['tool_2']['tool_img'])
-tool3 = Tool(name=demo_proc_json['tool_3']['name'], tool_img=demo_proc_json['tool_3']['tool_img'])
+tool1 = Tool(
+    name=demo_proc_json["tool_1"]["name"], tool_img=demo_proc_json["tool_1"]["tool_img"]
+)
+tool2 = Tool(
+    name=demo_proc_json["tool_2"]["name"], tool_img=demo_proc_json["tool_2"]["tool_img"]
+)
+tool3 = Tool(
+    name=demo_proc_json["tool_3"]["name"], tool_img=demo_proc_json["tool_3"]["tool_img"]
+)
 db.session.add(tool1)
 db.session.add(tool2)
 db.session.add(tool3)
@@ -240,10 +245,14 @@ db.session.add(proc_tool_1)
 db.session.add(proc_tool_2)
 db.session.add(proc_tool_3)
 
-db.session.commit()
+db.session.flush()
 
-part1 = Part(name=demo_proc_json['part_1']['name'], part_img=demo_proc_json['part_1']['part_img'])
-part2 = Part(name=demo_proc_json['part_2']['name'], part_img=demo_proc_json['part_2']['part_img'])
+part1 = Part(
+    name=demo_proc_json["part_1"]["name"], part_img=demo_proc_json["part_1"]["part_img"]
+)
+part2 = Part(
+    name=demo_proc_json["part_2"]["name"], part_img=demo_proc_json["part_2"]["part_img"]
+)
 db.session.add(part1)
 db.session.add(part2)
 proc_part_1 = ProcedurePart(proc=demo_proc, part=part1)
@@ -251,27 +260,30 @@ proc_part_2 = ProcedurePart(proc=demo_proc, part=part2)
 db.session.add(proc_part_1)
 db.session.add(proc_part_2)
 
-for count in range(1,4):
-    step_text = demo_proc_json[f'step_{count}']['step_text']
-    ref_text = demo_proc_json[f'ref_{count}']
+for count in range(1, 4):
+    step_text = demo_proc_json[f"step_{count}"]["step_text"]
+    ref_text = demo_proc_json[f"ref_{count}"]
     step_img = None
 
     [reference, filename] = crud.get_step_ref_and_img(ref_text, step_img)
 
-    new_step = Step(order_num=count,
-                step_text=step_text,
-                proc=demo_proc,
-                reference=reference,
-                step_img=filename,
-                )
+    new_step = Step(
+        order_num=count,
+        step_text=step_text,
+        proc=demo_proc,
+        reference=reference,
+        step_img=filename,
+    )
     db.session.add(new_step)
 
-for count in range(4,9):
-    step = Step(order_num=demo_proc_json[f'step_{count}']['order_num'], 
-                step_text=demo_proc_json[f'step_{count}']['step_text'], 
-                step_img= "toolbox.png",
-                reference="No Ref Provided",
-                proc=demo_proc)
+for count in range(4, 9):
+    step = Step(
+        order_num=demo_proc_json[f"step_{count}"]["order_num"],
+        step_text=demo_proc_json[f"step_{count}"]["step_text"],
+        step_img="toolbox.png",
+        reference="No Ref Provided",
+        proc=demo_proc,
+    )
     db.session.add(step)
 
 db.session.commit()

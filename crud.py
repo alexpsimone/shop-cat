@@ -14,6 +14,7 @@ def allowed_file(filename):
 
     return "." in filename and filename.rsplit(".", 1)[1].lower() in allowed_extensions
 
+
 def get_step_ref(reference):
     if reference:
         if "youtube.com" in reference:
@@ -24,18 +25,20 @@ def get_step_ref(reference):
             ref_text = reference
     else:
         ref_text = "No Ref Provided"
-    
+
     return ref_text
+
 
 def get_step_img(step_img):
     if step_img and allowed_file(step_img.filename):
-            filename = secure_filename(step_img.filename)
-            step_img.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-            step_img.close()
+        filename = secure_filename(step_img.filename)
+        step_img.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+        step_img.close()
     else:
         filename = "toolbox.png"
-            
+
     return filename
+
 
 def get_step_ref_and_img(reference, step_img):
     """Determine if a reference and/or img needs to be added to the Step.
@@ -126,6 +129,7 @@ def create_part(req_name, other_name, part_img, other_num, other_manuf, is_oem):
 
     return my_part
 
+
 #################################################
 #### TODO: Break down into smaller functions. ###
 #################################################
@@ -144,7 +148,7 @@ def update_procedure(proc_id, title, label, cars, tool_data, part_data, step_dat
     car_ids = set()
 
     for item in cars:
-        car_info = item.split("-") # Returns [model_year, make, model] for each car.
+        car_info = item.split("-")  # Returns [model_year, make, model] for each car.
         car = Car.query.filter(
             Car.model_year == car_info[0],
             Car.make == car_info[1],
