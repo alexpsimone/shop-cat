@@ -24,7 +24,6 @@ function getModels (evt) {
             `<select class="custom-select" id="model-select" name="model" required>
             <option value="">Vehicle Model</option>
             ${str}
-            <option value="other">Other (please specify)...</option>
             </select>`
         );
     });

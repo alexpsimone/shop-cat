@@ -11,19 +11,6 @@
             "name": "Funnel",
             "tool_img": "IMG"
         },
-        "tool_2": {
-            "name": "Deep 10mm Socket, 6-point",
-            "tool_img": "IMG"
-        },
-        "tool_3": {
-            "name": "Oil Drip Pan",
-            "tool_img": "IMG"
-        },
-
-        "part_1": {
-            "name": "Engine Oil - 5W-30",
-            "part_img": "IMG"
-        },
         "part_2": {
             "name": "Shop Cloth",
             "part_img": "IMG"

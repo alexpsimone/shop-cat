@@ -1,14 +1,12 @@
 # Shop Cat
 
-## Project Proposal: Shop Cat
+## Shop Cat
 
-### Overview
+A collaborative wiki for vehicle repair.<br><br>
+This app allows users to create individual pages for different procedures, with step-by-step instructions. Pages are linked by keyword and moderated by the community.<br><br>
+The app is meant to be a better-moderated, more structured alternative to traditional vehicle forum writeups and videos. It also provides room for flexibility and collaborative oversight.
 
-A collaborative wiki for vehicle repair.<br>
-This app allows users to create individual pages for different processes, with step-by-step instructions.<br>
-Pages will be linked by keyword and moderated by the community.<br>
-The app is meant to be a better-moderated, more structured alternative to traditional vehicle forum writeups and videos.<br>
-It also provides room for flexibility and collaborative oversight.
+<iframe src='//gifs.com/embed/MwyBXP' frameborder='0' scrolling='no' width='578px' height='324px' style='-webkit-backface-visibility: hidden;-webkit-transform: scale(1);' ></iframe>
 
 ### Technologies required (besides typical Hackbright tech stack)
 
@@ -18,6 +16,8 @@ It also provides room for flexibility and collaborative oversight.
 ### Data
 
 **Procedures are the central building blocks of Shop Cat.**
+
+<img src="./planning/Data_Model.PNG">
 
 Procedures consist of Cars, Parts, Tools, and Steps.
 A Procedure can apply to multiple Cars, and multiple Procedures can be written about a Car. (many-many)  
