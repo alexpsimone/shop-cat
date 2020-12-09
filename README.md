@@ -11,7 +11,7 @@ The app is meant to be a better-moderated, more structured alternative to tradit
 ### Technologies required (besides typical Hackbright tech stack)
 
 - YouTube iFrame Player API: https://developers.google.com/youtube/v3
-- BeautifulSoup 4
+- BeautifulSoup 4: https://www.crummy.com/software/BeautifulSoup/bs4/doc/
 
 ### Data
 
