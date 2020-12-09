@@ -1,7 +1,5 @@
 # Shop Cat
 
-## Shop Cat
-
 A collaborative wiki for vehicle repair.<br><br>
 This app allows users to create individual pages for different procedures, with step-by-step instructions. Pages are linked by keyword and moderated by the community.<br><br>
 The app is meant to be a better-moderated, more structured alternative to traditional vehicle forum writeups and videos. It also provides room for flexibility and collaborative oversight.
