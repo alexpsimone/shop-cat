@@ -17,7 +17,7 @@ The app is meant to be a better-moderated, more structured alternative to tradit
 
 **Procedures are the central building blocks of Shop Cat.**
 
-<img src="./planning/Data_Model.PNG">
+<img src="./static/img/Data_Model.PNG">
 
 Procedures consist of Cars, Parts, Tools, and Steps.
 A Procedure can apply to multiple Cars, and multiple Procedures can be written about a Car. (many-many)  
