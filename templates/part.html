@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ part.name }}{% endblock %}
+
+{% block js %}
+
+{% endblock %}
+
+
+{% block body %}
+<div class="container-fluid dashboard">
+    <div class="row d-flex justify-content-around">
+        <div class="col-4">
+            <h1>{{ part.name }}</h1>
+            <img class="tool-part-page-img" src="/static/img/uploads/{{ part.part_img }}" />
+            <p>Part Numbers:</p>
+            <ul>
+                {% for part_num in part_nums %}
+                <li>
+                    {{ part_num.part_num }} ({{ part_num.manuf }})
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-4">
+            <p>This part is used in the following procedures:</p>
+            <ul>
+                {% for proc_part in proc_parts %}
+                <li>
+                    <a href="/procedure/{{ proc_part.proc.proc_id }}">{{ proc_part.proc.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            <p>This part fits the following cars:</p>
+            <ul>
+                {% for car in all_cars %}
+                <li>
+                    <a href="/vehicle/{{ car.make }}/{{ car.model_year }}/{{ car.model }}">
+                    {{ car.model_year }} {{ car.make }} {{ car.model }}
+                    </a>                
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
