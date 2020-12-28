@@ -1,4 +1,4 @@
-# Shop Cat
+# :toolbox: Shop Cat
 
 A collaborative wiki for vehicle repair.<br><br>
 This app allows users to create individual pages for different procedures, with step-by-step instructions. Pages are linked by keyword and moderated by the community.<br><br>
@@ -6,12 +6,13 @@ The app is meant to be a better-moderated, more structured alternative to tradit
 
 ![Shop Cat Demo](https://j.gifs.com/MwyBXP.gif)
 
-### Technologies required (besides typical Hackbright tech stack)
+### :wrench: Technologies Required
 
+- postgreSQL, Python, Flask/SQLAlchemy, JavaScript, jQuery/Ajax, HTML, CSS/Bootstrap
 - YouTube iFrame Player API: https://developers.google.com/youtube/v3
 - BeautifulSoup 4: https://www.crummy.com/software/BeautifulSoup/bs4/doc/
 
-### Data
+### :wrench: Data
 
 **Procedures are the central building blocks of Shop Cat.**
 
@@ -30,7 +31,7 @@ A Part can have multiple Part-Numbers, but a Part-Number can only describe one P
 - Users can edit many things, and each thing can be edited by many different Users, but no changes are tracked.
 - Future implementation: Users will be connected to all the things they change via their key in a contribution history.
 
-### Roadmap
+### :wrench: Roadmap
 
 #### MVP
 
