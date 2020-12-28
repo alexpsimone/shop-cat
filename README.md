@@ -6,13 +6,13 @@ The app is meant to be a better-moderated, more structured alternative to tradit
 
 ![Shop Cat Demo](https://j.gifs.com/MwyBXP.gif)
 
-### :wrench: Technologies Required
+### :hammer_and_wrench: Technologies Required
 
 - postgreSQL, Python, Flask/SQLAlchemy, JavaScript, jQuery/Ajax, HTML, CSS/Bootstrap
 - YouTube iFrame Player API: https://developers.google.com/youtube/v3
 - BeautifulSoup 4: https://www.crummy.com/software/BeautifulSoup/bs4/doc/
 
-### :wrench: Data
+### :hammer_and_wrench: Data
 
 **Procedures are the central building blocks of Shop Cat.**
 
@@ -31,7 +31,7 @@ A Part can have multiple Part-Numbers, but a Part-Number can only describe one P
 - Users can edit many things, and each thing can be edited by many different Users, but no changes are tracked.
 - Future implementation: Users will be connected to all the things they change via their key in a contribution history.
 
-### :wrench: Roadmap
+### :hammer_and_wrench: Roadmap
 
 #### MVP
 
